@@ -1,0 +1,126 @@
+{
+  "type": "record",
+  "name": "AdmnMessage",
+  "namespace": "com.anz.fastpayment.nonval.avro",
+  "doc": "Avro schema for ADMN administrative messages in APEAFAST-SG ClearPath Gateway",
+  "fields": [
+    {
+      "name": "messageId",
+      "type": "string",
+      "doc": "Unique message identifier from group header"
+    },
+    {
+      "name": "messageType",
+      "type": {
+        "type": "enum",
+        "name": "AdmnType",
+        "symbols": ["ADMN_001", "ADMN_002", "ADMN_003", "ADMN_004"]
+      },
+      "doc": "Type of administrative message"
+    },
+    {
+      "name": "creationDateTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Message creation timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "instructingAgentBIC",
+      "type": "string",
+      "doc": "BIC code of the instructing financial institution"
+    },
+    {
+      "name": "instructedAgentBIC",
+      "type": "string",
+      "doc": "BIC code of the instructed financial institution"
+    },
+    {
+      "name": "instructionId",
+      "type": "string",
+      "doc": "Instruction identifier for requests (ADMN.001/003)"
+    },
+    {
+      "name": "originalInstructionId",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Original instruction ID for responses (ADMN.002/004)"
+    },
+    {
+      "name": "status",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "StatusType",
+          "symbols": ["ACTC", "RJCT"]
+        }
+      ],
+      "default": null,
+      "doc": "Status for response messages: ACTC (Accepted) or RJCT (Rejected)"
+    },
+    {
+      "name": "statusReason",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Reason for rejection if status is RJCT"
+    },
+    {
+      "name": "statusReasonCode",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Proprietary reason code for rejection"
+    },
+    {
+      "name": "clearingSystemMemberId",
+      "type": "string",
+      "doc": "11-character clearing system member identifier"
+    },
+    {
+      "name": "originalXmlContent",
+      "type": "string",
+      "doc": "Base64 encoded original XML message for audit and debugging"
+    },
+    {
+      "name": "processingMetadata",
+      "type": {
+        "type": "record",
+        "name": "ProcessingMetadata",
+        "fields": [
+          {
+            "name": "sourceQueue",
+            "type": "string",
+            "doc": "Source IBM MQ queue name"
+          },
+          {
+            "name": "receivedTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            },
+            "doc": "Timestamp when message was received by router"
+          },
+          {
+            "name": "correlationId",
+            "type": "string",
+            "doc": "Correlation ID for message tracking"
+          },
+          {
+            "name": "processedBy",
+            "type": "string",
+            "default": "fast-nonval-router",
+            "doc": "Service that processed this message"
+          },
+          {
+            "name": "schemaVersion",
+            "type": "string",
+            "default": "1.0.0",
+            "doc": "Version of this Avro schema"
+          }
+        ]
+      },
+      "doc": "Metadata about message processing"
+    }
+  ]
+}

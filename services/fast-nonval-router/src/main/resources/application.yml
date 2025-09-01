@@ -1,0 +1,284 @@
+spring:
+  application:
+    name: fast-nonval-router
+  
+  threads:
+    virtual:
+      enabled: true  # Enable virtual threads for better concurrency
+  
+  profiles:
+    active: local
+  
+  cloud:
+    gcp:
+      spanner:
+        instance-id: ${SPANNER_INSTANCE_ID:fast-cpg-spanner}
+        database: ${SPANNER_DATABASE:fast_cpg_db}
+      storage:
+        credentials:
+          location: ${GCP_CREDENTIALS_PATH:}
+        project-id: ${GCP_PROJECT_ID:}
+  
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: 3  # Dedicated database for non-value router
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 10
+          min-idle: 5
+  
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 1
+    consumer:
+      group-id: fast-nonval-router-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      properties:
+        spring.json.trusted.packages: "com.anz.fastpayment.*"
+
+# IBM MQ Configuration
+ibm:
+  mq:
+    queueManager: ${MQ_QUEUE_MANAGER:QM_CPG_NONVAL}
+    channel: ${MQ_CHANNEL:SVRCONN.NONVAL}
+    connName: ${MQ_CONN_NAME:localhost(1414)}
+    user: ${MQ_USER:mquser}
+    password: ${MQ_PASSWORD:mqpass}
+    clientReconnectOptions: true
+    clientReconnectTimeout: 3600
+    pool:
+      enabled: true
+      maxConnections: 20
+      receiveTimeout: 30000
+
+# gRPC Configuration
+grpc:
+  client:
+    availability-service:
+      address: ${AVAILABILITY_SERVICE_GRPC_ADDRESS:static://localhost:9095}
+      negotiationType: plaintext
+      keepAliveTime: 30s
+      keepAliveTimeout: 5s
+      keepAliveWithoutCalls: true
+      maxInboundMessageSize: 4MB
+      enableRetry: true
+      retryPolicy:
+        maxAttempts: 3
+        initialBackoff: 1s
+        maxBackoff: 30s
+        backoffMultiplier: 2.0
+
+# AWS Configuration
+aws:
+  s3:
+    region: ${AWS_REGION:ap-southeast-1}
+    bucket:
+      bank-statements: ${S3_BANK_STATEMENTS_BUCKET:fast-cpg-bank-statements}
+      archive: ${S3_ARCHIVE_BUCKET:fast-cpg-archive}
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY:}
+      secretKey: ${AWS_SECRET_KEY:}
+
+# Resilience4j Configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      availability-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 30s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - io.grpc.StatusRuntimeException
+          - java.util.concurrent.TimeoutException
+      
+      s3-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 60s
+        failureRateThreshold: 60
+        eventConsumerBufferSize: 10
+  
+  retry:
+    instances:
+      grpc-calls:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2.0
+        retryExceptions:
+          - io.grpc.StatusRuntimeException
+      
+      s3-operations:
+        maxAttempts: 5
+        waitDuration: 2s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 1.5
+        retryExceptions:
+          - software.amazon.awssdk.services.s3.model.S3Exception
+
+# Application-specific Configuration
+app:
+  nonval-router:
+    message:
+      processing:
+        timeout: 2000ms
+        batchSize: 100
+        parallelism: 10
+      validation:
+        xsd:
+          enabled: true
+          strict: true
+      routing:
+        default-priority: NORMAL
+        emergency-threshold: HIGH
+    
+    mq:
+      queues:
+        input:
+          admn-messages: CPG.NONVAL.ADMN.IN
+          bank-statements: CPG.NONVAL.CAMT053.IN
+          settlement-notifications: CPG.NONVAL.SETTLEMENT.IN
+        dlq:
+          failed-messages: CPG.NONVAL.DLQ
+    
+    kafka:
+      topics:
+        availability-requests: availability-requests
+        poison-admn-messages: poison-admn-messages
+        poison-camt053-messages: poison-camt053-messages
+        bank-statements-processed: bank-statements-processed
+        settlement-notifications: settlement-notifications  # Future implementation
+    
+    s3:
+      path-patterns:
+        bank-statements: "statements/{date}/{bank-code}/"
+        archive: "archive/nonval/{year}/{month}/"
+      
+    audit:
+      enabled: true
+      retention-days: 90
+      batch-size: 50
+
+# Management and Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+        "[grpc.client.calls]": true
+      sla:
+        "[http.server.requests]": 100ms,500ms,1s,2s
+        "[grpc.client.calls]": 100ms,500ms,1s,2s
+
+# Logging Configuration
+logging:
+  level:
+    com.anz.fastpayment: DEBUG
+    org.springframework.kafka: INFO
+    io.grpc: INFO
+    com.ibm.mq: INFO
+    software.amazon.awssdk: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{correlationId}] %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{correlationId}] %logger{36} - %msg%n"
+
+---
+# Local Development Profile
+spring:
+  config:
+    activate:
+      on-profile: local
+  
+  cloud:
+    gcp:
+      spanner:
+        emulator-host: localhost:9010
+      storage:
+        emulator-host: localhost:9020
+
+aws:
+  s3:
+    endpoint: http://localhost:4566  # LocalStack
+    pathStyleAccess: true
+
+ibm:
+  mq:
+    connName: localhost(1414)
+
+---
+# Development Environment Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    com.anz.fastpayment: DEBUG
+
+---
+# Staging Environment Profile
+spring:
+  config:
+    activate:
+      on-profile: staging
+
+logging:
+  level:
+    com.anz.fastpayment: INFO
+
+---
+# Production Environment Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    com.anz.fastpayment: WARN
+    org.springframework: INFO
+    root: WARN
+
+management:
+  endpoint:
+    health:
+      show-details: when-authorized

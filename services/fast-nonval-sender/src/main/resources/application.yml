@@ -1,0 +1,305 @@
+spring:
+  application:
+    name: fast-nonval-sender
+  
+  threads:
+    virtual:
+      enabled: true  # Enable virtual threads for better concurrency
+  
+  profiles:
+    active: local
+  
+  cloud:
+    gcp:
+      spanner:
+        instance-id: ${SPANNER_INSTANCE_ID:fast-cpg-spanner}
+        database: ${SPANNER_DATABASE:fast_cpg_db}
+  
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: 4  # Dedicated database for non-value sender
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 10
+          min-idle: 5
+  
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: fast-nonval-sender-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      properties:
+        spring.json.trusted.packages: "com.anz.fastpayment.*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+
+# IBM MQ Configuration
+ibm:
+  mq:
+    queueManager: ${MQ_QUEUE_MANAGER:QM_CPG_NONVAL_OUT}
+    channel: ${MQ_CHANNEL:SVRCONN.NONVAL.OUT}
+    connName: ${MQ_CONN_NAME:localhost(1414)}
+    user: ${MQ_USER:mquser}
+    password: ${MQ_PASSWORD:mqpass}
+    clientReconnectOptions: true
+    clientReconnectTimeout: 3600
+    pool:
+      enabled: true
+      maxConnections: 20
+      receiveTimeout: 30000
+
+# gRPC Server Configuration
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT:9096}
+    enableReflection: true
+    maxInboundMessageSize: 4MB
+    maxInboundMetadataSize: 8KB
+  
+  client:
+    # For potential future use with other services
+    GLOBAL:
+      negotiationType: plaintext
+      keepAliveTime: 30s
+      keepAliveTimeout: 5s
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8086}
+  servlet:
+    context-path: /fast-nonval-sender
+
+# AWS Configuration
+aws:
+  s3:
+    region: ${AWS_REGION:ap-southeast-1}
+    bucket:
+      dlq-archive: ${S3_DLQ_ARCHIVE_BUCKET:fast-cpg-nonval-dlq}
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY:}
+      secretKey: ${AWS_SECRET_KEY:}
+
+# Resilience4j Configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      ibm-mq:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 60s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - javax.jms.JMSException
+          - java.util.concurrent.TimeoutException
+      
+      emergency-queue:
+        registerHealthIndicator: true
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 3
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 30s
+        failureRateThreshold: 30
+        eventConsumerBufferSize: 10
+  
+  retry:
+    instances:
+      mq-send:
+        maxAttempts: 3
+        waitDuration: 2s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2.0
+        retryExceptions:
+          - javax.jms.JMSException
+          - java.util.concurrent.TimeoutException
+      
+      emergency-send:
+        maxAttempts: 5
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 1.5
+        retryExceptions:
+          - javax.jms.JMSException
+      
+      settlement-send:
+        maxAttempts: 5
+        waitDuration: 3s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2.0
+
+# Application-specific Configuration
+app:
+  nonval-sender:
+    message:
+      processing:
+        timeout: 2000ms
+        emergency-timeout: 10000ms
+        batchSize: 50
+        parallelism: 10
+      validation:
+        xsd:
+          enabled: true
+          strict: true
+      delivery:
+        default-priority: NORMAL
+        emergency-priority: HIGH
+        max-retry-count: 3
+        emergency-max-retry-count: 5
+    
+    mq:
+      queues:
+        output:
+          admn-messages: CPG.NONVAL.ADMN.OUT
+          settlement-confirmations: CPG.NONVAL.SETTLEMENT.OUT
+          emergency-alerts: CPG.NONVAL.EMERGENCY.OUT
+        dlq:
+          failed-deliveries: CPG.NONVAL.SENDER.DLQ
+      connection:
+        pool-size: 20
+        timeout: 30s
+    
+    kafka:
+      topics:
+        bank-availability-requests: bank-availability-requests
+        poison-outbound-messages: poison-outbound-messages
+        delivery-status-updates: delivery-status-updates
+        settlement-requests: settlement-requests  # Future implementation
+    
+    templates:
+      path: classpath:templates/
+      cache-size: 100
+      validation: true
+      
+    delivery-tracking:
+      enabled: true
+      retention-hours: 168  # 7 days
+      batch-update-size: 100
+      
+    audit:
+      enabled: true
+      retention-days: 90
+      batch-size: 50
+
+# Management and Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+        "[grpc.server.calls]": true
+        "[mq.message.send]": true
+      sla:
+        "[http.server.requests]": 100ms,500ms,1s,2s
+        "[grpc.server.calls]": 100ms,500ms,1s,2s
+        "[mq.message.send]": 500ms,1s,2s,5s
+
+# Logging Configuration
+logging:
+  level:
+    com.anz.fastpayment: DEBUG
+    org.springframework.kafka: INFO
+    io.grpc: INFO
+    com.ibm.mq: INFO
+    software.amazon.awssdk: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{correlationId}] %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{correlationId}] %logger{36} - %msg%n"
+
+---
+# Local Development Profile
+spring:
+  config:
+    activate:
+      on-profile: local
+  
+  cloud:
+    gcp:
+      spanner:
+        emulator-host: localhost:9010
+
+aws:
+  s3:
+    endpoint: http://localhost:4566  # LocalStack
+    pathStyleAccess: true
+
+ibm:
+  mq:
+    connName: localhost(1414)
+
+---
+# Development Environment Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    com.anz.fastpayment: DEBUG
+
+---
+# Staging Environment Profile
+spring:
+  config:
+    activate:
+      on-profile: staging
+
+logging:
+  level:
+    com.anz.fastpayment: INFO
+
+---
+# Production Environment Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    com.anz.fastpayment: WARN
+    org.springframework: INFO
+    root: WARN
+
+management:
+  endpoint:
+    health:
+      show-details: when-authorized
+
+app:
+  nonval-sender:
+    message:
+      processing:
+        emergency-timeout: 5000ms  # Stricter timeout in prod
