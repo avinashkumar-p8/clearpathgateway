@@ -44,6 +44,16 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+        <!-- ActiveMQ / JMS -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
+
         <!-- Google Cloud Spanner -->
         <dependency>
             <groupId>com.google.cloud</groupId>
