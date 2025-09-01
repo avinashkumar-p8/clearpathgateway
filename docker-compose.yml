@@ -17,10 +17,15 @@ services:
       - zookeeper
     ports:
       - "9092:9092"
+      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      # Dual listeners: containers use kafka:9092; host uses localhost:29092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
 
@@ -29,6 +34,13 @@ services:
     ports:
       - "6379:6379"
     command: redis-server --appendonly yes
+  activemq:
+    image: apache/activemq-classic:5.18.3
+    ports:
+      - "61616:61616" # JMS
+      - "8161:8161"   # Web Console
+    environment:
+      ACTIVEMQ_OPTS: "-Xms512m -Xmx1024m -Djetty.host=0.0.0.0"
 
   # Cloud Spanner Emulator
   spanner-emulator:
@@ -61,9 +73,15 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      ACTIVEMQ_BROKER_URL: tcp://activemq:61616
+      ACTIVEMQ_USERNAME: admin
+      ACTIVEMQ_PASSWORD: admin
+      ACTIVEMQ_INPUT_QUEUE: payment.inbound
+      SPANNER_EMULATOR_HOST: spanner-emulator:9010
     depends_on:
       - kafka
       - redis
+      - activemq
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s

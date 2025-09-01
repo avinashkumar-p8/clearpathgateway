@@ -181,7 +181,7 @@ initialize_kafka() {
     
     for topic in "${topics[@]}"; do
         docker-compose exec kafka kafka-topics --create \
-            --bootstrap-server localhost:9092 \
+            --bootstrap-server localhost:29092 \
             --topic "$topic" \
             --partitions 3 \
             --replication-factor 1 \
