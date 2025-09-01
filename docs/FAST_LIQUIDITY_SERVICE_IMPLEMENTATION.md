@@ -37,25 +37,25 @@ graph TB
         RiskMonitor[Risk Monitor]
         ReportingEngine[Reporting Engine]
     end
-    
+
     subgraph "Data & Security"
         Database[(Cloud Spanner)]
         Cache[(Redis)]
         Encryption[Encryption Service]
     end
-    
+
     subgraph "External Integration"
         PaymentServices[Payment Services]
         RegulatorySystem[MAS Reporting]
         MonitoringDash[Operations Dashboard]
     end
-    
+
     PaymentServices --> API
     API --> BalanceEngine
     BalanceEngine --> RiskMonitor
     RiskMonitor --> Database
     BalanceEngine --> Cache
-    
+
     ReportingEngine --> RegulatorySystem
     ReportingEngine --> MonitoringDash
     All Components --> Encryption

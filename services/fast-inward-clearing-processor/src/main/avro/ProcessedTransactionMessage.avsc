@@ -1,0 +1,88 @@
+{
+  "namespace": "com.anz.fastpayment.inward.avro",
+  "type": "record",
+  "name": "ProcessedTransactionMessage",
+  "doc": "Simplified Processed Transaction Message",
+  "fields": [
+    {
+      "name": "transactionId",
+      "type": "string",
+      "doc": "Unique transaction identifier"
+    },
+    {
+      "name": "amount",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Transaction amount as string to preserve precision"
+    },
+    {
+      "name": "currency",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Currency code"
+    },
+    {
+      "name": "senderAccount",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Sender account number"
+    },
+    {
+      "name": "receiverAccount",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Receiver account number"
+    },
+    {
+      "name": "transactionType",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Type of transaction"
+    },
+    {
+      "name": "priority",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Transaction priority"
+    },
+    {
+      "name": "timestamp",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Original transaction timestamp"
+    },
+    {
+      "name": "processingTimestamp",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "When the transaction was processed"
+    },
+    {
+      "name": "processingNodeId",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "ID of the processing node"
+    },
+    {
+      "name": "status",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Processing status (SUCCESS, FAILED, PENDING)"
+    },
+    {
+      "name": "validationPassed",
+      "type": "boolean",
+      "doc": "Whether validation passed"
+    },
+    {
+      "name": "businessRulesPassed",
+      "type": "boolean",
+      "doc": "Whether business rules passed"
+    },
+    {
+      "name": "errorMessage",
+      "type": ["null", "string"],
+      "doc": "Error message if processing failed"
+    }
+  ]
+}

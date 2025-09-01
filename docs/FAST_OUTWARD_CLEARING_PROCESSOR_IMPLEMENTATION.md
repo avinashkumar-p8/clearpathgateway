@@ -39,13 +39,13 @@ graph TB
         PaymentOrch[Payment Orchestrator]
         SettlementCoord[Settlement Coordinator]
     end
-    
+
     subgraph "Data & Security"
         Database[(Cloud Spanner)]
         Cache[(Redis)]
         ComplianceStore[(S3 Compliance)]
     end
-    
+
     subgraph "External Integration"
         PSPGlobal[PSP Global]
         LiquidityService[Liquidity Service]
@@ -53,7 +53,7 @@ graph TB
         ComplianceService[Compliance Service]
         SettlementSystem[Settlement System]
     end
-    
+
     PSPGlobal --> PSPGateway
     PSPGateway --> RiskEngine
     RiskEngine --> ComplianceCheck
@@ -62,7 +62,7 @@ graph TB
     AuthManager --> PaymentOrch
     PaymentOrch --> SettlementCoord
     SettlementCoord --> SenderService
-    
+
     All Components --> Database
     All Components --> Cache
     ComplianceCheck --> ComplianceStore

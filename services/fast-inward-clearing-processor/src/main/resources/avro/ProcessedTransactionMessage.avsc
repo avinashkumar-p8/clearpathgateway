@@ -1,0 +1,84 @@
+{
+  "namespace": "com.anz.fastpayment.inward.avro",
+  "type": "record",
+  "name": "ProcessedTransactionMessage",
+  "doc": "Simplified Processed Transaction Message",
+  "fields": [
+    {
+      "name": "transactionId",
+      "type": "string",
+      "doc": "Unique transaction identifier"
+    },
+    {
+      "name": "amount",
+      "type": "double",
+      "doc": "Transaction amount (legacy field - use amountMinor for precision)"
+    },
+    {
+      "name": "amountMinor",
+      "type": "long",
+      "doc": "Transaction amount in minor units (e.g., cents for USD) for precise monetary representation",
+      "default": 0
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "doc": "Currency code"
+    },
+    {
+      "name": "senderAccount",
+      "type": "string",
+      "doc": "Sender account number"
+    },
+    {
+      "name": "receiverAccount",
+      "type": "string",
+      "doc": "Receiver account number"
+    },
+    {
+      "name": "transactionType",
+      "type": "string",
+      "doc": "Type of transaction"
+    },
+    {
+      "name": "priority",
+      "type": "string",
+      "doc": "Transaction priority"
+    },
+    {
+      "name": "timestamp",
+      "type": "string",
+      "doc": "Original transaction timestamp"
+    },
+    {
+      "name": "processingTimestamp",
+      "type": "string",
+      "doc": "When the transaction was processed"
+    },
+    {
+      "name": "processingNodeId",
+      "type": "string",
+      "doc": "ID of the processing node"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "doc": "Processing status (SUCCESS, FAILED, PENDING)"
+    },
+    {
+      "name": "validationPassed",
+      "type": "boolean",
+      "doc": "Whether validation passed"
+    },
+    {
+      "name": "businessRulesPassed",
+      "type": "boolean",
+      "doc": "Whether business rules passed"
+    },
+    {
+      "name": "errorMessage",
+      "type": ["null", "string"],
+      "doc": "Error message if processing failed"
+    }
+  ]
+}

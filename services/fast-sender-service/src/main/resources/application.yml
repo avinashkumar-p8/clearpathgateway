@@ -3,24 +3,28 @@ spring:
     name: fast-sender-service
   profiles:
     active: local
-  
+
   # Enable Virtual Threads for Java 21
   threads:
     virtual:
       enabled: true
-  
+
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:29092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       retries: 3
       acks: all
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
     consumer:
       group-id: ${spring.application.name}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       auto-offset-reset: earliest
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
 
 server:
   port: 8080
@@ -34,22 +38,22 @@ management:
   endpoint:
     health:
       show-details: always
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
 
 # Application Configuration
 app:
   name: Fast Sender Service
   version: 21.0.0-apeafast-SNAPSHOT
-  
+
   # Message transmission configuration
   sender:
     delivery-timeout-ms: ${DELIVERY_TIMEOUT_MS:10000}
     max-retry-attempts: ${MAX_RETRY_ATTEMPTS:5}
     retry-backoff-ms: ${RETRY_BACKOFF_MS:1000}
-    
+
   # External service endpoints
   external:
     g3-host-endpoint: ${G3_HOST_ENDPOINT:https://g3host.anz.com/api}

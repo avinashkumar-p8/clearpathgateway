@@ -94,11 +94,11 @@ To update dependency versions:
 
 ## Benefits
 
-✅ **Simplified Service POMs**: Services focus on their specific dependencies  
-✅ **Version Consistency**: No version conflicts between services  
-✅ **Easy Upgrades**: Update one place to upgrade all services  
-✅ **Security**: Centralized security scanning configuration  
-✅ **Documentation**: Clear view of all technology versions used  
+✅ **Simplified Service POMs**: Services focus on their specific dependencies
+✅ **Version Consistency**: No version conflicts between services
+✅ **Easy Upgrades**: Update one place to upgrade all services
+✅ **Security**: Centralized security scanning configuration
+✅ **Documentation**: Clear view of all technology versions used
 
 ## Services Using This BOM
 

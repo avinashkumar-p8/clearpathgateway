@@ -17,7 +17,7 @@ graph TB
         VAM[VAM]
         MIDANZ[MIDANZ]
     end
-    
+
     subgraph "Fast Payment Gateway Services"
         Router[fast-router-service]
         Inward[fast-inward-clearing-processor]
@@ -26,27 +26,27 @@ graph TB
         Liquidity[fast-liquidity-service]
         Availability[fast-availability-service]
     end
-    
+
     subgraph "Infrastructure"
         Kafka[Kafka Event Bus]
         Spanner[Cloud Spanner]
         Redis[Redis Cache]
     end
-    
+
     G3 -->|PACS Messages| CPG
     CPG -->|Route Messages| Router
     Router -->|CTI/DDI| Inward
     Router -->|Bank Status| Availability
     PSP -->|CTO Requests| Outward
-    
+
     Inward -->|Responses| Sender
     Outward -->|Auth Check| Liquidity
     Outward -->|Send Messages| Sender
     Sender -->|Messages| CPG
-    
+
     Inward -->|Account Ops| VAM
     Inward -->|Account Ops| MIDANZ
-    
+
     All Services -.->|Events| Kafka
     All Services -.->|Data| Spanner
     All Services -.->|Cache| Redis
@@ -67,7 +67,7 @@ graph TB
 
 ### 1. Inward Credit Transfer (CTI)
 ```
-G3 Host → CPG → fast-router-service → fast-inward-clearing-processor 
+G3 Host → CPG → fast-router-service → fast-inward-clearing-processor
 ↓
 VAM/MIDANZ (account credit) → fast-sender-service → CPG → G3 Host
 ```

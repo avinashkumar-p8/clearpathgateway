@@ -14,7 +14,7 @@ The Fast Router Service acts as the **central message gateway** for Singapore's 
 
 ### Core Functions
 - **Message Reception & Validation**: Receive and validate ISO 20022 messages from G3 Host
-- **Format Transformation**: Convert XML messages to unified JSON for internal processing  
+- **Format Transformation**: Convert XML messages to unified JSON for internal processing
 - **Intelligent Routing**: Route messages to appropriate services based on type and rules
 - **Response Handling**: Process acknowledgments and status responses
 - **Audit & Compliance**: Maintain complete audit trail for regulatory compliance
@@ -32,31 +32,31 @@ The Fast Router Service acts as the **central message gateway** for Singapore's 
 graph TB
     subgraph "Fast Router Service"
         Reception[Message Reception]
-        Validation[Validation Engine]  
+        Validation[Validation Engine]
         Transformation[Format Conversion]
         Routing[Intelligent Router]
         Fallback[Resilience Handler]
     end
-    
+
     subgraph "Data & Messaging"
         Database[(Cloud Spanner)]
         Queue[(Kafka)]
         Cache[(Redis)]
         Backup[(S3 Storage)]
     end
-    
+
     subgraph "External Systems"
         G3[G3 Host/CPG]
         Services[Processing Services]
     end
-    
+
     G3 --> Reception
     Reception --> Validation
-    Validation --> Transformation  
+    Validation --> Transformation
     Transformation --> Routing
     Routing --> Queue
     Routing --> Services
-    
+
     Routing --> Database
     Routing --> Cache
     Fallback --> Backup
@@ -88,7 +88,7 @@ graph TB
 
 ### Resilience & Reliability Features
 - **Idempotency**: Prevents duplicate processing of messages
-- **Circuit Breakers**: Protects against downstream service failures  
+- **Circuit Breakers**: Protects against downstream service failures
 - **Multi-tier Fallback**: Kafka → Spanner → S3 for guaranteed message preservation
 - **Automatic Retry**: Exponential backoff for transient failures
 - **Real-time Monitoring**: Immediate alerts for SLA breaches
@@ -109,7 +109,7 @@ graph TB
 - **Cache-First Strategy**: Redis-based fast duplicate detection
 - **Database Verification**: Spanner-based persistent duplicate tracking
 
-#### Performance Optimization  
+#### Performance Optimization
 - **Layered Caching**: Redis for hot data, Spanner for persistence
 - **Parallel Processing**: Virtual threads for concurrent message handling
 - **Connection Pooling**: Optimized database and messaging connections
@@ -179,7 +179,7 @@ graph TB
 - Basic routing engine with Kafka integration
 - Initial monitoring and alerting setup
 
-### Phase 2: Resilience (Weeks 5-8)  
+### Phase 2: Resilience (Weeks 5-8)
 - Multi-tier fallback implementation
 - Circuit breaker and retry logic
 - Comprehensive error handling

@@ -1,0 +1,39 @@
+{
+  "name": "playwright-kafka-tests",
+  "version": "1.0.0",
+  "description": "Playwright test suite for Kafka + Avro functionality",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "install:browsers": "playwright install",
+    "docker:up": "docker-compose -f docker-compose-test.yml up -d",
+    "docker:down": "docker-compose -f docker-compose-test.yml down",
+    "docker:logs": "docker-compose -f docker-compose-test.yml logs -f",
+    "cleanup": "./cleanup-docker.sh",
+    "cleanup:all": "docker-compose down && ./cleanup-docker.sh",
+    "kafka:test": "node test-runner.js",
+    "kafka:test:clean": "npm run docker:down && npm run kafka:test",
+    "posttest": "npm run docker:down && ./cleanup-docker.sh",
+    "test:idempotency": "playwright test tests/idempotency-idempotency.spec.ts",
+    "test:idempotency:headed": "playwright test tests/idempotency-idempotency.spec.ts --headed",
+    "test:idempotency:ui": "playwright test tests/idempotency-idempotency.spec.ts --ui",
+    "test:idempotency:debug": "playwright test tests/idempotency-idempotency.spec.ts --debug",
+    "test:integration": "playwright test tests/idempotency-integration.spec.ts",
+    "test:integration:headed": "playwright test tests/idempotency-integration.spec.ts --headed",
+    "test:integration:ui": "playwright test tests/idempotency-integration.spec.ts --ui",
+    "test:integration:debug": "playwright test tests/idempotency-integration.spec.ts --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "avsc": "^5.7.7",
+    "@kafkajs/confluent-schema-registry": "^3.6.2"
+  }
+}

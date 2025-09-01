@@ -39,24 +39,24 @@ graph TB
         PaymentExec[Payment Execution]
         Workflow[Payment Workflow]
     end
-    
+
     subgraph "Data & Security"
         Database[(Cloud Spanner)]
         Cache[(Redis)]
         AuditStore[(S3 Audit Store)]
     end
-    
+
     subgraph "External Integration"
         VAM[VAM Core Banking]
         MIDANZ[MIDANZ System]
         LiquidityService[Liquidity Service]
         SenderService[Response Service]
     end
-    
+
     subgraph "Message Flow"
         Router[Router Service]
     end
-    
+
     Router --> Reception
     Reception --> Validation
     Validation --> FraudScreen
@@ -67,7 +67,7 @@ graph TB
     PaymentExec --> MIDANZ
     PaymentExec --> Workflow
     Workflow --> SenderService
-    
+
     All Components --> Database
     All Components --> Cache
     All Components --> AuditStore

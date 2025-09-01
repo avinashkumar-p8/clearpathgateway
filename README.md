@@ -90,7 +90,7 @@ docker-compose up -d
 ### Inward Credit Transfer (CTI)
 G3 Host → CPG → fast-router-service → fast-inward-clearing-processor → Response
 
-### Outward Credit Transfer (CTO)  
+### Outward Credit Transfer (CTO)
 PSP Global → fast-outward-clearing-processor → fast-liquidity-service → fast-sender-service → G3 Host
 
 ### Direct Debit Inward (DDI)

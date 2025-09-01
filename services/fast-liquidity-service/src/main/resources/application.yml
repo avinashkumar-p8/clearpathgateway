@@ -6,16 +6,16 @@ server:
 spring:
   application:
     name: fast-liquidity-service
-  
+
   # Enable Virtual Threads (Project Loom)
   threads:
     virtual:
       enabled: true
-  
+
   # Profile management
   profiles:
     active: local
-  
+
   # JSON serialization
   jackson:
     default-property-inclusion: NON_NULL
@@ -23,7 +23,7 @@ spring:
       write-dates-as-timestamps: false
     deserialization:
       fail-on-unknown-properties: false
-  
+
   # JPA/Database
   jpa:
     hibernate:
@@ -33,7 +33,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-  
+
   # Redis Configuration
   data:
     redis:
@@ -45,7 +45,7 @@ spring:
           max-active: 20
           max-idle: 10
           min-idle: 5
-  
+
   # Kafka Configuration
   kafka:
     bootstrap-servers: localhost:9092
@@ -73,9 +73,9 @@ management:
   endpoint:
     health:
       show-details: always
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
   health:
     redis:
@@ -98,18 +98,18 @@ liquidity:
   supported-schemes:
     SG: G3
     HK: FPS
-  
+
   # Balance thresholds
   thresholds:
     warning-percentage: 0.8  # 80% of limit
     critical-percentage: 0.95  # 95% of limit
-  
+
   # Net debit cap settings
   net-debit-cap:
     default-limit: 5000000.00  # 5 million
     monitoring-enabled: true
     alert-threshold: 0.9  # 90% utilization
-  
+
   # Cache settings
   cache:
     balance-ttl: PT30S  # 30 seconds
@@ -129,7 +129,7 @@ resilience4j:
         minimum-number-of-calls: 5
         sliding-window-size: 10
         wait-duration-in-open-state: 30s
-  
+
   retry:
     instances:
       spanner:
@@ -155,7 +155,7 @@ spring:
   config:
     activate:
       on-profile: local
-  
+
   # Google Cloud Spanner (local emulator)
   cloud:
     gcp:
@@ -173,14 +173,16 @@ spring:
   config:
     activate:
       on-profile: docker
-  
+
   data:
     redis:
       host: redis
-  
+
   kafka:
-    bootstrap-servers: kafka:9092
-  
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:29092}
+    properties:
+      schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+
   cloud:
     gcp:
       spanner:
@@ -193,13 +195,13 @@ spring:
   config:
     activate:
       on-profile: production
-  
+
   cloud:
     gcp:
       spanner:
         instance-id: ${SPANNER_INSTANCE_ID}
         database: ${SPANNER_DATABASE}
-  
+
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     security:
@@ -208,7 +210,7 @@ spring:
         mechanism: PLAIN
         jaas:
           config: ${KAFKA_SASL_CONFIG}
-  
+
   data:
     redis:
       host: ${REDIS_HOST}

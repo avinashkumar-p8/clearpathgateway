@@ -24,7 +24,7 @@ This diagram shows the complete integration architecture for the Singapore Clear
 - **SLA**: < 1 second end-to-end
 - **Exception Handling**: Circuit breaker → Spanner fallback → S3 emergency storage
 
-### Fast Inward Clearing Processor  
+### Fast Inward Clearing Processor
 - **Input**: Kafka (unified JSON from Router)
 - **Processing**: Business validation, fraud detection, account validation, payment execution
 - **Output**: Kafka response messages to Sender Service
@@ -34,7 +34,7 @@ This diagram shows the complete integration architecture for the Singapore Clear
 ### Fast Outward Clearing Processor
 - **Input**: REST API (PSP Global, WebMethods, Operations Console)
 - **Processing**: Multi-stage authorization, risk assessment, compliance checking
-- **Output**: Kafka outbound messages to Sender Service  
+- **Output**: Kafka outbound messages to Sender Service
 - **SLA**: < 5 seconds for complete authorization
 - **External Calls**: Liquidity Service (REST), Availability Service (gRPC), Risk Management APIs
 

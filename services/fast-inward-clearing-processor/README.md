@@ -1,192 +1,312 @@
-# Fast Inward Clearing Processor
+# Fast Inward Clearing Processor Service
 
-## Overview
+A Kafka-based clearing processor service that handles CTI (Credit Transfer Inward) and DDI (Direct Debit Inward) processing with 4.5-second SLA compliance for the Singapore Fast Payment system.
 
-The Fast Inward Clearing Processor handles all inbound payment processing for Credit Transfer Inward (CTI) and Direct Debit Inward (DDI) transactions. This service must meet the critical 4.5-second SLA requirement for payment processing.
+## Features
 
-## Responsibilities
-
-### Core Functions
-- **CTI Processing**: Handle PACS.008 Credit Transfer Initiation messages
-- **DDI Processing**: Handle PACS.003 Direct Debit Initiation messages
-- **Account Validation**: Verify recipient account details via VAM/MIDANZ
-- **Business Rule Validation**: Apply payment scheme rules and fraud checks
-- **Liquidity Management**: Coordinate with fast-liquidity-service for DDI authorization
-- **Response Generation**: Create PACS.002 Payment Status Reports
-- **Exception Handling**: Process CAMT.056 cancelations and PACS.007 reversals
-
-### Payment Types
-- **Credit Transfer Inward (CTI)**: Customer receives money
-- **Direct Debit Inward (DDI)**: Customer account is debited
+- **Kafka Integration**: Consumes messages from input topics and produces to output topics
+- **Complex Avro Serialization**: Supports nested event structures with Header, Body, and Processing Context
+- **Advanced Transaction Processing**: Complete transaction lifecycle management with complex data extraction
+- **Intelligent Data Mapping**: Extracts payment data from nested structures (Header.UUID, Body.PmtAddRq, Procctxt.PmtDtls)
+- **Validation**: Comprehensive field validation and business rule enforcement
+- **Enrichment**: Adds metadata, timestamps, and processing information
+- **Business Rules**: Configurable business logic and compliance checks with enhanced payment category support
+- **Idempotency**: Redis-based duplicate transaction prevention
+- **Error Handling**: Retry logic with Dead Letter Queue (DLQ) support
+- **Monitoring**: Health checks, metrics, and observability endpoints
+- **Containerization**: Docker and Kubernetes deployment support
+- **ISO20022 Compliance**: Support for complex payment message structures
 
 ## Architecture
 
-### Input Sources
-- fast-router-service (routed messages)
-- PSP APEA FAST Business Services
+```
+Input Topic (transactions.incoming)
+           ↓
+   Transaction Consumer
+           ↓
+   Clearing Processor Service
+           ↓
+   ├── Validation
+   ├── Enrichment
+   ├── Business Rules
+   └── Idempotency Check
+           ↓
+   Output Topic (transactions.processed)
+           ↓
+   Dead Letter Queue (transactions.dlq) [on failure]
+```
 
-### Output Targets
-- fast-sender-service (for responses)
-- fast-liquidity-service (for liquidity updates)
-- VAM/MIDANZ (for account operations)
-- Audit/Event streams
+## Components
 
-### Technology Stack
-- **Framework**: Spring Boot 3.x with WebFlux (reactive)
-- **Database**: Cloud Spanner (transactional consistency)
-- **Messaging**: Kafka
-- **Cache**: Redis (for session state)
-- **Monitoring**: Micrometer, Jaeger tracing
+### Core Services
 
-## Key Features
+- **ClearingProcessorService**: Main business logic for transaction processing
+- **TransactionConsumer**: Kafka consumer with error handling and DLQ support
+- **HealthController**: Monitoring and health check endpoints
 
-### Performance Requirements
-- **SLA**: 4.5 seconds end-to-end processing
-- **Throughput**: 15+ TPS for inward payments
-- **Availability**: 99.95% uptime
-- **Success Rate**: >99.9% transaction success
+### Models
 
-### CTI Processing Flow
-1. **Message Validation**: Validate PACS.008 message structure
-2. **Account Lookup**: Verify recipient account via VAM
-3. **Business Rules**: Apply scheme-specific validation
-4. **Account Credit**: Post credit to customer account
-5. **Response**: Generate PACS.002 acceptance response
-6. **Notification**: Trigger customer notification
-7. **Audit**: Complete audit trail logging
+- **TransactionMessage**: Input transaction representation (extracted from complex nested structure)
+- **ProcessedTransactionMessage**: Enriched and processed transaction
+- **BusinessRuleResults**: Business rule validation results
+- **EnrichmentData**: Additional metadata and processing information
+- **Complex Event Support**: Header, Body, Processing Context, and ISO20022 message structures
 
-### DDI Processing Flow
-1. **Message Validation**: Validate PACS.003 message structure
-2. **Account Verification**: Check customer account exists and is active
-3. **Liquidity Check**: Verify sufficient customer balance
-4. **Authorization**: Pre-authorization check via fast-liquidity-service
-5. **Account Debit**: Process customer account debit
-6. **Liquidity Update**: Update net debit cap (increases bank liquidity)
-7. **Response**: Generate PACS.002 response (accept/reject)
-8. **Settlement**: Include in settlement cycle
+### Configuration
 
-### Timer Management
-- **SLA Timer**: 4.5-second countdown from message receipt
-- **Timeout Detection**: Automatic timeout handling
-- **Performance Monitoring**: Real-time SLA compliance tracking
+- **KafkaConfig**: Kafka consumer/producer configuration with retry logic
+- **RedisConfig**: Redis connection and template configuration
 
 ## Configuration
 
-### Environment Variables
-```bash
-KAFKA_BOOTSTRAP_SERVERS=localhost:9092
-SPANNER_INSTANCE=payment-gateway
-SPANNER_DATABASE=transactions
-VAM_ENDPOINT=https://vam.anz.com/api
-MIDANZ_ENDPOINT=https://midanz.anz.com/api
-SLA_TIMEOUT_MS=4500
-MAX_RETRY_ATTEMPTS=3
-CIRCUIT_BREAKER_THRESHOLD=5
-```
+### Application Properties
 
-### Business Rules
 ```yaml
-validation:
-  max_amount: 999999.99
-  min_amount: 0.01
-  blocked_accounts: []
-  restricted_currencies: []
+app:
+  kafka:
+    topics:
+      input: transactions.incoming
+      output: transactions.processed
+      dlq: transactions.dlq
+    consumer:
+      max-retries: 3
+      retry-delay: 1000
+      concurrency: 3
+    producer:
+      acks: all
+      retries: 3
+      enable-idempotence: true
   
-fraud_checks:
-  enabled: true
-  threshold_amount: 10000.00
-  velocity_checks: true
+  business-rules:
+    max-amount: SGD 1000000
+    high-risk-countries: XX,YY,ZZ
+  
+  idempotency:
+    ttl-hours: 24
+  
+  processing:
+    node-id: inward-processor-01
 ```
 
-## APIs
+### Kafka Configuration
 
-### Health Check
-```http
-GET /health
-Response: 200 OK
-{
-  "status": "UP",
-  "components": {
-    "spanner": "UP",
-    "kafka": "UP",
-    "vam": "UP",
-    "midanz": "UP"
-  }
-}
-```
+- **Consumer**: Manual acknowledgment, error handling, retry logic
+- **Producer**: Idempotent producer, at-least-once delivery, compression
+- **Topics**: Input, output, and DLQ topic configuration
 
-### Process Payment (Internal)
-```http
-POST /api/v1/payments/process
-Content-Type: application/json
+### Redis Configuration
 
-{
-  "messageType": "PACS.008",
-  "messageId": "MSG123456",
-  "amount": "1000.00",
-  "currency": "SGD",
-  "debtorAccount": "12345678",
-  "creditorAccount": "87654321"
-}
-```
+- **Connection**: Standalone Redis with connection pooling
+- **Idempotency**: TTL-based duplicate prevention
+- **Caching**: Transaction state and metadata storage
 
-## Monitoring
+## Business Rules
 
-### Key Metrics
-- `processor.payments.processed.total` - Total payments processed
-- `processor.payments.success.total` - Successful payments
-- `processor.payments.failed.total` - Failed payments
-- `processor.sla.compliance.ratio` - SLA compliance percentage
-- `processor.processing.duration.seconds` - Processing time distribution
-- `processor.account.validation.duration.seconds` - Account validation time
+### Amount Limits
 
-### Critical Alerts
-- SLA breach (>4.5 seconds processing time)
-- Error rate > 0.1%
-- Account service connectivity issues
-- Liquidity service timeouts
-- Circuit breaker activated
+- Configurable maximum transaction amounts
+- Currency-specific limit enforcement
+- Risk-based amount validation
 
-### Business Metrics
-- Daily transaction volume
-- Peak TPS achieved
-- Account validation success rate
-- Liquidity authorization success rate
+### Compliance Checks
+
+- High-risk country detection
+- Transaction type validation
+- Priority-based risk assessment
+
+### Risk Scoring
+
+- Amount-based risk calculation
+- Transaction type risk factors
+- Priority-based risk adjustment
+- Automatic blocking for high-risk transactions
 
 ## Error Handling
 
-### Timeout Scenarios
-- **Account Service Timeout**: Return temporary reject with retry
-- **Liquidity Service Timeout**: Hold payment for manual review
-- **Database Timeout**: Return technical reject
-
 ### Retry Logic
-- **Transient Errors**: Exponential backoff (max 3 attempts)
-- **Account Unavailable**: Hold and retry every 30 seconds
-- **System Errors**: Dead letter queue for manual intervention
+
+- Configurable retry attempts (default: 3)
+- Exponential backoff strategy
+- Non-retryable exception handling
+
+### Dead Letter Queue
+
+- Failed message routing to DLQ
+- Error metadata preservation
+- Manual reprocessing capability
+
+### Idempotency
+
+- Redis-based duplicate detection
+- Configurable TTL for processed transactions
+- Prevents duplicate processing
+
+## Monitoring and Health Checks
+
+### Health Endpoints
+
+- `/health` - Basic health status
+- `/health/detailed` - Detailed health with metrics
+- `/health/ready` - Readiness probe
+- `/health/live` - Liveness probe
+
+### Metrics
+
+- Messages processed counter
+- Processing latency
+- Error rates
+- Business rule results
+
+### Observability
+
+- Prometheus metrics export
+- Distributed tracing support
+- Structured logging with SLF4J
+
+## Deployment
+
+### Docker
+
+```bash
+# Build the image
+docker build -t fast-inward-clearing-processor .
+
+# Run the container
+docker run -p 8080:8080 \
+  -e KAFKA_BOOTSTRAP_SERVERS=localhost:9092 \
+  -e REDIS_HOST=localhost \
+  -e REDIS_PORT=6379 \
+  fast-inward-clearing-processor
+```
+
+### Kubernetes
+
+```bash
+# Apply the deployment
+kubectl apply -f k8s/deployment.yaml
+
+# Check deployment status
+kubectl get pods -n fast-payment -l app=fast-inward-clearing-processor
+```
+
+### Environment Variables
+
+- `KAFKA_BOOTSTRAP_SERVERS`: Kafka broker addresses
+- `REDIS_HOST`: Redis server hostname
+- `REDIS_PORT`: Redis server port
+- `SPRING_PROFILES_ACTIVE`: Spring profile (local/gcp)
+- `GCP_PROJECT_ID`: Google Cloud project ID
+- `SPANNER_INSTANCE`: Cloud Spanner instance
+- `SPANNER_DATABASE`: Cloud Spanner database
 
 ## Development
 
-### Local Setup
+### Prerequisites
+
+- Java 21
+- Maven 3.8+
+- Docker
+- Kafka cluster
+- Redis instance
+
+### Building
+
 ```bash
-cd services/fast-inward-clearing-processor
-./mvnw spring-boot:run -Dspring.profiles.active=local
+# Build the project
+mvn clean package
+
+# Run tests
+mvn test
+
+# Build Docker image
+mvn docker:build
 ```
 
 ### Testing
+
 ```bash
 # Unit tests
-./mvnw test
+mvn test
 
-# Integration tests with test containers
-./mvnw integration-test
+# Integration tests
+mvn verify
 
-# Performance tests
-./mvnw test -Dtest=PerformanceTest
+# Test with Testcontainers
+mvn test -Dtest=*IntegrationTest
 ```
 
-### Load Testing
+## Performance and Scalability
+
+### JVM Optimizations
+
+- ZGC garbage collector
+- Virtual threads support
+- Memory tuning (512MB - 2GB)
+- Preview features enabled
+
+### Kafka Configuration
+
+- Consumer concurrency: 3 partitions
+- Producer batching and compression
+- Idempotent producer for exactly-once semantics
+- Manual acknowledgment for control
+
+### Resource Requirements
+
+- **CPU**: 250m - 1000m
+- **Memory**: 512Mi - 2Gi
+- **Replicas**: 3 (configurable)
+- **Health Checks**: 30s intervals
+
+## Security
+
+### Container Security
+
+- Non-root user execution
+- Privilege escalation disabled
+- Capability dropping
+- Read-only root filesystem (recommended)
+
+### Network Security
+
+- Internal service communication
+- Configurable network policies
+- TLS encryption support
+- Authentication and authorization
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Kafka Connection**: Check broker addresses and network connectivity
+2. **Redis Connection**: Verify Redis host/port and authentication
+3. **Message Processing**: Check business rule configuration
+4. **Performance**: Monitor JVM metrics and Kafka lag
+
+### Logs
+
 ```bash
-# Test SLA compliance under load
-./scripts/load-test.sh --tps=20 --duration=300s
+# View application logs
+kubectl logs -f deployment/fast-inward-clearing-processor -n fast-payment
+
+# Check health status
+curl http://localhost:8080/health/detailed
 ```
+
+### Metrics
+
+- Prometheus metrics at `/actuator/prometheus`
+- Business metrics in health endpoints
+- Kafka consumer lag monitoring
+- Redis connection status
+
+## Contributing
+
+1. Follow the existing code style and patterns
+2. Add comprehensive tests for new features
+3. Update documentation for configuration changes
+4. Ensure backward compatibility for existing deployments
+
+## License
+
+This project is proprietary to ANZ Bank and subject to internal licensing terms.

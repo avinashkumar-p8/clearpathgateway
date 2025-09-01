@@ -3,23 +3,21 @@ spring:
     name: fast-router-service
   profiles:
     active: local
-  activemq:
-    broker-url: ${ACTIVEMQ_BROKER_URL:tcp://localhost:61616}
-    user: ${ACTIVEMQ_USERNAME:admin}
-    password: ${ACTIVEMQ_PASSWORD:admin}
-  
+
   # Enable Virtual Threads for Java 21
   threads:
     virtual:
       enabled: true
-  
+
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:29092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       retries: 3
       acks: all
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
     consumer:
       group-id: ${spring.application.name}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -27,6 +25,7 @@ spring:
       auto-offset-reset: earliest
       properties:
         spring.json.trusted.packages: "com.anz.fastpayment.*"
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
 
   data:
     redis:
@@ -55,9 +54,9 @@ management:
       show-details: always
     metrics:
       enabled: true
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
   tracing:
     sampling:
@@ -67,23 +66,18 @@ management:
 app:
   name: Fast Router Service
   version: 21.0.0-apeafast-SNAPSHOT
-  validation:
-    xsd:
-      enabled: ${XSD_VALIDATION_ENABLED:true}
-  
+
   # Message processing configuration
   router:
     timeout-ms: ${MESSAGE_TIMEOUT_MS:4500}
     duplicate-cache-ttl-minutes: ${DUPLICATE_CACHE_TTL_MINUTES:60}
     max-retry-attempts: 3
-  activemq:
-    input-queue: ${ACTIVEMQ_INPUT_QUEUE:payment.inbound}
-    
+
   # External service endpoints
   external:
     cpg-endpoint: ${CPG_ENDPOINT:http://localhost:8444/cpg}
     g3-host-endpoint: ${G3_HOST_ENDPOINT:http://localhost:8443/g3host}
-    
+
   # Kafka topics
   kafka:
     topics:

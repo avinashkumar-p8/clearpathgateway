@@ -186,7 +186,7 @@ The solution follows a hybrid architecture model with three distinct regions:
 - CAMT.029 (Cancelation Response)
 - Administrative messages (Sign-on/Sign-off)
 
-**Protocol**: MQ-based messaging via CPG  
+**Protocol**: MQ-based messaging via CPG
 **SLA**: 4.5 seconds for inward processing (CTI and DDI)
 
 ### 5.2 CPG (Clearing Payment Gateway) Integration

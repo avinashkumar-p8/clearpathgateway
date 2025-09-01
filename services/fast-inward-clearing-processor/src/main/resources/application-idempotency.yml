@@ -1,0 +1,49 @@
+# Idempotency Configuration for Banking Operations
+# Ensures exactly-once processing of Kafka messages
+
+idempotency:
+  # Cache configuration for MUID lookups
+  cache:
+    muid:
+      ttl-seconds: 3600  # 1 hour TTL for MUID cache
+      max-entries: 10000 # Maximum entries in cache
+      eviction-policy: LRU
+  
+  # Database configuration for MUID persistence
+  database:
+    cleanup:
+      enabled: true
+      retention-days: 90  # Keep MUID records for 90 days
+      batch-size: 1000    # Batch size for cleanup operations
+      schedule: "0 2 * * *" # Daily at 2 AM
+  
+  # Logging configuration for audit trails
+  logging:
+    level: INFO
+    include-muid: true
+    include-topic: false  # Don't log topic for security
+    include-partition: false  # Don't log partition for security
+    include-offset: false  # Don't log offset for security
+  
+  # Monitoring and metrics
+  monitoring:
+    enabled: true
+    metrics-prefix: "kafka.idempotency"
+    health-check:
+      enabled: true
+      timeout-seconds: 30
+  
+  # Error handling and retry
+  error-handling:
+    max-retries: 3
+    backoff-multiplier: 2.0
+    initial-delay-ms: 1000
+    
+  # Security and compliance
+  security:
+    audit-logging: true
+    sensitive-data-masking: true
+    encryption:
+      enabled: false  # Enable if encryption is required
+      algorithm: "AES-256"
+

@@ -38,22 +38,22 @@ graph TB
         DeliveryTracker[Delivery Tracker]
         RetryHandler[Retry Engine]
     end
-    
+
     subgraph "Data & Storage"
         Database[(Cloud Spanner)]
         Cache[(Redis)]
         BackupStore[(S3 Storage)]
     end
-    
+
     subgraph "External Interface"
         CPG[CPG Gateway]
         G3Host[G3 Host System]
     end
-    
+
     subgraph "Internal Services"
         ProcessingServices[Processing Services]
     end
-    
+
     ProcessingServices --> MessageConsumer
     MessageConsumer --> JsonToXml
     JsonToXml --> TransmissionMgr
@@ -61,7 +61,7 @@ graph TB
     CPG --> G3Host
     TransmissionMgr --> DeliveryTracker
     DeliveryTracker --> RetryHandler
-    
+
     All Components --> Database
     All Components --> Cache
     RetryHandler --> BackupStore

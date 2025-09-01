@@ -38,26 +38,26 @@ graph TB
         StatusEngine[Status Engine]
         NotificationEngine[Notification Engine]
     end
-    
+
     subgraph "Data & Messaging"
         Database[(Cloud Spanner)]
         Cache[(Redis)]
         EventQueue[(Kafka)]
     end
-    
+
     subgraph "External Systems"
         BankSystems[Bank Participants]
         PaymentServices[Payment Services]
         OperationsDash[Operations Dashboard]
     end
-    
+
     BankSystems --> HealthMonitor
     StatusAPI --> StatusEngine
     StatusEngine --> Database
     StatusEngine --> Cache
     StatusEngine --> NotificationEngine
     NotificationEngine --> EventQueue
-    
+
     PaymentServices --> StatusAPI
     HealthMonitor --> OperationsDash
 ```
