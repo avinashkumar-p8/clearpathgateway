@@ -1,0 +1,152 @@
+spring:
+  application:
+    name: fast-outward-clearing-processor
+  profiles:
+    active: local
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:29092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      retries: 3
+      acks: all
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+    consumer:
+      group-id: ${spring.application.name}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      auto-offset-reset: earliest
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+        specific.avro.reader: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000
+
+server:
+  port: 8080
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Application Configuration
+app:
+  name: Fast Outward Clearing Processor
+  version: 21.0.0-apeafast-SNAPSHOT
+
+  # Kafka Topic Configuration
+  kafka:
+    topics:
+      input: transactions.outgoing
+      output: transactions.processed
+      dlq: transactions.dlq
+    producer:
+      acks: all
+      retries: 3
+    schema-registry:
+      url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+
+  # Business Rules Configuration
+  business-rules:
+    max-amount: SGD 1000000
+    high-risk-countries: XX,YY,ZZ
+
+  # Idempotency Configuration
+  idempotency:
+    ttl-hours: 24
+
+  # Processing Configuration
+  processing:
+    node-id: outward-processor-01
+
+  # SLA Configuration
+  sla:
+    timeout-seconds: ${SLA_TIMEOUT_SECONDS:2.0}
+    warning-threshold-seconds: 1.5
+
+  # External service endpoints
+  external:
+    liquidity-service-url: ${LIQUIDITY_SERVICE_URL:http://fast-liquidity-service:8084}
+
+logging:
+  level:
+    com.anz.fastpayment: DEBUG
+    org.springframework.kafka: INFO
+    org.springframework.data.redis: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  data:
+    redis:
+      host: redis
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:29092}
+    producer:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+        enable.idempotence: true
+    consumer:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+    listener:
+      concurrency: 3
+      ack-mode: manual
+      type: single
+      # Retry configuration
+      retry:
+        enabled: true
+        initial-interval: 1s
+        max-attempts: 3
+        multiplier: 2.0
+        max-interval: 10s
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    producer:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL}
+        enable.idempotence: true
+    consumer:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL}
+    listener:
+      concurrency: 3
+      ack-mode: manual
+      type: single
+      # Retry configuration
+      retry:
+        enabled: true
+        initial-interval: 1s
+        max-attempts: 3
+        multiplier: 2.0
+        max-interval: 10s
