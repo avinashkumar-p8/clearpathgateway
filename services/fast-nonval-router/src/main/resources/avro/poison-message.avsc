@@ -1,0 +1,136 @@
+{
+  "type": "record",
+  "name": "PoisonMessage",
+  "namespace": "com.anz.fastpayment.nonval.avro",
+  "doc": "Avro schema for poison/failed messages in APEAFAST-SG ClearPath Gateway",
+  "fields": [
+    {
+      "name": "poisonMessageId",
+      "type": "string",
+      "doc": "Unique identifier for this poison message record"
+    },
+    {
+      "name": "originalMessageId",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Original message ID if it could be extracted"
+    },
+    {
+      "name": "originalMessage",
+      "type": "string",
+      "doc": "Base64 encoded original message content"
+    },
+    {
+      "name": "messageType",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Detected message type if identifiable"
+    },
+    {
+      "name": "errorType",
+      "type": {
+        "type": "enum",
+        "name": "ErrorType",
+        "symbols": [
+          "XSD_VALIDATION_FAILURE",
+          "XML_PARSING_ERROR", 
+          "UNKNOWN_MESSAGE_TYPE",
+          "TRANSFORMATION_ERROR",
+          "SCHEMA_MISMATCH",
+          "GENERAL_PROCESSING_ERROR"
+        ]
+      },
+      "doc": "Type of error that caused message to be poisoned"
+    },
+    {
+      "name": "errorDetails",
+      "type": "string",
+      "doc": "Detailed error description including stack traces"
+    },
+    {
+      "name": "errorCode",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Specific error code if applicable"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when error occurred"
+    },
+    {
+      "name": "sourceQueue",
+      "type": "string",
+      "doc": "Source queue where original message came from"
+    },
+    {
+      "name": "targetTopic",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Target Kafka topic if message was being routed"
+    },
+    {
+      "name": "attemptCount",
+      "type": "int",
+      "default": 1,
+      "doc": "Number of processing attempts before failure"
+    },
+    {
+      "name": "processingMetadata",
+      "type": {
+        "type": "record",
+        "name": "PoisonProcessingMetadata",
+        "fields": [
+          {
+            "name": "serviceName",
+            "type": "string",
+            "doc": "Name of the service that generated this poison record"
+          },
+          {
+            "name": "serviceVersion",
+            "type": "string",
+            "doc": "Version of the service"
+          },
+          {
+            "name": "correlationId",
+            "type": "string",
+            "doc": "Correlation ID for tracing"
+          },
+          {
+            "name": "threadId",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Thread ID that processed the message"
+          },
+          {
+            "name": "hostname",
+            "type": "string",
+            "doc": "Hostname of the processing server"
+          },
+          {
+            "name": "schemaVersion",
+            "type": "string",
+            "default": "1.0.0",
+            "doc": "Version of this poison message schema"
+          }
+        ]
+      },
+      "doc": "Metadata about the poison message processing"
+    },
+    {
+      "name": "retryable",
+      "type": "boolean",
+      "default": false,
+      "doc": "Whether this message can be retried after fixing the issue"
+    },
+    {
+      "name": "alertGenerated",
+      "type": "boolean",
+      "default": false,
+      "doc": "Whether an alert has been generated for this poison message"
+    }
+  ]
+}
