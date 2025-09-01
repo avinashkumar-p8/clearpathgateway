@@ -39,7 +39,7 @@ public class UnifiedTransactionConsumer {
     private String dlqTopic;
     
     @Autowired
-    private KafkaProducer<String, com.anz.fastpayment.inward.avro.ProcessedTransactionMessage> kafkaProducer;
+    private KafkaProducer<String, com.anz.fastpayment.inward.avro.ResponseMessage> kafkaProducer;
     
     @Autowired
     private KafkaProducer<String, String> dlqProducer;
@@ -158,13 +158,13 @@ public class UnifiedTransactionConsumer {
      */
     private void sendToOutputTopic(ProcessingResult result) {
         try {
-            if (result.getProcessedMessage() == null) {
-                logger.error("Cannot send null processed message to output topic");
+            if (result.getResponseMessage() == null) {
+                logger.error("Cannot send null response message to output topic");
                 return;
             }
             
-            ProducerRecord<String, com.anz.fastpayment.inward.avro.ProcessedTransactionMessage> record = 
-                new ProducerRecord<>(outputTopic, result.getProcessedMessage().getTransactionId(), result.getProcessedMessage());
+            ProducerRecord<String, com.anz.fastpayment.inward.avro.ResponseMessage> record = 
+                new ProducerRecord<>(outputTopic, result.getResponseMessage().getHeader().getMUID().toString(), result.getResponseMessage());
             
             // Add headers
             addSafeHeader(record, "processed_at", String.valueOf(System.currentTimeMillis()));

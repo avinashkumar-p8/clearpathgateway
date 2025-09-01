@@ -1088,24 +1088,12 @@ public class MessageContext extends org.apache.avro.specific.SpecificRecordBase 
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.OrigMsgTyp == null) {
-      throw new IllegalStateException("OrigMsgTyp cannot be null for MessageContext encoding");
-    }
     out.writeString(this.OrigMsgTyp);
 
-    if (this.InstdClrgPref == null) {
-      throw new IllegalStateException("InstdClrgPref cannot be null for MessageContext encoding");
-    }
     out.writeString(this.InstdClrgPref);
 
-    if (this.InstdMoPCat == null) {
-      throw new IllegalStateException("InstdMoPCat cannot be null for MessageContext encoding");
-    }
     out.writeString(this.InstdMoPCat);
 
-    if (this.Site == null) {
-      throw new IllegalStateException("Site cannot be null for MessageContext encoding");
-    }
     out.writeString(this.Site);
 
     if (this.BaseAmt == null) {
@@ -1124,34 +1112,16 @@ public class MessageContext extends org.apache.avro.specific.SpecificRecordBase 
       out.writeLong(this.BaseAmtMinor);
     }
 
-    if (this.BaseCcy == null) {
-      throw new IllegalStateException("BaseCcy cannot be null for MessageContext encoding");
-    }
     out.writeString(this.BaseCcy);
 
-    if (this.SenderBIC == null) {
-      throw new IllegalStateException("SenderBIC cannot be null for MessageContext encoding");
-    }
     out.writeString(this.SenderBIC);
 
-    if (this.ProcCtryCd == null) {
-      throw new IllegalStateException("ProcCtryCd cannot be null for MessageContext encoding");
-    }
     out.writeString(this.ProcCtryCd);
 
-    if (this.Department == null) {
-      throw new IllegalStateException("Department cannot be null for MessageContext encoding");
-    }
     out.writeString(this.Department);
 
-    if (this.MsgId == null) {
-      throw new IllegalStateException("MsgId cannot be null for MessageContext encoding");
-    }
     out.writeString(this.MsgId);
 
-    if (this.Direction == null) {
-      throw new IllegalStateException("Direction cannot be null for MessageContext encoding");
-    }
     out.writeString(this.Direction);
 
   }

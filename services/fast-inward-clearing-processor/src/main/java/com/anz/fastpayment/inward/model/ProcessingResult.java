@@ -1,6 +1,6 @@
 package com.anz.fastpayment.inward.model;
 
-import com.anz.fastpayment.inward.avro.ProcessedTransactionMessage;
+import com.anz.fastpayment.inward.avro.ResponseMessage;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class ProcessingResult {
     private final Status status;
     private final String errorMessage;
     private final List<String> validationErrors;
-    private final ProcessedTransactionMessage processedMessage;
+    private final ResponseMessage responseMessage;
     private final String muid;
     private final long processingDurationMs;
     
@@ -32,17 +32,17 @@ public class ProcessingResult {
         this.status = builder.status;
         this.errorMessage = builder.errorMessage;
         this.validationErrors = builder.validationErrors;
-        this.processedMessage = builder.processedMessage;
+        this.responseMessage = builder.responseMessage;
         this.muid = builder.muid;
         this.processingDurationMs = builder.processingDurationMs;
     }
     
     // Factory methods for different result types
-    public static ProcessingResult success(ProcessedTransactionMessage processedMessage, long processingDurationMs) {
+    public static ProcessingResult success(ResponseMessage responseMessage, long processingDurationMs) {
         return new Builder()
                 .success(true)
                 .status(Status.SUCCESS)
-                .processedMessage(processedMessage)
+                .responseMessage(responseMessage)
                 .processingDurationMs(processingDurationMs)
                 .build();
     }
@@ -109,8 +109,8 @@ public class ProcessingResult {
         return validationErrors;
     }
     
-    public ProcessedTransactionMessage getProcessedMessage() {
-        return processedMessage;
+    public ResponseMessage getResponseMessage() {
+        return responseMessage;
     }
     
     public String getMuid() {
@@ -133,7 +133,7 @@ public class ProcessingResult {
         private Status status;
         private String errorMessage;
         private List<String> validationErrors;
-        private ProcessedTransactionMessage processedMessage;
+        private ResponseMessage responseMessage;
         private String muid;
         private long processingDurationMs;
         
@@ -157,8 +157,8 @@ public class ProcessingResult {
             return this;
         }
         
-        public Builder processedMessage(ProcessedTransactionMessage processedMessage) {
-            this.processedMessage = processedMessage;
+        public Builder responseMessage(ResponseMessage responseMessage) {
+            this.responseMessage = responseMessage;
             return this;
         }
         

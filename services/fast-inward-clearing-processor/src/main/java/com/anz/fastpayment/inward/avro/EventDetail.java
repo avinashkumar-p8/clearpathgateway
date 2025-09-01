@@ -354,14 +354,8 @@ public class EventDetail extends org.apache.avro.specific.SpecificRecordBase imp
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.EventCode == null) {
-      throw new IllegalStateException("EventCode cannot be null for EventDetail encoding");
-    }
     out.writeString(this.EventCode);
 
-    if (this.EventID == null) {
-      throw new IllegalStateException("EventID cannot be null for EventDetail encoding");
-    }
     out.writeString(this.EventID);
 
   }

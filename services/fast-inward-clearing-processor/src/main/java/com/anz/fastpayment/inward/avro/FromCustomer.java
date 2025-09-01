@@ -282,9 +282,6 @@ public class FromCustomer extends org.apache.avro.specific.SpecificRecordBase im
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Name == null) {
-      throw new IllegalStateException("Name cannot be null for FromCustomer encoding");
-    }
     out.writeString(this.Name);
 
   }

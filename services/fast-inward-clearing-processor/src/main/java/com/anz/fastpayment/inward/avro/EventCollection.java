@@ -282,17 +282,11 @@ public class EventCollection extends org.apache.avro.specific.SpecificRecordBase
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Event == null) {
-      throw new IllegalStateException("Event cannot be null for EventCollection encoding");
-    }
     long size0 = this.Event.size();
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
     for (com.anz.fastpayment.inward.avro.EventDetail e0: this.Event) {
-      if (e0 == null) {
-        throw new IllegalStateException("Array element cannot be null for EventCollection.Event encoding");
-      }
       actualSize0++;
       out.startItem();
       e0.customEncode(out);

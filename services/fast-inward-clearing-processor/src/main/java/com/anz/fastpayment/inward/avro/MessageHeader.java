@@ -1115,24 +1115,12 @@ public class MessageHeader extends org.apache.avro.specific.SpecificRecordBase i
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.ComponentName == null) {
-      throw new IllegalStateException("ComponentName cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.ComponentName);
 
-    if (this.UUID == null) {
-      throw new IllegalStateException("UUID cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.UUID);
 
-    if (this.EventInfo == null) {
-      throw new IllegalStateException("EventInfo cannot be null for MessageHeader encoding");
-    }
     this.EventInfo.customEncode(out);
 
-    if (this.ReplyToQueue == null) {
-      throw new IllegalStateException("ReplyToQueue cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.ReplyToQueue);
 
     if (this.ReqMap == null) {
@@ -1143,34 +1131,16 @@ public class MessageHeader extends org.apache.avro.specific.SpecificRecordBase i
       out.writeString(this.ReqMap);
     }
 
-    if (this.MUID == null) {
-      throw new IllegalStateException("MUID cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.MUID);
 
-    if (this.Channel == null) {
-      throw new IllegalStateException("Channel cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.Channel);
 
-    if (this.Direction == null) {
-      throw new IllegalStateException("Direction cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.Direction);
 
-    if (this.RcvdTS == null) {
-      throw new IllegalStateException("RcvdTS cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.RcvdTS);
 
-    if (this.DomainName == null) {
-      throw new IllegalStateException("DomainName cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.DomainName);
 
-    if (this.DomainType == null) {
-      throw new IllegalStateException("DomainType cannot be null for MessageHeader encoding");
-    }
     out.writeString(this.DomainType);
 
   }

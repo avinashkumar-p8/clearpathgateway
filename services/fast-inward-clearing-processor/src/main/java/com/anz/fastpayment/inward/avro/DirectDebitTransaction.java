@@ -332,9 +332,6 @@ public class DirectDebitTransaction extends org.apache.avro.specific.SpecificRec
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.MndtRltdInf == null) {
-      throw new IllegalStateException("MndtRltdInf cannot be null for DirectDebitTransaction encoding");
-    }
     this.MndtRltdInf.customEncode(out);
 
   }

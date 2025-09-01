@@ -282,17 +282,11 @@ public class MessageBody extends org.apache.avro.specific.SpecificRecordBase imp
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.PmtAddRq == null) {
-      throw new IllegalStateException("PmtAddRq cannot be null for MessageBody encoding");
-    }
     long size0 = this.PmtAddRq.size();
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
     for (com.anz.fastpayment.inward.avro.PaymentAddRequest e0: this.PmtAddRq) {
-      if (e0 == null) {
-        throw new IllegalStateException("Array element cannot be null for MessageBody.PmtAddRq encoding");
-      }
       actualSize0++;
       out.startItem();
       e0.customEncode(out);

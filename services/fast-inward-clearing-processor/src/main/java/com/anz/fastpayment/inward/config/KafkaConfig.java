@@ -1,7 +1,7 @@
 package com.anz.fastpayment.inward.config;
 
-import com.anz.fastpayment.inward.avro.UnifiedPaymentMessage;
-import com.anz.fastpayment.inward.avro.ProcessedTransactionMessage;
+import com.anz.fastpayment.inward.avro.InputMessage;
+import com.anz.fastpayment.inward.avro.ResponseMessage;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -149,10 +149,10 @@ public class KafkaConfig {
     }
 
     /**
-     * Kafka Producer for ProcessedTransactionMessage (Avro)
+     * Kafka Producer for ResponseMessage (Avro)
      */
     @Bean
-    public KafkaProducer<String, ProcessedTransactionMessage> kafkaProducer() {
+    public KafkaProducer<String, ResponseMessage> kafkaProducer() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);

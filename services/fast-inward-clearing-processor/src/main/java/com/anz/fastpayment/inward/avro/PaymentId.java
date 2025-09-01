@@ -498,24 +498,12 @@ public class PaymentId extends org.apache.avro.specific.SpecificRecordBase imple
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.InstrId == null) {
-      throw new IllegalStateException("InstrId cannot be null for PaymentId encoding");
-    }
     out.writeString(this.InstrId);
 
-    if (this.TxId == null) {
-      throw new IllegalStateException("TxId cannot be null for PaymentId encoding");
-    }
     out.writeString(this.TxId);
 
-    if (this.EndToEndId == null) {
-      throw new IllegalStateException("EndToEndId cannot be null for PaymentId encoding");
-    }
     out.writeString(this.EndToEndId);
 
-    if (this.ClrSysRef == null) {
-      throw new IllegalStateException("ClrSysRef cannot be null for PaymentId encoding");
-    }
     out.writeString(this.ClrSysRef);
 
   }

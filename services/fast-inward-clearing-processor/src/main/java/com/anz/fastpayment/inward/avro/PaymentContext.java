@@ -404,14 +404,8 @@ public class PaymentContext extends org.apache.avro.specific.SpecificRecordBase 
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.PuId == null) {
-      throw new IllegalStateException("PuId cannot be null for PaymentContext encoding");
-    }
     out.writeString(this.PuId);
 
-    if (this.IntnSrc == null) {
-      throw new IllegalStateException("IntnSrc cannot be null for PaymentContext encoding");
-    }
     this.IntnSrc.customEncode(out);
 
   }

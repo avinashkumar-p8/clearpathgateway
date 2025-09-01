@@ -964,43 +964,22 @@ public class FromAccount extends org.apache.avro.specific.SpecificRecordBase imp
       out.writeString(this.AcctId);
     }
 
-    if (this.AcctSys == null) {
-      throw new IllegalStateException("AcctSys cannot be null for FromAccount encoding");
-    }
     out.writeString(this.AcctSys);
 
-    if (this.AcctGrp == null) {
-      throw new IllegalStateException("AcctGrp cannot be null for FromAccount encoding");
-    }
     out.writeString(this.AcctGrp);
 
-    if (this.Name == null) {
-      throw new IllegalStateException("Name cannot be null for FromAccount encoding");
-    }
     out.writeString(this.Name);
 
-    if (this.PmtAuthMethod == null) {
-      throw new IllegalStateException("PmtAuthMethod cannot be null for FromAccount encoding");
-    }
     out.writeString(this.PmtAuthMethod);
 
-    if (this.Narrative == null) {
-      throw new IllegalStateException("Narrative cannot be null for FromAccount encoding");
-    }
     out.writeString(this.Narrative);
 
-    if (this.CurCode == null) {
-      throw new IllegalStateException("CurCode cannot be null for FromAccount encoding");
-    }
     out.writeString(this.CurCode);
 
     out.writeDouble(this.Amount);
 
     out.writeLong(this.AmountMinor);
 
-    if (this.AcctUse == null) {
-      throw new IllegalStateException("AcctUse cannot be null for FromAccount encoding");
-    }
     out.writeString(this.AcctUse);
 
   }

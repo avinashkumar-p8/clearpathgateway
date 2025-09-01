@@ -1036,39 +1036,18 @@ public class EventInformation extends org.apache.avro.specific.SpecificRecordBas
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.EventCode == null) {
-      throw new IllegalStateException("EventCode cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventCode);
 
-    if (this.EventDescription == null) {
-      throw new IllegalStateException("EventDescription cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventDescription);
 
-    if (this.EventID == null) {
-      throw new IllegalStateException("EventID cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventID);
 
-    if (this.EventType == null) {
-      throw new IllegalStateException("EventType cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventType);
 
-    if (this.EventProducer == null) {
-      throw new IllegalStateException("EventProducer cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventProducer);
 
-    if (this.EventTS == null) {
-      throw new IllegalStateException("EventTS cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventTS);
 
-    if (this.EventTopics == null) {
-      throw new IllegalStateException("EventTopics cannot be null for EventInformation encoding");
-    }
     out.writeString(this.EventTopics);
 
     if (this.SystemId == null) {
@@ -1079,9 +1058,6 @@ public class EventInformation extends org.apache.avro.specific.SpecificRecordBas
       out.writeString(this.SystemId);
     }
 
-    if (this.Events == null) {
-      throw new IllegalStateException("Events cannot be null for EventInformation encoding");
-    }
     this.Events.customEncode(out);
 
     if (this.EventVersion == null) {

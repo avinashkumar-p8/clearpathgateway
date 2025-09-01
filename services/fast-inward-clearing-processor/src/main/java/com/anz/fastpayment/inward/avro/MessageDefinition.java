@@ -354,14 +354,8 @@ public class MessageDefinition extends org.apache.avro.specific.SpecificRecordBa
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.MsgType == null) {
-      throw new IllegalStateException("MsgType cannot be null for MessageDefinition encoding");
-    }
     out.writeString(this.MsgType);
 
-    if (this.Schema == null) {
-      throw new IllegalStateException("Schema cannot be null for MessageDefinition encoding");
-    }
     out.writeString(this.Schema);
 
   }

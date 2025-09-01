@@ -282,9 +282,6 @@ public class ClearingInfo extends org.apache.avro.specific.SpecificRecordBase im
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.ClearPref == null) {
-      throw new IllegalStateException("ClearPref cannot be null for ClearingInfo encoding");
-    }
     out.writeString(this.ClearPref);
 
   }

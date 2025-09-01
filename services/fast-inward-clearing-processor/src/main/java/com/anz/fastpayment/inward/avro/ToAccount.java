@@ -676,23 +676,14 @@ public class ToAccount extends org.apache.avro.specific.SpecificRecordBase imple
       out.writeString(this.AcctId);
     }
 
-    if (this.CurCode == null) {
-      throw new IllegalStateException("CurCode cannot be null for ToAccount encoding");
-    }
     out.writeString(this.CurCode);
 
     out.writeDouble(this.Amount);
 
     out.writeLong(this.AmountMinor);
 
-    if (this.Narrative == null) {
-      throw new IllegalStateException("Narrative cannot be null for ToAccount encoding");
-    }
     out.writeString(this.Narrative);
 
-    if (this.AcctUse == null) {
-      throw new IllegalStateException("AcctUse cannot be null for ToAccount encoding");
-    }
     out.writeString(this.AcctUse);
 
   }

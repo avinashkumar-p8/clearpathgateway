@@ -1459,67 +1459,31 @@ public class PaymentAddRequest extends org.apache.avro.specific.SpecificRecordBa
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.RqUID == null) {
-      throw new IllegalStateException("RqUID cannot be null for PaymentAddRequest encoding");
-    }
     out.writeString(this.RqUID);
 
-    if (this.MsgHdr == null) {
-      throw new IllegalStateException("MsgHdr cannot be null for PaymentAddRequest encoding");
-    }
     this.MsgHdr.customEncode(out);
 
-    if (this.PayHdr == null) {
-      throw new IllegalStateException("PayHdr cannot be null for PaymentAddRequest encoding");
-    }
     this.PayHdr.customEncode(out);
 
-    if (this.FromFIData == null) {
-      throw new IllegalStateException("FromFIData cannot be null for PaymentAddRequest encoding");
-    }
     this.FromFIData.customEncode(out);
 
-    if (this.FromCust == null) {
-      throw new IllegalStateException("FromCust cannot be null for PaymentAddRequest encoding");
-    }
     this.FromCust.customEncode(out);
 
-    if (this.FromAcct == null) {
-      throw new IllegalStateException("FromAcct cannot be null for PaymentAddRequest encoding");
-    }
     this.FromAcct.customEncode(out);
 
-    if (this.ToFIData == null) {
-      throw new IllegalStateException("ToFIData cannot be null for PaymentAddRequest encoding");
-    }
     this.ToFIData.customEncode(out);
 
-    if (this.Clearing == null) {
-      throw new IllegalStateException("Clearing cannot be null for PaymentAddRequest encoding");
-    }
     this.Clearing.customEncode(out);
 
-    if (this.ToBene == null) {
-      throw new IllegalStateException("ToBene cannot be null for PaymentAddRequest encoding");
-    }
     this.ToBene.customEncode(out);
 
-    if (this.ToAcct == null) {
-      throw new IllegalStateException("ToAcct cannot be null for PaymentAddRequest encoding");
-    }
     this.ToAcct.customEncode(out);
 
-    if (this.Fees == null) {
-      throw new IllegalStateException("Fees cannot be null for PaymentAddRequest encoding");
-    }
     long size0 = this.Fees.size();
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
     for (java.lang.String e0: this.Fees) {
-      if (e0 == null) {
-        throw new IllegalStateException("Array element cannot be null for PaymentAddRequest.Fees encoding");
-      }
       actualSize0++;
       out.startItem();
       out.writeString(e0);

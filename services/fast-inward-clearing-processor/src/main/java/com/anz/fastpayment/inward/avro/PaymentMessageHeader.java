@@ -498,24 +498,12 @@ public class PaymentMessageHeader extends org.apache.avro.specific.SpecificRecor
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.ClientDt == null) {
-      throw new IllegalStateException("ClientDt cannot be null for PaymentMessageHeader encoding");
-    }
     out.writeString(this.ClientDt);
 
-    if (this.ClientName == null) {
-      throw new IllegalStateException("ClientName cannot be null for PaymentMessageHeader encoding");
-    }
     out.writeString(this.ClientName);
 
-    if (this.PartyId == null) {
-      throw new IllegalStateException("PartyId cannot be null for PaymentMessageHeader encoding");
-    }
     out.writeString(this.PartyId);
 
-    if (this.Version == null) {
-      throw new IllegalStateException("Version cannot be null for PaymentMessageHeader encoding");
-    }
     out.writeString(this.Version);
 
   }

@@ -332,9 +332,6 @@ public class MessageDetails extends org.apache.avro.specific.SpecificRecordBase 
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.DrctDbtTxInf == null) {
-      throw new IllegalStateException("DrctDbtTxInf cannot be null for MessageDetails encoding");
-    }
     this.DrctDbtTxInf.customEncode(out);
 
   }

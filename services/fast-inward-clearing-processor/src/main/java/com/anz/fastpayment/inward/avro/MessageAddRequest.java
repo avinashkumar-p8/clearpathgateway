@@ -404,14 +404,8 @@ public class MessageAddRequest extends org.apache.avro.specific.SpecificRecordBa
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.OrigMsg == null) {
-      throw new IllegalStateException("OrigMsg cannot be null for MessageAddRequest encoding");
-    }
     out.writeString(this.OrigMsg);
 
-    if (this.MsgDtls == null) {
-      throw new IllegalStateException("MsgDtls cannot be null for MessageAddRequest encoding");
-    }
     this.MsgDtls.customEncode(out);
 
   }

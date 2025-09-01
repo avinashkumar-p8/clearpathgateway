@@ -1,6 +1,6 @@
 package com.anz.fastpayment.inward.model;
 
-import com.anz.fastpayment.inward.avro.ProcessedTransactionMessage;
+import com.anz.fastpayment.inward.avro.ResponseMessage;
 
 /**
  * Result of business processing operation
@@ -8,18 +8,18 @@ import com.anz.fastpayment.inward.avro.ProcessedTransactionMessage;
 public class BusinessProcessingResult {
     
     private final boolean success;
-    private final ProcessedTransactionMessage processedMessage;
+    private final ResponseMessage responseMessage;
     private final String errorMessage;
     
-    public BusinessProcessingResult(boolean success, ProcessedTransactionMessage processedMessage, String errorMessage) {
+    public BusinessProcessingResult(boolean success, ResponseMessage responseMessage, String errorMessage) {
         this.success = success;
-        this.processedMessage = processedMessage;
+        this.responseMessage = responseMessage;
         this.errorMessage = errorMessage;
     }
     
     // Factory methods
-    public static BusinessProcessingResult success(ProcessedTransactionMessage processedMessage) {
-        return new BusinessProcessingResult(true, processedMessage, null);
+    public static BusinessProcessingResult success(ResponseMessage responseMessage) {
+        return new BusinessProcessingResult(true, responseMessage, null);
     }
     
     public static BusinessProcessingResult failed(String errorMessage) {
@@ -31,8 +31,8 @@ public class BusinessProcessingResult {
         return success;
     }
     
-    public ProcessedTransactionMessage getProcessedMessage() {
-        return processedMessage;
+    public ResponseMessage getResponseMessage() {
+        return responseMessage;
     }
     
     public String getErrorMessage() {
@@ -45,8 +45,8 @@ public class BusinessProcessingResult {
     
     @Override
     public String toString() {
-        return String.format("BusinessProcessingResult{success=%s, errorMessage='%s', processedMessageId='%s'}", 
+        return String.format("BusinessProcessingResult{success=%s, errorMessage='%s', responseMessageId='%s'}", 
                            success, errorMessage, 
-                           processedMessage != null ? processedMessage.getTransactionId() : "null");
+                           responseMessage != null ? "ResponseMessage" : "null");
     }
 }

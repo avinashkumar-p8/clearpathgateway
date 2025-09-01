@@ -282,9 +282,6 @@ public class MandateRelatedInformation extends org.apache.avro.specific.Specific
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.MndtId == null) {
-      throw new IllegalStateException("MndtId cannot be null for MandateRelatedInformation encoding");
-    }
     out.writeString(this.MndtId);
 
   }

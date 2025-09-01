@@ -282,9 +282,6 @@ public class InstructedAgent extends org.apache.avro.specific.SpecificRecordBase
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.BIC == null) {
-      throw new IllegalStateException("BIC cannot be null for InstructedAgent encoding");
-    }
     out.writeString(this.BIC);
 
   }

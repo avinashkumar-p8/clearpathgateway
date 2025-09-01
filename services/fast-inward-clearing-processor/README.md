@@ -40,9 +40,8 @@ Input Topic (transactions.incoming)
 
 ### Core Services
 
-- **ClearingProcessorService**: Main business logic for transaction processing
-- **TransactionConsumer**: Kafka consumer with error handling and DLQ support
-- **HealthController**: Monitoring and health check endpoints
+- **UnifiedTransactionConsumer**: Single Kafka consumer with unified processing pipeline
+- **HealthController**: Simple monitoring and health check endpoints
 
 ### Models
 

@@ -354,14 +354,8 @@ public class IntentionSource extends org.apache.avro.specific.SpecificRecordBase
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.type == null) {
-      throw new IllegalStateException("type cannot be null for IntentionSource encoding");
-    }
     out.writeString(this.type);
 
-    if (this.value == null) {
-      throw new IllegalStateException("value cannot be null for IntentionSource encoding");
-    }
     out.writeString(this.value);
 
   }

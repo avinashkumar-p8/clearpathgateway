@@ -282,9 +282,6 @@ public class Creditor extends org.apache.avro.specific.SpecificRecordBase implem
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Nm == null) {
-      throw new IllegalStateException("Nm cannot be null for Creditor encoding");
-    }
     out.writeString(this.Nm);
 
   }

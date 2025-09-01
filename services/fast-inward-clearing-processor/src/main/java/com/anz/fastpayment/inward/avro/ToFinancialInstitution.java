@@ -354,14 +354,8 @@ public class ToFinancialInstitution extends org.apache.avro.specific.SpecificRec
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Country == null) {
-      throw new IllegalStateException("Country cannot be null for ToFinancialInstitution encoding");
-    }
     out.writeString(this.Country);
 
-    if (this.BIC == null) {
-      throw new IllegalStateException("BIC cannot be null for ToFinancialInstitution encoding");
-    }
     out.writeString(this.BIC);
 
   }

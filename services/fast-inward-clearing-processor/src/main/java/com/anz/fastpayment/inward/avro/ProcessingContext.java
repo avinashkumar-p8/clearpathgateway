@@ -476,17 +476,11 @@ public class ProcessingContext extends org.apache.avro.specific.SpecificRecordBa
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.sideEffect == null) {
-      throw new IllegalStateException("sideEffect cannot be null for ProcessingContext encoding");
-    }
     long size0 = this.sideEffect.size();
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
     for (java.lang.String e0: this.sideEffect) {
-      if (e0 == null) {
-        throw new IllegalStateException("Array element cannot be null for ProcessingContext.sideEffect encoding");
-      }
       actualSize0++;
       out.startItem();
       out.writeString(e0);
@@ -495,17 +489,11 @@ public class ProcessingContext extends org.apache.avro.specific.SpecificRecordBa
     if (actualSize0 != size0)
       throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
 
-    if (this.softFail == null) {
-      throw new IllegalStateException("softFail cannot be null for ProcessingContext encoding");
-    }
     long size1 = this.softFail.size();
     out.writeArrayStart();
     out.setItemCount(size1);
     long actualSize1 = 0;
     for (java.lang.String e1: this.softFail) {
-      if (e1 == null) {
-        throw new IllegalStateException("Array element cannot be null for ProcessingContext.softFail encoding");
-      }
       actualSize1++;
       out.startItem();
       out.writeString(e1);
@@ -514,9 +502,6 @@ public class ProcessingContext extends org.apache.avro.specific.SpecificRecordBa
     if (actualSize1 != size1)
       throw new java.util.ConcurrentModificationException("Array-size written was " + size1 + ", but element count was " + actualSize1 + ".");
 
-    if (this.PmtDtls == null) {
-      throw new IllegalStateException("PmtDtls cannot be null for ProcessingContext encoding");
-    }
     this.PmtDtls.customEncode(out);
 
   }

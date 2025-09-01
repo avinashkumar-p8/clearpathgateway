@@ -111,7 +111,7 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
             long processingDuration = System.currentTimeMillis() - startTime;
             
             logger.info("Successfully processed transaction: {} in {}ms", transactionId, processingDuration);
-            return ProcessingResult.success(businessResult.getProcessedMessage(), processingDuration);
+            return ProcessingResult.success(businessResult.getResponseMessage(), processingDuration);
             
         } catch (Exception e) {
             systemErrors.incrementAndGet();

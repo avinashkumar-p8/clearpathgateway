@@ -1203,69 +1203,30 @@ public class PaymentDetails extends org.apache.avro.specific.SpecificRecordBase 
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.PmtCtxt == null) {
-      throw new IllegalStateException("PmtCtxt cannot be null for PaymentDetails encoding");
-    }
     this.PmtCtxt.customEncode(out);
 
-    if (this.ProcCtryCd == null) {
-      throw new IllegalStateException("ProcCtryCd cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.ProcCtryCd);
 
-    if (this.InstdClrgPref == null) {
-      throw new IllegalStateException("InstdClrgPref cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.InstdClrgPref);
 
-    if (this.InstdMoPCat == null) {
-      throw new IllegalStateException("InstdMoPCat cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.InstdMoPCat);
 
-    if (this.PmtCtgry == null) {
-      throw new IllegalStateException("PmtCtgry cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.PmtCtgry);
 
-    if (this.actClrMethod == null) {
-      throw new IllegalStateException("actClrMethod cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.actClrMethod);
 
-    if (this.actlMtdOfPmtCtgry == null) {
-      throw new IllegalStateException("actlMtdOfPmtCtgry cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.actlMtdOfPmtCtgry);
 
-    if (this.FIDCIdentifier == null) {
-      throw new IllegalStateException("FIDCIdentifier cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.FIDCIdentifier);
 
-    if (this.FICCIdentifier == null) {
-      throw new IllegalStateException("FICCIdentifier cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.FICCIdentifier);
 
-    if (this.VAM == null) {
-      throw new IllegalStateException("VAM cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.VAM);
 
-    if (this.derivedDRAccountNo == null) {
-      throw new IllegalStateException("derivedDRAccountNo cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.derivedDRAccountNo);
 
-    if (this.derivedDRAccountSys == null) {
-      throw new IllegalStateException("derivedDRAccountSys cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.derivedDRAccountSys);
 
-    if (this.derivedDRBookCode == null) {
-      throw new IllegalStateException("derivedDRBookCode cannot be null for PaymentDetails encoding");
-    }
     out.writeString(this.derivedDRBookCode);
 
   }

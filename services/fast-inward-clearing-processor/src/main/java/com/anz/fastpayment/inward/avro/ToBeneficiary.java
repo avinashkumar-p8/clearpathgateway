@@ -426,19 +426,10 @@ public class ToBeneficiary extends org.apache.avro.specific.SpecificRecordBase i
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Name == null) {
-      throw new IllegalStateException("Name cannot be null for ToBeneficiary encoding");
-    }
     out.writeString(this.Name);
 
-    if (this.Country == null) {
-      throw new IllegalStateException("Country cannot be null for ToBeneficiary encoding");
-    }
     out.writeString(this.Country);
 
-    if (this.Message == null) {
-      throw new IllegalStateException("Message cannot be null for ToBeneficiary encoding");
-    }
     out.writeString(this.Message);
 
   }

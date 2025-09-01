@@ -332,9 +332,6 @@ public class MessageInstruction extends org.apache.avro.specific.SpecificRecordB
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.instruction == null) {
-      throw new IllegalStateException("instruction cannot be null for MessageInstruction encoding");
-    }
     this.instruction.customEncode(out);
 
   }

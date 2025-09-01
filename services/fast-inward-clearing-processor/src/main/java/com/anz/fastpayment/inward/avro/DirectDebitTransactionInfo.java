@@ -1974,78 +1974,36 @@ public class DirectDebitTransactionInfo extends org.apache.avro.specific.Specifi
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.PmtId == null) {
-      throw new IllegalStateException("PmtId cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.PmtId.customEncode(out);
 
     out.writeDouble(this.IntrBkSttlmAmt);
 
     out.writeLong(this.IntrBkSttlmAmtMinor);
 
-    if (this.IntrBkSttlmCCY == null) {
-      throw new IllegalStateException("IntrBkSttlmCCY cannot be null for DirectDebitTransactionInfo encoding");
-    }
     out.writeString(this.IntrBkSttlmCCY);
 
-    if (this.IntrBkSttlmDt == null) {
-      throw new IllegalStateException("IntrBkSttlmDt cannot be null for DirectDebitTransactionInfo encoding");
-    }
     out.writeString(this.IntrBkSttlmDt);
 
-    if (this.InstgAgt == null) {
-      throw new IllegalStateException("InstgAgt cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.InstgAgt.customEncode(out);
 
-    if (this.InstdAgt == null) {
-      throw new IllegalStateException("InstdAgt cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.InstdAgt.customEncode(out);
 
-    if (this.Dbtr == null) {
-      throw new IllegalStateException("Dbtr cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.Dbtr.customEncode(out);
 
-    if (this.DbtrAcct == null) {
-      throw new IllegalStateException("DbtrAcct cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.DbtrAcct.customEncode(out);
 
-    if (this.DbtrAgt == null) {
-      throw new IllegalStateException("DbtrAgt cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.DbtrAgt.customEncode(out);
 
-    if (this.CdtrAgt == null) {
-      throw new IllegalStateException("CdtrAgt cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.CdtrAgt.customEncode(out);
 
-    if (this.Cdtr == null) {
-      throw new IllegalStateException("Cdtr cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.Cdtr.customEncode(out);
 
-    if (this.CdtrAcct == null) {
-      throw new IllegalStateException("CdtrAcct cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.CdtrAcct.customEncode(out);
 
-    if (this.Purp == null) {
-      throw new IllegalStateException("Purp cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.Purp.customEncode(out);
 
-    if (this.RmtInf == null) {
-      throw new IllegalStateException("RmtInf cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.RmtInf.customEncode(out);
 
-    if (this.DrctDbtTx == null) {
-      throw new IllegalStateException("DrctDbtTx cannot be null for DirectDebitTransactionInfo encoding");
-    }
     this.DrctDbtTx.customEncode(out);
 
   }

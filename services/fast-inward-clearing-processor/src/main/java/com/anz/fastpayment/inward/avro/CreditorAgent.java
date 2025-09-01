@@ -282,9 +282,6 @@ public class CreditorAgent extends org.apache.avro.specific.SpecificRecordBase i
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.BIC == null) {
-      throw new IllegalStateException("BIC cannot be null for CreditorAgent encoding");
-    }
     out.writeString(this.BIC);
 
   }

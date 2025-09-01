@@ -282,9 +282,6 @@ public class Purpose extends org.apache.avro.specific.SpecificRecordBase impleme
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Cd == null) {
-      throw new IllegalStateException("Cd cannot be null for Purpose encoding");
-    }
     out.writeString(this.Cd);
 
   }

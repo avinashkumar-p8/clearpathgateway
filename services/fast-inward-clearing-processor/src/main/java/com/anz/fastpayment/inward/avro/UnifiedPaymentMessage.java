@@ -649,32 +649,17 @@ public class UnifiedPaymentMessage extends org.apache.avro.specific.SpecificReco
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Header == null) {
-      throw new IllegalStateException("Header cannot be null for UnifiedPaymentMessage encoding");
-    }
     this.Header.customEncode(out);
 
-    if (this.Body == null) {
-      throw new IllegalStateException("Body cannot be null for UnifiedPaymentMessage encoding");
-    }
     this.Body.customEncode(out);
 
-    if (this.Procctxt == null) {
-      throw new IllegalStateException("Procctxt cannot be null for UnifiedPaymentMessage encoding");
-    }
     this.Procctxt.customEncode(out);
 
-    if (this.messages == null) {
-      throw new IllegalStateException("messages cannot be null for UnifiedPaymentMessage encoding");
-    }
     long size0 = this.messages.size();
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
     for (com.anz.fastpayment.inward.avro.MessageInstruction e0: this.messages) {
-      if (e0 == null) {
-        throw new IllegalStateException("Array element cannot be null for UnifiedPaymentMessage.messages encoding");
-      }
       actualSize0++;
       out.startItem();
       e0.customEncode(out);

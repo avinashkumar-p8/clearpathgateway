@@ -649,34 +649,16 @@ public class PaymentHeader extends org.apache.avro.specific.SpecificRecordBase i
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.PODsID == null) {
-      throw new IllegalStateException("PODsID cannot be null for PaymentHeader encoding");
-    }
     out.writeString(this.PODsID);
 
-    if (this.PaymentID == null) {
-      throw new IllegalStateException("PaymentID cannot be null for PaymentHeader encoding");
-    }
     out.writeString(this.PaymentID);
 
-    if (this.ThirdPartyPayID == null) {
-      throw new IllegalStateException("ThirdPartyPayID cannot be null for PaymentHeader encoding");
-    }
     out.writeString(this.ThirdPartyPayID);
 
-    if (this.PaymentTRN == null) {
-      throw new IllegalStateException("PaymentTRN cannot be null for PaymentHeader encoding");
-    }
     out.writeString(this.PaymentTRN);
 
-    if (this.PaymentRetRef == null) {
-      throw new IllegalStateException("PaymentRetRef cannot be null for PaymentHeader encoding");
-    }
     out.writeString(this.PaymentRetRef);
 
-    if (this.ProcDate == null) {
-      throw new IllegalStateException("ProcDate cannot be null for PaymentHeader encoding");
-    }
     out.writeString(this.ProcDate);
 
   }

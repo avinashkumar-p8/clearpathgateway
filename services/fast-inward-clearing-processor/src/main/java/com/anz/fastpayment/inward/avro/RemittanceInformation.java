@@ -282,9 +282,6 @@ public class RemittanceInformation extends org.apache.avro.specific.SpecificReco
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.Ustrd == null) {
-      throw new IllegalStateException("Ustrd cannot be null for RemittanceInformation encoding");
-    }
     out.writeString(this.Ustrd);
 
   }

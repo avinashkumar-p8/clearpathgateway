@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Instruction extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 5445553870533108005L;
+  private static final long serialVersionUID = -3891004664511846880L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Instruction\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MsgDef\",\"type\":{\"type\":\"record\",\"name\":\"MessageDefinition\",\"fields\":[{\"name\":\"MsgType\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"Schema\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"MsgCtxt\",\"type\":{\"type\":\"record\",\"name\":\"MessageContext\",\"fields\":[{\"name\":\"OrigMsgTyp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"InstdClrgPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"InstdMoPCat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"Site\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"BaseAmt\",\"type\":[\"null\",\"double\"],\"doc\":\"Base amount (legacy field - use BaseAmtMinor for precision)\",\"default\":null},{\"name\":\"BaseAmtMinor\",\"type\":[\"null\",\"long\"],\"doc\":\"Base amount in minor units (e.g., cents for USD) for precise monetary representation\",\"default\":null},{\"name\":\"BaseCcy\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"SenderBIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ProcCtryCd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"Department\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"MsgId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"Direction\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"MsgAddRq\",\"type\":{\"type\":\"record\",\"name\":\"MessageAddRequest\",\"fields\":[{\"name\":\"OrigMsg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"MsgDtls\",\"type\":{\"type\":\"record\",\"name\":\"MessageDetails\",\"fields\":[{\"name\":\"DrctDbtTxInf\",\"type\":{\"type\":\"record\",\"name\":\"DirectDebitTransactionInfo\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PaymentId\",\"fields\":[{\"name\":\"InstrId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"TxId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"EndToEndId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ClrSysRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Inter-bank settlement amount (legacy field - use IntrBkSttlmAmtMinor for precision)\"},{\"name\":\"IntrBkSttlmAmtMinor\",\"type\":\"long\",\"doc\":\"Inter-bank settlement amount in minor units (e.g., cents for USD) for precise monetary representation\",\"default\":0},{\"name\":\"IntrBkSttlmCCY\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"IntrBkSttlmDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstructingAgent\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstructedAgent\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Debtor\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DebtorAccount\",\"fields\":[{\"name\":\"AcctId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DebtorAgent\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CreditorAgent\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Creditor\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CreditorAccount\",\"fields\":[{\"name\":\"AcctId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purpose\",\"fields\":[{\"name\":\"Cd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RemittanceInformation\",\"fields\":[{\"name\":\"Ustrd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DirectDebitTransaction\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MandateRelatedInformation\",\"fields\":[{\"name\":\"MndtId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}}]}}]}}]}}]}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Instruction\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MsgDef\",\"type\":{\"type\":\"record\",\"name\":\"MsgDef\",\"fields\":[{\"name\":\"MsgType\",\"type\":\"string\",\"doc\":\"Message type\"},{\"name\":\"Schema\",\"type\":\"string\",\"doc\":\"Schema\"}]},\"doc\":\"Message definition\"},{\"name\":\"MsgCtxt\",\"type\":{\"type\":\"record\",\"name\":\"MsgCtxt\",\"fields\":[{\"name\":\"OrigMsgTyp\",\"type\":\"string\",\"doc\":\"Original message type\"},{\"name\":\"InstdClrgPref\",\"type\":\"string\",\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":\"string\",\"doc\":\"Instructed method of payment category\"},{\"name\":\"Site\",\"type\":\"string\",\"doc\":\"Site\"},{\"name\":\"BaseAmt\",\"type\":\"double\",\"doc\":\"Base amount\"},{\"name\":\"BaseCcy\",\"type\":\"string\",\"doc\":\"Base currency\"},{\"name\":\"SenderBIC\",\"type\":\"string\",\"doc\":\"Sender BIC\"},{\"name\":\"ProcCtryCd\",\"type\":\"string\",\"doc\":\"Processing country code\"},{\"name\":\"Department\",\"type\":\"string\",\"doc\":\"Department\"},{\"name\":\"MsgId\",\"type\":\"string\",\"doc\":\"Message identifier\"},{\"name\":\"Direction\",\"type\":\"string\",\"doc\":\"Direction\"}]},\"doc\":\"Message context\"},{\"name\":\"MsgAddRq\",\"type\":{\"type\":\"record\",\"name\":\"MsgAddRq\",\"fields\":[{\"name\":\"OrigMsg\",\"type\":\"string\",\"doc\":\"Original message\"},{\"name\":\"MsgDtls\",\"type\":{\"type\":\"record\",\"name\":\"MsgDtls\",\"fields\":[{\"name\":\"DrctDbtTxInf\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTxInf\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PmtId\",\"fields\":[{\"name\":\"InstrId\",\"type\":\"string\",\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":\"string\",\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":\"string\",\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":\"string\",\"doc\":\"Clearing system reference\"}]},\"doc\":\"Payment identifier\"},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Interbank settlement amount\"},{\"name\":\"IntrBkSttlmCCY\",\"type\":\"string\",\"doc\":\"Interbank settlement currency\"},{\"name\":\"IntrBkSttlmDt\",\"type\":\"string\",\"doc\":\"Interbank settlement date\"},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstgAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Instructing agent\"},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstdAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Instructed agent\"},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Dbtr\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]},\"doc\":\"Debtor\"},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]},\"doc\":\"Debtor account\"},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Debtor agent\"},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Creditor agent\"},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Cdtr\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]},\"doc\":\"Creditor\"},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]},\"doc\":\"Creditor account\"},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purp\",\"fields\":[{\"name\":\"Cd\",\"type\":\"string\",\"doc\":\"Code\"}]},\"doc\":\"Purpose\"},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RmtInf\",\"fields\":[{\"name\":\"Ustrd\",\"type\":\"string\",\"doc\":\"Unstructured\"}]},\"doc\":\"Remittance information\"},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":\"string\",\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]},\"doc\":\"Direct debit transaction\"}]},\"doc\":\"Direct debit transaction information\"}]},\"doc\":\"Message details\"}]},\"doc\":\"Message add request\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -73,9 +73,12 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
     return DECODER.decode(b);
   }
 
-  private com.anz.fastpayment.inward.avro.MessageDefinition MsgDef;
-  private com.anz.fastpayment.inward.avro.MessageContext MsgCtxt;
-  private com.anz.fastpayment.inward.avro.MessageAddRequest MsgAddRq;
+  /** Message definition */
+  private com.anz.fastpayment.inward.avro.MsgDef MsgDef;
+  /** Message context */
+  private com.anz.fastpayment.inward.avro.MsgCtxt MsgCtxt;
+  /** Message add request */
+  private com.anz.fastpayment.inward.avro.MsgAddRq MsgAddRq;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -86,11 +89,11 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
   /**
    * All-args constructor.
-   * @param MsgDef The new value for MsgDef
-   * @param MsgCtxt The new value for MsgCtxt
-   * @param MsgAddRq The new value for MsgAddRq
+   * @param MsgDef Message definition
+   * @param MsgCtxt Message context
+   * @param MsgAddRq Message add request
    */
-  public Instruction(com.anz.fastpayment.inward.avro.MessageDefinition MsgDef, com.anz.fastpayment.inward.avro.MessageContext MsgCtxt, com.anz.fastpayment.inward.avro.MessageAddRequest MsgAddRq) {
+  public Instruction(com.anz.fastpayment.inward.avro.MsgDef MsgDef, com.anz.fastpayment.inward.avro.MsgCtxt MsgCtxt, com.anz.fastpayment.inward.avro.MsgAddRq MsgAddRq) {
     this.MsgDef = MsgDef;
     this.MsgCtxt = MsgCtxt;
     this.MsgAddRq = MsgAddRq;
@@ -118,61 +121,64 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: MsgDef = (com.anz.fastpayment.inward.avro.MessageDefinition)value$; break;
-    case 1: MsgCtxt = (com.anz.fastpayment.inward.avro.MessageContext)value$; break;
-    case 2: MsgAddRq = (com.anz.fastpayment.inward.avro.MessageAddRequest)value$; break;
+    case 0: MsgDef = (com.anz.fastpayment.inward.avro.MsgDef)value$; break;
+    case 1: MsgCtxt = (com.anz.fastpayment.inward.avro.MsgCtxt)value$; break;
+    case 2: MsgAddRq = (com.anz.fastpayment.inward.avro.MsgAddRq)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
    * Gets the value of the 'MsgDef' field.
-   * @return The value of the 'MsgDef' field.
+   * @return Message definition
    */
-  public com.anz.fastpayment.inward.avro.MessageDefinition getMsgDef() {
+  public com.anz.fastpayment.inward.avro.MsgDef getMsgDef() {
     return MsgDef;
   }
 
 
   /**
    * Sets the value of the 'MsgDef' field.
+   * Message definition
    * @param value the value to set.
    */
-  public void setMsgDef(com.anz.fastpayment.inward.avro.MessageDefinition value) {
+  public void setMsgDef(com.anz.fastpayment.inward.avro.MsgDef value) {
     this.MsgDef = value;
   }
 
   /**
    * Gets the value of the 'MsgCtxt' field.
-   * @return The value of the 'MsgCtxt' field.
+   * @return Message context
    */
-  public com.anz.fastpayment.inward.avro.MessageContext getMsgCtxt() {
+  public com.anz.fastpayment.inward.avro.MsgCtxt getMsgCtxt() {
     return MsgCtxt;
   }
 
 
   /**
    * Sets the value of the 'MsgCtxt' field.
+   * Message context
    * @param value the value to set.
    */
-  public void setMsgCtxt(com.anz.fastpayment.inward.avro.MessageContext value) {
+  public void setMsgCtxt(com.anz.fastpayment.inward.avro.MsgCtxt value) {
     this.MsgCtxt = value;
   }
 
   /**
    * Gets the value of the 'MsgAddRq' field.
-   * @return The value of the 'MsgAddRq' field.
+   * @return Message add request
    */
-  public com.anz.fastpayment.inward.avro.MessageAddRequest getMsgAddRq() {
+  public com.anz.fastpayment.inward.avro.MsgAddRq getMsgAddRq() {
     return MsgAddRq;
   }
 
 
   /**
    * Sets the value of the 'MsgAddRq' field.
+   * Message add request
    * @param value the value to set.
    */
-  public void setMsgAddRq(com.anz.fastpayment.inward.avro.MessageAddRequest value) {
+  public void setMsgAddRq(com.anz.fastpayment.inward.avro.MsgAddRq value) {
     this.MsgAddRq = value;
   }
 
@@ -217,12 +223,15 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Instruction>
     implements org.apache.avro.data.RecordBuilder<Instruction> {
 
-    private com.anz.fastpayment.inward.avro.MessageDefinition MsgDef;
-    private com.anz.fastpayment.inward.avro.MessageDefinition.Builder MsgDefBuilder;
-    private com.anz.fastpayment.inward.avro.MessageContext MsgCtxt;
-    private com.anz.fastpayment.inward.avro.MessageContext.Builder MsgCtxtBuilder;
-    private com.anz.fastpayment.inward.avro.MessageAddRequest MsgAddRq;
-    private com.anz.fastpayment.inward.avro.MessageAddRequest.Builder MsgAddRqBuilder;
+    /** Message definition */
+    private com.anz.fastpayment.inward.avro.MsgDef MsgDef;
+    private com.anz.fastpayment.inward.avro.MsgDef.Builder MsgDefBuilder;
+    /** Message context */
+    private com.anz.fastpayment.inward.avro.MsgCtxt MsgCtxt;
+    private com.anz.fastpayment.inward.avro.MsgCtxt.Builder MsgCtxtBuilder;
+    /** Message add request */
+    private com.anz.fastpayment.inward.avro.MsgAddRq MsgAddRq;
+    private com.anz.fastpayment.inward.avro.MsgAddRq.Builder MsgAddRqBuilder;
 
     /** Creates a new Builder */
     private Builder() {
@@ -240,21 +249,21 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasMsgDefBuilder()) {
-        this.MsgDefBuilder = com.anz.fastpayment.inward.avro.MessageDefinition.newBuilder(other.getMsgDefBuilder());
+        this.MsgDefBuilder = com.anz.fastpayment.inward.avro.MsgDef.newBuilder(other.getMsgDefBuilder());
       }
       if (isValidValue(fields()[1], other.MsgCtxt)) {
         this.MsgCtxt = data().deepCopy(fields()[1].schema(), other.MsgCtxt);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (other.hasMsgCtxtBuilder()) {
-        this.MsgCtxtBuilder = com.anz.fastpayment.inward.avro.MessageContext.newBuilder(other.getMsgCtxtBuilder());
+        this.MsgCtxtBuilder = com.anz.fastpayment.inward.avro.MsgCtxt.newBuilder(other.getMsgCtxtBuilder());
       }
       if (isValidValue(fields()[2], other.MsgAddRq)) {
         this.MsgAddRq = data().deepCopy(fields()[2].schema(), other.MsgAddRq);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (other.hasMsgAddRqBuilder()) {
-        this.MsgAddRqBuilder = com.anz.fastpayment.inward.avro.MessageAddRequest.newBuilder(other.getMsgAddRqBuilder());
+        this.MsgAddRqBuilder = com.anz.fastpayment.inward.avro.MsgAddRq.newBuilder(other.getMsgAddRqBuilder());
       }
     }
 
@@ -283,19 +292,21 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Gets the value of the 'MsgDef' field.
+      * Message definition
       * @return The value.
       */
-    public com.anz.fastpayment.inward.avro.MessageDefinition getMsgDef() {
+    public com.anz.fastpayment.inward.avro.MsgDef getMsgDef() {
       return MsgDef;
     }
 
 
     /**
       * Sets the value of the 'MsgDef' field.
+      * Message definition
       * @param value The value of 'MsgDef'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgDef(com.anz.fastpayment.inward.avro.MessageDefinition value) {
+    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgDef(com.anz.fastpayment.inward.avro.MsgDef value) {
       validate(fields()[0], value);
       this.MsgDefBuilder = null;
       this.MsgDef = value;
@@ -305,6 +316,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Checks whether the 'MsgDef' field has been set.
+      * Message definition
       * @return True if the 'MsgDef' field has been set, false otherwise.
       */
     public boolean hasMsgDef() {
@@ -313,14 +325,15 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Gets the Builder instance for the 'MsgDef' field and creates one if it doesn't exist yet.
+     * Message definition
      * @return This builder.
      */
-    public com.anz.fastpayment.inward.avro.MessageDefinition.Builder getMsgDefBuilder() {
+    public com.anz.fastpayment.inward.avro.MsgDef.Builder getMsgDefBuilder() {
       if (MsgDefBuilder == null) {
         if (hasMsgDef()) {
-          setMsgDefBuilder(com.anz.fastpayment.inward.avro.MessageDefinition.newBuilder(MsgDef));
+          setMsgDefBuilder(com.anz.fastpayment.inward.avro.MsgDef.newBuilder(MsgDef));
         } else {
-          setMsgDefBuilder(com.anz.fastpayment.inward.avro.MessageDefinition.newBuilder());
+          setMsgDefBuilder(com.anz.fastpayment.inward.avro.MsgDef.newBuilder());
         }
       }
       return MsgDefBuilder;
@@ -328,11 +341,12 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Sets the Builder instance for the 'MsgDef' field
+     * Message definition
      * @param value The builder instance that must be set.
      * @return This builder.
      */
 
-    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgDefBuilder(com.anz.fastpayment.inward.avro.MessageDefinition.Builder value) {
+    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgDefBuilder(com.anz.fastpayment.inward.avro.MsgDef.Builder value) {
       clearMsgDef();
       MsgDefBuilder = value;
       return this;
@@ -340,6 +354,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Checks whether the 'MsgDef' field has an active Builder instance
+     * Message definition
      * @return True if the 'MsgDef' field has an active Builder instance
      */
     public boolean hasMsgDefBuilder() {
@@ -348,6 +363,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Clears the value of the 'MsgDef' field.
+      * Message definition
       * @return This builder.
       */
     public com.anz.fastpayment.inward.avro.Instruction.Builder clearMsgDef() {
@@ -359,19 +375,21 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Gets the value of the 'MsgCtxt' field.
+      * Message context
       * @return The value.
       */
-    public com.anz.fastpayment.inward.avro.MessageContext getMsgCtxt() {
+    public com.anz.fastpayment.inward.avro.MsgCtxt getMsgCtxt() {
       return MsgCtxt;
     }
 
 
     /**
       * Sets the value of the 'MsgCtxt' field.
+      * Message context
       * @param value The value of 'MsgCtxt'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgCtxt(com.anz.fastpayment.inward.avro.MessageContext value) {
+    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgCtxt(com.anz.fastpayment.inward.avro.MsgCtxt value) {
       validate(fields()[1], value);
       this.MsgCtxtBuilder = null;
       this.MsgCtxt = value;
@@ -381,6 +399,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Checks whether the 'MsgCtxt' field has been set.
+      * Message context
       * @return True if the 'MsgCtxt' field has been set, false otherwise.
       */
     public boolean hasMsgCtxt() {
@@ -389,14 +408,15 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Gets the Builder instance for the 'MsgCtxt' field and creates one if it doesn't exist yet.
+     * Message context
      * @return This builder.
      */
-    public com.anz.fastpayment.inward.avro.MessageContext.Builder getMsgCtxtBuilder() {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder getMsgCtxtBuilder() {
       if (MsgCtxtBuilder == null) {
         if (hasMsgCtxt()) {
-          setMsgCtxtBuilder(com.anz.fastpayment.inward.avro.MessageContext.newBuilder(MsgCtxt));
+          setMsgCtxtBuilder(com.anz.fastpayment.inward.avro.MsgCtxt.newBuilder(MsgCtxt));
         } else {
-          setMsgCtxtBuilder(com.anz.fastpayment.inward.avro.MessageContext.newBuilder());
+          setMsgCtxtBuilder(com.anz.fastpayment.inward.avro.MsgCtxt.newBuilder());
         }
       }
       return MsgCtxtBuilder;
@@ -404,11 +424,12 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Sets the Builder instance for the 'MsgCtxt' field
+     * Message context
      * @param value The builder instance that must be set.
      * @return This builder.
      */
 
-    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgCtxtBuilder(com.anz.fastpayment.inward.avro.MessageContext.Builder value) {
+    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgCtxtBuilder(com.anz.fastpayment.inward.avro.MsgCtxt.Builder value) {
       clearMsgCtxt();
       MsgCtxtBuilder = value;
       return this;
@@ -416,6 +437,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Checks whether the 'MsgCtxt' field has an active Builder instance
+     * Message context
      * @return True if the 'MsgCtxt' field has an active Builder instance
      */
     public boolean hasMsgCtxtBuilder() {
@@ -424,6 +446,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Clears the value of the 'MsgCtxt' field.
+      * Message context
       * @return This builder.
       */
     public com.anz.fastpayment.inward.avro.Instruction.Builder clearMsgCtxt() {
@@ -435,19 +458,21 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Gets the value of the 'MsgAddRq' field.
+      * Message add request
       * @return The value.
       */
-    public com.anz.fastpayment.inward.avro.MessageAddRequest getMsgAddRq() {
+    public com.anz.fastpayment.inward.avro.MsgAddRq getMsgAddRq() {
       return MsgAddRq;
     }
 
 
     /**
       * Sets the value of the 'MsgAddRq' field.
+      * Message add request
       * @param value The value of 'MsgAddRq'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgAddRq(com.anz.fastpayment.inward.avro.MessageAddRequest value) {
+    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgAddRq(com.anz.fastpayment.inward.avro.MsgAddRq value) {
       validate(fields()[2], value);
       this.MsgAddRqBuilder = null;
       this.MsgAddRq = value;
@@ -457,6 +482,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Checks whether the 'MsgAddRq' field has been set.
+      * Message add request
       * @return True if the 'MsgAddRq' field has been set, false otherwise.
       */
     public boolean hasMsgAddRq() {
@@ -465,14 +491,15 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Gets the Builder instance for the 'MsgAddRq' field and creates one if it doesn't exist yet.
+     * Message add request
      * @return This builder.
      */
-    public com.anz.fastpayment.inward.avro.MessageAddRequest.Builder getMsgAddRqBuilder() {
+    public com.anz.fastpayment.inward.avro.MsgAddRq.Builder getMsgAddRqBuilder() {
       if (MsgAddRqBuilder == null) {
         if (hasMsgAddRq()) {
-          setMsgAddRqBuilder(com.anz.fastpayment.inward.avro.MessageAddRequest.newBuilder(MsgAddRq));
+          setMsgAddRqBuilder(com.anz.fastpayment.inward.avro.MsgAddRq.newBuilder(MsgAddRq));
         } else {
-          setMsgAddRqBuilder(com.anz.fastpayment.inward.avro.MessageAddRequest.newBuilder());
+          setMsgAddRqBuilder(com.anz.fastpayment.inward.avro.MsgAddRq.newBuilder());
         }
       }
       return MsgAddRqBuilder;
@@ -480,11 +507,12 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Sets the Builder instance for the 'MsgAddRq' field
+     * Message add request
      * @param value The builder instance that must be set.
      * @return This builder.
      */
 
-    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgAddRqBuilder(com.anz.fastpayment.inward.avro.MessageAddRequest.Builder value) {
+    public com.anz.fastpayment.inward.avro.Instruction.Builder setMsgAddRqBuilder(com.anz.fastpayment.inward.avro.MsgAddRq.Builder value) {
       clearMsgAddRq();
       MsgAddRqBuilder = value;
       return this;
@@ -492,6 +520,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
      * Checks whether the 'MsgAddRq' field has an active Builder instance
+     * Message add request
      * @return True if the 'MsgAddRq' field has an active Builder instance
      */
     public boolean hasMsgAddRqBuilder() {
@@ -500,6 +529,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
 
     /**
       * Clears the value of the 'MsgAddRq' field.
+      * Message add request
       * @return This builder.
       */
     public com.anz.fastpayment.inward.avro.Instruction.Builder clearMsgAddRq() {
@@ -522,7 +552,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
             throw e;
           }
         } else {
-          record.MsgDef = fieldSetFlags()[0] ? this.MsgDef : (com.anz.fastpayment.inward.avro.MessageDefinition) defaultValue(fields()[0]);
+          record.MsgDef = fieldSetFlags()[0] ? this.MsgDef : (com.anz.fastpayment.inward.avro.MsgDef) defaultValue(fields()[0]);
         }
         if (MsgCtxtBuilder != null) {
           try {
@@ -532,7 +562,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
             throw e;
           }
         } else {
-          record.MsgCtxt = fieldSetFlags()[1] ? this.MsgCtxt : (com.anz.fastpayment.inward.avro.MessageContext) defaultValue(fields()[1]);
+          record.MsgCtxt = fieldSetFlags()[1] ? this.MsgCtxt : (com.anz.fastpayment.inward.avro.MsgCtxt) defaultValue(fields()[1]);
         }
         if (MsgAddRqBuilder != null) {
           try {
@@ -542,7 +572,7 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
             throw e;
           }
         } else {
-          record.MsgAddRq = fieldSetFlags()[2] ? this.MsgAddRq : (com.anz.fastpayment.inward.avro.MessageAddRequest) defaultValue(fields()[2]);
+          record.MsgAddRq = fieldSetFlags()[2] ? this.MsgAddRq : (com.anz.fastpayment.inward.avro.MsgAddRq) defaultValue(fields()[2]);
         }
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
@@ -576,19 +606,10 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.MsgDef == null) {
-      throw new IllegalStateException("MsgDef cannot be null for Instruction encoding");
-    }
     this.MsgDef.customEncode(out);
 
-    if (this.MsgCtxt == null) {
-      throw new IllegalStateException("MsgCtxt cannot be null for Instruction encoding");
-    }
     this.MsgCtxt.customEncode(out);
 
-    if (this.MsgAddRq == null) {
-      throw new IllegalStateException("MsgAddRq cannot be null for Instruction encoding");
-    }
     this.MsgAddRq.customEncode(out);
 
   }
@@ -599,17 +620,17 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
       if (this.MsgDef == null) {
-        this.MsgDef = new com.anz.fastpayment.inward.avro.MessageDefinition();
+        this.MsgDef = new com.anz.fastpayment.inward.avro.MsgDef();
       }
       this.MsgDef.customDecode(in);
 
       if (this.MsgCtxt == null) {
-        this.MsgCtxt = new com.anz.fastpayment.inward.avro.MessageContext();
+        this.MsgCtxt = new com.anz.fastpayment.inward.avro.MsgCtxt();
       }
       this.MsgCtxt.customDecode(in);
 
       if (this.MsgAddRq == null) {
-        this.MsgAddRq = new com.anz.fastpayment.inward.avro.MessageAddRequest();
+        this.MsgAddRq = new com.anz.fastpayment.inward.avro.MsgAddRq();
       }
       this.MsgAddRq.customDecode(in);
 
@@ -618,21 +639,21 @@ public class Instruction extends org.apache.avro.specific.SpecificRecordBase imp
         switch (fieldOrder[i].pos()) {
         case 0:
           if (this.MsgDef == null) {
-            this.MsgDef = new com.anz.fastpayment.inward.avro.MessageDefinition();
+            this.MsgDef = new com.anz.fastpayment.inward.avro.MsgDef();
           }
           this.MsgDef.customDecode(in);
           break;
 
         case 1:
           if (this.MsgCtxt == null) {
-            this.MsgCtxt = new com.anz.fastpayment.inward.avro.MessageContext();
+            this.MsgCtxt = new com.anz.fastpayment.inward.avro.MsgCtxt();
           }
           this.MsgCtxt.customDecode(in);
           break;
 
         case 2:
           if (this.MsgAddRq == null) {
-            this.MsgAddRq = new com.anz.fastpayment.inward.avro.MessageAddRequest();
+            this.MsgAddRq = new com.anz.fastpayment.inward.avro.MsgAddRq();
           }
           this.MsgAddRq.customDecode(in);
           break;
