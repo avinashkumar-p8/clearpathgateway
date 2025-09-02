@@ -1,0 +1,854 @@
+{
+  "namespace": "com.anz.fastpayment.inward.avro",
+  "type": "record",
+  "name": "UnifiedPaymentMessage",
+  "doc": "Complex Unified Payment Message for Fast Payment System with Header, Body, and Processing Context",
+  "fields": [
+    {
+      "name": "Header",
+      "type": {
+        "type": "record",
+        "name": "MessageHeader",
+        "fields": [
+          {
+            "name": "ComponentName",
+            "type": "string",
+            "doc": "Component name (e.g., PSPAPFAFAST)"
+          },
+          {
+            "name": "UUID",
+            "type": "string",
+            "doc": "Unique identifier for the message"
+          },
+          {
+            "name": "EventInfo",
+            "type": {
+              "type": "record",
+              "name": "EventInformation",
+              "fields": [
+                {
+                  "name": "EventCode",
+                  "type": "string",
+                  "doc": "Event code (e.g., P.PSP.STS.M.OP_RPI.100)"
+                },
+                {
+                  "name": "EventDescription",
+                  "type": "string",
+                  "doc": "Description of the event"
+                },
+                {
+                  "name": "EventID",
+                  "type": "string",
+                  "doc": "Unique event identifier"
+                },
+                {
+                  "name": "EventType",
+                  "type": "string",
+                  "doc": "Type of event (e.g., PE)"
+                },
+                {
+                  "name": "EventProducer",
+                  "type": "string",
+                  "doc": "Producer of the event"
+                },
+                {
+                  "name": "EventTS",
+                  "type": "string",
+                  "doc": "Event timestamp"
+                },
+                {
+                  "name": "EventTopics",
+                  "type": "string",
+                  "doc": "Kafka topics for the event"
+                },
+                {
+                  "name": "SystemId",
+                  "type": ["null", "string"],
+                  "doc": "System identifier"
+                },
+                {
+                  "name": "Events",
+                  "type": {
+                    "type": "record",
+                    "name": "EventCollection",
+                    "fields": [
+                      {
+                        "name": "Event",
+                        "type": {
+                          "type": "array",
+                          "items": {
+                            "type": "record",
+                            "name": "EventDetail",
+                            "fields": [
+                              {
+                                "name": "EventCode",
+                                "type": "string"
+                              },
+                              {
+                                "name": "EventID",
+                                "type": "string"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "EventVersion",
+                  "type": ["null", "string"]
+                }
+              ]
+            }
+          },
+          {
+            "name": "ReplyToQueue",
+            "type": "string",
+            "doc": "Reply queue name"
+          },
+          {
+            "name": "ReqMap",
+            "type": ["null", "string"]
+          },
+          {
+            "name": "MUID",
+            "type": "string",
+            "doc": "Message unique identifier"
+          },
+          {
+            "name": "Channel",
+            "type": "string",
+            "doc": "Channel identifier (e.g., G3I)"
+          },
+          {
+            "name": "Direction",
+            "type": "string",
+            "doc": "Direction (I for Inward, O for Outward)"
+          },
+          {
+            "name": "RcvdTS",
+            "type": "string",
+            "doc": "Received timestamp"
+          },
+          {
+            "name": "DomainName",
+            "type": "string",
+            "doc": "Domain name (e.g., PAYMENTS)"
+          },
+          {
+            "name": "DomainType",
+            "type": "string",
+            "doc": "Domain type (e.g., PAYMENT)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Body",
+      "type": {
+        "type": "record",
+        "name": "MessageBody",
+        "fields": [
+          {
+            "name": "PmtAddRq",
+            "type": {
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "PaymentAddRequest",
+                "fields": [
+                  {
+                    "name": "RqUID",
+                    "type": "string",
+                    "doc": "Request unique identifier"
+                  },
+                  {
+                    "name": "MsgHdr",
+                    "type": {
+                      "type": "record",
+                      "name": "PaymentMessageHeader",
+                      "fields": [
+                        {
+                          "name": "ClientDt",
+                          "type": "string"
+                        },
+                        {
+                          "name": "ClientName",
+                          "type": "string"
+                        },
+                        {
+                          "name": "PartyId",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Version",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "PayHdr",
+                    "type": {
+                      "type": "record",
+                      "name": "PaymentHeader",
+                      "fields": [
+                        {
+                          "name": "PODsID",
+                          "type": "string"
+                        },
+                        {
+                          "name": "PaymentID",
+                          "type": "string",
+                          "doc": "Payment identifier"
+                        },
+                        {
+                          "name": "ThirdPartyPayID",
+                          "type": "string"
+                        },
+                        {
+                          "name": "PaymentTRN",
+                          "type": "string"
+                        },
+                        {
+                          "name": "PaymentRetRef",
+                          "type": "string"
+                        },
+                        {
+                          "name": "ProcDate",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "FromFIData",
+                    "type": {
+                      "type": "record",
+                      "name": "FromFinancialInstitution",
+                      "fields": [
+                        {
+                          "name": "Country",
+                          "type": "string"
+                        },
+                        {
+                          "name": "BIC",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "FromCust",
+                    "type": {
+                      "type": "record",
+                      "name": "FromCustomer",
+                      "fields": [
+                        {
+                          "name": "Name",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "FromAcct",
+                    "type": {
+                      "type": "record",
+                      "name": "FromAccount",
+                      "fields": [
+                        {
+                          "name": "AcctId",
+                          "type": ["null", "string"],
+                          "default": null,
+                          "doc": "Account identifier"
+                        },
+                        {
+                          "name": "AcctSys",
+                          "type": "string"
+                        },
+                        {
+                          "name": "AcctGrp",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Name",
+                          "type": "string"
+                        },
+                        {
+                          "name": "PmtAuthMethod",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Narrative",
+                          "type": "string"
+                        },
+                        {
+                          "name": "CurCode",
+                          "type": "string",
+                          "doc": "Currency code"
+                        },
+                        {
+                          "name": "Amount",
+                          "type": "double",
+                          "doc": "Transaction amount (legacy field - use AmountMinor for precision)"
+                        },
+                        {
+                          "name": "AmountMinor",
+                          "type": "long",
+                          "doc": "Transaction amount in minor units (e.g., cents for USD) for precise monetary representation",
+                          "default": 0
+                        },
+                        {
+                          "name": "AcctUse",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "ToFIData",
+                    "type": {
+                      "type": "record",
+                      "name": "ToFinancialInstitution",
+                      "fields": [
+                        {
+                          "name": "Country",
+                          "type": "string"
+                        },
+                        {
+                          "name": "BIC",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "Clearing",
+                    "type": {
+                      "type": "record",
+                      "name": "ClearingInfo",
+                      "fields": [
+                        {
+                          "name": "ClearPref",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "ToBene",
+                    "type": {
+                      "type": "record",
+                      "name": "ToBeneficiary",
+                      "fields": [
+                        {
+                          "name": "Name",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Country",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Message",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "ToAcct",
+                    "type": {
+                      "type": "record",
+                      "name": "ToAccount",
+                      "fields": [
+                        {
+                          "name": "AcctId",
+                          "type": ["null", "string"],
+                          "default": null,
+                          "doc": "Account identifier"
+                        },
+                        {
+                          "name": "CurCode",
+                          "type": "string",
+                          "doc": "Currency code"
+                        },
+                        {
+                          "name": "Amount",
+                          "type": "double",
+                          "doc": "Transaction amount (legacy field - use AmountMinor for precision)"
+                        },
+                        {
+                          "name": "AmountMinor",
+                          "type": "long",
+                          "doc": "Transaction amount in minor units (e.g., cents for USD) for precise monetary representation",
+                          "default": 0
+                        },
+                        {
+                          "name": "Narrative",
+                          "type": "string"
+                        },
+                        {
+                          "name": "AcctUse",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "Fees",
+                    "type": {
+                      "type": "array",
+                      "items": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Procctxt",
+      "type": {
+        "type": "record",
+        "name": "ProcessingContext",
+        "fields": [
+          {
+            "name": "sideEffect",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "softFail",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "PmtDtls",
+            "type": {
+              "type": "record",
+              "name": "PaymentDetails",
+              "fields": [
+                {
+                  "name": "PmtCtxt",
+                  "type": {
+                    "type": "record",
+                    "name": "PaymentContext",
+                    "fields": [
+                      {
+                        "name": "PuId",
+                        "type": "string"
+                      },
+                      {
+                        "name": "IntnSrc",
+                        "type": {
+                          "type": "record",
+                          "name": "IntentionSource",
+                          "fields": [
+                            {
+                              "name": "type",
+                              "type": "string"
+                            },
+                            {
+                              "name": "value",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "ProcCtryCd",
+                  "type": "string"
+                },
+                {
+                  "name": "InstdClrgPref",
+                  "type": "string"
+                },
+                {
+                  "name": "InstdMoPCat",
+                  "type": "string"
+                },
+                {
+                  "name": "PmtCtgry",
+                  "type": "string",
+                  "doc": "Payment category (e.g., DD for Direct Debit)"
+                },
+                {
+                  "name": "actClrMethod",
+                  "type": "string"
+                },
+                {
+                  "name": "actlMtdOfPmtCtgry",
+                  "type": "string"
+                },
+                {
+                  "name": "FIDCIdentifier",
+                  "type": "string"
+                },
+                {
+                  "name": "FICCIdentifier",
+                  "type": "string"
+                },
+                {
+                  "name": "VAM",
+                  "type": "string"
+                },
+                {
+                  "name": "derivedDRAccountNo",
+                  "type": "string"
+                },
+                {
+                  "name": "derivedDRAccountSys",
+                  "type": "string"
+                },
+                {
+                  "name": "derivedDRBookCode",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "messages",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "MessageInstruction",
+          "fields": [
+            {
+              "name": "instruction",
+              "type": {
+                "type": "record",
+                "name": "Instruction",
+                "fields": [
+                  {
+                    "name": "MsgDef",
+                    "type": {
+                      "type": "record",
+                      "name": "MessageDefinition",
+                      "fields": [
+                        {
+                          "name": "MsgType",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Schema",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "MsgCtxt",
+                    "type": {
+                      "type": "record",
+                      "name": "MessageContext",
+                      "fields": [
+                        {
+                          "name": "OrigMsgTyp",
+                          "type": "string"
+                        },
+                        {
+                          "name": "InstdClrgPref",
+                          "type": "string"
+                        },
+                        {
+                          "name": "InstdMoPCat",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Site",
+                          "type": "string"
+                        },
+                        {
+                          "name": "BaseAmt",
+                          "type": ["null", "double"],
+                          "default": null,
+                          "doc": "Base amount (legacy field - use BaseAmtMinor for precision)"
+                        },
+                        {
+                          "name": "BaseAmtMinor",
+                          "type": ["null", "long"],
+                          "default": null,
+                          "doc": "Base amount in minor units (e.g., cents for USD) for precise monetary representation"
+                        },
+                        {
+                          "name": "BaseCcy",
+                          "type": "string"
+                        },
+                        {
+                          "name": "SenderBIC",
+                          "type": "string"
+                        },
+                        {
+                          "name": "ProcCtryCd",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Department",
+                          "type": "string"
+                        },
+                        {
+                          "name": "MsgId",
+                          "type": "string"
+                        },
+                        {
+                          "name": "Direction",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "MsgAddRq",
+                    "type": {
+                      "type": "record",
+                      "name": "MessageAddRequest",
+                      "fields": [
+                        {
+                          "name": "OrigMsg",
+                          "type": "string"
+                        },
+                        {
+                          "name": "MsgDtls",
+                          "type": {
+                            "type": "record",
+                            "name": "MessageDetails",
+                            "fields": [
+                              {
+                                "name": "DrctDbtTxInf",
+                                "type": {
+                                  "type": "record",
+                                  "name": "DirectDebitTransactionInfo",
+                                  "fields": [
+                                    {
+                                      "name": "PmtId",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "PaymentId",
+                                        "fields": [
+                                          {
+                                            "name": "InstrId",
+                                            "type": "string"
+                                          },
+                                          {
+                                            "name": "TxId",
+                                            "type": "string"
+                                          },
+                                          {
+                                            "name": "EndToEndId",
+                                            "type": "string"
+                                          },
+                                          {
+                                            "name": "ClrSysRef",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "IntrBkSttlmAmt",
+                                      "type": "double",
+                                      "doc": "Inter-bank settlement amount (legacy field - use IntrBkSttlmAmtMinor for precision)"
+                                    },
+                                    {
+                                      "name": "IntrBkSttlmAmtMinor",
+                                      "type": "long",
+                                      "doc": "Inter-bank settlement amount in minor units (e.g., cents for USD) for precise monetary representation",
+                                      "default": 0
+                                    },
+                                    {
+                                      "name": "IntrBkSttlmCCY",
+                                      "type": "string"
+                                    },
+                                    {
+                                      "name": "IntrBkSttlmDt",
+                                      "type": "string"
+                                    },
+                                    {
+                                      "name": "InstgAgt",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "InstructingAgent",
+                                        "fields": [
+                                          {
+                                            "name": "BIC",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "InstdAgt",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "InstructedAgent",
+                                        "fields": [
+                                          {
+                                            "name": "BIC",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "Dbtr",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "Debtor",
+                                        "fields": [
+                                          {
+                                            "name": "Nm",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "DbtrAcct",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "DebtorAccount",
+                                        "fields": [
+                                          {
+                                            "name": "AcctId",
+                                            "type": ["null", "string"],
+                                            "default": null
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "DbtrAgt",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "DebtorAgent",
+                                        "fields": [
+                                          {
+                                            "name": "BIC",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "CdtrAgt",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "CreditorAgent",
+                                        "fields": [
+                                          {
+                                            "name": "BIC",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "Cdtr",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "Creditor",
+                                        "fields": [
+                                          {
+                                            "name": "Nm",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "CdtrAcct",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "CreditorAccount",
+                                        "fields": [
+                                          {
+                                            "name": "AcctId",
+                                            "type": ["null", "string"],
+                                            "default": null
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "Purp",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "Purpose",
+                                        "fields": [
+                                          {
+                                            "name": "Cd",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "RmtInf",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "RemittanceInformation",
+                                        "fields": [
+                                          {
+                                            "name": "Ustrd",
+                                            "type": "string"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "name": "DrctDbtTx",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "DirectDebitTransaction",
+                                        "fields": [
+                                          {
+                                            "name": "MndtRltdInf",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "MandateRelatedInformation",
+                                              "fields": [
+                                                {
+                                                  "name": "MndtId",
+                                                  "type": "string"
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

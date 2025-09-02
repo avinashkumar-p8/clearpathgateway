@@ -1,0 +1,26 @@
+{
+  "name": "fast-inward-clearing-processor-playwright",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Playwright test suite for Fast Inward Clearing Processor service",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "codegen": "playwright codegen",
+    "install-browsers": "playwright install",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "dotenv": "^16.4.5",
+    "axios": "^1.6.0"
+  }
+}

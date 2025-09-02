@@ -38,9 +38,9 @@
     },
     {
       "name": "controlSum",
-      "type": ["null", "double"],
+      "type": ["null", "string"],
       "default": null,
-      "doc": "Total of all individual amounts included in the message"
+      "doc": "Total of all individual amounts included in the message as string to preserve precision"
     },
     {
       "name": "batchBooking",
@@ -192,9 +192,9 @@
     
     {
       "name": "amount",
-      "type": ["null", "double"],
+      "type": ["null", "string"],
       "default": null,
-      "doc": "Transaction amount"
+      "doc": "Transaction amount as string to preserve precision"
     },
     {
       "name": "currency",
@@ -203,16 +203,21 @@
       "doc": "Currency code (ISO 4217)"
     },
     {
-      "name": "interbankSettlementAmount",
-      "type": ["null", "double"],
-      "default": null,
-      "doc": "Interbank settlement amount"
+      "name": "IntrBkSttlmAmt",
+      "type": "string",
+      "doc": "Interbank settlement amount as string to preserve precision"
     },
     {
       "name": "instructedAmount",
-      "type": ["null", "double"],
+      "type": ["null", "string"],
       "default": null,
-      "doc": "Instructed amount"
+      "doc": "Instructed amount as string to preserve precision"
+    },
+    {
+      "name": "BaseAmt",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Base amount as string to preserve precision"
     },
     
     {

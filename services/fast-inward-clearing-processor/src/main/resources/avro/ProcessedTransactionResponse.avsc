@@ -1,0 +1,86 @@
+{
+  "namespace": "com.anz.fastpayment.inward.avro",
+  "type": "record",
+  "name": "ProcessedTransactionResponse",
+  "doc": "Response message with original data plus processing trailer",
+  "fields": [
+    {
+      "name": "Header",
+      "type": {
+        "type": "record",
+        "name": "ResponseHeader",
+        "fields": [
+          {
+            "name": "MessageId",
+            "type": "string",
+            "doc": "Unique message identifier"
+          },
+          {
+            "name": "CreationDateTime",
+            "type": "string",
+            "doc": "Message creation timestamp"
+          },
+          {
+            "name": "ProcessingDateTime",
+            "type": "string",
+            "doc": "When processing completed"
+          }
+        ]
+      },
+      "doc": "Response header information"
+    },
+    {
+      "name": "Body",
+      "type": {
+        "type": "record",
+        "name": "ResponseBody",
+        "fields": [
+          {
+            "name": "OriginalMessage",
+            "type": "bytes",
+            "doc": "Original input message preserved as bytes"
+          },
+          {
+            "name": "TransactionId",
+            "type": "string",
+            "doc": "Transaction identifier"
+          },
+          {
+            "name": "ProcessingStatus",
+            "type": "string",
+            "doc": "Overall processing status"
+          }
+        ]
+      },
+      "doc": "Response body with original message and processing info"
+    },
+    {
+      "name": "Trailer",
+      "type": {
+        "type": "record",
+        "name": "ServiceStatus",
+        "fields": [
+          {
+            "name": "status",
+            "type": "string",
+            "doc": "Processing status: SUCCESS, FAILED, PARTIAL"
+          },
+          {
+            "name": "StatusCode",
+            "type": "string",
+            "doc": "HTTP-style status code: 200, 400, 500"
+          },
+          {
+            "name": "StatusDesc",
+            "type": {
+              "type": "array",
+              "items": "string"
+            },
+            "doc": "Array of status descriptions or validation errors"
+          }
+        ]
+      },
+      "doc": "Service status trailer with validation results"
+    }
+  ]
+}
