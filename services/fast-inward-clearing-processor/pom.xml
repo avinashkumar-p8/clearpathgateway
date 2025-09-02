@@ -165,7 +165,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             
-            <!-- Avro Maven Plugin for generating Avro classes -->
+            <!-- Avro Maven Plugin for generating Avro classes directly into src/main/java -->
             <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
@@ -181,6 +181,11 @@
                             <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                             <stringType>String</stringType>
                             <fieldVisibility>PRIVATE</fieldVisibility>
+                            <createSetters>true</createSetters>
+                            <createOptionalGetters>false</createOptionalGetters>
+                            <gettersReturnOptional>false</gettersReturnOptional>
+                            <optionalGettersForNullableFieldsOnly>false</optionalGettersForNullableFieldsOnly>
+                            <enableDecimalLogicalType>true</enableDecimalLogicalType>
                         </configuration>
                     </execution>
                 </executions>

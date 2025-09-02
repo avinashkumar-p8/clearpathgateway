@@ -17,7 +17,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
   private static final long serialVersionUID = -6343280579603502728L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CdtrAgt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CdtrAgt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /** BIC */
-  private java.lang.CharSequence BIC;
+  private java.lang.String BIC;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
    * All-args constructor.
    * @param BIC BIC
    */
-  public CdtrAgt(java.lang.CharSequence BIC) {
+  public CdtrAgt(java.lang.String BIC) {
     this.BIC = BIC;
   }
 
@@ -111,7 +111,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: BIC = (java.lang.CharSequence)value$; break;
+    case 0: BIC = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'BIC' field.
    * @return BIC
    */
-  public java.lang.CharSequence getBIC() {
+  public java.lang.String getBIC() {
     return BIC;
   }
 
@@ -130,7 +130,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
    * BIC
    * @param value the value to set.
    */
-  public void setBIC(java.lang.CharSequence value) {
+  public void setBIC(java.lang.String value) {
     this.BIC = value;
   }
 
@@ -176,7 +176,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
     implements org.apache.avro.data.RecordBuilder<CdtrAgt> {
 
     /** BIC */
-    private java.lang.CharSequence BIC;
+    private java.lang.String BIC;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
       * BIC
       * @return The value.
       */
-    public java.lang.CharSequence getBIC() {
+    public java.lang.String getBIC() {
       return BIC;
     }
 
@@ -223,7 +223,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'BIC'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.CdtrAgt.Builder setBIC(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.CdtrAgt.Builder setBIC(java.lang.String value) {
       validate(fields()[0], value);
       this.BIC = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
     public CdtrAgt build() {
       try {
         CdtrAgt record = new CdtrAgt();
-        record.BIC = fieldSetFlags()[0] ? this.BIC : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.BIC = fieldSetFlags()[0] ? this.BIC : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class CdtrAgt extends org.apache.avro.specific.SpecificRecordBase impleme
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.BIC = in.readString(this.BIC instanceof Utf8 ? (Utf8)this.BIC : null);
+      this.BIC = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.BIC = in.readString(this.BIC instanceof Utf8 ? (Utf8)this.BIC : null);
+          this.BIC = in.readString();
           break;
 
         default:

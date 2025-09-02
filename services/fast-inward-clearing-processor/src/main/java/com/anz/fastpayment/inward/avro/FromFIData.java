@@ -17,7 +17,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
   private static final long serialVersionUID = -6182635095474759432L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FromFIData\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Country\",\"type\":\"string\",\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"Bank identifier code\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FromFIData\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,9 +74,9 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
   }
 
   /** Country code */
-  private java.lang.CharSequence Country;
+  private java.lang.String Country;
   /** Bank identifier code */
-  private java.lang.CharSequence BIC;
+  private java.lang.String BIC;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -90,7 +90,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
    * @param Country Country code
    * @param BIC Bank identifier code
    */
-  public FromFIData(java.lang.CharSequence Country, java.lang.CharSequence BIC) {
+  public FromFIData(java.lang.String Country, java.lang.String BIC) {
     this.Country = Country;
     this.BIC = BIC;
   }
@@ -116,8 +116,8 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: Country = (java.lang.CharSequence)value$; break;
-    case 1: BIC = (java.lang.CharSequence)value$; break;
+    case 0: Country = value$ != null ? value$.toString() : null; break;
+    case 1: BIC = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -126,7 +126,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
    * Gets the value of the 'Country' field.
    * @return Country code
    */
-  public java.lang.CharSequence getCountry() {
+  public java.lang.String getCountry() {
     return Country;
   }
 
@@ -136,7 +136,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
    * Country code
    * @param value the value to set.
    */
-  public void setCountry(java.lang.CharSequence value) {
+  public void setCountry(java.lang.String value) {
     this.Country = value;
   }
 
@@ -144,7 +144,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
    * Gets the value of the 'BIC' field.
    * @return Bank identifier code
    */
-  public java.lang.CharSequence getBIC() {
+  public java.lang.String getBIC() {
     return BIC;
   }
 
@@ -154,7 +154,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
    * Bank identifier code
    * @param value the value to set.
    */
-  public void setBIC(java.lang.CharSequence value) {
+  public void setBIC(java.lang.String value) {
     this.BIC = value;
   }
 
@@ -200,9 +200,9 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
     implements org.apache.avro.data.RecordBuilder<FromFIData> {
 
     /** Country code */
-    private java.lang.CharSequence Country;
+    private java.lang.String Country;
     /** Bank identifier code */
-    private java.lang.CharSequence BIC;
+    private java.lang.String BIC;
 
     /** Creates a new Builder */
     private Builder() {
@@ -246,7 +246,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
       * Country code
       * @return The value.
       */
-    public java.lang.CharSequence getCountry() {
+    public java.lang.String getCountry() {
       return Country;
     }
 
@@ -257,7 +257,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
       * @param value The value of 'Country'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromFIData.Builder setCountry(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromFIData.Builder setCountry(java.lang.String value) {
       validate(fields()[0], value);
       this.Country = value;
       fieldSetFlags()[0] = true;
@@ -290,7 +290,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
       * Bank identifier code
       * @return The value.
       */
-    public java.lang.CharSequence getBIC() {
+    public java.lang.String getBIC() {
       return BIC;
     }
 
@@ -301,7 +301,7 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
       * @param value The value of 'BIC'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromFIData.Builder setBIC(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromFIData.Builder setBIC(java.lang.String value) {
       validate(fields()[1], value);
       this.BIC = value;
       fieldSetFlags()[1] = true;
@@ -334,8 +334,8 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
     public FromFIData build() {
       try {
         FromFIData record = new FromFIData();
-        record.Country = fieldSetFlags()[0] ? this.Country : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.BIC = fieldSetFlags()[1] ? this.BIC : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.Country = fieldSetFlags()[0] ? this.Country : (java.lang.String) defaultValue(fields()[0]);
+        record.BIC = fieldSetFlags()[1] ? this.BIC : (java.lang.String) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -379,19 +379,19 @@ public class FromFIData extends org.apache.avro.specific.SpecificRecordBase impl
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.Country = in.readString(this.Country instanceof Utf8 ? (Utf8)this.Country : null);
+      this.Country = in.readString();
 
-      this.BIC = in.readString(this.BIC instanceof Utf8 ? (Utf8)this.BIC : null);
+      this.BIC = in.readString();
 
     } else {
       for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.Country = in.readString(this.Country instanceof Utf8 ? (Utf8)this.Country : null);
+          this.Country = in.readString();
           break;
 
         case 1:
-          this.BIC = in.readString(this.BIC instanceof Utf8 ? (Utf8)this.BIC : null);
+          this.BIC = in.readString();
           break;
 
         default:

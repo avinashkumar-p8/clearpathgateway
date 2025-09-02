@@ -17,7 +17,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = 7731261393129670897L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Procctxt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"sideEffect\",\"type\":{\"type\":\"array\",\"items\":\"string\"},\"doc\":\"Side effects array\"},{\"name\":\"softFail\",\"type\":{\"type\":\"array\",\"items\":\"string\"},\"doc\":\"Soft failures array\"},{\"name\":\"PmtDtls\",\"type\":{\"type\":\"record\",\"name\":\"PmtDtls\",\"fields\":[{\"name\":\"PmtCtxt\",\"type\":{\"type\":\"record\",\"name\":\"PmtCtxt\",\"fields\":[{\"name\":\"PuId\",\"type\":\"string\",\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":\"string\",\"doc\":\"Type\"},{\"name\":\"value\",\"type\":\"string\",\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]},\"doc\":\"Payment context\"},{\"name\":\"ProcCtryCd\",\"type\":\"string\",\"doc\":\"Processing country code\"},{\"name\":\"InstdClrgPref\",\"type\":\"string\",\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":\"string\",\"doc\":\"Instructed method of payment category\"},{\"name\":\"PmtCtgry\",\"type\":\"string\",\"doc\":\"Payment category\"},{\"name\":\"actClrMethod\",\"type\":\"string\",\"doc\":\"Actual clearing method\"},{\"name\":\"actlMtdOfPmtCtgry\",\"type\":\"string\",\"doc\":\"Actual method of payment category\"},{\"name\":\"FIDCIdentifier\",\"type\":\"string\",\"doc\":\"FIDC identifier\"},{\"name\":\"FICCIdentifier\",\"type\":\"string\",\"doc\":\"FICC identifier\"},{\"name\":\"VAM\",\"type\":\"string\",\"doc\":\"VAM\"},{\"name\":\"derivedDRAccountNo\",\"type\":\"string\",\"doc\":\"Derived debtor account number\"},{\"name\":\"derivedDRAccountSys\",\"type\":\"string\",\"doc\":\"Derived debtor account system\"},{\"name\":\"derivedDRBookCode\",\"type\":\"string\",\"doc\":\"Derived debtor book code\"}]},\"doc\":\"Payment details\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Procctxt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"sideEffect\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Side effects array\"},{\"name\":\"softFail\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Soft failures array\"},{\"name\":\"PmtDtls\",\"type\":{\"type\":\"record\",\"name\":\"PmtDtls\",\"fields\":[{\"name\":\"PmtCtxt\",\"type\":{\"type\":\"record\",\"name\":\"PmtCtxt\",\"fields\":[{\"name\":\"PuId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Type\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]},\"doc\":\"Payment context\"},{\"name\":\"ProcCtryCd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing country code\"},{\"name\":\"InstdClrgPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed method of payment category\"},{\"name\":\"PmtCtgry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment category\"},{\"name\":\"actClrMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Actual clearing method\"},{\"name\":\"actlMtdOfPmtCtgry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Actual method of payment category\"},{\"name\":\"FIDCIdentifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"FIDC identifier\"},{\"name\":\"FICCIdentifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"FICC identifier\"},{\"name\":\"VAM\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"VAM\"},{\"name\":\"derivedDRAccountNo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor account number\"},{\"name\":\"derivedDRAccountSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor account system\"},{\"name\":\"derivedDRBookCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor book code\"}]},\"doc\":\"Payment details\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,9 +74,9 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Side effects array */
-  private java.util.List<java.lang.CharSequence> sideEffect;
+  private java.util.List<java.lang.String> sideEffect;
   /** Soft failures array */
-  private java.util.List<java.lang.CharSequence> softFail;
+  private java.util.List<java.lang.String> softFail;
   /** Payment details */
   private com.anz.fastpayment.inward.avro.PmtDtls PmtDtls;
 
@@ -93,7 +93,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
    * @param softFail Soft failures array
    * @param PmtDtls Payment details
    */
-  public Procctxt(java.util.List<java.lang.CharSequence> sideEffect, java.util.List<java.lang.CharSequence> softFail, com.anz.fastpayment.inward.avro.PmtDtls PmtDtls) {
+  public Procctxt(java.util.List<java.lang.String> sideEffect, java.util.List<java.lang.String> softFail, com.anz.fastpayment.inward.avro.PmtDtls PmtDtls) {
     this.sideEffect = sideEffect;
     this.softFail = softFail;
     this.PmtDtls = PmtDtls;
@@ -121,8 +121,8 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: sideEffect = (java.util.List<java.lang.CharSequence>)value$; break;
-    case 1: softFail = (java.util.List<java.lang.CharSequence>)value$; break;
+    case 0: sideEffect = (java.util.List<java.lang.String>)value$; break;
+    case 1: softFail = (java.util.List<java.lang.String>)value$; break;
     case 2: PmtDtls = (com.anz.fastpayment.inward.avro.PmtDtls)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -132,7 +132,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'sideEffect' field.
    * @return Side effects array
    */
-  public java.util.List<java.lang.CharSequence> getSideEffect() {
+  public java.util.List<java.lang.String> getSideEffect() {
     return sideEffect;
   }
 
@@ -142,7 +142,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
    * Side effects array
    * @param value the value to set.
    */
-  public void setSideEffect(java.util.List<java.lang.CharSequence> value) {
+  public void setSideEffect(java.util.List<java.lang.String> value) {
     this.sideEffect = value;
   }
 
@@ -150,7 +150,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'softFail' field.
    * @return Soft failures array
    */
-  public java.util.List<java.lang.CharSequence> getSoftFail() {
+  public java.util.List<java.lang.String> getSoftFail() {
     return softFail;
   }
 
@@ -160,7 +160,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
    * Soft failures array
    * @param value the value to set.
    */
-  public void setSoftFail(java.util.List<java.lang.CharSequence> value) {
+  public void setSoftFail(java.util.List<java.lang.String> value) {
     this.softFail = value;
   }
 
@@ -224,9 +224,9 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<Procctxt> {
 
     /** Side effects array */
-    private java.util.List<java.lang.CharSequence> sideEffect;
+    private java.util.List<java.lang.String> sideEffect;
     /** Soft failures array */
-    private java.util.List<java.lang.CharSequence> softFail;
+    private java.util.List<java.lang.String> softFail;
     /** Payment details */
     private com.anz.fastpayment.inward.avro.PmtDtls PmtDtls;
     private com.anz.fastpayment.inward.avro.PmtDtls.Builder PmtDtlsBuilder;
@@ -285,7 +285,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
       * Side effects array
       * @return The value.
       */
-    public java.util.List<java.lang.CharSequence> getSideEffect() {
+    public java.util.List<java.lang.String> getSideEffect() {
       return sideEffect;
     }
 
@@ -296,7 +296,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'sideEffect'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Procctxt.Builder setSideEffect(java.util.List<java.lang.CharSequence> value) {
+    public com.anz.fastpayment.inward.avro.Procctxt.Builder setSideEffect(java.util.List<java.lang.String> value) {
       validate(fields()[0], value);
       this.sideEffect = value;
       fieldSetFlags()[0] = true;
@@ -329,7 +329,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
       * Soft failures array
       * @return The value.
       */
-    public java.util.List<java.lang.CharSequence> getSoftFail() {
+    public java.util.List<java.lang.String> getSoftFail() {
       return softFail;
     }
 
@@ -340,7 +340,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'softFail'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Procctxt.Builder setSoftFail(java.util.List<java.lang.CharSequence> value) {
+    public com.anz.fastpayment.inward.avro.Procctxt.Builder setSoftFail(java.util.List<java.lang.String> value) {
       validate(fields()[1], value);
       this.softFail = value;
       fieldSetFlags()[1] = true;
@@ -456,8 +456,8 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
     public Procctxt build() {
       try {
         Procctxt record = new Procctxt();
-        record.sideEffect = fieldSetFlags()[0] ? this.sideEffect : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[0]);
-        record.softFail = fieldSetFlags()[1] ? this.softFail : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[1]);
+        record.sideEffect = fieldSetFlags()[0] ? this.sideEffect : (java.util.List<java.lang.String>) defaultValue(fields()[0]);
+        record.softFail = fieldSetFlags()[1] ? this.softFail : (java.util.List<java.lang.String>) defaultValue(fields()[1]);
         if (PmtDtlsBuilder != null) {
           try {
             record.PmtDtls = this.PmtDtlsBuilder.build();
@@ -504,7 +504,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
-    for (java.lang.CharSequence e0: this.sideEffect) {
+    for (java.lang.String e0: this.sideEffect) {
       actualSize0++;
       out.startItem();
       out.writeString(e0);
@@ -517,7 +517,7 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
     out.writeArrayStart();
     out.setItemCount(size1);
     long actualSize1 = 0;
-    for (java.lang.CharSequence e1: this.softFail) {
+    for (java.lang.String e1: this.softFail) {
       actualSize1++;
       out.startItem();
       out.writeString(e1);
@@ -536,31 +536,31 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
       long size0 = in.readArrayStart();
-      java.util.List<java.lang.CharSequence> a0 = this.sideEffect;
+      java.util.List<java.lang.String> a0 = this.sideEffect;
       if (a0 == null) {
-        a0 = new SpecificData.Array<java.lang.CharSequence>((int)size0, SCHEMA$.getField("sideEffect").schema());
+        a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("sideEffect").schema());
         this.sideEffect = a0;
       } else a0.clear();
-      SpecificData.Array<java.lang.CharSequence> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a0 : null);
+      SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
       for ( ; 0 < size0; size0 = in.arrayNext()) {
         for ( ; size0 != 0; size0--) {
-          java.lang.CharSequence e0 = (ga0 != null ? ga0.peek() : null);
-          e0 = in.readString(e0 instanceof Utf8 ? (Utf8)e0 : null);
+          java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+          e0 = in.readString();
           a0.add(e0);
         }
       }
 
       long size1 = in.readArrayStart();
-      java.util.List<java.lang.CharSequence> a1 = this.softFail;
+      java.util.List<java.lang.String> a1 = this.softFail;
       if (a1 == null) {
-        a1 = new SpecificData.Array<java.lang.CharSequence>((int)size1, SCHEMA$.getField("softFail").schema());
+        a1 = new SpecificData.Array<java.lang.String>((int)size1, SCHEMA$.getField("softFail").schema());
         this.softFail = a1;
       } else a1.clear();
-      SpecificData.Array<java.lang.CharSequence> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a1 : null);
+      SpecificData.Array<java.lang.String> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a1 : null);
       for ( ; 0 < size1; size1 = in.arrayNext()) {
         for ( ; size1 != 0; size1--) {
-          java.lang.CharSequence e1 = (ga1 != null ? ga1.peek() : null);
-          e1 = in.readString(e1 instanceof Utf8 ? (Utf8)e1 : null);
+          java.lang.String e1 = (ga1 != null ? ga1.peek() : null);
+          e1 = in.readString();
           a1.add(e1);
         }
       }
@@ -575,16 +575,16 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
         switch (fieldOrder[i].pos()) {
         case 0:
           long size0 = in.readArrayStart();
-          java.util.List<java.lang.CharSequence> a0 = this.sideEffect;
+          java.util.List<java.lang.String> a0 = this.sideEffect;
           if (a0 == null) {
-            a0 = new SpecificData.Array<java.lang.CharSequence>((int)size0, SCHEMA$.getField("sideEffect").schema());
+            a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("sideEffect").schema());
             this.sideEffect = a0;
           } else a0.clear();
-          SpecificData.Array<java.lang.CharSequence> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a0 : null);
+          SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
           for ( ; 0 < size0; size0 = in.arrayNext()) {
             for ( ; size0 != 0; size0--) {
-              java.lang.CharSequence e0 = (ga0 != null ? ga0.peek() : null);
-              e0 = in.readString(e0 instanceof Utf8 ? (Utf8)e0 : null);
+              java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+              e0 = in.readString();
               a0.add(e0);
             }
           }
@@ -592,16 +592,16 @@ public class Procctxt extends org.apache.avro.specific.SpecificRecordBase implem
 
         case 1:
           long size1 = in.readArrayStart();
-          java.util.List<java.lang.CharSequence> a1 = this.softFail;
+          java.util.List<java.lang.String> a1 = this.softFail;
           if (a1 == null) {
-            a1 = new SpecificData.Array<java.lang.CharSequence>((int)size1, SCHEMA$.getField("softFail").schema());
+            a1 = new SpecificData.Array<java.lang.String>((int)size1, SCHEMA$.getField("softFail").schema());
             this.softFail = a1;
           } else a1.clear();
-          SpecificData.Array<java.lang.CharSequence> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a1 : null);
+          SpecificData.Array<java.lang.String> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a1 : null);
           for ( ; 0 < size1; size1 = in.arrayNext()) {
             for ( ; size1 != 0; size1--) {
-              java.lang.CharSequence e1 = (ga1 != null ? ga1.peek() : null);
-              e1 = in.readString(e1 instanceof Utf8 ? (Utf8)e1 : null);
+              java.lang.String e1 = (ga1 != null ? ga1.peek() : null);
+              e1 = in.readString();
               a1.add(e1);
             }
           }

@@ -17,7 +17,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = 256868919251342355L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RmtInf\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Ustrd\",\"type\":\"string\",\"doc\":\"Unstructured\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RmtInf\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Ustrd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Unstructured\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** Unstructured */
-  private java.lang.CharSequence Ustrd;
+  private java.lang.String Ustrd;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
    * All-args constructor.
    * @param Ustrd Unstructured
    */
-  public RmtInf(java.lang.CharSequence Ustrd) {
+  public RmtInf(java.lang.String Ustrd) {
     this.Ustrd = Ustrd;
   }
 
@@ -111,7 +111,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: Ustrd = (java.lang.CharSequence)value$; break;
+    case 0: Ustrd = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Ustrd' field.
    * @return Unstructured
    */
-  public java.lang.CharSequence getUstrd() {
+  public java.lang.String getUstrd() {
     return Ustrd;
   }
 
@@ -130,7 +130,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
    * Unstructured
    * @param value the value to set.
    */
-  public void setUstrd(java.lang.CharSequence value) {
+  public void setUstrd(java.lang.String value) {
     this.Ustrd = value;
   }
 
@@ -176,7 +176,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<RmtInf> {
 
     /** Unstructured */
-    private java.lang.CharSequence Ustrd;
+    private java.lang.String Ustrd;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
       * Unstructured
       * @return The value.
       */
-    public java.lang.CharSequence getUstrd() {
+    public java.lang.String getUstrd() {
       return Ustrd;
     }
 
@@ -223,7 +223,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Ustrd'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.RmtInf.Builder setUstrd(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.RmtInf.Builder setUstrd(java.lang.String value) {
       validate(fields()[0], value);
       this.Ustrd = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
     public RmtInf build() {
       try {
         RmtInf record = new RmtInf();
-        record.Ustrd = fieldSetFlags()[0] ? this.Ustrd : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.Ustrd = fieldSetFlags()[0] ? this.Ustrd : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class RmtInf extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.Ustrd = in.readString(this.Ustrd instanceof Utf8 ? (Utf8)this.Ustrd : null);
+      this.Ustrd = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.Ustrd = in.readString(this.Ustrd instanceof Utf8 ? (Utf8)this.Ustrd : null);
+          this.Ustrd = in.readString();
           break;
 
         default:

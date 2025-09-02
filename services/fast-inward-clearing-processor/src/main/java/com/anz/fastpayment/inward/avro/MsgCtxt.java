@@ -17,7 +17,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   private static final long serialVersionUID = -3367752317948508994L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgCtxt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"OrigMsgTyp\",\"type\":\"string\",\"doc\":\"Original message type\"},{\"name\":\"InstdClrgPref\",\"type\":\"string\",\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":\"string\",\"doc\":\"Instructed method of payment category\"},{\"name\":\"Site\",\"type\":\"string\",\"doc\":\"Site\"},{\"name\":\"BaseAmt\",\"type\":\"double\",\"doc\":\"Base amount\"},{\"name\":\"BaseCcy\",\"type\":\"string\",\"doc\":\"Base currency\"},{\"name\":\"SenderBIC\",\"type\":\"string\",\"doc\":\"Sender BIC\"},{\"name\":\"ProcCtryCd\",\"type\":\"string\",\"doc\":\"Processing country code\"},{\"name\":\"Department\",\"type\":\"string\",\"doc\":\"Department\"},{\"name\":\"MsgId\",\"type\":\"string\",\"doc\":\"Message identifier\"},{\"name\":\"Direction\",\"type\":\"string\",\"doc\":\"Direction\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgCtxt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"OrigMsgTyp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Original message type\"},{\"name\":\"InstdClrgPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed method of payment category\"},{\"name\":\"Site\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Site\"},{\"name\":\"BaseAmt\",\"type\":\"double\",\"doc\":\"Base amount\"},{\"name\":\"BaseCcy\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Base currency\"},{\"name\":\"SenderBIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Sender BIC\"},{\"name\":\"ProcCtryCd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing country code\"},{\"name\":\"Department\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Department\"},{\"name\":\"MsgId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message identifier\"},{\"name\":\"Direction\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Direction\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,27 +74,27 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /** Original message type */
-  private java.lang.CharSequence OrigMsgTyp;
+  private java.lang.String OrigMsgTyp;
   /** Instructed clearing preference */
-  private java.lang.CharSequence InstdClrgPref;
+  private java.lang.String InstdClrgPref;
   /** Instructed method of payment category */
-  private java.lang.CharSequence InstdMoPCat;
+  private java.lang.String InstdMoPCat;
   /** Site */
-  private java.lang.CharSequence Site;
+  private java.lang.String Site;
   /** Base amount */
   private double BaseAmt;
   /** Base currency */
-  private java.lang.CharSequence BaseCcy;
+  private java.lang.String BaseCcy;
   /** Sender BIC */
-  private java.lang.CharSequence SenderBIC;
+  private java.lang.String SenderBIC;
   /** Processing country code */
-  private java.lang.CharSequence ProcCtryCd;
+  private java.lang.String ProcCtryCd;
   /** Department */
-  private java.lang.CharSequence Department;
+  private java.lang.String Department;
   /** Message identifier */
-  private java.lang.CharSequence MsgId;
+  private java.lang.String MsgId;
   /** Direction */
-  private java.lang.CharSequence Direction;
+  private java.lang.String Direction;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -117,7 +117,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param MsgId Message identifier
    * @param Direction Direction
    */
-  public MsgCtxt(java.lang.CharSequence OrigMsgTyp, java.lang.CharSequence InstdClrgPref, java.lang.CharSequence InstdMoPCat, java.lang.CharSequence Site, java.lang.Double BaseAmt, java.lang.CharSequence BaseCcy, java.lang.CharSequence SenderBIC, java.lang.CharSequence ProcCtryCd, java.lang.CharSequence Department, java.lang.CharSequence MsgId, java.lang.CharSequence Direction) {
+  public MsgCtxt(java.lang.String OrigMsgTyp, java.lang.String InstdClrgPref, java.lang.String InstdMoPCat, java.lang.String Site, java.lang.Double BaseAmt, java.lang.String BaseCcy, java.lang.String SenderBIC, java.lang.String ProcCtryCd, java.lang.String Department, java.lang.String MsgId, java.lang.String Direction) {
     this.OrigMsgTyp = OrigMsgTyp;
     this.InstdClrgPref = InstdClrgPref;
     this.InstdMoPCat = InstdMoPCat;
@@ -161,17 +161,17 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: OrigMsgTyp = (java.lang.CharSequence)value$; break;
-    case 1: InstdClrgPref = (java.lang.CharSequence)value$; break;
-    case 2: InstdMoPCat = (java.lang.CharSequence)value$; break;
-    case 3: Site = (java.lang.CharSequence)value$; break;
+    case 0: OrigMsgTyp = value$ != null ? value$.toString() : null; break;
+    case 1: InstdClrgPref = value$ != null ? value$.toString() : null; break;
+    case 2: InstdMoPCat = value$ != null ? value$.toString() : null; break;
+    case 3: Site = value$ != null ? value$.toString() : null; break;
     case 4: BaseAmt = (java.lang.Double)value$; break;
-    case 5: BaseCcy = (java.lang.CharSequence)value$; break;
-    case 6: SenderBIC = (java.lang.CharSequence)value$; break;
-    case 7: ProcCtryCd = (java.lang.CharSequence)value$; break;
-    case 8: Department = (java.lang.CharSequence)value$; break;
-    case 9: MsgId = (java.lang.CharSequence)value$; break;
-    case 10: Direction = (java.lang.CharSequence)value$; break;
+    case 5: BaseCcy = value$ != null ? value$.toString() : null; break;
+    case 6: SenderBIC = value$ != null ? value$.toString() : null; break;
+    case 7: ProcCtryCd = value$ != null ? value$.toString() : null; break;
+    case 8: Department = value$ != null ? value$.toString() : null; break;
+    case 9: MsgId = value$ != null ? value$.toString() : null; break;
+    case 10: Direction = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -180,7 +180,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'OrigMsgTyp' field.
    * @return Original message type
    */
-  public java.lang.CharSequence getOrigMsgTyp() {
+  public java.lang.String getOrigMsgTyp() {
     return OrigMsgTyp;
   }
 
@@ -190,7 +190,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Original message type
    * @param value the value to set.
    */
-  public void setOrigMsgTyp(java.lang.CharSequence value) {
+  public void setOrigMsgTyp(java.lang.String value) {
     this.OrigMsgTyp = value;
   }
 
@@ -198,7 +198,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'InstdClrgPref' field.
    * @return Instructed clearing preference
    */
-  public java.lang.CharSequence getInstdClrgPref() {
+  public java.lang.String getInstdClrgPref() {
     return InstdClrgPref;
   }
 
@@ -208,7 +208,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Instructed clearing preference
    * @param value the value to set.
    */
-  public void setInstdClrgPref(java.lang.CharSequence value) {
+  public void setInstdClrgPref(java.lang.String value) {
     this.InstdClrgPref = value;
   }
 
@@ -216,7 +216,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'InstdMoPCat' field.
    * @return Instructed method of payment category
    */
-  public java.lang.CharSequence getInstdMoPCat() {
+  public java.lang.String getInstdMoPCat() {
     return InstdMoPCat;
   }
 
@@ -226,7 +226,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Instructed method of payment category
    * @param value the value to set.
    */
-  public void setInstdMoPCat(java.lang.CharSequence value) {
+  public void setInstdMoPCat(java.lang.String value) {
     this.InstdMoPCat = value;
   }
 
@@ -234,7 +234,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'Site' field.
    * @return Site
    */
-  public java.lang.CharSequence getSite() {
+  public java.lang.String getSite() {
     return Site;
   }
 
@@ -244,7 +244,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Site
    * @param value the value to set.
    */
-  public void setSite(java.lang.CharSequence value) {
+  public void setSite(java.lang.String value) {
     this.Site = value;
   }
 
@@ -270,7 +270,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'BaseCcy' field.
    * @return Base currency
    */
-  public java.lang.CharSequence getBaseCcy() {
+  public java.lang.String getBaseCcy() {
     return BaseCcy;
   }
 
@@ -280,7 +280,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Base currency
    * @param value the value to set.
    */
-  public void setBaseCcy(java.lang.CharSequence value) {
+  public void setBaseCcy(java.lang.String value) {
     this.BaseCcy = value;
   }
 
@@ -288,7 +288,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'SenderBIC' field.
    * @return Sender BIC
    */
-  public java.lang.CharSequence getSenderBIC() {
+  public java.lang.String getSenderBIC() {
     return SenderBIC;
   }
 
@@ -298,7 +298,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sender BIC
    * @param value the value to set.
    */
-  public void setSenderBIC(java.lang.CharSequence value) {
+  public void setSenderBIC(java.lang.String value) {
     this.SenderBIC = value;
   }
 
@@ -306,7 +306,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'ProcCtryCd' field.
    * @return Processing country code
    */
-  public java.lang.CharSequence getProcCtryCd() {
+  public java.lang.String getProcCtryCd() {
     return ProcCtryCd;
   }
 
@@ -316,7 +316,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Processing country code
    * @param value the value to set.
    */
-  public void setProcCtryCd(java.lang.CharSequence value) {
+  public void setProcCtryCd(java.lang.String value) {
     this.ProcCtryCd = value;
   }
 
@@ -324,7 +324,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'Department' field.
    * @return Department
    */
-  public java.lang.CharSequence getDepartment() {
+  public java.lang.String getDepartment() {
     return Department;
   }
 
@@ -334,7 +334,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Department
    * @param value the value to set.
    */
-  public void setDepartment(java.lang.CharSequence value) {
+  public void setDepartment(java.lang.String value) {
     this.Department = value;
   }
 
@@ -342,7 +342,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'MsgId' field.
    * @return Message identifier
    */
-  public java.lang.CharSequence getMsgId() {
+  public java.lang.String getMsgId() {
     return MsgId;
   }
 
@@ -352,7 +352,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Message identifier
    * @param value the value to set.
    */
-  public void setMsgId(java.lang.CharSequence value) {
+  public void setMsgId(java.lang.String value) {
     this.MsgId = value;
   }
 
@@ -360,7 +360,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'Direction' field.
    * @return Direction
    */
-  public java.lang.CharSequence getDirection() {
+  public java.lang.String getDirection() {
     return Direction;
   }
 
@@ -370,7 +370,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Direction
    * @param value the value to set.
    */
-  public void setDirection(java.lang.CharSequence value) {
+  public void setDirection(java.lang.String value) {
     this.Direction = value;
   }
 
@@ -416,27 +416,27 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
     implements org.apache.avro.data.RecordBuilder<MsgCtxt> {
 
     /** Original message type */
-    private java.lang.CharSequence OrigMsgTyp;
+    private java.lang.String OrigMsgTyp;
     /** Instructed clearing preference */
-    private java.lang.CharSequence InstdClrgPref;
+    private java.lang.String InstdClrgPref;
     /** Instructed method of payment category */
-    private java.lang.CharSequence InstdMoPCat;
+    private java.lang.String InstdMoPCat;
     /** Site */
-    private java.lang.CharSequence Site;
+    private java.lang.String Site;
     /** Base amount */
     private double BaseAmt;
     /** Base currency */
-    private java.lang.CharSequence BaseCcy;
+    private java.lang.String BaseCcy;
     /** Sender BIC */
-    private java.lang.CharSequence SenderBIC;
+    private java.lang.String SenderBIC;
     /** Processing country code */
-    private java.lang.CharSequence ProcCtryCd;
+    private java.lang.String ProcCtryCd;
     /** Department */
-    private java.lang.CharSequence Department;
+    private java.lang.String Department;
     /** Message identifier */
-    private java.lang.CharSequence MsgId;
+    private java.lang.String MsgId;
     /** Direction */
-    private java.lang.CharSequence Direction;
+    private java.lang.String Direction;
 
     /** Creates a new Builder */
     private Builder() {
@@ -552,7 +552,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Original message type
       * @return The value.
       */
-    public java.lang.CharSequence getOrigMsgTyp() {
+    public java.lang.String getOrigMsgTyp() {
       return OrigMsgTyp;
     }
 
@@ -563,7 +563,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'OrigMsgTyp'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setOrigMsgTyp(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setOrigMsgTyp(java.lang.String value) {
       validate(fields()[0], value);
       this.OrigMsgTyp = value;
       fieldSetFlags()[0] = true;
@@ -596,7 +596,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Instructed clearing preference
       * @return The value.
       */
-    public java.lang.CharSequence getInstdClrgPref() {
+    public java.lang.String getInstdClrgPref() {
       return InstdClrgPref;
     }
 
@@ -607,7 +607,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'InstdClrgPref'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setInstdClrgPref(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setInstdClrgPref(java.lang.String value) {
       validate(fields()[1], value);
       this.InstdClrgPref = value;
       fieldSetFlags()[1] = true;
@@ -640,7 +640,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Instructed method of payment category
       * @return The value.
       */
-    public java.lang.CharSequence getInstdMoPCat() {
+    public java.lang.String getInstdMoPCat() {
       return InstdMoPCat;
     }
 
@@ -651,7 +651,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'InstdMoPCat'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setInstdMoPCat(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setInstdMoPCat(java.lang.String value) {
       validate(fields()[2], value);
       this.InstdMoPCat = value;
       fieldSetFlags()[2] = true;
@@ -684,7 +684,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Site
       * @return The value.
       */
-    public java.lang.CharSequence getSite() {
+    public java.lang.String getSite() {
       return Site;
     }
 
@@ -695,7 +695,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'Site'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setSite(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setSite(java.lang.String value) {
       validate(fields()[3], value);
       this.Site = value;
       fieldSetFlags()[3] = true;
@@ -771,7 +771,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Base currency
       * @return The value.
       */
-    public java.lang.CharSequence getBaseCcy() {
+    public java.lang.String getBaseCcy() {
       return BaseCcy;
     }
 
@@ -782,7 +782,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'BaseCcy'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setBaseCcy(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setBaseCcy(java.lang.String value) {
       validate(fields()[5], value);
       this.BaseCcy = value;
       fieldSetFlags()[5] = true;
@@ -815,7 +815,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Sender BIC
       * @return The value.
       */
-    public java.lang.CharSequence getSenderBIC() {
+    public java.lang.String getSenderBIC() {
       return SenderBIC;
     }
 
@@ -826,7 +826,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'SenderBIC'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setSenderBIC(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setSenderBIC(java.lang.String value) {
       validate(fields()[6], value);
       this.SenderBIC = value;
       fieldSetFlags()[6] = true;
@@ -859,7 +859,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Processing country code
       * @return The value.
       */
-    public java.lang.CharSequence getProcCtryCd() {
+    public java.lang.String getProcCtryCd() {
       return ProcCtryCd;
     }
 
@@ -870,7 +870,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'ProcCtryCd'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setProcCtryCd(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setProcCtryCd(java.lang.String value) {
       validate(fields()[7], value);
       this.ProcCtryCd = value;
       fieldSetFlags()[7] = true;
@@ -903,7 +903,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Department
       * @return The value.
       */
-    public java.lang.CharSequence getDepartment() {
+    public java.lang.String getDepartment() {
       return Department;
     }
 
@@ -914,7 +914,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'Department'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setDepartment(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setDepartment(java.lang.String value) {
       validate(fields()[8], value);
       this.Department = value;
       fieldSetFlags()[8] = true;
@@ -947,7 +947,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Message identifier
       * @return The value.
       */
-    public java.lang.CharSequence getMsgId() {
+    public java.lang.String getMsgId() {
       return MsgId;
     }
 
@@ -958,7 +958,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'MsgId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setMsgId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setMsgId(java.lang.String value) {
       validate(fields()[9], value);
       this.MsgId = value;
       fieldSetFlags()[9] = true;
@@ -991,7 +991,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Direction
       * @return The value.
       */
-    public java.lang.CharSequence getDirection() {
+    public java.lang.String getDirection() {
       return Direction;
     }
 
@@ -1002,7 +1002,7 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'Direction'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setDirection(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgCtxt.Builder setDirection(java.lang.String value) {
       validate(fields()[10], value);
       this.Direction = value;
       fieldSetFlags()[10] = true;
@@ -1035,17 +1035,17 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
     public MsgCtxt build() {
       try {
         MsgCtxt record = new MsgCtxt();
-        record.OrigMsgTyp = fieldSetFlags()[0] ? this.OrigMsgTyp : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.InstdClrgPref = fieldSetFlags()[1] ? this.InstdClrgPref : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.InstdMoPCat = fieldSetFlags()[2] ? this.InstdMoPCat : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.Site = fieldSetFlags()[3] ? this.Site : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.OrigMsgTyp = fieldSetFlags()[0] ? this.OrigMsgTyp : (java.lang.String) defaultValue(fields()[0]);
+        record.InstdClrgPref = fieldSetFlags()[1] ? this.InstdClrgPref : (java.lang.String) defaultValue(fields()[1]);
+        record.InstdMoPCat = fieldSetFlags()[2] ? this.InstdMoPCat : (java.lang.String) defaultValue(fields()[2]);
+        record.Site = fieldSetFlags()[3] ? this.Site : (java.lang.String) defaultValue(fields()[3]);
         record.BaseAmt = fieldSetFlags()[4] ? this.BaseAmt : (java.lang.Double) defaultValue(fields()[4]);
-        record.BaseCcy = fieldSetFlags()[5] ? this.BaseCcy : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.SenderBIC = fieldSetFlags()[6] ? this.SenderBIC : (java.lang.CharSequence) defaultValue(fields()[6]);
-        record.ProcCtryCd = fieldSetFlags()[7] ? this.ProcCtryCd : (java.lang.CharSequence) defaultValue(fields()[7]);
-        record.Department = fieldSetFlags()[8] ? this.Department : (java.lang.CharSequence) defaultValue(fields()[8]);
-        record.MsgId = fieldSetFlags()[9] ? this.MsgId : (java.lang.CharSequence) defaultValue(fields()[9]);
-        record.Direction = fieldSetFlags()[10] ? this.Direction : (java.lang.CharSequence) defaultValue(fields()[10]);
+        record.BaseCcy = fieldSetFlags()[5] ? this.BaseCcy : (java.lang.String) defaultValue(fields()[5]);
+        record.SenderBIC = fieldSetFlags()[6] ? this.SenderBIC : (java.lang.String) defaultValue(fields()[6]);
+        record.ProcCtryCd = fieldSetFlags()[7] ? this.ProcCtryCd : (java.lang.String) defaultValue(fields()[7]);
+        record.Department = fieldSetFlags()[8] ? this.Department : (java.lang.String) defaultValue(fields()[8]);
+        record.MsgId = fieldSetFlags()[9] ? this.MsgId : (java.lang.String) defaultValue(fields()[9]);
+        record.Direction = fieldSetFlags()[10] ? this.Direction : (java.lang.String) defaultValue(fields()[10]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1107,45 +1107,45 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.OrigMsgTyp = in.readString(this.OrigMsgTyp instanceof Utf8 ? (Utf8)this.OrigMsgTyp : null);
+      this.OrigMsgTyp = in.readString();
 
-      this.InstdClrgPref = in.readString(this.InstdClrgPref instanceof Utf8 ? (Utf8)this.InstdClrgPref : null);
+      this.InstdClrgPref = in.readString();
 
-      this.InstdMoPCat = in.readString(this.InstdMoPCat instanceof Utf8 ? (Utf8)this.InstdMoPCat : null);
+      this.InstdMoPCat = in.readString();
 
-      this.Site = in.readString(this.Site instanceof Utf8 ? (Utf8)this.Site : null);
+      this.Site = in.readString();
 
       this.BaseAmt = in.readDouble();
 
-      this.BaseCcy = in.readString(this.BaseCcy instanceof Utf8 ? (Utf8)this.BaseCcy : null);
+      this.BaseCcy = in.readString();
 
-      this.SenderBIC = in.readString(this.SenderBIC instanceof Utf8 ? (Utf8)this.SenderBIC : null);
+      this.SenderBIC = in.readString();
 
-      this.ProcCtryCd = in.readString(this.ProcCtryCd instanceof Utf8 ? (Utf8)this.ProcCtryCd : null);
+      this.ProcCtryCd = in.readString();
 
-      this.Department = in.readString(this.Department instanceof Utf8 ? (Utf8)this.Department : null);
+      this.Department = in.readString();
 
-      this.MsgId = in.readString(this.MsgId instanceof Utf8 ? (Utf8)this.MsgId : null);
+      this.MsgId = in.readString();
 
-      this.Direction = in.readString(this.Direction instanceof Utf8 ? (Utf8)this.Direction : null);
+      this.Direction = in.readString();
 
     } else {
       for (int i = 0; i < 11; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.OrigMsgTyp = in.readString(this.OrigMsgTyp instanceof Utf8 ? (Utf8)this.OrigMsgTyp : null);
+          this.OrigMsgTyp = in.readString();
           break;
 
         case 1:
-          this.InstdClrgPref = in.readString(this.InstdClrgPref instanceof Utf8 ? (Utf8)this.InstdClrgPref : null);
+          this.InstdClrgPref = in.readString();
           break;
 
         case 2:
-          this.InstdMoPCat = in.readString(this.InstdMoPCat instanceof Utf8 ? (Utf8)this.InstdMoPCat : null);
+          this.InstdMoPCat = in.readString();
           break;
 
         case 3:
-          this.Site = in.readString(this.Site instanceof Utf8 ? (Utf8)this.Site : null);
+          this.Site = in.readString();
           break;
 
         case 4:
@@ -1153,27 +1153,27 @@ public class MsgCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
           break;
 
         case 5:
-          this.BaseCcy = in.readString(this.BaseCcy instanceof Utf8 ? (Utf8)this.BaseCcy : null);
+          this.BaseCcy = in.readString();
           break;
 
         case 6:
-          this.SenderBIC = in.readString(this.SenderBIC instanceof Utf8 ? (Utf8)this.SenderBIC : null);
+          this.SenderBIC = in.readString();
           break;
 
         case 7:
-          this.ProcCtryCd = in.readString(this.ProcCtryCd instanceof Utf8 ? (Utf8)this.ProcCtryCd : null);
+          this.ProcCtryCd = in.readString();
           break;
 
         case 8:
-          this.Department = in.readString(this.Department instanceof Utf8 ? (Utf8)this.Department : null);
+          this.Department = in.readString();
           break;
 
         case 9:
-          this.MsgId = in.readString(this.MsgId instanceof Utf8 ? (Utf8)this.MsgId : null);
+          this.MsgId = in.readString();
           break;
 
         case 10:
-          this.Direction = in.readString(this.Direction instanceof Utf8 ? (Utf8)this.Direction : null);
+          this.Direction = in.readString();
           break;
 
         default:

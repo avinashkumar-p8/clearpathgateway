@@ -17,7 +17,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = 3642172316204745052L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgAddRq\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"OrigMsg\",\"type\":\"string\",\"doc\":\"Original message\"},{\"name\":\"MsgDtls\",\"type\":{\"type\":\"record\",\"name\":\"MsgDtls\",\"fields\":[{\"name\":\"DrctDbtTxInf\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTxInf\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PmtId\",\"fields\":[{\"name\":\"InstrId\",\"type\":\"string\",\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":\"string\",\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":\"string\",\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":\"string\",\"doc\":\"Clearing system reference\"}]},\"doc\":\"Payment identifier\"},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Interbank settlement amount\"},{\"name\":\"IntrBkSttlmCCY\",\"type\":\"string\",\"doc\":\"Interbank settlement currency\"},{\"name\":\"IntrBkSttlmDt\",\"type\":\"string\",\"doc\":\"Interbank settlement date\"},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstgAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Instructing agent\"},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstdAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Instructed agent\"},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Dbtr\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]},\"doc\":\"Debtor\"},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]},\"doc\":\"Debtor account\"},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Debtor agent\"},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Creditor agent\"},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Cdtr\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]},\"doc\":\"Creditor\"},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]},\"doc\":\"Creditor account\"},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purp\",\"fields\":[{\"name\":\"Cd\",\"type\":\"string\",\"doc\":\"Code\"}]},\"doc\":\"Purpose\"},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RmtInf\",\"fields\":[{\"name\":\"Ustrd\",\"type\":\"string\",\"doc\":\"Unstructured\"}]},\"doc\":\"Remittance information\"},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":\"string\",\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]},\"doc\":\"Direct debit transaction\"}]},\"doc\":\"Direct debit transaction information\"}]},\"doc\":\"Message details\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgAddRq\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"OrigMsg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Original message\"},{\"name\":\"MsgDtls\",\"type\":{\"type\":\"record\",\"name\":\"MsgDtls\",\"fields\":[{\"name\":\"DrctDbtTxInf\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTxInf\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PmtId\",\"fields\":[{\"name\":\"InstrId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing system reference\"}]},\"doc\":\"Payment identifier\"},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Interbank settlement amount\"},{\"name\":\"IntrBkSttlmCCY\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Interbank settlement currency\"},{\"name\":\"IntrBkSttlmDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Interbank settlement date\"},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstgAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Instructing agent\"},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstdAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Instructed agent\"},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Dbtr\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]},\"doc\":\"Debtor\"},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]},\"doc\":\"Debtor account\"},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Debtor agent\"},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Creditor agent\"},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Cdtr\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]},\"doc\":\"Creditor\"},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]},\"doc\":\"Creditor account\"},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purp\",\"fields\":[{\"name\":\"Cd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Code\"}]},\"doc\":\"Purpose\"},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RmtInf\",\"fields\":[{\"name\":\"Ustrd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Unstructured\"}]},\"doc\":\"Remittance information\"},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]},\"doc\":\"Direct debit transaction\"}]},\"doc\":\"Direct debit transaction information\"}]},\"doc\":\"Message details\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Original message */
-  private java.lang.CharSequence OrigMsg;
+  private java.lang.String OrigMsg;
   /** Message details */
   private com.anz.fastpayment.inward.avro.MsgDtls MsgDtls;
 
@@ -90,7 +90,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * @param OrigMsg Original message
    * @param MsgDtls Message details
    */
-  public MsgAddRq(java.lang.CharSequence OrigMsg, com.anz.fastpayment.inward.avro.MsgDtls MsgDtls) {
+  public MsgAddRq(java.lang.String OrigMsg, com.anz.fastpayment.inward.avro.MsgDtls MsgDtls) {
     this.OrigMsg = OrigMsg;
     this.MsgDtls = MsgDtls;
   }
@@ -116,7 +116,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: OrigMsg = (java.lang.CharSequence)value$; break;
+    case 0: OrigMsg = value$ != null ? value$.toString() : null; break;
     case 1: MsgDtls = (com.anz.fastpayment.inward.avro.MsgDtls)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -126,7 +126,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'OrigMsg' field.
    * @return Original message
    */
-  public java.lang.CharSequence getOrigMsg() {
+  public java.lang.String getOrigMsg() {
     return OrigMsg;
   }
 
@@ -136,7 +136,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * Original message
    * @param value the value to set.
    */
-  public void setOrigMsg(java.lang.CharSequence value) {
+  public void setOrigMsg(java.lang.String value) {
     this.OrigMsg = value;
   }
 
@@ -200,7 +200,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<MsgAddRq> {
 
     /** Original message */
-    private java.lang.CharSequence OrigMsg;
+    private java.lang.String OrigMsg;
     /** Message details */
     private com.anz.fastpayment.inward.avro.MsgDtls MsgDtls;
     private com.anz.fastpayment.inward.avro.MsgDtls.Builder MsgDtlsBuilder;
@@ -251,7 +251,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       * Original message
       * @return The value.
       */
-    public java.lang.CharSequence getOrigMsg() {
+    public java.lang.String getOrigMsg() {
       return OrigMsg;
     }
 
@@ -262,7 +262,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'OrigMsg'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgAddRq.Builder setOrigMsg(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgAddRq.Builder setOrigMsg(java.lang.String value) {
       validate(fields()[0], value);
       this.OrigMsg = value;
       fieldSetFlags()[0] = true;
@@ -378,7 +378,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     public MsgAddRq build() {
       try {
         MsgAddRq record = new MsgAddRq();
-        record.OrigMsg = fieldSetFlags()[0] ? this.OrigMsg : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.OrigMsg = fieldSetFlags()[0] ? this.OrigMsg : (java.lang.String) defaultValue(fields()[0]);
         if (MsgDtlsBuilder != null) {
           try {
             record.MsgDtls = this.MsgDtlsBuilder.build();
@@ -432,7 +432,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.OrigMsg = in.readString(this.OrigMsg instanceof Utf8 ? (Utf8)this.OrigMsg : null);
+      this.OrigMsg = in.readString();
 
       if (this.MsgDtls == null) {
         this.MsgDtls = new com.anz.fastpayment.inward.avro.MsgDtls();
@@ -443,7 +443,7 @@ public class MsgAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.OrigMsg = in.readString(this.OrigMsg instanceof Utf8 ? (Utf8)this.OrigMsg : null);
+          this.OrigMsg = in.readString();
           break;
 
         case 1:

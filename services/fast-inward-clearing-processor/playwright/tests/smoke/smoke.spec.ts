@@ -9,7 +9,9 @@ test.describe('Smoke Tests - Basic Functionality Verification', () => {
   });
 
   test.afterAll(async () => {
-    await kafkaHelper.disconnect();
+    // Don't disconnect Kafka for 24/7 continuous service
+    // Kafka connections should remain active for continuous processing
+    console.log('Test completed - Kafka connections remain active for continuous service');
   });
 
   test('should have service running and healthy', async () => {
@@ -59,45 +61,18 @@ test.describe('Smoke Tests - Basic Functionality Verification', () => {
     const inputTopic = process.env.INPUT_TOPIC || 'transactions.incoming';
     const outputTopic = process.env.OUTPUT_TOPIC || 'transactions.processed';
     
-    // Send a simple payment message
-    const simpleMessage = {
-      Header: {
-        ComponentName: "SMOKE_TEST",
-        UUID: "smoke-test-uuid",
-        MUID: "smoke-test-muid",
-        Channel: "TEST",
-        Direction: "INWARD",
-        RcvdTS: new Date().toISOString()
-      },
-      Body: {
-        PmtAddRq: [{
-          RqUID: "smoke-req-001",
-          FromAcct: {
-            AcctId: "SMOKE001",
-            Amount: 100.00,
-            CurCode: "SGD"
-          },
-          ToAcct: {
-            AcctId: "SMOKE002",
-            Amount: 100.00,
-            CurCode: "SGD"
-          }
-        }]
-      },
-      Procctxt: {
-        sideEffect: ["none"]
-      },
-      messages: []
-    };
+    // Send a proper payment message using test data with unique MUID
+    const testMessage = { ...testData.sampleInputMessage };
+    const uniqueMUID = `smoke-test-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+    testMessage.Header.MUID = uniqueMUID;
+    testMessage.Header.UUID = uniqueMUID;
     
-    await kafkaHelper.sendMessage(inputTopic, simpleMessage, simpleMessage.Header.MUID);
+    await kafkaHelper.sendMessage(inputTopic, testMessage, uniqueMUID);
     
-    // Wait for response
-    const responses = await kafkaHelper.consumeMessages(outputTopic, 1, 10000);
+    // Wait for response - use consumeMessage which handles Avro deserialization
+    const responseMessage = await kafkaHelper.consumeMessage(outputTopic, 10000);
     
-    expect(responses).toHaveLength(1);
-    
-    const responseMessage = JSON.parse(responses[0].value!.toString());
+    expect(responseMessage).not.toBeNull();
     
     // Basic structure verification
     expect(responseMessage).toHaveProperty('Header');

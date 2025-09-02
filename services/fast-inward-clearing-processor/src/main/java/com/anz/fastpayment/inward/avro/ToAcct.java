@@ -17,7 +17,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = -1910860165602626629L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ToAcct\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"},{\"name\":\"CurCode\",\"type\":\"string\",\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"Narrative\",\"type\":\"string\",\"doc\":\"Narrative\"},{\"name\":\"AcctUse\",\"type\":\"string\",\"doc\":\"Account use\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ToAcct\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,15 +74,15 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** Account identifier */
-  private java.lang.CharSequence AcctId;
+  private java.lang.String AcctId;
   /** Currency code */
-  private java.lang.CharSequence CurCode;
+  private java.lang.String CurCode;
   /** Amount */
   private double Amount;
   /** Narrative */
-  private java.lang.CharSequence Narrative;
+  private java.lang.String Narrative;
   /** Account use */
-  private java.lang.CharSequence AcctUse;
+  private java.lang.String AcctUse;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -99,7 +99,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param Narrative Narrative
    * @param AcctUse Account use
    */
-  public ToAcct(java.lang.CharSequence AcctId, java.lang.CharSequence CurCode, java.lang.Double Amount, java.lang.CharSequence Narrative, java.lang.CharSequence AcctUse) {
+  public ToAcct(java.lang.String AcctId, java.lang.String CurCode, java.lang.Double Amount, java.lang.String Narrative, java.lang.String AcctUse) {
     this.AcctId = AcctId;
     this.CurCode = CurCode;
     this.Amount = Amount;
@@ -131,11 +131,11 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: AcctId = (java.lang.CharSequence)value$; break;
-    case 1: CurCode = (java.lang.CharSequence)value$; break;
+    case 0: AcctId = value$ != null ? value$.toString() : null; break;
+    case 1: CurCode = value$ != null ? value$.toString() : null; break;
     case 2: Amount = (java.lang.Double)value$; break;
-    case 3: Narrative = (java.lang.CharSequence)value$; break;
-    case 4: AcctUse = (java.lang.CharSequence)value$; break;
+    case 3: Narrative = value$ != null ? value$.toString() : null; break;
+    case 4: AcctUse = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -144,7 +144,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'AcctId' field.
    * @return Account identifier
    */
-  public java.lang.CharSequence getAcctId() {
+  public java.lang.String getAcctId() {
     return AcctId;
   }
 
@@ -154,7 +154,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Account identifier
    * @param value the value to set.
    */
-  public void setAcctId(java.lang.CharSequence value) {
+  public void setAcctId(java.lang.String value) {
     this.AcctId = value;
   }
 
@@ -162,7 +162,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'CurCode' field.
    * @return Currency code
    */
-  public java.lang.CharSequence getCurCode() {
+  public java.lang.String getCurCode() {
     return CurCode;
   }
 
@@ -172,7 +172,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Currency code
    * @param value the value to set.
    */
-  public void setCurCode(java.lang.CharSequence value) {
+  public void setCurCode(java.lang.String value) {
     this.CurCode = value;
   }
 
@@ -198,7 +198,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Narrative' field.
    * @return Narrative
    */
-  public java.lang.CharSequence getNarrative() {
+  public java.lang.String getNarrative() {
     return Narrative;
   }
 
@@ -208,7 +208,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Narrative
    * @param value the value to set.
    */
-  public void setNarrative(java.lang.CharSequence value) {
+  public void setNarrative(java.lang.String value) {
     this.Narrative = value;
   }
 
@@ -216,7 +216,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'AcctUse' field.
    * @return Account use
    */
-  public java.lang.CharSequence getAcctUse() {
+  public java.lang.String getAcctUse() {
     return AcctUse;
   }
 
@@ -226,7 +226,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
    * Account use
    * @param value the value to set.
    */
-  public void setAcctUse(java.lang.CharSequence value) {
+  public void setAcctUse(java.lang.String value) {
     this.AcctUse = value;
   }
 
@@ -272,15 +272,15 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<ToAcct> {
 
     /** Account identifier */
-    private java.lang.CharSequence AcctId;
+    private java.lang.String AcctId;
     /** Currency code */
-    private java.lang.CharSequence CurCode;
+    private java.lang.String CurCode;
     /** Amount */
     private double Amount;
     /** Narrative */
-    private java.lang.CharSequence Narrative;
+    private java.lang.String Narrative;
     /** Account use */
-    private java.lang.CharSequence AcctUse;
+    private java.lang.String AcctUse;
 
     /** Creates a new Builder */
     private Builder() {
@@ -348,7 +348,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * Account identifier
       * @return The value.
       */
-    public java.lang.CharSequence getAcctId() {
+    public java.lang.String getAcctId() {
       return AcctId;
     }
 
@@ -359,7 +359,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'AcctId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToAcct.Builder setAcctId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToAcct.Builder setAcctId(java.lang.String value) {
       validate(fields()[0], value);
       this.AcctId = value;
       fieldSetFlags()[0] = true;
@@ -392,7 +392,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * Currency code
       * @return The value.
       */
-    public java.lang.CharSequence getCurCode() {
+    public java.lang.String getCurCode() {
       return CurCode;
     }
 
@@ -403,7 +403,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'CurCode'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToAcct.Builder setCurCode(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToAcct.Builder setCurCode(java.lang.String value) {
       validate(fields()[1], value);
       this.CurCode = value;
       fieldSetFlags()[1] = true;
@@ -479,7 +479,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * Narrative
       * @return The value.
       */
-    public java.lang.CharSequence getNarrative() {
+    public java.lang.String getNarrative() {
       return Narrative;
     }
 
@@ -490,7 +490,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Narrative'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToAcct.Builder setNarrative(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToAcct.Builder setNarrative(java.lang.String value) {
       validate(fields()[3], value);
       this.Narrative = value;
       fieldSetFlags()[3] = true;
@@ -523,7 +523,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * Account use
       * @return The value.
       */
-    public java.lang.CharSequence getAcctUse() {
+    public java.lang.String getAcctUse() {
       return AcctUse;
     }
 
@@ -534,7 +534,7 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'AcctUse'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToAcct.Builder setAcctUse(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToAcct.Builder setAcctUse(java.lang.String value) {
       validate(fields()[4], value);
       this.AcctUse = value;
       fieldSetFlags()[4] = true;
@@ -567,11 +567,11 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
     public ToAcct build() {
       try {
         ToAcct record = new ToAcct();
-        record.AcctId = fieldSetFlags()[0] ? this.AcctId : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.CurCode = fieldSetFlags()[1] ? this.CurCode : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.AcctId = fieldSetFlags()[0] ? this.AcctId : (java.lang.String) defaultValue(fields()[0]);
+        record.CurCode = fieldSetFlags()[1] ? this.CurCode : (java.lang.String) defaultValue(fields()[1]);
         record.Amount = fieldSetFlags()[2] ? this.Amount : (java.lang.Double) defaultValue(fields()[2]);
-        record.Narrative = fieldSetFlags()[3] ? this.Narrative : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.AcctUse = fieldSetFlags()[4] ? this.AcctUse : (java.lang.CharSequence) defaultValue(fields()[4]);
+        record.Narrative = fieldSetFlags()[3] ? this.Narrative : (java.lang.String) defaultValue(fields()[3]);
+        record.AcctUse = fieldSetFlags()[4] ? this.AcctUse : (java.lang.String) defaultValue(fields()[4]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -621,25 +621,25 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.AcctId = in.readString(this.AcctId instanceof Utf8 ? (Utf8)this.AcctId : null);
+      this.AcctId = in.readString();
 
-      this.CurCode = in.readString(this.CurCode instanceof Utf8 ? (Utf8)this.CurCode : null);
+      this.CurCode = in.readString();
 
       this.Amount = in.readDouble();
 
-      this.Narrative = in.readString(this.Narrative instanceof Utf8 ? (Utf8)this.Narrative : null);
+      this.Narrative = in.readString();
 
-      this.AcctUse = in.readString(this.AcctUse instanceof Utf8 ? (Utf8)this.AcctUse : null);
+      this.AcctUse = in.readString();
 
     } else {
       for (int i = 0; i < 5; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.AcctId = in.readString(this.AcctId instanceof Utf8 ? (Utf8)this.AcctId : null);
+          this.AcctId = in.readString();
           break;
 
         case 1:
-          this.CurCode = in.readString(this.CurCode instanceof Utf8 ? (Utf8)this.CurCode : null);
+          this.CurCode = in.readString();
           break;
 
         case 2:
@@ -647,11 +647,11 @@ public class ToAcct extends org.apache.avro.specific.SpecificRecordBase implemen
           break;
 
         case 3:
-          this.Narrative = in.readString(this.Narrative instanceof Utf8 ? (Utf8)this.Narrative : null);
+          this.Narrative = in.readString();
           break;
 
         case 4:
-          this.AcctUse = in.readString(this.AcctUse instanceof Utf8 ? (Utf8)this.AcctUse : null);
+          this.AcctUse = in.readString();
           break;
 
         default:

@@ -17,7 +17,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = 7339713572071715380L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtAddRq\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"RqUID\",\"type\":\"string\",\"doc\":\"Request unique identifier\"},{\"name\":\"MsgHdr\",\"type\":{\"type\":\"record\",\"name\":\"MsgHdr\",\"fields\":[{\"name\":\"ClientDt\",\"type\":\"string\",\"doc\":\"Client date\"},{\"name\":\"ClientName\",\"type\":\"string\",\"doc\":\"Client name\"},{\"name\":\"PartyId\",\"type\":\"string\",\"doc\":\"Party identifier\"},{\"name\":\"Version\",\"type\":\"string\",\"doc\":\"Version\"}]},\"doc\":\"Message header\"},{\"name\":\"PayHdr\",\"type\":{\"type\":\"record\",\"name\":\"PayHdr\",\"fields\":[{\"name\":\"PODsID\",\"type\":\"string\",\"doc\":\"PODs identifier\"},{\"name\":\"PaymentID\",\"type\":\"string\",\"doc\":\"Payment identifier\"},{\"name\":\"ThirdPartyPayID\",\"type\":\"string\",\"doc\":\"Third party payment identifier\"},{\"name\":\"PaymentTRN\",\"type\":\"string\",\"doc\":\"Payment transaction reference number\"},{\"name\":\"PaymentRetRef\",\"type\":\"string\",\"doc\":\"Payment return reference\"},{\"name\":\"ProcDate\",\"type\":\"string\",\"doc\":\"Processing date\"}]},\"doc\":\"Payment header\"},{\"name\":\"FromFIData\",\"type\":{\"type\":\"record\",\"name\":\"FromFIData\",\"fields\":[{\"name\":\"Country\",\"type\":\"string\",\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"Bank identifier code\"}]},\"doc\":\"From financial institution data\"},{\"name\":\"FromCust\",\"type\":{\"type\":\"record\",\"name\":\"FromCust\",\"fields\":[{\"name\":\"Name\",\"type\":\"string\",\"doc\":\"Customer name\"}]},\"doc\":\"From customer\"},{\"name\":\"FromAcct\",\"type\":{\"type\":\"record\",\"name\":\"FromAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"},{\"name\":\"AcctSys\",\"type\":\"string\",\"doc\":\"Account system\"},{\"name\":\"AcctGrp\",\"type\":\"string\",\"doc\":\"Account group\"},{\"name\":\"Name\",\"type\":\"string\",\"doc\":\"Account name\"},{\"name\":\"PmtAuthMethod\",\"type\":\"string\",\"doc\":\"Payment authorization method\"},{\"name\":\"Narrative\",\"type\":\"string\",\"doc\":\"Narrative\"},{\"name\":\"CurCode\",\"type\":\"string\",\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"AcctUse\",\"type\":\"string\",\"doc\":\"Account use\"}]},\"doc\":\"From account\"},{\"name\":\"ToFIData\",\"type\":{\"type\":\"record\",\"name\":\"ToFIData\",\"fields\":[{\"name\":\"Country\",\"type\":\"string\",\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"Bank identifier code\"}]},\"doc\":\"To financial institution data\"},{\"name\":\"Clearing\",\"type\":{\"type\":\"record\",\"name\":\"Clearing\",\"fields\":[{\"name\":\"ClearPref\",\"type\":\"string\",\"doc\":\"Clearing preference\"}]},\"doc\":\"Clearing information\"},{\"name\":\"ToBene\",\"type\":{\"type\":\"record\",\"name\":\"ToBene\",\"fields\":[{\"name\":\"Name\",\"type\":\"string\",\"doc\":\"Beneficiary name\"},{\"name\":\"Country\",\"type\":\"string\",\"doc\":\"Country code\"},{\"name\":\"Message\",\"type\":\"string\",\"doc\":\"Message\"}]},\"doc\":\"To beneficiary\"},{\"name\":\"ToAcct\",\"type\":{\"type\":\"record\",\"name\":\"ToAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"},{\"name\":\"CurCode\",\"type\":\"string\",\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"Narrative\",\"type\":\"string\",\"doc\":\"Narrative\"},{\"name\":\"AcctUse\",\"type\":\"string\",\"doc\":\"Account use\"}]},\"doc\":\"To account\"},{\"name\":\"Fees\",\"type\":{\"type\":\"array\",\"items\":\"string\"},\"doc\":\"Fees array\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtAddRq\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"RqUID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Request unique identifier\"},{\"name\":\"MsgHdr\",\"type\":{\"type\":\"record\",\"name\":\"MsgHdr\",\"fields\":[{\"name\":\"ClientDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client date\"},{\"name\":\"ClientName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client name\"},{\"name\":\"PartyId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Party identifier\"},{\"name\":\"Version\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Version\"}]},\"doc\":\"Message header\"},{\"name\":\"PayHdr\",\"type\":{\"type\":\"record\",\"name\":\"PayHdr\",\"fields\":[{\"name\":\"PODsID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"PODs identifier\"},{\"name\":\"PaymentID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment identifier\"},{\"name\":\"ThirdPartyPayID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Third party payment identifier\"},{\"name\":\"PaymentTRN\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment transaction reference number\"},{\"name\":\"PaymentRetRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment return reference\"},{\"name\":\"ProcDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing date\"}]},\"doc\":\"Payment header\"},{\"name\":\"FromFIData\",\"type\":{\"type\":\"record\",\"name\":\"FromFIData\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]},\"doc\":\"From financial institution data\"},{\"name\":\"FromCust\",\"type\":{\"type\":\"record\",\"name\":\"FromCust\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Customer name\"}]},\"doc\":\"From customer\"},{\"name\":\"FromAcct\",\"type\":{\"type\":\"record\",\"name\":\"FromAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"AcctSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account system\"},{\"name\":\"AcctGrp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account group\"},{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account name\"},{\"name\":\"PmtAuthMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment authorization method\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]},\"doc\":\"From account\"},{\"name\":\"ToFIData\",\"type\":{\"type\":\"record\",\"name\":\"ToFIData\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]},\"doc\":\"To financial institution data\"},{\"name\":\"Clearing\",\"type\":{\"type\":\"record\",\"name\":\"Clearing\",\"fields\":[{\"name\":\"ClearPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing preference\"}]},\"doc\":\"Clearing information\"},{\"name\":\"ToBene\",\"type\":{\"type\":\"record\",\"name\":\"ToBene\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Beneficiary name\"},{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"Message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message\"}]},\"doc\":\"To beneficiary\"},{\"name\":\"ToAcct\",\"type\":{\"type\":\"record\",\"name\":\"ToAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]},\"doc\":\"To account\"},{\"name\":\"Fees\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Fees array\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Request unique identifier */
-  private java.lang.CharSequence RqUID;
+  private java.lang.String RqUID;
   /** Message header */
   private com.anz.fastpayment.inward.avro.MsgHdr MsgHdr;
   /** Payment header */
@@ -94,7 +94,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   /** To account */
   private com.anz.fastpayment.inward.avro.ToAcct ToAcct;
   /** Fees array */
-  private java.util.List<java.lang.CharSequence> Fees;
+  private java.util.List<java.lang.String> Fees;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -117,7 +117,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * @param ToAcct To account
    * @param Fees Fees array
    */
-  public PmtAddRq(java.lang.CharSequence RqUID, com.anz.fastpayment.inward.avro.MsgHdr MsgHdr, com.anz.fastpayment.inward.avro.PayHdr PayHdr, com.anz.fastpayment.inward.avro.FromFIData FromFIData, com.anz.fastpayment.inward.avro.FromCust FromCust, com.anz.fastpayment.inward.avro.FromAcct FromAcct, com.anz.fastpayment.inward.avro.ToFIData ToFIData, com.anz.fastpayment.inward.avro.Clearing Clearing, com.anz.fastpayment.inward.avro.ToBene ToBene, com.anz.fastpayment.inward.avro.ToAcct ToAcct, java.util.List<java.lang.CharSequence> Fees) {
+  public PmtAddRq(java.lang.String RqUID, com.anz.fastpayment.inward.avro.MsgHdr MsgHdr, com.anz.fastpayment.inward.avro.PayHdr PayHdr, com.anz.fastpayment.inward.avro.FromFIData FromFIData, com.anz.fastpayment.inward.avro.FromCust FromCust, com.anz.fastpayment.inward.avro.FromAcct FromAcct, com.anz.fastpayment.inward.avro.ToFIData ToFIData, com.anz.fastpayment.inward.avro.Clearing Clearing, com.anz.fastpayment.inward.avro.ToBene ToBene, com.anz.fastpayment.inward.avro.ToAcct ToAcct, java.util.List<java.lang.String> Fees) {
     this.RqUID = RqUID;
     this.MsgHdr = MsgHdr;
     this.PayHdr = PayHdr;
@@ -161,7 +161,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: RqUID = (java.lang.CharSequence)value$; break;
+    case 0: RqUID = value$ != null ? value$.toString() : null; break;
     case 1: MsgHdr = (com.anz.fastpayment.inward.avro.MsgHdr)value$; break;
     case 2: PayHdr = (com.anz.fastpayment.inward.avro.PayHdr)value$; break;
     case 3: FromFIData = (com.anz.fastpayment.inward.avro.FromFIData)value$; break;
@@ -171,7 +171,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     case 7: Clearing = (com.anz.fastpayment.inward.avro.Clearing)value$; break;
     case 8: ToBene = (com.anz.fastpayment.inward.avro.ToBene)value$; break;
     case 9: ToAcct = (com.anz.fastpayment.inward.avro.ToAcct)value$; break;
-    case 10: Fees = (java.util.List<java.lang.CharSequence>)value$; break;
+    case 10: Fees = (java.util.List<java.lang.String>)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -180,7 +180,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'RqUID' field.
    * @return Request unique identifier
    */
-  public java.lang.CharSequence getRqUID() {
+  public java.lang.String getRqUID() {
     return RqUID;
   }
 
@@ -190,7 +190,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * Request unique identifier
    * @param value the value to set.
    */
-  public void setRqUID(java.lang.CharSequence value) {
+  public void setRqUID(java.lang.String value) {
     this.RqUID = value;
   }
 
@@ -360,7 +360,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'Fees' field.
    * @return Fees array
    */
-  public java.util.List<java.lang.CharSequence> getFees() {
+  public java.util.List<java.lang.String> getFees() {
     return Fees;
   }
 
@@ -370,7 +370,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
    * Fees array
    * @param value the value to set.
    */
-  public void setFees(java.util.List<java.lang.CharSequence> value) {
+  public void setFees(java.util.List<java.lang.String> value) {
     this.Fees = value;
   }
 
@@ -416,7 +416,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<PmtAddRq> {
 
     /** Request unique identifier */
-    private java.lang.CharSequence RqUID;
+    private java.lang.String RqUID;
     /** Message header */
     private com.anz.fastpayment.inward.avro.MsgHdr MsgHdr;
     private com.anz.fastpayment.inward.avro.MsgHdr.Builder MsgHdrBuilder;
@@ -445,7 +445,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     private com.anz.fastpayment.inward.avro.ToAcct ToAcct;
     private com.anz.fastpayment.inward.avro.ToAcct.Builder ToAcctBuilder;
     /** Fees array */
-    private java.util.List<java.lang.CharSequence> Fees;
+    private java.util.List<java.lang.String> Fees;
 
     /** Creates a new Builder */
     private Builder() {
@@ -597,7 +597,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       * Request unique identifier
       * @return The value.
       */
-    public java.lang.CharSequence getRqUID() {
+    public java.lang.String getRqUID() {
       return RqUID;
     }
 
@@ -608,7 +608,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'RqUID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtAddRq.Builder setRqUID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtAddRq.Builder setRqUID(java.lang.String value) {
       validate(fields()[0], value);
       this.RqUID = value;
       fieldSetFlags()[0] = true;
@@ -1388,7 +1388,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       * Fees array
       * @return The value.
       */
-    public java.util.List<java.lang.CharSequence> getFees() {
+    public java.util.List<java.lang.String> getFees() {
       return Fees;
     }
 
@@ -1399,7 +1399,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'Fees'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtAddRq.Builder setFees(java.util.List<java.lang.CharSequence> value) {
+    public com.anz.fastpayment.inward.avro.PmtAddRq.Builder setFees(java.util.List<java.lang.String> value) {
       validate(fields()[10], value);
       this.Fees = value;
       fieldSetFlags()[10] = true;
@@ -1432,7 +1432,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     public PmtAddRq build() {
       try {
         PmtAddRq record = new PmtAddRq();
-        record.RqUID = fieldSetFlags()[0] ? this.RqUID : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.RqUID = fieldSetFlags()[0] ? this.RqUID : (java.lang.String) defaultValue(fields()[0]);
         if (MsgHdrBuilder != null) {
           try {
             record.MsgHdr = this.MsgHdrBuilder.build();
@@ -1523,7 +1523,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
         } else {
           record.ToAcct = fieldSetFlags()[9] ? this.ToAcct : (com.anz.fastpayment.inward.avro.ToAcct) defaultValue(fields()[9]);
         }
-        record.Fees = fieldSetFlags()[10] ? this.Fees : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[10]);
+        record.Fees = fieldSetFlags()[10] ? this.Fees : (java.util.List<java.lang.String>) defaultValue(fields()[10]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1580,7 +1580,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
-    for (java.lang.CharSequence e0: this.Fees) {
+    for (java.lang.String e0: this.Fees) {
       actualSize0++;
       out.startItem();
       out.writeString(e0);
@@ -1596,7 +1596,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.RqUID = in.readString(this.RqUID instanceof Utf8 ? (Utf8)this.RqUID : null);
+      this.RqUID = in.readString();
 
       if (this.MsgHdr == null) {
         this.MsgHdr = new com.anz.fastpayment.inward.avro.MsgHdr();
@@ -1644,16 +1644,16 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       this.ToAcct.customDecode(in);
 
       long size0 = in.readArrayStart();
-      java.util.List<java.lang.CharSequence> a0 = this.Fees;
+      java.util.List<java.lang.String> a0 = this.Fees;
       if (a0 == null) {
-        a0 = new SpecificData.Array<java.lang.CharSequence>((int)size0, SCHEMA$.getField("Fees").schema());
+        a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("Fees").schema());
         this.Fees = a0;
       } else a0.clear();
-      SpecificData.Array<java.lang.CharSequence> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a0 : null);
+      SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
       for ( ; 0 < size0; size0 = in.arrayNext()) {
         for ( ; size0 != 0; size0--) {
-          java.lang.CharSequence e0 = (ga0 != null ? ga0.peek() : null);
-          e0 = in.readString(e0 instanceof Utf8 ? (Utf8)e0 : null);
+          java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+          e0 = in.readString();
           a0.add(e0);
         }
       }
@@ -1662,7 +1662,7 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
       for (int i = 0; i < 11; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.RqUID = in.readString(this.RqUID instanceof Utf8 ? (Utf8)this.RqUID : null);
+          this.RqUID = in.readString();
           break;
 
         case 1:
@@ -1730,16 +1730,16 @@ public class PmtAddRq extends org.apache.avro.specific.SpecificRecordBase implem
 
         case 10:
           long size0 = in.readArrayStart();
-          java.util.List<java.lang.CharSequence> a0 = this.Fees;
+          java.util.List<java.lang.String> a0 = this.Fees;
           if (a0 == null) {
-            a0 = new SpecificData.Array<java.lang.CharSequence>((int)size0, SCHEMA$.getField("Fees").schema());
+            a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("Fees").schema());
             this.Fees = a0;
           } else a0.clear();
-          SpecificData.Array<java.lang.CharSequence> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a0 : null);
+          SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
           for ( ; 0 < size0; size0 = in.arrayNext()) {
             for ( ; size0 != 0; size0--) {
-              java.lang.CharSequence e0 = (ga0 != null ? ga0.peek() : null);
-              e0 = in.readString(e0 instanceof Utf8 ? (Utf8)e0 : null);
+              java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+              e0 = in.readString();
               a0.add(e0);
             }
           }

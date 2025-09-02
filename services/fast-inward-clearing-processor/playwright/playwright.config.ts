@@ -2,10 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false, // Disable parallel execution for Kafka tests
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1, // Force single worker for test isolation
   reporter: [
     ['html'],
     ['json', { outputFile: 'test-results/results.json' }],
@@ -32,7 +32,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'cd ../services/fast-inward-clearing-processor && mvn spring-boot:run',
+    command: 'cd .. && mvn spring-boot:run',
     url: 'http://localhost:8080/api/v1/health/status',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,

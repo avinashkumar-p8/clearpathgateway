@@ -17,7 +17,7 @@ public class Events extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = -9046612637459260465L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Events\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Event\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Event\",\"fields\":[{\"name\":\"EventCode\",\"type\":\"string\",\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":\"string\",\"doc\":\"Event identifier\"}]}},\"doc\":\"Array of events\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Events\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Event\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Event\",\"fields\":[{\"name\":\"EventCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event identifier\"}]}},\"doc\":\"Array of events\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();

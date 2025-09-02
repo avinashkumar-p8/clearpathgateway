@@ -17,7 +17,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
   private static final long serialVersionUID = -5910769019341689132L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ServiceStatus\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"status\",\"type\":\"string\",\"doc\":\"Processing status: SUCCESS, FAILED, PARTIAL\"},{\"name\":\"StatusCode\",\"type\":\"string\",\"doc\":\"HTTP-style status code: 200, 400, 500\"},{\"name\":\"StatusDesc\",\"type\":{\"type\":\"array\",\"items\":\"string\"},\"doc\":\"Array of status descriptions or validation errors\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ServiceStatus\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"status\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing status: SUCCESS, FAILED, PARTIAL\"},{\"name\":\"StatusCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"HTTP-style status code: 200, 400, 500\"},{\"name\":\"StatusDesc\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Array of status descriptions or validation errors\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,11 +74,11 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
   }
 
   /** Processing status: SUCCESS, FAILED, PARTIAL */
-  private java.lang.CharSequence status;
+  private java.lang.String status;
   /** HTTP-style status code: 200, 400, 500 */
-  private java.lang.CharSequence StatusCode;
+  private java.lang.String StatusCode;
   /** Array of status descriptions or validation errors */
-  private java.util.List<java.lang.CharSequence> StatusDesc;
+  private java.util.List<java.lang.String> StatusDesc;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -93,7 +93,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * @param StatusCode HTTP-style status code: 200, 400, 500
    * @param StatusDesc Array of status descriptions or validation errors
    */
-  public ServiceStatus(java.lang.CharSequence status, java.lang.CharSequence StatusCode, java.util.List<java.lang.CharSequence> StatusDesc) {
+  public ServiceStatus(java.lang.String status, java.lang.String StatusCode, java.util.List<java.lang.String> StatusDesc) {
     this.status = status;
     this.StatusCode = StatusCode;
     this.StatusDesc = StatusDesc;
@@ -121,9 +121,9 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: status = (java.lang.CharSequence)value$; break;
-    case 1: StatusCode = (java.lang.CharSequence)value$; break;
-    case 2: StatusDesc = (java.util.List<java.lang.CharSequence>)value$; break;
+    case 0: status = value$ != null ? value$.toString() : null; break;
+    case 1: StatusCode = value$ != null ? value$.toString() : null; break;
+    case 2: StatusDesc = (java.util.List<java.lang.String>)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -132,7 +132,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * Gets the value of the 'status' field.
    * @return Processing status: SUCCESS, FAILED, PARTIAL
    */
-  public java.lang.CharSequence getStatus() {
+  public java.lang.String getStatus() {
     return status;
   }
 
@@ -142,7 +142,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * Processing status: SUCCESS, FAILED, PARTIAL
    * @param value the value to set.
    */
-  public void setStatus(java.lang.CharSequence value) {
+  public void setStatus(java.lang.String value) {
     this.status = value;
   }
 
@@ -150,7 +150,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * Gets the value of the 'StatusCode' field.
    * @return HTTP-style status code: 200, 400, 500
    */
-  public java.lang.CharSequence getStatusCode() {
+  public java.lang.String getStatusCode() {
     return StatusCode;
   }
 
@@ -160,7 +160,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * HTTP-style status code: 200, 400, 500
    * @param value the value to set.
    */
-  public void setStatusCode(java.lang.CharSequence value) {
+  public void setStatusCode(java.lang.String value) {
     this.StatusCode = value;
   }
 
@@ -168,7 +168,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * Gets the value of the 'StatusDesc' field.
    * @return Array of status descriptions or validation errors
    */
-  public java.util.List<java.lang.CharSequence> getStatusDesc() {
+  public java.util.List<java.lang.String> getStatusDesc() {
     return StatusDesc;
   }
 
@@ -178,7 +178,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
    * Array of status descriptions or validation errors
    * @param value the value to set.
    */
-  public void setStatusDesc(java.util.List<java.lang.CharSequence> value) {
+  public void setStatusDesc(java.util.List<java.lang.String> value) {
     this.StatusDesc = value;
   }
 
@@ -224,11 +224,11 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
     implements org.apache.avro.data.RecordBuilder<ServiceStatus> {
 
     /** Processing status: SUCCESS, FAILED, PARTIAL */
-    private java.lang.CharSequence status;
+    private java.lang.String status;
     /** HTTP-style status code: 200, 400, 500 */
-    private java.lang.CharSequence StatusCode;
+    private java.lang.String StatusCode;
     /** Array of status descriptions or validation errors */
-    private java.util.List<java.lang.CharSequence> StatusDesc;
+    private java.util.List<java.lang.String> StatusDesc;
 
     /** Creates a new Builder */
     private Builder() {
@@ -280,7 +280,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       * Processing status: SUCCESS, FAILED, PARTIAL
       * @return The value.
       */
-    public java.lang.CharSequence getStatus() {
+    public java.lang.String getStatus() {
       return status;
     }
 
@@ -291,7 +291,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       * @param value The value of 'status'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ServiceStatus.Builder setStatus(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ServiceStatus.Builder setStatus(java.lang.String value) {
       validate(fields()[0], value);
       this.status = value;
       fieldSetFlags()[0] = true;
@@ -324,7 +324,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       * HTTP-style status code: 200, 400, 500
       * @return The value.
       */
-    public java.lang.CharSequence getStatusCode() {
+    public java.lang.String getStatusCode() {
       return StatusCode;
     }
 
@@ -335,7 +335,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       * @param value The value of 'StatusCode'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ServiceStatus.Builder setStatusCode(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ServiceStatus.Builder setStatusCode(java.lang.String value) {
       validate(fields()[1], value);
       this.StatusCode = value;
       fieldSetFlags()[1] = true;
@@ -368,7 +368,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       * Array of status descriptions or validation errors
       * @return The value.
       */
-    public java.util.List<java.lang.CharSequence> getStatusDesc() {
+    public java.util.List<java.lang.String> getStatusDesc() {
       return StatusDesc;
     }
 
@@ -379,7 +379,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       * @param value The value of 'StatusDesc'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ServiceStatus.Builder setStatusDesc(java.util.List<java.lang.CharSequence> value) {
+    public com.anz.fastpayment.inward.avro.ServiceStatus.Builder setStatusDesc(java.util.List<java.lang.String> value) {
       validate(fields()[2], value);
       this.StatusDesc = value;
       fieldSetFlags()[2] = true;
@@ -412,9 +412,9 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
     public ServiceStatus build() {
       try {
         ServiceStatus record = new ServiceStatus();
-        record.status = fieldSetFlags()[0] ? this.status : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.StatusCode = fieldSetFlags()[1] ? this.StatusCode : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.StatusDesc = fieldSetFlags()[2] ? this.StatusDesc : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[2]);
+        record.status = fieldSetFlags()[0] ? this.status : (java.lang.String) defaultValue(fields()[0]);
+        record.StatusCode = fieldSetFlags()[1] ? this.StatusCode : (java.lang.String) defaultValue(fields()[1]);
+        record.StatusDesc = fieldSetFlags()[2] ? this.StatusDesc : (java.util.List<java.lang.String>) defaultValue(fields()[2]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -455,7 +455,7 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
     out.writeArrayStart();
     out.setItemCount(size0);
     long actualSize0 = 0;
-    for (java.lang.CharSequence e0: this.StatusDesc) {
+    for (java.lang.String e0: this.StatusDesc) {
       actualSize0++;
       out.startItem();
       out.writeString(e0);
@@ -471,21 +471,21 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.status = in.readString(this.status instanceof Utf8 ? (Utf8)this.status : null);
+      this.status = in.readString();
 
-      this.StatusCode = in.readString(this.StatusCode instanceof Utf8 ? (Utf8)this.StatusCode : null);
+      this.StatusCode = in.readString();
 
       long size0 = in.readArrayStart();
-      java.util.List<java.lang.CharSequence> a0 = this.StatusDesc;
+      java.util.List<java.lang.String> a0 = this.StatusDesc;
       if (a0 == null) {
-        a0 = new SpecificData.Array<java.lang.CharSequence>((int)size0, SCHEMA$.getField("StatusDesc").schema());
+        a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("StatusDesc").schema());
         this.StatusDesc = a0;
       } else a0.clear();
-      SpecificData.Array<java.lang.CharSequence> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a0 : null);
+      SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
       for ( ; 0 < size0; size0 = in.arrayNext()) {
         for ( ; size0 != 0; size0--) {
-          java.lang.CharSequence e0 = (ga0 != null ? ga0.peek() : null);
-          e0 = in.readString(e0 instanceof Utf8 ? (Utf8)e0 : null);
+          java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+          e0 = in.readString();
           a0.add(e0);
         }
       }
@@ -494,25 +494,25 @@ public class ServiceStatus extends org.apache.avro.specific.SpecificRecordBase i
       for (int i = 0; i < 3; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.status = in.readString(this.status instanceof Utf8 ? (Utf8)this.status : null);
+          this.status = in.readString();
           break;
 
         case 1:
-          this.StatusCode = in.readString(this.StatusCode instanceof Utf8 ? (Utf8)this.StatusCode : null);
+          this.StatusCode = in.readString();
           break;
 
         case 2:
           long size0 = in.readArrayStart();
-          java.util.List<java.lang.CharSequence> a0 = this.StatusDesc;
+          java.util.List<java.lang.String> a0 = this.StatusDesc;
           if (a0 == null) {
-            a0 = new SpecificData.Array<java.lang.CharSequence>((int)size0, SCHEMA$.getField("StatusDesc").schema());
+            a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("StatusDesc").schema());
             this.StatusDesc = a0;
           } else a0.clear();
-          SpecificData.Array<java.lang.CharSequence> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.CharSequence>)a0 : null);
+          SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
           for ( ; 0 < size0; size0 = in.arrayNext()) {
             for ( ; size0 != 0; size0--) {
-              java.lang.CharSequence e0 = (ga0 != null ? ga0.peek() : null);
-              e0 = in.readString(e0 instanceof Utf8 ? (Utf8)e0 : null);
+              java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+              e0 = in.readString();
               a0.add(e0);
             }
           }

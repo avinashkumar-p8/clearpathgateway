@@ -90,19 +90,18 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
                 List<String> validationErrors = validationHandler.getValidationErrors(validationResult);
                 logger.warn("Validation failed for transaction: {} - Errors: {}", 
                            transactionId, validationErrors);
-                return ProcessingResult.validationFailed(validationErrors, 
-                                                       System.currentTimeMillis() - startTime);
+                
+                // Create failure response with validation errors in Trailer
+                BusinessProcessingResult failureResult = businessHandler.createFailureResponse(
+                    context.getAvroMessage(), transactionId, validationErrors);
+                return ProcessingResult.success(failureResult.getResponseMessage(), 
+                                               System.currentTimeMillis() - startTime);
             }
             
-            // Step 4: Business Processing
-            BusinessProcessingResult businessResult = businessHandler.process(parsingResult.getMessagePayload(), transactionId);
-            if (!businessResult.isSuccess()) {
-                businessProcessingFailures.incrementAndGet();
-                logger.warn("Business processing failed for transaction: {} - Error: {}", 
-                           transactionId, businessResult.getErrorMessage());
-                return ProcessingResult.businessProcessingFailed(businessResult.getErrorMessage(), 
-                                                               System.currentTimeMillis() - startTime);
-            }
+            // Step 4: Create Response (No business processing needed)
+            // Create response with original data + success Trailer
+            BusinessProcessingResult successResult = businessHandler.createSuccessResponse(
+                context.getAvroMessage(), transactionId);
             
             // Success - Update idempotency status
             idempotencyHandler.updateProcessingStatus(idempotencyResult.getMuid(), "COMPLETED");
@@ -111,7 +110,7 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
             long processingDuration = System.currentTimeMillis() - startTime;
             
             logger.info("Successfully processed transaction: {} in {}ms", transactionId, processingDuration);
-            return ProcessingResult.success(businessResult.getResponseMessage(), processingDuration);
+            return ProcessingResult.success(successResult.getResponseMessage(), processingDuration);
             
         } catch (Exception e) {
             systemErrors.incrementAndGet();

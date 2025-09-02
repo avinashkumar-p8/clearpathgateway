@@ -17,7 +17,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = 4559986555864251855L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PayHdr\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PODsID\",\"type\":\"string\",\"doc\":\"PODs identifier\"},{\"name\":\"PaymentID\",\"type\":\"string\",\"doc\":\"Payment identifier\"},{\"name\":\"ThirdPartyPayID\",\"type\":\"string\",\"doc\":\"Third party payment identifier\"},{\"name\":\"PaymentTRN\",\"type\":\"string\",\"doc\":\"Payment transaction reference number\"},{\"name\":\"PaymentRetRef\",\"type\":\"string\",\"doc\":\"Payment return reference\"},{\"name\":\"ProcDate\",\"type\":\"string\",\"doc\":\"Processing date\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PayHdr\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PODsID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"PODs identifier\"},{\"name\":\"PaymentID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment identifier\"},{\"name\":\"ThirdPartyPayID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Third party payment identifier\"},{\"name\":\"PaymentTRN\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment transaction reference number\"},{\"name\":\"PaymentRetRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment return reference\"},{\"name\":\"ProcDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing date\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,17 +74,17 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** PODs identifier */
-  private java.lang.CharSequence PODsID;
+  private java.lang.String PODsID;
   /** Payment identifier */
-  private java.lang.CharSequence PaymentID;
+  private java.lang.String PaymentID;
   /** Third party payment identifier */
-  private java.lang.CharSequence ThirdPartyPayID;
+  private java.lang.String ThirdPartyPayID;
   /** Payment transaction reference number */
-  private java.lang.CharSequence PaymentTRN;
+  private java.lang.String PaymentTRN;
   /** Payment return reference */
-  private java.lang.CharSequence PaymentRetRef;
+  private java.lang.String PaymentRetRef;
   /** Processing date */
-  private java.lang.CharSequence ProcDate;
+  private java.lang.String ProcDate;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -102,7 +102,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param PaymentRetRef Payment return reference
    * @param ProcDate Processing date
    */
-  public PayHdr(java.lang.CharSequence PODsID, java.lang.CharSequence PaymentID, java.lang.CharSequence ThirdPartyPayID, java.lang.CharSequence PaymentTRN, java.lang.CharSequence PaymentRetRef, java.lang.CharSequence ProcDate) {
+  public PayHdr(java.lang.String PODsID, java.lang.String PaymentID, java.lang.String ThirdPartyPayID, java.lang.String PaymentTRN, java.lang.String PaymentRetRef, java.lang.String ProcDate) {
     this.PODsID = PODsID;
     this.PaymentID = PaymentID;
     this.ThirdPartyPayID = ThirdPartyPayID;
@@ -136,12 +136,12 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: PODsID = (java.lang.CharSequence)value$; break;
-    case 1: PaymentID = (java.lang.CharSequence)value$; break;
-    case 2: ThirdPartyPayID = (java.lang.CharSequence)value$; break;
-    case 3: PaymentTRN = (java.lang.CharSequence)value$; break;
-    case 4: PaymentRetRef = (java.lang.CharSequence)value$; break;
-    case 5: ProcDate = (java.lang.CharSequence)value$; break;
+    case 0: PODsID = value$ != null ? value$.toString() : null; break;
+    case 1: PaymentID = value$ != null ? value$.toString() : null; break;
+    case 2: ThirdPartyPayID = value$ != null ? value$.toString() : null; break;
+    case 3: PaymentTRN = value$ != null ? value$.toString() : null; break;
+    case 4: PaymentRetRef = value$ != null ? value$.toString() : null; break;
+    case 5: ProcDate = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -150,7 +150,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'PODsID' field.
    * @return PODs identifier
    */
-  public java.lang.CharSequence getPODsID() {
+  public java.lang.String getPODsID() {
     return PODsID;
   }
 
@@ -160,7 +160,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * PODs identifier
    * @param value the value to set.
    */
-  public void setPODsID(java.lang.CharSequence value) {
+  public void setPODsID(java.lang.String value) {
     this.PODsID = value;
   }
 
@@ -168,7 +168,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'PaymentID' field.
    * @return Payment identifier
    */
-  public java.lang.CharSequence getPaymentID() {
+  public java.lang.String getPaymentID() {
     return PaymentID;
   }
 
@@ -178,7 +178,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Payment identifier
    * @param value the value to set.
    */
-  public void setPaymentID(java.lang.CharSequence value) {
+  public void setPaymentID(java.lang.String value) {
     this.PaymentID = value;
   }
 
@@ -186,7 +186,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ThirdPartyPayID' field.
    * @return Third party payment identifier
    */
-  public java.lang.CharSequence getThirdPartyPayID() {
+  public java.lang.String getThirdPartyPayID() {
     return ThirdPartyPayID;
   }
 
@@ -196,7 +196,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Third party payment identifier
    * @param value the value to set.
    */
-  public void setThirdPartyPayID(java.lang.CharSequence value) {
+  public void setThirdPartyPayID(java.lang.String value) {
     this.ThirdPartyPayID = value;
   }
 
@@ -204,7 +204,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'PaymentTRN' field.
    * @return Payment transaction reference number
    */
-  public java.lang.CharSequence getPaymentTRN() {
+  public java.lang.String getPaymentTRN() {
     return PaymentTRN;
   }
 
@@ -214,7 +214,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Payment transaction reference number
    * @param value the value to set.
    */
-  public void setPaymentTRN(java.lang.CharSequence value) {
+  public void setPaymentTRN(java.lang.String value) {
     this.PaymentTRN = value;
   }
 
@@ -222,7 +222,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'PaymentRetRef' field.
    * @return Payment return reference
    */
-  public java.lang.CharSequence getPaymentRetRef() {
+  public java.lang.String getPaymentRetRef() {
     return PaymentRetRef;
   }
 
@@ -232,7 +232,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Payment return reference
    * @param value the value to set.
    */
-  public void setPaymentRetRef(java.lang.CharSequence value) {
+  public void setPaymentRetRef(java.lang.String value) {
     this.PaymentRetRef = value;
   }
 
@@ -240,7 +240,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ProcDate' field.
    * @return Processing date
    */
-  public java.lang.CharSequence getProcDate() {
+  public java.lang.String getProcDate() {
     return ProcDate;
   }
 
@@ -250,7 +250,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Processing date
    * @param value the value to set.
    */
-  public void setProcDate(java.lang.CharSequence value) {
+  public void setProcDate(java.lang.String value) {
     this.ProcDate = value;
   }
 
@@ -296,17 +296,17 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<PayHdr> {
 
     /** PODs identifier */
-    private java.lang.CharSequence PODsID;
+    private java.lang.String PODsID;
     /** Payment identifier */
-    private java.lang.CharSequence PaymentID;
+    private java.lang.String PaymentID;
     /** Third party payment identifier */
-    private java.lang.CharSequence ThirdPartyPayID;
+    private java.lang.String ThirdPartyPayID;
     /** Payment transaction reference number */
-    private java.lang.CharSequence PaymentTRN;
+    private java.lang.String PaymentTRN;
     /** Payment return reference */
-    private java.lang.CharSequence PaymentRetRef;
+    private java.lang.String PaymentRetRef;
     /** Processing date */
-    private java.lang.CharSequence ProcDate;
+    private java.lang.String ProcDate;
 
     /** Creates a new Builder */
     private Builder() {
@@ -382,7 +382,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * PODs identifier
       * @return The value.
       */
-    public java.lang.CharSequence getPODsID() {
+    public java.lang.String getPODsID() {
       return PODsID;
     }
 
@@ -393,7 +393,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'PODsID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPODsID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPODsID(java.lang.String value) {
       validate(fields()[0], value);
       this.PODsID = value;
       fieldSetFlags()[0] = true;
@@ -426,7 +426,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Payment identifier
       * @return The value.
       */
-    public java.lang.CharSequence getPaymentID() {
+    public java.lang.String getPaymentID() {
       return PaymentID;
     }
 
@@ -437,7 +437,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'PaymentID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPaymentID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPaymentID(java.lang.String value) {
       validate(fields()[1], value);
       this.PaymentID = value;
       fieldSetFlags()[1] = true;
@@ -470,7 +470,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Third party payment identifier
       * @return The value.
       */
-    public java.lang.CharSequence getThirdPartyPayID() {
+    public java.lang.String getThirdPartyPayID() {
       return ThirdPartyPayID;
     }
 
@@ -481,7 +481,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ThirdPartyPayID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PayHdr.Builder setThirdPartyPayID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PayHdr.Builder setThirdPartyPayID(java.lang.String value) {
       validate(fields()[2], value);
       this.ThirdPartyPayID = value;
       fieldSetFlags()[2] = true;
@@ -514,7 +514,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Payment transaction reference number
       * @return The value.
       */
-    public java.lang.CharSequence getPaymentTRN() {
+    public java.lang.String getPaymentTRN() {
       return PaymentTRN;
     }
 
@@ -525,7 +525,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'PaymentTRN'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPaymentTRN(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPaymentTRN(java.lang.String value) {
       validate(fields()[3], value);
       this.PaymentTRN = value;
       fieldSetFlags()[3] = true;
@@ -558,7 +558,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Payment return reference
       * @return The value.
       */
-    public java.lang.CharSequence getPaymentRetRef() {
+    public java.lang.String getPaymentRetRef() {
       return PaymentRetRef;
     }
 
@@ -569,7 +569,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'PaymentRetRef'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPaymentRetRef(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PayHdr.Builder setPaymentRetRef(java.lang.String value) {
       validate(fields()[4], value);
       this.PaymentRetRef = value;
       fieldSetFlags()[4] = true;
@@ -602,7 +602,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Processing date
       * @return The value.
       */
-    public java.lang.CharSequence getProcDate() {
+    public java.lang.String getProcDate() {
       return ProcDate;
     }
 
@@ -613,7 +613,7 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ProcDate'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PayHdr.Builder setProcDate(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PayHdr.Builder setProcDate(java.lang.String value) {
       validate(fields()[5], value);
       this.ProcDate = value;
       fieldSetFlags()[5] = true;
@@ -646,12 +646,12 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
     public PayHdr build() {
       try {
         PayHdr record = new PayHdr();
-        record.PODsID = fieldSetFlags()[0] ? this.PODsID : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.PaymentID = fieldSetFlags()[1] ? this.PaymentID : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.ThirdPartyPayID = fieldSetFlags()[2] ? this.ThirdPartyPayID : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.PaymentTRN = fieldSetFlags()[3] ? this.PaymentTRN : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.PaymentRetRef = fieldSetFlags()[4] ? this.PaymentRetRef : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.ProcDate = fieldSetFlags()[5] ? this.ProcDate : (java.lang.CharSequence) defaultValue(fields()[5]);
+        record.PODsID = fieldSetFlags()[0] ? this.PODsID : (java.lang.String) defaultValue(fields()[0]);
+        record.PaymentID = fieldSetFlags()[1] ? this.PaymentID : (java.lang.String) defaultValue(fields()[1]);
+        record.ThirdPartyPayID = fieldSetFlags()[2] ? this.ThirdPartyPayID : (java.lang.String) defaultValue(fields()[2]);
+        record.PaymentTRN = fieldSetFlags()[3] ? this.PaymentTRN : (java.lang.String) defaultValue(fields()[3]);
+        record.PaymentRetRef = fieldSetFlags()[4] ? this.PaymentRetRef : (java.lang.String) defaultValue(fields()[4]);
+        record.ProcDate = fieldSetFlags()[5] ? this.ProcDate : (java.lang.String) defaultValue(fields()[5]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -703,43 +703,43 @@ public class PayHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.PODsID = in.readString(this.PODsID instanceof Utf8 ? (Utf8)this.PODsID : null);
+      this.PODsID = in.readString();
 
-      this.PaymentID = in.readString(this.PaymentID instanceof Utf8 ? (Utf8)this.PaymentID : null);
+      this.PaymentID = in.readString();
 
-      this.ThirdPartyPayID = in.readString(this.ThirdPartyPayID instanceof Utf8 ? (Utf8)this.ThirdPartyPayID : null);
+      this.ThirdPartyPayID = in.readString();
 
-      this.PaymentTRN = in.readString(this.PaymentTRN instanceof Utf8 ? (Utf8)this.PaymentTRN : null);
+      this.PaymentTRN = in.readString();
 
-      this.PaymentRetRef = in.readString(this.PaymentRetRef instanceof Utf8 ? (Utf8)this.PaymentRetRef : null);
+      this.PaymentRetRef = in.readString();
 
-      this.ProcDate = in.readString(this.ProcDate instanceof Utf8 ? (Utf8)this.ProcDate : null);
+      this.ProcDate = in.readString();
 
     } else {
       for (int i = 0; i < 6; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.PODsID = in.readString(this.PODsID instanceof Utf8 ? (Utf8)this.PODsID : null);
+          this.PODsID = in.readString();
           break;
 
         case 1:
-          this.PaymentID = in.readString(this.PaymentID instanceof Utf8 ? (Utf8)this.PaymentID : null);
+          this.PaymentID = in.readString();
           break;
 
         case 2:
-          this.ThirdPartyPayID = in.readString(this.ThirdPartyPayID instanceof Utf8 ? (Utf8)this.ThirdPartyPayID : null);
+          this.ThirdPartyPayID = in.readString();
           break;
 
         case 3:
-          this.PaymentTRN = in.readString(this.PaymentTRN instanceof Utf8 ? (Utf8)this.PaymentTRN : null);
+          this.PaymentTRN = in.readString();
           break;
 
         case 4:
-          this.PaymentRetRef = in.readString(this.PaymentRetRef instanceof Utf8 ? (Utf8)this.PaymentRetRef : null);
+          this.PaymentRetRef = in.readString();
           break;
 
         case 5:
-          this.ProcDate = in.readString(this.ProcDate instanceof Utf8 ? (Utf8)this.ProcDate : null);
+          this.ProcDate = in.readString();
           break;
 
         default:

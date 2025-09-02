@@ -17,7 +17,7 @@ public class DrctDbtTx extends org.apache.avro.specific.SpecificRecordBase imple
   private static final long serialVersionUID = -6269482524552527861L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":\"string\",\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();

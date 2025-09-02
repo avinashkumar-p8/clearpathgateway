@@ -17,7 +17,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   private static final long serialVersionUID = 5472100451390801957L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtCtxt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PuId\",\"type\":\"string\",\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":\"string\",\"doc\":\"Type\"},{\"name\":\"value\",\"type\":\"string\",\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtCtxt\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PuId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Type\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /** Payment unit identifier */
-  private java.lang.CharSequence PuId;
+  private java.lang.String PuId;
   /** Intention source */
   private com.anz.fastpayment.inward.avro.IntnSrc IntnSrc;
 
@@ -90,7 +90,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param PuId Payment unit identifier
    * @param IntnSrc Intention source
    */
-  public PmtCtxt(java.lang.CharSequence PuId, com.anz.fastpayment.inward.avro.IntnSrc IntnSrc) {
+  public PmtCtxt(java.lang.String PuId, com.anz.fastpayment.inward.avro.IntnSrc IntnSrc) {
     this.PuId = PuId;
     this.IntnSrc = IntnSrc;
   }
@@ -116,7 +116,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: PuId = (java.lang.CharSequence)value$; break;
+    case 0: PuId = value$ != null ? value$.toString() : null; break;
     case 1: IntnSrc = (com.anz.fastpayment.inward.avro.IntnSrc)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -126,7 +126,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'PuId' field.
    * @return Payment unit identifier
    */
-  public java.lang.CharSequence getPuId() {
+  public java.lang.String getPuId() {
     return PuId;
   }
 
@@ -136,7 +136,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
    * Payment unit identifier
    * @param value the value to set.
    */
-  public void setPuId(java.lang.CharSequence value) {
+  public void setPuId(java.lang.String value) {
     this.PuId = value;
   }
 
@@ -200,7 +200,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
     implements org.apache.avro.data.RecordBuilder<PmtCtxt> {
 
     /** Payment unit identifier */
-    private java.lang.CharSequence PuId;
+    private java.lang.String PuId;
     /** Intention source */
     private com.anz.fastpayment.inward.avro.IntnSrc IntnSrc;
     private com.anz.fastpayment.inward.avro.IntnSrc.Builder IntnSrcBuilder;
@@ -251,7 +251,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * Payment unit identifier
       * @return The value.
       */
-    public java.lang.CharSequence getPuId() {
+    public java.lang.String getPuId() {
       return PuId;
     }
 
@@ -262,7 +262,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'PuId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtCtxt.Builder setPuId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtCtxt.Builder setPuId(java.lang.String value) {
       validate(fields()[0], value);
       this.PuId = value;
       fieldSetFlags()[0] = true;
@@ -378,7 +378,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
     public PmtCtxt build() {
       try {
         PmtCtxt record = new PmtCtxt();
-        record.PuId = fieldSetFlags()[0] ? this.PuId : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.PuId = fieldSetFlags()[0] ? this.PuId : (java.lang.String) defaultValue(fields()[0]);
         if (IntnSrcBuilder != null) {
           try {
             record.IntnSrc = this.IntnSrcBuilder.build();
@@ -432,7 +432,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.PuId = in.readString(this.PuId instanceof Utf8 ? (Utf8)this.PuId : null);
+      this.PuId = in.readString();
 
       if (this.IntnSrc == null) {
         this.IntnSrc = new com.anz.fastpayment.inward.avro.IntnSrc();
@@ -443,7 +443,7 @@ public class PmtCtxt extends org.apache.avro.specific.SpecificRecordBase impleme
       for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.PuId = in.readString(this.PuId instanceof Utf8 ? (Utf8)this.PuId : null);
+          this.PuId = in.readString();
           break;
 
         case 1:

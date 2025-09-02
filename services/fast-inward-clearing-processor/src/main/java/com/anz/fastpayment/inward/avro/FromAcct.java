@@ -17,7 +17,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = -3830257606535802824L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FromAcct\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"},{\"name\":\"AcctSys\",\"type\":\"string\",\"doc\":\"Account system\"},{\"name\":\"AcctGrp\",\"type\":\"string\",\"doc\":\"Account group\"},{\"name\":\"Name\",\"type\":\"string\",\"doc\":\"Account name\"},{\"name\":\"PmtAuthMethod\",\"type\":\"string\",\"doc\":\"Payment authorization method\"},{\"name\":\"Narrative\",\"type\":\"string\",\"doc\":\"Narrative\"},{\"name\":\"CurCode\",\"type\":\"string\",\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"AcctUse\",\"type\":\"string\",\"doc\":\"Account use\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FromAcct\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"AcctSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account system\"},{\"name\":\"AcctGrp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account group\"},{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account name\"},{\"name\":\"PmtAuthMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment authorization method\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,23 +74,23 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Account identifier */
-  private java.lang.CharSequence AcctId;
+  private java.lang.String AcctId;
   /** Account system */
-  private java.lang.CharSequence AcctSys;
+  private java.lang.String AcctSys;
   /** Account group */
-  private java.lang.CharSequence AcctGrp;
+  private java.lang.String AcctGrp;
   /** Account name */
-  private java.lang.CharSequence Name;
+  private java.lang.String Name;
   /** Payment authorization method */
-  private java.lang.CharSequence PmtAuthMethod;
+  private java.lang.String PmtAuthMethod;
   /** Narrative */
-  private java.lang.CharSequence Narrative;
+  private java.lang.String Narrative;
   /** Currency code */
-  private java.lang.CharSequence CurCode;
+  private java.lang.String CurCode;
   /** Amount */
   private double Amount;
   /** Account use */
-  private java.lang.CharSequence AcctUse;
+  private java.lang.String AcctUse;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -111,7 +111,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * @param Amount Amount
    * @param AcctUse Account use
    */
-  public FromAcct(java.lang.CharSequence AcctId, java.lang.CharSequence AcctSys, java.lang.CharSequence AcctGrp, java.lang.CharSequence Name, java.lang.CharSequence PmtAuthMethod, java.lang.CharSequence Narrative, java.lang.CharSequence CurCode, java.lang.Double Amount, java.lang.CharSequence AcctUse) {
+  public FromAcct(java.lang.String AcctId, java.lang.String AcctSys, java.lang.String AcctGrp, java.lang.String Name, java.lang.String PmtAuthMethod, java.lang.String Narrative, java.lang.String CurCode, java.lang.Double Amount, java.lang.String AcctUse) {
     this.AcctId = AcctId;
     this.AcctSys = AcctSys;
     this.AcctGrp = AcctGrp;
@@ -151,15 +151,15 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: AcctId = (java.lang.CharSequence)value$; break;
-    case 1: AcctSys = (java.lang.CharSequence)value$; break;
-    case 2: AcctGrp = (java.lang.CharSequence)value$; break;
-    case 3: Name = (java.lang.CharSequence)value$; break;
-    case 4: PmtAuthMethod = (java.lang.CharSequence)value$; break;
-    case 5: Narrative = (java.lang.CharSequence)value$; break;
-    case 6: CurCode = (java.lang.CharSequence)value$; break;
+    case 0: AcctId = value$ != null ? value$.toString() : null; break;
+    case 1: AcctSys = value$ != null ? value$.toString() : null; break;
+    case 2: AcctGrp = value$ != null ? value$.toString() : null; break;
+    case 3: Name = value$ != null ? value$.toString() : null; break;
+    case 4: PmtAuthMethod = value$ != null ? value$.toString() : null; break;
+    case 5: Narrative = value$ != null ? value$.toString() : null; break;
+    case 6: CurCode = value$ != null ? value$.toString() : null; break;
     case 7: Amount = (java.lang.Double)value$; break;
-    case 8: AcctUse = (java.lang.CharSequence)value$; break;
+    case 8: AcctUse = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -168,7 +168,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'AcctId' field.
    * @return Account identifier
    */
-  public java.lang.CharSequence getAcctId() {
+  public java.lang.String getAcctId() {
     return AcctId;
   }
 
@@ -178,7 +178,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Account identifier
    * @param value the value to set.
    */
-  public void setAcctId(java.lang.CharSequence value) {
+  public void setAcctId(java.lang.String value) {
     this.AcctId = value;
   }
 
@@ -186,7 +186,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'AcctSys' field.
    * @return Account system
    */
-  public java.lang.CharSequence getAcctSys() {
+  public java.lang.String getAcctSys() {
     return AcctSys;
   }
 
@@ -196,7 +196,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Account system
    * @param value the value to set.
    */
-  public void setAcctSys(java.lang.CharSequence value) {
+  public void setAcctSys(java.lang.String value) {
     this.AcctSys = value;
   }
 
@@ -204,7 +204,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'AcctGrp' field.
    * @return Account group
    */
-  public java.lang.CharSequence getAcctGrp() {
+  public java.lang.String getAcctGrp() {
     return AcctGrp;
   }
 
@@ -214,7 +214,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Account group
    * @param value the value to set.
    */
-  public void setAcctGrp(java.lang.CharSequence value) {
+  public void setAcctGrp(java.lang.String value) {
     this.AcctGrp = value;
   }
 
@@ -222,7 +222,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'Name' field.
    * @return Account name
    */
-  public java.lang.CharSequence getName() {
+  public java.lang.String getName() {
     return Name;
   }
 
@@ -232,7 +232,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Account name
    * @param value the value to set.
    */
-  public void setName(java.lang.CharSequence value) {
+  public void setName(java.lang.String value) {
     this.Name = value;
   }
 
@@ -240,7 +240,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'PmtAuthMethod' field.
    * @return Payment authorization method
    */
-  public java.lang.CharSequence getPmtAuthMethod() {
+  public java.lang.String getPmtAuthMethod() {
     return PmtAuthMethod;
   }
 
@@ -250,7 +250,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Payment authorization method
    * @param value the value to set.
    */
-  public void setPmtAuthMethod(java.lang.CharSequence value) {
+  public void setPmtAuthMethod(java.lang.String value) {
     this.PmtAuthMethod = value;
   }
 
@@ -258,7 +258,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'Narrative' field.
    * @return Narrative
    */
-  public java.lang.CharSequence getNarrative() {
+  public java.lang.String getNarrative() {
     return Narrative;
   }
 
@@ -268,7 +268,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Narrative
    * @param value the value to set.
    */
-  public void setNarrative(java.lang.CharSequence value) {
+  public void setNarrative(java.lang.String value) {
     this.Narrative = value;
   }
 
@@ -276,7 +276,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'CurCode' field.
    * @return Currency code
    */
-  public java.lang.CharSequence getCurCode() {
+  public java.lang.String getCurCode() {
     return CurCode;
   }
 
@@ -286,7 +286,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Currency code
    * @param value the value to set.
    */
-  public void setCurCode(java.lang.CharSequence value) {
+  public void setCurCode(java.lang.String value) {
     this.CurCode = value;
   }
 
@@ -312,7 +312,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'AcctUse' field.
    * @return Account use
    */
-  public java.lang.CharSequence getAcctUse() {
+  public java.lang.String getAcctUse() {
     return AcctUse;
   }
 
@@ -322,7 +322,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Account use
    * @param value the value to set.
    */
-  public void setAcctUse(java.lang.CharSequence value) {
+  public void setAcctUse(java.lang.String value) {
     this.AcctUse = value;
   }
 
@@ -368,23 +368,23 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<FromAcct> {
 
     /** Account identifier */
-    private java.lang.CharSequence AcctId;
+    private java.lang.String AcctId;
     /** Account system */
-    private java.lang.CharSequence AcctSys;
+    private java.lang.String AcctSys;
     /** Account group */
-    private java.lang.CharSequence AcctGrp;
+    private java.lang.String AcctGrp;
     /** Account name */
-    private java.lang.CharSequence Name;
+    private java.lang.String Name;
     /** Payment authorization method */
-    private java.lang.CharSequence PmtAuthMethod;
+    private java.lang.String PmtAuthMethod;
     /** Narrative */
-    private java.lang.CharSequence Narrative;
+    private java.lang.String Narrative;
     /** Currency code */
-    private java.lang.CharSequence CurCode;
+    private java.lang.String CurCode;
     /** Amount */
     private double Amount;
     /** Account use */
-    private java.lang.CharSequence AcctUse;
+    private java.lang.String AcctUse;
 
     /** Creates a new Builder */
     private Builder() {
@@ -484,7 +484,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Account identifier
       * @return The value.
       */
-    public java.lang.CharSequence getAcctId() {
+    public java.lang.String getAcctId() {
       return AcctId;
     }
 
@@ -495,7 +495,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'AcctId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctId(java.lang.String value) {
       validate(fields()[0], value);
       this.AcctId = value;
       fieldSetFlags()[0] = true;
@@ -528,7 +528,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Account system
       * @return The value.
       */
-    public java.lang.CharSequence getAcctSys() {
+    public java.lang.String getAcctSys() {
       return AcctSys;
     }
 
@@ -539,7 +539,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'AcctSys'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctSys(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctSys(java.lang.String value) {
       validate(fields()[1], value);
       this.AcctSys = value;
       fieldSetFlags()[1] = true;
@@ -572,7 +572,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Account group
       * @return The value.
       */
-    public java.lang.CharSequence getAcctGrp() {
+    public java.lang.String getAcctGrp() {
       return AcctGrp;
     }
 
@@ -583,7 +583,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'AcctGrp'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctGrp(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctGrp(java.lang.String value) {
       validate(fields()[2], value);
       this.AcctGrp = value;
       fieldSetFlags()[2] = true;
@@ -616,7 +616,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Account name
       * @return The value.
       */
-    public java.lang.CharSequence getName() {
+    public java.lang.String getName() {
       return Name;
     }
 
@@ -627,7 +627,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'Name'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setName(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setName(java.lang.String value) {
       validate(fields()[3], value);
       this.Name = value;
       fieldSetFlags()[3] = true;
@@ -660,7 +660,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Payment authorization method
       * @return The value.
       */
-    public java.lang.CharSequence getPmtAuthMethod() {
+    public java.lang.String getPmtAuthMethod() {
       return PmtAuthMethod;
     }
 
@@ -671,7 +671,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'PmtAuthMethod'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setPmtAuthMethod(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setPmtAuthMethod(java.lang.String value) {
       validate(fields()[4], value);
       this.PmtAuthMethod = value;
       fieldSetFlags()[4] = true;
@@ -704,7 +704,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Narrative
       * @return The value.
       */
-    public java.lang.CharSequence getNarrative() {
+    public java.lang.String getNarrative() {
       return Narrative;
     }
 
@@ -715,7 +715,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'Narrative'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setNarrative(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setNarrative(java.lang.String value) {
       validate(fields()[5], value);
       this.Narrative = value;
       fieldSetFlags()[5] = true;
@@ -748,7 +748,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Currency code
       * @return The value.
       */
-    public java.lang.CharSequence getCurCode() {
+    public java.lang.String getCurCode() {
       return CurCode;
     }
 
@@ -759,7 +759,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'CurCode'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setCurCode(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setCurCode(java.lang.String value) {
       validate(fields()[6], value);
       this.CurCode = value;
       fieldSetFlags()[6] = true;
@@ -835,7 +835,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Account use
       * @return The value.
       */
-    public java.lang.CharSequence getAcctUse() {
+    public java.lang.String getAcctUse() {
       return AcctUse;
     }
 
@@ -846,7 +846,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'AcctUse'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctUse(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromAcct.Builder setAcctUse(java.lang.String value) {
       validate(fields()[8], value);
       this.AcctUse = value;
       fieldSetFlags()[8] = true;
@@ -879,15 +879,15 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
     public FromAcct build() {
       try {
         FromAcct record = new FromAcct();
-        record.AcctId = fieldSetFlags()[0] ? this.AcctId : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.AcctSys = fieldSetFlags()[1] ? this.AcctSys : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.AcctGrp = fieldSetFlags()[2] ? this.AcctGrp : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.Name = fieldSetFlags()[3] ? this.Name : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.PmtAuthMethod = fieldSetFlags()[4] ? this.PmtAuthMethod : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.Narrative = fieldSetFlags()[5] ? this.Narrative : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.CurCode = fieldSetFlags()[6] ? this.CurCode : (java.lang.CharSequence) defaultValue(fields()[6]);
+        record.AcctId = fieldSetFlags()[0] ? this.AcctId : (java.lang.String) defaultValue(fields()[0]);
+        record.AcctSys = fieldSetFlags()[1] ? this.AcctSys : (java.lang.String) defaultValue(fields()[1]);
+        record.AcctGrp = fieldSetFlags()[2] ? this.AcctGrp : (java.lang.String) defaultValue(fields()[2]);
+        record.Name = fieldSetFlags()[3] ? this.Name : (java.lang.String) defaultValue(fields()[3]);
+        record.PmtAuthMethod = fieldSetFlags()[4] ? this.PmtAuthMethod : (java.lang.String) defaultValue(fields()[4]);
+        record.Narrative = fieldSetFlags()[5] ? this.Narrative : (java.lang.String) defaultValue(fields()[5]);
+        record.CurCode = fieldSetFlags()[6] ? this.CurCode : (java.lang.String) defaultValue(fields()[6]);
         record.Amount = fieldSetFlags()[7] ? this.Amount : (java.lang.Double) defaultValue(fields()[7]);
-        record.AcctUse = fieldSetFlags()[8] ? this.AcctUse : (java.lang.CharSequence) defaultValue(fields()[8]);
+        record.AcctUse = fieldSetFlags()[8] ? this.AcctUse : (java.lang.String) defaultValue(fields()[8]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -945,53 +945,53 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.AcctId = in.readString(this.AcctId instanceof Utf8 ? (Utf8)this.AcctId : null);
+      this.AcctId = in.readString();
 
-      this.AcctSys = in.readString(this.AcctSys instanceof Utf8 ? (Utf8)this.AcctSys : null);
+      this.AcctSys = in.readString();
 
-      this.AcctGrp = in.readString(this.AcctGrp instanceof Utf8 ? (Utf8)this.AcctGrp : null);
+      this.AcctGrp = in.readString();
 
-      this.Name = in.readString(this.Name instanceof Utf8 ? (Utf8)this.Name : null);
+      this.Name = in.readString();
 
-      this.PmtAuthMethod = in.readString(this.PmtAuthMethod instanceof Utf8 ? (Utf8)this.PmtAuthMethod : null);
+      this.PmtAuthMethod = in.readString();
 
-      this.Narrative = in.readString(this.Narrative instanceof Utf8 ? (Utf8)this.Narrative : null);
+      this.Narrative = in.readString();
 
-      this.CurCode = in.readString(this.CurCode instanceof Utf8 ? (Utf8)this.CurCode : null);
+      this.CurCode = in.readString();
 
       this.Amount = in.readDouble();
 
-      this.AcctUse = in.readString(this.AcctUse instanceof Utf8 ? (Utf8)this.AcctUse : null);
+      this.AcctUse = in.readString();
 
     } else {
       for (int i = 0; i < 9; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.AcctId = in.readString(this.AcctId instanceof Utf8 ? (Utf8)this.AcctId : null);
+          this.AcctId = in.readString();
           break;
 
         case 1:
-          this.AcctSys = in.readString(this.AcctSys instanceof Utf8 ? (Utf8)this.AcctSys : null);
+          this.AcctSys = in.readString();
           break;
 
         case 2:
-          this.AcctGrp = in.readString(this.AcctGrp instanceof Utf8 ? (Utf8)this.AcctGrp : null);
+          this.AcctGrp = in.readString();
           break;
 
         case 3:
-          this.Name = in.readString(this.Name instanceof Utf8 ? (Utf8)this.Name : null);
+          this.Name = in.readString();
           break;
 
         case 4:
-          this.PmtAuthMethod = in.readString(this.PmtAuthMethod instanceof Utf8 ? (Utf8)this.PmtAuthMethod : null);
+          this.PmtAuthMethod = in.readString();
           break;
 
         case 5:
-          this.Narrative = in.readString(this.Narrative instanceof Utf8 ? (Utf8)this.Narrative : null);
+          this.Narrative = in.readString();
           break;
 
         case 6:
-          this.CurCode = in.readString(this.CurCode instanceof Utf8 ? (Utf8)this.CurCode : null);
+          this.CurCode = in.readString();
           break;
 
         case 7:
@@ -999,7 +999,7 @@ public class FromAcct extends org.apache.avro.specific.SpecificRecordBase implem
           break;
 
         case 8:
-          this.AcctUse = in.readString(this.AcctUse instanceof Utf8 ? (Utf8)this.AcctUse : null);
+          this.AcctUse = in.readString();
           break;
 
         default:

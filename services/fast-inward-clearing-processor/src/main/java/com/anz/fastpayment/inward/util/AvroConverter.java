@@ -1,6 +1,6 @@
 package com.anz.fastpayment.inward.util;
 
-import com.anz.fastpayment.inward.avro.UnifiedPaymentMessage;
+
 import com.anz.fastpayment.inward.model.ProcessedTransactionMessage;
 import com.anz.fastpayment.inward.model.TransactionMessage;
 import org.apache.avro.generic.GenericRecord;
@@ -22,10 +22,10 @@ public class AvroConverter {
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     /**
-     * Convert Avro UnifiedPaymentMessage to TransactionMessage POJO
-     * Updated to extract data from complex nested structure
+     * Convert Avro GenericRecord to TransactionMessage POJO
+     * Updated to extract data from complex nested structure using GenericRecord
      * 
-     * @param avroRecord The Avro UnifiedPaymentMessage
+     * @param avroRecord The Avro GenericRecord (InputMessage)
      * @return TransactionMessage POJO
      */
     public static TransactionMessage convertToTransactionMessage(GenericRecord avroRecord) {
@@ -34,73 +34,81 @@ public class AvroConverter {
         }
 
         try {
-            // Cast to the specific Avro class
-            UnifiedPaymentMessage unifiedMessage = (UnifiedPaymentMessage) avroRecord;
+            // Work with GenericRecord directly - no casting needed
             
             TransactionMessage transactionMessage = new TransactionMessage();
             
             // Extract transaction ID from Header.UUID or Body.PmtAddRq[0].RqUID
-            String transactionId = extractTransactionId(unifiedMessage);
+            String transactionId = extractTransactionId(avroRecord);
             transactionMessage.setTransactionId(transactionId);
             
             // Extract amount and currency from Body.PmtAddRq[0].FromAcct
-            if (unifiedMessage.getBody() != null && 
-                unifiedMessage.getBody().getPmtAddRq() != null && 
-                unifiedMessage.getBody().getPmtAddRq().size() > 0) {
+            GenericRecord body = (GenericRecord) avroRecord.get("Body");
+            if (body != null) {
+                @SuppressWarnings("unchecked")
+                java.util.List<GenericRecord> pmtAddRq = (java.util.List<GenericRecord>) body.get("PmtAddRq");
+                if (pmtAddRq != null && pmtAddRq.size() > 0) {
+                    GenericRecord firstPaymentRequest = pmtAddRq.get(0);
                 
-                var firstPaymentRequest = unifiedMessage.getBody().getPmtAddRq().get(0);
+                    // Extract amount and currency from FromAcct
+                    GenericRecord fromAcct = (GenericRecord) firstPaymentRequest.get("FromAcct");
+                    if (fromAcct != null) {
+                        // Amount is double, so convert to BigDecimal directly
+                        Double amount = (Double) fromAcct.get("Amount");
+                        if (amount != null) {
+                            transactionMessage.setAmount(new BigDecimal(amount));
+                        }
+                        Object curCode = fromAcct.get("CurCode");
+                        if (curCode != null) {
+                            transactionMessage.setCurrency(curCode.toString());
+                        }
+                        Object acctId = fromAcct.get("AcctId");
+                        if (acctId != null) {
+                            transactionMessage.setSenderAccount(acctId.toString());
+                        }
+                    }
+                    
+                    // Extract receiver account from ToAcct
+                    GenericRecord toAcct = (GenericRecord) firstPaymentRequest.get("ToAcct");
+                    if (toAcct != null) {
+                        Object acctId = toAcct.get("AcctId");
+                        if (acctId != null) {
+                            transactionMessage.setReceiverAccount(acctId.toString());
+                        }
+                    }
                 
-                // Extract amount and currency from FromAcct
-                if (firstPaymentRequest.getFromAcct() != null) {
-                    var fromAcct = firstPaymentRequest.getFromAcct();
-                    // Amount is double, so convert to BigDecimal directly
-                    transactionMessage.setAmount(new BigDecimal(fromAcct.getAmount()));
-                    if (fromAcct.getCurCode() != null) {
-                        transactionMessage.setCurrency(fromAcct.getCurCode().toString());
-                    }
-                    if (fromAcct.getAcctId() != null) {
-                        transactionMessage.setSenderAccount(fromAcct.getAcctId().toString());
-                    }
-                }
-                
-                // Extract receiver account from ToAcct
-                if (firstPaymentRequest.getToAcct() != null) {
-                    var toAcct = firstPaymentRequest.getToAcct();
-                    if (toAcct.getAcctId() != null) {
-                        transactionMessage.setReceiverAccount(toAcct.getAcctId().toString());
-                    }
                 }
                 
                 // Extract transaction type from Procctxt.PmtDtls.PmtCtgry
-                String transactionType = extractTransactionType(unifiedMessage);
+                String transactionType = extractTransactionType(avroRecord);
                 if (transactionType != null) {
                     transactionMessage.setTransactionType(transactionType);
                 }
                 
                 // Extract priority (could be derived from amount or other factors)
-                String priority = determinePriority(unifiedMessage);
+                String priority = determinePriority(avroRecord);
                 transactionMessage.setPriority(priority);
                 
                 // Extract timestamp from Header.EventInfo.EventTS or Header.RcvdTS
-                LocalDateTime timestamp = extractTimestamp(unifiedMessage);
+                LocalDateTime timestamp = extractTimestamp(avroRecord);
                 if (timestamp != null) {
                     transactionMessage.setTimestamp(timestamp);
                 }
                 
                 // Extract description from FromAcct.Narrative or ToAcct.Narrative
-                String description = extractDescription(unifiedMessage);
+                String description = extractDescription(avroRecord);
                 if (description != null) {
                     transactionMessage.setDescription(description);
                 }
                 
                 // Extract reference from PayHdr.PaymentID or PayHdr.ThirdPartyPayID
-                String reference = extractReference(unifiedMessage);
+                String reference = extractReference(avroRecord);
                 if (reference != null) {
                     transactionMessage.setReference(reference);
                 }
             }
             
-            logger.debug("Successfully converted complex Avro UnifiedPaymentMessage to TransactionMessage: {}", 
+            logger.debug("Successfully converted complex Avro GenericRecord to TransactionMessage: {}", 
                        transactionMessage.getTransactionId());
             
             return transactionMessage;
@@ -114,26 +122,36 @@ public class AvroConverter {
     /**
      * Extract transaction ID from various possible locations in the message
      */
-    private static String extractTransactionId(UnifiedPaymentMessage message) {
+    private static String extractTransactionId(GenericRecord message) {
         // Try Header.UUID first
-        if (message.getHeader() != null && message.getHeader().getUUID() != null) {
-            return message.getHeader().getUUID().toString();
+        GenericRecord header = (GenericRecord) message.get("Header");
+        if (header != null) {
+            Object uuid = header.get("UUID");
+            if (uuid != null) {
+                return uuid.toString();
+            }
         }
         
         // Try Body.PmtAddRq[0].RqUID
-        if (message.getBody() != null && 
-            message.getBody().getPmtAddRq() != null && 
-            message.getBody().getPmtAddRq().size() > 0) {
-            
-            var firstPaymentRequest = message.getBody().getPmtAddRq().get(0);
-            if (firstPaymentRequest.getRqUID() != null) {
-                return firstPaymentRequest.getRqUID().toString();
-            }
-            
-            // Try PayHdr.PaymentID
-            if (firstPaymentRequest.getPayHdr() != null && 
-                firstPaymentRequest.getPayHdr().getPaymentID() != null) {
-                return firstPaymentRequest.getPayHdr().getPaymentID().toString();
+        GenericRecord body = (GenericRecord) message.get("Body");
+        if (body != null) {
+            @SuppressWarnings("unchecked")
+            java.util.List<GenericRecord> pmtAddRq = (java.util.List<GenericRecord>) body.get("PmtAddRq");
+            if (pmtAddRq != null && pmtAddRq.size() > 0) {
+                GenericRecord firstPaymentRequest = pmtAddRq.get(0);
+                Object rqUID = firstPaymentRequest.get("RqUID");
+                if (rqUID != null) {
+                    return rqUID.toString();
+                }
+                
+                // Try PayHdr.PaymentID
+                GenericRecord payHdr = (GenericRecord) firstPaymentRequest.get("PayHdr");
+                if (payHdr != null) {
+                    Object paymentID = payHdr.get("PaymentID");
+                    if (paymentID != null) {
+                        return paymentID.toString();
+                    }
+                }
             }
         }
         
@@ -144,21 +162,25 @@ public class AvroConverter {
     /**
      * Extract transaction type from processing context
      */
-    private static String extractTransactionType(UnifiedPaymentMessage message) {
-        if (message.getProcctxt() != null && 
-            message.getProcctxt().getPmtDtls() != null && 
-            message.getProcctxt().getPmtDtls().getPmtCtgry() != null) {
-            
-            String category = message.getProcctxt().getPmtDtls().getPmtCtgry().toString();
-            
-            // Map payment categories to transaction types
-            switch (category) {
-                case "DD":
-                    return "DDI"; // Direct Debit Inward
-                case "CT":
-                    return "CTI"; // Credit Transfer Inward
-                default:
-                    return category;
+    private static String extractTransactionType(GenericRecord message) {
+        GenericRecord procctxt = (GenericRecord) message.get("Procctxt");
+        if (procctxt != null) {
+            GenericRecord pmtDtls = (GenericRecord) procctxt.get("PmtDtls");
+            if (pmtDtls != null) {
+                Object pmtCtgry = pmtDtls.get("PmtCtgry");
+                if (pmtCtgry != null) {
+                    String category = pmtCtgry.toString();
+                    
+                    // Map payment categories to transaction types
+                    switch (category) {
+                        case "DD":
+                            return "DDI"; // Direct Debit Inward
+                        case "CT":
+                            return "CTI"; // Credit Transfer Inward
+                        default:
+                            return category;
+                    }
+                }
             }
         }
         return "UNKNOWN";
@@ -167,25 +189,30 @@ public class AvroConverter {
     /**
      * Determine priority based on amount and other factors
      */
-    private static String determinePriority(UnifiedPaymentMessage message) {
+    private static String determinePriority(GenericRecord message) {
         try {
-            if (message.getBody() != null && 
-                message.getBody().getPmtAddRq() != null && 
-                message.getBody().getPmtAddRq().size() > 0) {
+            GenericRecord body = (GenericRecord) message.get("Body");
+            if (body != null) {
+                @SuppressWarnings("unchecked")
+                java.util.List<GenericRecord> pmtAddRq = (java.util.List<GenericRecord>) body.get("PmtAddRq");
+                if (pmtAddRq != null && pmtAddRq.size() > 0) {
                 
-                var firstPaymentRequest = message.getBody().getPmtAddRq().get(0);
-                if (firstPaymentRequest.getFromAcct() != null) {
-                    
-                    double amountDouble = firstPaymentRequest.getFromAcct().getAmount();
-                    BigDecimal amount = new BigDecimal(amountDouble);
-                    
-                    // Simple priority logic based on amount
-                    if (amount.compareTo(new BigDecimal("100000")) >= 0) {
-                        return "HIGH";
-                    } else if (amount.compareTo(new BigDecimal("10000")) >= 0) {
-                        return "NORMAL";
-                    } else {
-                        return "LOW";
+                    GenericRecord firstPaymentRequest = pmtAddRq.get(0);
+                    GenericRecord fromAcct = (GenericRecord) firstPaymentRequest.get("FromAcct");
+                    if (fromAcct != null) {
+                        Double amountDouble = (Double) fromAcct.get("Amount");
+                        if (amountDouble != null) {
+                            BigDecimal amount = new BigDecimal(amountDouble);
+                            
+                            // Simple priority logic based on amount
+                            if (amount.compareTo(new BigDecimal("100000")) >= 0) {
+                                return "HIGH";
+                            } else if (amount.compareTo(new BigDecimal("10000")) >= 0) {
+                                return "NORMAL";
+                            } else {
+                                return "LOW";
+                            }
+                        }
                     }
                 }
             }
@@ -199,36 +226,45 @@ public class AvroConverter {
     /**
      * Extract timestamp from various possible locations
      */
-    private static LocalDateTime extractTimestamp(UnifiedPaymentMessage message) {
+    private static LocalDateTime extractTimestamp(GenericRecord message) {
         try {
             // Try Header.EventInfo.EventTS first
-            if (message.getHeader() != null && 
-                message.getHeader().getEventInfo() != null && 
-                message.getHeader().getEventInfo().getEventTS() != null) {
-                
-                String eventTS = message.getHeader().getEventInfo().getEventTS().toString();
-                return LocalDateTime.parse(eventTS, TIMESTAMP_FORMATTER);
+            GenericRecord header = (GenericRecord) message.get("Header");
+            if (header != null) {
+                GenericRecord eventInfo = (GenericRecord) header.get("EventInfo");
+                if (eventInfo != null) {
+                    Object eventTS = eventInfo.get("EventTS");
+                    if (eventTS != null) {
+                        String eventTSStr = eventTS.toString();
+                        return LocalDateTime.parse(eventTSStr, TIMESTAMP_FORMATTER);
+                    }
+                }
             }
             
             // Try Header.RcvdTS
-            if (message.getHeader() != null && 
-                message.getHeader().getRcvdTS() != null) {
-                
-                String rcvdTS = message.getHeader().getRcvdTS().toString();
-                return LocalDateTime.parse(rcvdTS, TIMESTAMP_FORMATTER);
+            if (header != null) {
+                Object rcvdTS = header.get("RcvdTS");
+                if (rcvdTS != null) {
+                    String rcvdTSStr = rcvdTS.toString();
+                    return LocalDateTime.parse(rcvdTSStr, TIMESTAMP_FORMATTER);
+                }
             }
             
             // Try Body.PmtAddRq[0].MsgHdr.ClientDt
-            if (message.getBody() != null && 
-                message.getBody().getPmtAddRq() != null && 
-                message.getBody().getPmtAddRq().size() > 0) {
-                
-                var firstPaymentRequest = message.getBody().getPmtAddRq().get(0);
-                if (firstPaymentRequest.getMsgHdr() != null && 
-                    firstPaymentRequest.getMsgHdr().getClientDt() != null) {
-                    
-                    String clientDt = firstPaymentRequest.getMsgHdr().getClientDt().toString();
-                    return LocalDateTime.parse(clientDt, TIMESTAMP_FORMATTER);
+            GenericRecord body = (GenericRecord) message.get("Body");
+            if (body != null) {
+                @SuppressWarnings("unchecked")
+                java.util.List<GenericRecord> pmtAddRq = (java.util.List<GenericRecord>) body.get("PmtAddRq");
+                if (pmtAddRq != null && pmtAddRq.size() > 0) {
+                    GenericRecord firstPaymentRequest = pmtAddRq.get(0);
+                    GenericRecord msgHdr = (GenericRecord) firstPaymentRequest.get("MsgHdr");
+                    if (msgHdr != null) {
+                        Object clientDt = msgHdr.get("ClientDt");
+                        if (clientDt != null) {
+                            String clientDtStr = clientDt.toString();
+                            return LocalDateTime.parse(clientDtStr, TIMESTAMP_FORMATTER);
+                        }
+                    }
                 }
             }
             
@@ -242,24 +278,32 @@ public class AvroConverter {
     /**
      * Extract description from narrative fields
      */
-    private static String extractDescription(UnifiedPaymentMessage message) {
+    private static String extractDescription(GenericRecord message) {
         try {
-            if (message.getBody() != null && 
-                message.getBody().getPmtAddRq() != null && 
-                message.getBody().getPmtAddRq().size() > 0) {
-                
-                var firstPaymentRequest = message.getBody().getPmtAddRq().get(0);
-                
-                // Try FromAcct.Narrative first
-                if (firstPaymentRequest.getFromAcct() != null && 
-                    firstPaymentRequest.getFromAcct().getNarrative() != null) {
-                    return firstPaymentRequest.getFromAcct().getNarrative().toString();
-                }
-                
-                // Try ToAcct.Narrative
-                if (firstPaymentRequest.getToAcct() != null && 
-                    firstPaymentRequest.getToAcct().getNarrative() != null) {
-                    return firstPaymentRequest.getToAcct().getNarrative().toString();
+            GenericRecord body = (GenericRecord) message.get("Body");
+            if (body != null) {
+                @SuppressWarnings("unchecked")
+                java.util.List<GenericRecord> pmtAddRq = (java.util.List<GenericRecord>) body.get("PmtAddRq");
+                if (pmtAddRq != null && pmtAddRq.size() > 0) {
+                    GenericRecord firstPaymentRequest = pmtAddRq.get(0);
+                    
+                    // Try FromAcct.Narrative first
+                    GenericRecord fromAcct = (GenericRecord) firstPaymentRequest.get("FromAcct");
+                    if (fromAcct != null) {
+                        Object narrative = fromAcct.get("Narrative");
+                        if (narrative != null) {
+                            return narrative.toString();
+                        }
+                    }
+                    
+                    // Try ToAcct.Narrative
+                    GenericRecord toAcct = (GenericRecord) firstPaymentRequest.get("ToAcct");
+                    if (toAcct != null) {
+                        Object narrative = toAcct.get("Narrative");
+                        if (narrative != null) {
+                            return narrative.toString();
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
@@ -272,24 +316,30 @@ public class AvroConverter {
     /**
      * Extract reference from payment header
      */
-    private static String extractReference(UnifiedPaymentMessage message) {
+    private static String extractReference(GenericRecord message) {
         try {
-            if (message.getBody() != null && 
-                message.getBody().getPmtAddRq() != null && 
-                message.getBody().getPmtAddRq().size() > 0) {
+            GenericRecord body = (GenericRecord) message.get("Body");
+            if (body != null) {
+                @SuppressWarnings("unchecked")
+                java.util.List<GenericRecord> pmtAddRq = (java.util.List<GenericRecord>) body.get("PmtAddRq");
+                if (pmtAddRq != null && pmtAddRq.size() > 0) {
                 
-                var firstPaymentRequest = message.getBody().getPmtAddRq().get(0);
-                
-                // Try PayHdr.ThirdPartyPayID first
-                if (firstPaymentRequest.getPayHdr() != null && 
-                    firstPaymentRequest.getPayHdr().getThirdPartyPayID() != null) {
-                    return firstPaymentRequest.getPayHdr().getThirdPartyPayID().toString();
-                }
-                
-                // Try PayHdr.PaymentID
-                if (firstPaymentRequest.getPayHdr() != null && 
-                    firstPaymentRequest.getPayHdr().getPaymentID() != null) {
-                    return firstPaymentRequest.getPayHdr().getPaymentID().toString();
+                    GenericRecord firstPaymentRequest = pmtAddRq.get(0);
+                    
+                    // Try PayHdr.ThirdPartyPayID first
+                    GenericRecord payHdr = (GenericRecord) firstPaymentRequest.get("PayHdr");
+                    if (payHdr != null) {
+                        Object thirdPartyPayID = payHdr.get("ThirdPartyPayID");
+                        if (thirdPartyPayID != null) {
+                            return thirdPartyPayID.toString();
+                        }
+                        
+                        // Try PayHdr.PaymentID
+                        Object paymentID = payHdr.get("PaymentID");
+                        if (paymentID != null) {
+                            return paymentID.toString();
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
@@ -299,20 +349,7 @@ public class AvroConverter {
         return null;
     }
 
-    /**
-     * Extract transaction ID from Avro message for error handling
-     */
-    public static String extractTransactionId(GenericRecord avroMessage) {
-        try {
-            if (avroMessage instanceof UnifiedPaymentMessage) {
-                UnifiedPaymentMessage message = (UnifiedPaymentMessage) avroMessage;
-                return extractTransactionId(message);
-            }
-        } catch (Exception e) {
-            logger.warn("Could not extract transaction ID from Avro message", e);
-        }
-        return "UNKNOWN";
-    }
+
 
     /**
      * Convert ProcessedTransactionMessage POJO to Avro ProcessedTransactionMessage
