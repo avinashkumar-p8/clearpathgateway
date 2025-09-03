@@ -27,6 +27,7 @@
 
     <modules>
         <module>fast-cpg-bom</module>
+        <module>services/fast-id-generator-service</module>
         <module>services/fast-router-service</module>
         <module>services/fast-inward-clearing-processor</module>
         <module>services/fast-sender-service</module>
