@@ -1,48 +1,49 @@
 package com.anz.fastpayment.inward.scheme.validation.entity;
 
-import jakarta.persistence.*;
+import com.google.cloud.spring.data.spanner.core.mapping.Column;
+import com.google.cloud.spring.data.spanner.core.mapping.PrimaryKey;
+import com.google.cloud.spring.data.spanner.core.mapping.Table;
 import java.time.LocalDateTime;
 
 /**
  * MessageUniqueId entity for tracking message idempotency
  * Maps to the message_unique_ids table in Spanner
  */
-@Entity
 @Table(name = "message_unique_ids")
 public class MessageUniqueId {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
+    @Column(name = "id")
     private Long id;
     
-    @Column(name = "muid", nullable = false, unique = true, length = 255)
+    @Column(name = "muid")
     private String muid;
     
-    @Column(name = "message_topic", nullable = false, length = 100)
+    @Column(name = "message_topic")
     private String topic;
     
-    @Column(name = "message_partition", nullable = false)
+    @Column(name = "message_partition")
     private Integer partition;
     
-    @Column(name = "message_offset", nullable = false)
+    @Column(name = "message_offset")
     private Long offset;
     
-    @Column(name = "event_payload", columnDefinition = "TEXT")
+    @Column(name = "event_payload")
     private String eventPayload;
     
-    @Column(name = "processing_status", nullable = false, length = 50)
+    @Column(name = "processing_status")
     private String processingStatus;
     
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     
     @Column(name = "processed_at")
     private LocalDateTime processedAt;
     
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Boolean isActive;
     
-    // Default constructor for JPA
+    // Default constructor for Spanner
     protected MessageUniqueId() {}
     
     // Constructor for creating new MUID records
@@ -138,12 +139,7 @@ public class MessageUniqueId {
         this.isActive = isActive;
     }
     
-    @PreUpdate
-    protected void onUpdate() {
-        if ("COMPLETED".equals(this.processingStatus) || "FAILED".equals(this.processingStatus)) {
-            this.processedAt = LocalDateTime.now();
-        }
-    }
+    // Spanner doesn't have @PreUpdate, so we'll handle this in the service layer
     
     @Override
     public String toString() {

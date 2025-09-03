@@ -1,64 +1,66 @@
 package com.anz.fastpayment.inward.scheme.validation.entity;
 
-import jakarta.persistence.*;
+import com.google.cloud.spring.data.spanner.core.mapping.Column;
+import com.google.cloud.spring.data.spanner.core.mapping.PrimaryKey;
+import com.google.cloud.spring.data.spanner.core.mapping.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Currency entity for banking operations
  * Represents supported currencies with validation rules
+ * Uses Google Cloud Spanner for data persistence
  */
-@Entity
 @Table(name = "currencies")
 public class Currency {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
+    @Column(name = "id")
     private Long id;
     
-    @Column(name = "code", unique = true, nullable = false, length = 3)
+    @Column(name = "code")
     private String code;
     
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name")
     private String name;
     
-    @Column(name = "symbol", length = 5)
+    @Column(name = "symbol")
     private String symbol;
     
-    @Column(name = "is_active", nullable = false)
-    private boolean active = true;
+    @Column(name = "is_active")
+    private Boolean isActive;
     
-    @Column(name = "decimal_places", nullable = false)
-    private int decimalPlaces = 2;
+    @Column(name = "decimal_places")
+    private Integer decimalPlaces;
     
-    @ElementCollection
-    @CollectionTable(name = "currency_country_mappings", 
-                    joinColumns = @JoinColumn(name = "currency_id"))
-    @Column(name = "country_code", length = 2)
+    @Column(name = "valid_countries")
     private List<String> validCountries;
     
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    @Column(name = "created_by", length = 50)
+    @Column(name = "created_by")
     private String createdBy;
     
-    @Column(name = "updated_by", length = 50)
+    @Column(name = "updated_by")
     private String updatedBy;
     
     // Default constructor
     public Currency() {
         this.createdAt = LocalDateTime.now();
+        this.isActive = true;
+        this.decimalPlaces = 2;
     }
     
     // Constructor with required fields
-    public Currency(String code, String name) {
+    public Currency(String code, String name, String symbol) {
         this();
         this.code = code;
         this.name = name;
+        this.symbol = symbol;
     }
     
     // Getters and Setters
@@ -94,19 +96,19 @@ public class Currency {
         this.symbol = symbol;
     }
     
-    public boolean isActive() {
-        return active;
+    public Boolean getIsActive() {
+        return isActive;
     }
     
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
     
-    public int getDecimalPlaces() {
+    public Integer getDecimalPlaces() {
         return decimalPlaces;
     }
     
-    public void setDecimalPlaces(int decimalPlaces) {
+    public void setDecimalPlaces(Integer decimalPlaces) {
         this.decimalPlaces = decimalPlaces;
     }
     
@@ -150,8 +152,22 @@ public class Currency {
         this.updatedBy = updatedBy;
     }
     
-    @PreUpdate
-    public void preUpdate() {
+    // Business logic methods
+    public boolean isActive() {
+        return isActive != null && isActive;
+    }
+    
+    public void activate() {
+        this.isActive = true;
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    public void deactivate() {
+        this.isActive = false;
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    public void updateTimestamp() {
         this.updatedAt = LocalDateTime.now();
     }
     
@@ -162,7 +178,7 @@ public class Currency {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", symbol='" + symbol + '\'' +
-                ", active=" + active +
+                ", isActive=" + isActive +
                 ", decimalPlaces=" + decimalPlaces +
                 ", validCountries=" + validCountries +
                 ", createdAt=" + createdAt +
@@ -170,5 +186,18 @@ public class Currency {
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +
                 '}';
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Currency currency = (Currency) o;
+        return code != null ? code.equals(currency.code) : currency.code == null;
+    }
+    
+    @Override
+    public int hashCode() {
+        return code != null ? code.hashCode() : 0;
     }
 }

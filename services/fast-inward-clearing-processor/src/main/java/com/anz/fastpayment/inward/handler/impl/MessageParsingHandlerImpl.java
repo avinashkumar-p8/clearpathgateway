@@ -71,37 +71,24 @@ public class MessageParsingHandlerImpl implements MessageParsingHandler {
                 return new HashMap<>();
             }
             
-            // Extract only the 'messages' array from the Avro message
-            Object messagesArray = avroMessage.get("messages");
+            // TEMPORARY CHANGE: Parse the FULL message instead of just messages[0]
+            logger.info("TEMPORARY: Parsing FULL message structure for transaction: {}", context.getTransactionId());
+            Map<String, Object> fullMessage = AvroMessageParser.convertToMap(avroMessage);
             
-            if (messagesArray != null && messagesArray instanceof java.util.Collection) {
-                java.util.Collection<?> messages = (java.util.Collection<?>) messagesArray;
-                
-                if (!messages.isEmpty()) {
-                    // Extract only the first message (messages[0])
-                    Object firstMessage = messages.iterator().next();
-                    
-                    if (firstMessage instanceof GenericRecord) {
-                        logger.debug("Successfully extracted first message from messages array for transaction: {}", 
-                                   context.getTransactionId());
-                        return AvroMessageParser.convertToMap((GenericRecord) firstMessage);
-                    } else {
-                        logger.warn("First message is not a GenericRecord: {} for transaction: {}", 
-                                  firstMessage.getClass().getSimpleName(), context.getTransactionId());
-                        return new HashMap<>();
-                    }
-                } else {
-                    logger.warn("Messages array is empty for transaction: {}", context.getTransactionId());
-                    return new HashMap<>();
-                }
-            } else {
-                logger.warn("No 'messages' section found in Avro message or not a collection for transaction: {}", 
-                          context.getTransactionId());
-                return new HashMap<>();
+            logger.info("TEMPORARY: Full message parsed with {} top-level fields: {}", 
+                       fullMessage.size(), fullMessage.keySet());
+            
+            // Log the structure for debugging
+            for (String key : fullMessage.keySet()) {
+                Object value = fullMessage.get(key);
+                logger.debug("TEMPORARY: Field '{}' = {} (type: {})", 
+                           key, value, value != null ? value.getClass().getSimpleName() : "null");
             }
             
+            return fullMessage;
+            
         } catch (Exception e) {
-            logger.error("Error extracting Message section from Avro message for transaction: {} - Error: {}", 
+            logger.error("Error extracting FULL message from Avro message for transaction: {} - Error: {}", 
                         context.getTransactionId(), e.getMessage(), e);
             return new HashMap<>();
         }

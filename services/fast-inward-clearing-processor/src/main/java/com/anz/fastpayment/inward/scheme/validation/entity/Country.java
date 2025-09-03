@@ -1,67 +1,66 @@
 package com.anz.fastpayment.inward.scheme.validation.entity;
 
-import jakarta.persistence.*;
+import com.google.cloud.spring.data.spanner.core.mapping.Column;
+import com.google.cloud.spring.data.spanner.core.mapping.PrimaryKey;
+import com.google.cloud.spring.data.spanner.core.mapping.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Country entity for banking operations
  * Represents supported countries with validation rules
+ * Uses Google Cloud Spanner for data persistence
  */
-@Entity
 @Table(name = "countries")
 public class Country {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
+    @Column(name = "id")
     private Long id;
     
-    @Column(name = "code", unique = true, nullable = false, length = 2)
+    @Column(name = "code")
     private String code;
     
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name")
     private String name;
     
-    @Column(name = "iso_code", unique = true, length = 3)
+    @Column(name = "iso_code")
     private String isoCode;
     
-    @Column(name = "is_active", nullable = false)
-    private boolean active = true;
+    @Column(name = "currency_code")
+    private String currencyCode;
     
-    @Column(name = "region", length = 50)
-    private String region;
+    @Column(name = "is_active")
+    private Boolean isActive;
     
-    @Column(name = "sub_region", length = 50)
-    private String subRegion;
-    
-    @ElementCollection
-    @CollectionTable(name = "country_currency_mappings", 
-                    joinColumns = @JoinColumn(name = "country_id"))
-    @Column(name = "currency_code", length = 3)
-    private List<String> validCurrencies;
-    
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    @Column(name = "created_by", length = 50)
+    @Column(name = "created_by")
     private String createdBy;
     
-    @Column(name = "updated_by", length = 50)
+    @Column(name = "updated_by")
     private String updatedBy;
+    
+    @Column(name = "validation_rules")
+    private List<String> validationRules;
     
     // Default constructor
     public Country() {
         this.createdAt = LocalDateTime.now();
+        this.isActive = true;
     }
     
     // Constructor with required fields
-    public Country(String code, String name) {
+    public Country(String code, String name, String isoCode, String currencyCode) {
         this();
         this.code = code;
         this.name = name;
+        this.isoCode = isoCode;
+        this.currencyCode = currencyCode;
     }
     
     // Getters and Setters
@@ -97,36 +96,20 @@ public class Country {
         this.isoCode = isoCode;
     }
     
-    public boolean isActive() {
-        return active;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
     
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
     
-    public String getRegion() {
-        return region;
+    public Boolean getIsActive() {
+        return isActive;
     }
     
-    public void setRegion(String region) {
-        this.region = region;
-    }
-    
-    public String getSubRegion() {
-        return subRegion;
-    }
-    
-    public void setSubRegion(String subRegion) {
-        this.subRegion = subRegion;
-    }
-    
-    public List<String> getValidCurrencies() {
-        return validCurrencies;
-    }
-    
-    public void setValidCurrencies(List<String> validCurrencies) {
-        this.validCurrencies = validCurrencies;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
     
     public LocalDateTime getCreatedAt() {
@@ -161,8 +144,30 @@ public class Country {
         this.updatedBy = updatedBy;
     }
     
-    @PreUpdate
-    public void preUpdate() {
+    public List<String> getValidationRules() {
+        return validationRules;
+    }
+    
+    public void setValidationRules(List<String> validationRules) {
+        this.validationRules = validationRules;
+    }
+    
+    // Business logic methods
+    public boolean isActive() {
+        return isActive != null && isActive;
+    }
+    
+    public void activate() {
+        this.isActive = true;
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    public void deactivate() {
+        this.isActive = false;
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    public void updateTimestamp() {
         this.updatedAt = LocalDateTime.now();
     }
     
@@ -173,14 +178,26 @@ public class Country {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", isoCode='" + isoCode + '\'' +
-                ", active=" + active +
-                ", region='" + region + '\'' +
-                ", subRegion='" + subRegion + '\'' +
-                ", validCurrencies=" + validCurrencies +
+                ", currencyCode='" + currencyCode + '\'' +
+                ", isActive=" + isActive +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +
+                ", validationRules=" + validationRules +
                 '}';
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return code != null ? code.equals(country.code) : country.code == null;
+    }
+    
+    @Override
+    public int hashCode() {
+        return code != null ? code.hashCode() : 0;
     }
 }

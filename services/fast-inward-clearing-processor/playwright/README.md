@@ -1,17 +1,15 @@
-# Fast Inward Clearing Processor - Playwright Test Suite
+# Fast Inward Clearing Processor - Playwright E2E Test Suite
 
-This package contains comprehensive Playwright tests for the `fast-inward-clearing-processor` service, covering unit tests, integration tests, and end-to-end pipeline testing.
+This package contains **End-to-End (E2E) Playwright tests** for the `fast-inward-clearing-processor` service, focusing on complete pipeline validation and real-world scenarios.
 
 ## 🏗️ **Test Architecture**
 
 ### **Test Categories:**
-- **Unit Tests** (`tests/unit/`): Individual component testing
-- **Integration Tests** (`tests/integration/`): Kafka and service integration
-- **End-to-End Tests** (`tests/e2e/`): Complete pipeline validation
+- **End-to-End Tests** (`tests/e2e/`): Complete pipeline validation with real Kafka integration
 
 ### **Helper Modules:**
-- **`kafka-helper.ts`**: Kafka message production/consumption
-- **`http-helper.ts`**: REST API testing utilities
+- **`kafka-helper.ts`**: Kafka message production/consumption with Avro serialization
+- **`http-helper.ts`**: REST API testing utilities for health checks
 - **`test-data.ts`**: Sample Avro messages and test scenarios
 
 ## 🚀 **Quick Start**
@@ -44,21 +42,52 @@ TEST_TIMEOUT=30000
 
 ### **4. Run Tests**
 
-#### **Run All Tests**
+#### **🚀 Automated Testing (Recommended)**
 ```bash
-npm test
+# Run all tests with automatic service setup/cleanup
+npm run test:auto
+
+# Run tests in headed mode
+npm run test:auto:headed
+
+# Run specific test categories
+npm run test:component    # Component testing only
+npm run test:idempotency  # Idempotency tests only
+npm run test:validation   # Validation tests only
+npm run test:agent        # Agent ID validation only
+
+# Run tests matching a pattern
+npm run test:auto:pattern "IDEMPOTENCY"
+npm run test:auto:pattern "VALIDATION"
 ```
 
-#### **Run Specific Test Categories**
+#### **🔧 Manual Testing**
 ```bash
-# Unit tests only
-npx playwright test tests/unit/
+# Setup services first
+npm run setup
 
-# Integration tests only
-npx playwright test tests/integration/
+# Run tests manually
+npm test
 
-# E2E tests only
-npx playwright test tests/e2e/
+# Cleanup services after
+npm run cleanup
+```
+
+#### **📋 Individual Test Commands**
+```bash
+# All E2E tests (default)
+npx playwright test
+
+# Run component testing only
+npx playwright test tests/e2e/component-testing.spec.ts
+
+# Run pipeline testing only
+npx playwright test tests/e2e/end-to-end-pipeline.spec.ts
+
+# Run specific test
+npx playwright test -g "IDEMPOTENCY TEST"
+npx playwright test -g "VALIDATION TEST"
+npx playwright test -g "AGENT ID VALIDATION"
 ```
 
 #### **Run Tests with UI**
@@ -76,32 +105,32 @@ npm run test:debug
 npm run test:headed
 ```
 
-## 📋 **Test Coverage**
+## 📋 **E2E Test Coverage**
 
-### **Unit Tests**
-- ✅ Health Controller endpoints
-- ✅ Service status responses
-- ✅ Error handling
+### **Component Testing (InputMessage Schema)**
+- ✅ **1. Idempotency Test**: Duplicate message handling and logging
+- ✅ **2. Parsing Test**: InputMessage schema parsing and structure preservation
+- ✅ **3. Field Extraction Test**: Validation field extraction from complex JSON paths
+- ✅ **4. Validation Test**: All field validation (currency, amount, date, agent IDs)
+- ✅ **5. Validation Failure Test**: Error handling with proper Trailer responses
+- ✅ **6. Response Generation Test**: Complete response structure with Trailer
+- ✅ **7. Complete Pipeline Test**: Full 4-step flow (Consume → Idempotency → Validation → Response)
+- ✅ **8. Agent ID Validation Test**: 11-character requirement enforcement
 
-### **Integration Tests**
-- ✅ Kafka message processing
-- ✅ Message validation pipeline
-- ✅ Dead Letter Queue handling
-- ✅ Idempotency verification
-- ✅ High-volume processing
-
-### **End-to-End Tests**
-- ✅ Complete payment flow
-- ✅ Validation failure handling
-- ✅ Service recovery scenarios
-- ✅ Different message types
-- ✅ Performance benchmarks
+### **End-to-End Pipeline Tests**
+- ✅ **Complete Payment Flow**: Full 4-step pipeline validation
+- ✅ **Validation Failure Handling**: Invalid data with proper error responses
+- ✅ **Idempotency Verification**: Duplicate message detection and logging
+- ✅ **Service Recovery**: Health checks and restart scenarios
+- ✅ **Different Message Types**: Standard, high-value, international payments
+- ✅ **Performance Benchmarks**: Processing time validation
+- ✅ **Error Scenarios**: Parsing failures, validation errors
 
 ## 🔧 **Test Configuration**
 
 ### **Playwright Config**
-- **Browsers**: Chrome, Firefox, Safari
-- **Parallel Execution**: Enabled
+- **Browsers**: Chrome (E2E tests only)
+- **Parallel Execution**: Disabled (for Kafka test isolation)
 - **Retries**: 2 (CI), 0 (local)
 - **Screenshots**: On failure
 - **Videos**: Retain on failure

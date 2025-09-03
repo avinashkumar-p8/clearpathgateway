@@ -5,9 +5,13 @@ import com.anz.fastpayment.inward.scheme.validation.exception.ValidationExceptio
 import com.anz.fastpayment.inward.scheme.validation.model.TagValidationResult;
 import com.anz.fastpayment.inward.scheme.validation.model.ValidationResult;
 import com.anz.fastpayment.inward.scheme.validation.model.ValidationStatus;
+import com.anz.fastpayment.inward.scheme.validation.repository.CurrencyRepository;
+import com.anz.fastpayment.inward.scheme.validation.repository.CountryRepository;
+import com.anz.fastpayment.inward.scheme.validation.util.MapToArrayConverter;
 import com.anz.fastpayment.inward.util.DirectFieldExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,6 +36,13 @@ public class SchemeValidationOrchestrator {
     
     private static final Logger log = LoggerFactory.getLogger(SchemeValidationOrchestrator.class);
     
+    // Repository dependencies for database validation
+    @Autowired
+    private CurrencyRepository currencyRepository;
+    
+    @Autowired
+    private CountryRepository countryRepository;
+    
     // Thread pool for parallel validation
     private final ExecutorService validationExecutor = Executors.newFixedThreadPool(10);
     
@@ -53,6 +64,13 @@ public class SchemeValidationOrchestrator {
     private final Map<LocalDate, Set<String>> rvslIdCache = new ConcurrentHashMap<>();
     
     /**
+     * Constructor for dependency injection
+     */
+    public SchemeValidationOrchestrator() {
+        // Constructor - repositories will be injected by Spring
+    }
+    
+    /**
      * Main validation method that orchestrates parallel validation of all required tags.
      * 
      * @param payload The message payload as Map<String, Object>
@@ -66,8 +84,14 @@ public class SchemeValidationOrchestrator {
         inputMessageCount.incrementAndGet();
         lastValidationTime.set(java.time.LocalDateTime.now().toString());
         
+        // Convert payload structure if needed (Map-based to Array-based)
+        Map<String, Object> convertedPayload = MapToArrayConverter.convertIfNeeded(payload);
+        if (convertedPayload != payload) {
+            log.info("Payload structure converted from Map-based to Array-based for transaction: {}", transactionId);
+        }
+        
         // Log input data structure summary
-        log.debug("Input payload type: {}, size: {}", payload.getClass().getSimpleName(), payload.size());
+        log.debug("Input payload type: {}, size: {}", convertedPayload.getClass().getSimpleName(), convertedPayload.size());
         
         List<String> successfulValidations = new ArrayList<>();
         List<String> failedValidations = new ArrayList<>();
@@ -77,8 +101,10 @@ public class SchemeValidationOrchestrator {
         List<CompletableFuture<TagValidationResult>> validationFutures = REQUIRED_TAGS.stream()
             .map(tagName -> CompletableFuture.supplyAsync(() -> {
                 try {
+                    // Get the actual JSON path for this tag
+                    String jsonPath = getJsonPathForTag(tagName);
                     // Extract field value directly using the constant path
-                    String tagValue = DirectFieldExtractor.extractFieldValue(payload, tagName);
+                    String tagValue = DirectFieldExtractor.extractFieldValue(convertedPayload, jsonPath);
                     
                     if (tagValue != null && !tagValue.trim().isEmpty()) {
                         log.debug("Extracted value for tag '{}': {}", tagName, tagValue);
@@ -160,6 +186,27 @@ public class SchemeValidationOrchestrator {
             successfulValidations.size(), failedValidations.size(), missingTags.size());
         
         return validationResult;
+    }
+    
+    /**
+     * Get the JSON path for a given tag name
+     * 
+     * @param tagName The tag name (e.g., "currency", "country")
+     * @return The corresponding JSON path
+     */
+    private String getJsonPathForTag(String tagName) {
+        return switch (tagName) {
+            case ValidationTags.TAG_CURRENCY -> ValidationTags.CURRENCY;
+            case ValidationTags.TAG_COUNTRY -> ValidationTags.COUNTRY;
+            case ValidationTags.TAG_INSTR_ID -> ValidationTags.INSTR_ID;
+            case ValidationTags.TAG_INTR_BK_STTLM_AMT -> ValidationTags.INTR_BK_STTLM_AMT;
+            case ValidationTags.TAG_INTR_BK_STTLM_DT -> ValidationTags.INTR_BK_STTLM_DT;
+            case ValidationTags.TAG_CDTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID -> ValidationTags.CDTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID;
+            case ValidationTags.TAG_INSTG_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID -> ValidationTags.INSTG_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID;
+            case ValidationTags.TAG_DBTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID -> ValidationTags.DBTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID;
+            case ValidationTags.TAG_INSTD_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID -> ValidationTags.INSTD_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID;
+            default -> tagName; // Fallback to tag name if no mapping found
+        };
     }
     
     /**
@@ -300,25 +347,85 @@ public class SchemeValidationOrchestrator {
     }
     
     /**
-     * Validate currency using switch method
+     * Validate currency using database lookup
      */
     private void validateCurrency(String currencyCode, String transactionId) throws ValidationException {
         log.debug("Validating currency: {} for transaction: {}", currencyCode, transactionId);
         
-        // For now, just log the currency validation
-        // TODO: Implement actual currency validation logic
-        log.debug("Currency validation successful: {} for transaction: {}", currencyCode, transactionId);
+        if (currencyCode == null || currencyCode.trim().isEmpty()) {
+            throw new ValidationException(
+                "Currency code cannot be null or empty",
+                "INVALID_CURRENCY",
+                "currency",
+                transactionId
+            );
+        }
+        
+        String trimmedCode = currencyCode.trim().toUpperCase();
+        
+        // Check if currency exists in database
+        var currency = currencyRepository.findByCode(trimmedCode);
+        if (currency.isEmpty()) {
+            throw new ValidationException(
+                "Invalid currency code: " + trimmedCode,
+                "INVALID_CURRENCY",
+                "currency",
+                transactionId
+            );
+        }
+        
+        // Check if currency is active
+        if (!currency.get().isActive()) {
+            throw new ValidationException(
+                "Currency code is inactive: " + trimmedCode,
+                "INACTIVE_CURRENCY",
+                "currency",
+                transactionId
+            );
+        }
+        
+        log.debug("Currency validation successful: {} for transaction: {}", trimmedCode, transactionId);
     }
     
     /**
-     * Validate country using switch method
+     * Validate country using database lookup
      */
     private void validateCountry(String countryCode, String transactionId) throws ValidationException {
         log.debug("Validating country: {} for transaction: {}", countryCode, transactionId);
         
-        // For now, just log the country validation
-        // TODO: Implement actual country validation logic
-        log.debug("Country validation successful: {} for transaction: {}", countryCode, transactionId);
+        if (countryCode == null || countryCode.trim().isEmpty()) {
+            throw new ValidationException(
+                "Country code cannot be null or empty",
+                "INVALID_COUNTRY",
+                "country",
+                transactionId
+            );
+        }
+        
+        String trimmedCode = countryCode.trim().toUpperCase();
+        
+        // Check if country exists in database
+        var country = countryRepository.findByCode(trimmedCode);
+        if (country.isEmpty()) {
+            throw new ValidationException(
+                "Invalid country code: " + trimmedCode,
+                "INVALID_COUNTRY",
+                "country",
+                transactionId
+            );
+        }
+        
+        // Check if country is active
+        if (!country.get().isActive()) {
+            throw new ValidationException(
+                "Country code is inactive: " + trimmedCode,
+                "INACTIVE_COUNTRY",
+                "country",
+                transactionId
+            );
+        }
+        
+        log.debug("Country validation successful: {} for transaction: {}", trimmedCode, transactionId);
     }
     
     /**
@@ -557,9 +664,49 @@ public class SchemeValidationOrchestrator {
     private void validateIntrBkSttlmAmt(String intrBkSttlmAmt, String transactionId) throws ValidationException {
         log.debug("Validating IntrBkSttlmAmt: {} for transaction: {}", intrBkSttlmAmt, transactionId);
         
-        // For now, just log the validation
-        // TODO: Implement currency code validation for the Ccy attribute
-        log.debug("IntrBkSttlmAmt validation successful: {} for transaction: {}", intrBkSttlmAmt, transactionId);
+        if (intrBkSttlmAmt == null || intrBkSttlmAmt.trim().isEmpty()) {
+            throw new ValidationException(
+                "IntrBkSttlmAmt cannot be null or empty",
+                "INVALID_INTR_BK_STTLM_AMT",
+                "intrBkSttlmAmt",
+                transactionId
+            );
+        }
+        
+        try {
+            // Parse the amount as BigDecimal for precise decimal handling
+            java.math.BigDecimal amount = new java.math.BigDecimal(intrBkSttlmAmt.trim());
+            
+            // Check if amount is greater than zero
+            if (amount.compareTo(java.math.BigDecimal.ZERO) <= 0) {
+                throw new ValidationException(
+                    "IntrBkSttlmAmt must be greater than zero, got: " + intrBkSttlmAmt,
+                    "INVALID_INTR_BK_STTLM_AMT_ZERO_OR_NEGATIVE",
+                    "intrBkSttlmAmt",
+                    transactionId
+                );
+            }
+            
+            // Check if amount has reasonable precision (max 2 decimal places for currency)
+            if (amount.scale() > 2) {
+                throw new ValidationException(
+                    "IntrBkSttlmAmt cannot have more than 2 decimal places, got: " + intrBkSttlmAmt,
+                    "INVALID_INTR_BK_STTLM_AMT_PRECISION",
+                    "intrBkSttlmAmt",
+                    transactionId
+                );
+            }
+            
+            log.debug("IntrBkSttlmAmt validation successful: {} for transaction: {}", intrBkSttlmAmt, transactionId);
+            
+        } catch (NumberFormatException e) {
+            throw new ValidationException(
+                "IntrBkSttlmAmt must be a valid decimal number, got: " + intrBkSttlmAmt,
+                "INVALID_INTR_BK_STTLM_AMT_FORMAT",
+                "intrBkSttlmAmt",
+                transactionId
+            );
+        }
     }
     
     /**

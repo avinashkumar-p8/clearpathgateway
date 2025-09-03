@@ -25,29 +25,15 @@ spring:
         schema.registry.basic.auth.user.info: ${SCHEMA_REGISTRY_USERNAME:}:${SCHEMA_REGISTRY_PASSWORD:}
         specific.avro.reader: true
 
-  # Database Configuration for Testing
-  data:
-    jpa:
-      hibernate:
-        ddl-auto: create-drop
-        show-sql: true
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.H2Dialect
-            format_sql: true
-    datasource:
-      url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-      driver-class-name: org.h2.Driver
-      username: sa
-      password: 
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-      show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true
+  # Spanner Configuration
+  cloud:
+    gcp:
+      spanner:
+        project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
+        instance-id: ${SPANNER_INSTANCE:payment-gateway}
+        database: ${SPANNER_DATABASE:inward-processor-db}
+        emulator-host: ${SPANNER_EMULATOR_HOST:localhost:9010}
+        auto-create-interleaved-table-ddl-on-delete-cascade: true
 
 server:
   port: 8080
@@ -183,22 +169,13 @@ spring:
         max-attempts: 3
         multiplier: 2.0
         max-interval: 10s
-  data:
-    jpa:
-      hibernate:
-        ddl-auto: create-drop
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.H2Dialect
-            format_sql: true
-            show_sql: true
-            jdbc:
-              batch_size: 20
-              order_inserts: true
-              order_updates: true
-              batch_versioned_data: true
+  # Spanner Configuration for Test Profile
+  cloud:
+    gcp:
+      spanner:
+        project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
+        instance-id: ${SPANNER_INSTANCE:payment-gateway}
+        database: ${SPANNER_DATABASE:inward-processor-db}
   cache:
     type: simple  # Use in-memory cache instead of Redis
     cache-names: muidCache,currencyCache,countryCache

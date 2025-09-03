@@ -52,7 +52,7 @@ export const testData = {
           },
           FromFIData: {
             Country: "SG",
-            BIC: "DBSASG2X"
+            BIC: "DBSGSGSGXXX"
           },
           FromCust: {
             Name: "Test Sender"
@@ -65,12 +65,12 @@ export const testData = {
             PmtAuthMethod: "SIGNATURE",
             Narrative: "Test payment",
             CurCode: "SGD",
-            Amount: 1000.00,
+            Amount: 215.00,
             AcctUse: "DEBIT"
           },
           ToFIData: {
             Country: "SG",
-            BIC: "OCBCSGSG"
+            BIC: "UOVBSGSGXXX"
           },
           Clearing: {
             ClearPref: "FAST"
@@ -83,7 +83,7 @@ export const testData = {
           ToAcct: {
             AcctId: "ACC002",
             CurCode: "SGD",
-            Amount: 1000.00,
+            Amount: 215.00,
             Narrative: "Test payment received",
             AcctUse: "CREDIT"
           },
@@ -128,9 +128,9 @@ export const testData = {
             InstdClrgPref: "FAST",
             InstdMoPCat: "CLEARING",
             Site: "SINGAPORE",
-            BaseAmt: 1000.00,
+            BaseAmt: 215.00,
             BaseCcy: "SGD",
-            SenderBIC: "DBSASG2X",
+            SenderBIC: "DBSGSGSGXXX",
             ProcCtryCd: "SG",
             Department: "PAYMENTS",
             MsgId: "msg-001",
@@ -146,14 +146,14 @@ export const testData = {
                   EndToEndId: "end-to-end-001",
                   ClrSysRef: "clr-001"
                 },
-                IntrBkSttlmAmt: 1000.00,
+                IntrBkSttlmAmt: 215.00,
                 IntrBkSttlmCCY: "SGD",
                 IntrBkSttlmDt: "2024-01-15",
                 InstgAgt: {
-                  BIC: "DBSASG2X"
+                  BIC: "ANZBSGSGXXX"
                 },
                 InstdAgt: {
-                  BIC: "OCBCSGSG"
+                  BIC: "UOVBSGSGXXX"
                 },
                 Dbtr: {
                   Nm: "Test Sender"
@@ -162,10 +162,10 @@ export const testData = {
                   AcctId: "ACC001"
                 },
                 DbtrAgt: {
-                  BIC: "DBSASG2X"
+                  BIC: "UOVBSGSGXXX"
                 },
                 CdtrAgt: {
-                  BIC: "OCBCSGSG"
+                  BIC: "DBSGSGSGXXX"
                 },
                 Cdtr: {
                   Nm: "Test Receiver"
