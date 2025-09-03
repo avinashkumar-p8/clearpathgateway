@@ -58,6 +58,13 @@
             <artifactId>spring-jms</artifactId>
         </dependency>
 
+        <!-- IBM MQ JMS client for non-local profiles -->
+        <dependency>
+            <groupId>com.ibm.mq</groupId>
+            <artifactId>com.ibm.mq.jakarta.client</artifactId>
+            <version>9.3.4.0</version>
+        </dependency>
+
         <!-- Google Cloud Spanner -->
         <dependency>
             <groupId>com.google.cloud</groupId>
@@ -86,6 +93,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <!-- Avro -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.11.3</version>
         </dependency>
 
         <!-- Utilities -->

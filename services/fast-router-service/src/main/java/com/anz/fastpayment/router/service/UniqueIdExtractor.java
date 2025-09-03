@@ -27,34 +27,19 @@ public class UniqueIdExtractor {
                 dbf.setAttribute(javax.xml.XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             } catch (Exception ignored) { }
             Document doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
-            if ("pacs.008.001.13".equals(messageType)) {
-                String e2e = firstNonBlank(
-                        text(doc, "urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13", "EndToEndId"),
-                        text(doc, "*", "EndToEndId"),
-                        text(doc, null, "EndToEndId")
-                );
-                if (notBlank(e2e)) return e2e.trim();
-                String instr = firstNonBlank(
-                        text(doc, "urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13", "InstrId"),
-                        text(doc, "*", "InstrId"),
-                        text(doc, null, "InstrId")
-                );
-                if (notBlank(instr)) return instr.trim();
-                String tx = firstNonBlank(
-                        text(doc, "urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13", "TxId"),
-                        text(doc, "*", "TxId"),
-                        text(doc, null, "TxId")
-                );
-                if (notBlank(tx)) return tx.trim();
+            // PACS types: use InstrId (Instruction Identification)
+            if (messageType != null && messageType.startsWith("pacs.")) {
+                String instrId = firstNonBlank(text(doc, "*", "InstrId"), text(doc, null, "InstrId"));
+                if (notBlank(instrId)) return instrId.trim();
             }
-            if (messageType != null && messageType.startsWith("pacs.002")) {
-                String e2e = firstNonBlank(text(doc, "*", "OrgnlEndToEndId"), text(doc, null, "OrgnlEndToEndId"));
-                if (notBlank(e2e)) return e2e.trim();
-                String tx = firstNonBlank(text(doc, "*", "OrgnlTxId"), text(doc, null, "OrgnlTxId"));
-                if (notBlank(tx)) return tx.trim();
-                String mid = firstNonBlank(text(doc, "*", "OrgnlMsgId"), text(doc, null, "OrgnlMsgId"));
-                if (notBlank(mid)) return mid.trim();
+            // camt.056: use OrgnlInstrId for linkage to corresponding PACS message
+            if (messageType != null && messageType.startsWith("camt.056")) {
+                String oInstr = firstNonBlank(text(doc, "*", "OrgnlInstrId"), text(doc, null, "OrgnlInstrId"));
+                if (notBlank(oInstr)) return oInstr.trim();
             }
+            // Fallback policy: use MsgId (from Group Header)
+            String msgId = firstNonBlank(text(doc, "*", "MsgId"), text(doc, null, "MsgId"));
+            if (notBlank(msgId)) return msgId.trim();
         } catch (Exception ignore) { }
         // Always non-null: fallback to PUID must be supplied by caller, so return empty to signal fallback
         return "";
