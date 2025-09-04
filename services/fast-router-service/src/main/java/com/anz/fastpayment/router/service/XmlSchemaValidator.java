@@ -72,6 +72,7 @@ public class XmlSchemaValidator {
             case "pacs.003.001.11" -> "schema/pacs.003.001.11.xsd";
             case "pacs.007.001.13" -> "schema/pacs.007.001.13.xsd";
             case "camt.056.001.11" -> "schema/camt.056.001.11.xsd";
+            case "head.001.001.01" -> "schema/head.001.001.01.xsd";
             default -> null;
         };
     }

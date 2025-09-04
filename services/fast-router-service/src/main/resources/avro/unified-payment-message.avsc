@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "UnifiedPaymentMessage",
+  "namespace": "com.anz.fastpayment.schema",
+  "doc": "Lean Avro schema for ISO 20022 PACS/CAMT unified messages",
+  "fields": [
+    {
+      "name": "messageType",
+      "type": {
+        "type": "enum",
+        "name": "MessageType",
+        "symbols": ["PACS_008", "PACS_003", "PACS_007", "CAMT_056", "PACS_002", "CAMT_029", "HEAD_001"]
+      },
+      "doc": "Type of ISO 20022 message"
+    },
+    { "name": "messageVersion", "type": ["null", "string"], "default": null },
+    { "name": "messageId", "type": "string" },
+    { "name": "creationDateTime", "type": "string" },
+    {
+      "name": "supplementaryData",
+      "type": ["null", {"type": "map", "values": "string"}],
+      "default": null
+    }
+  ]
+}
+
+

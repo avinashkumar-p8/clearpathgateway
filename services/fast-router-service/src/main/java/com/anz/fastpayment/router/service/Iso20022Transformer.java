@@ -40,6 +40,9 @@ public class Iso20022Transformer {
         if ("camt.056.001.11".equals(messageType)) {
             return transformCamt056(xml, puid);
         }
+        if ("head.001.001.01".equals(messageType)) {
+            return transformHead001(xml, puid);
+        }
         // passthrough for unsupported types for now
         return "{\"puid\":\"" + puid + "\",\"raw\":" + quote(jsonEscape(xml)) + "}";
     }
@@ -144,6 +147,26 @@ public class Iso20022Transformer {
         if (orgMsgId != null) sb.append("\"originalMessageId\":\"").append(escape(orgMsgId)).append("\",");
         if (creDtTm != null) sb.append("\"creationDateTime\":\"").append(escape(creDtTm)).append("\",");
         sb.append("\"transactions\":[{}]}");
+        return sb.toString();
+    }
+
+    private String transformHead001(String xml, String puid) throws Exception {
+        Document doc = parseSecure(xml);
+        String ns = "urn:iso:std:iso:20022:tech:xsd:head.001.001.01";
+        String msgId = text(doc, ns, "BizMsgIdr");
+        String creDt = text(doc, ns, "CreDt");
+        String id = text(doc, ns, "Id");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"puid\":\"").append(escape(puid)).append("\",");
+        sb.append("\"messageType\":\"HEAD_001\",");
+        sb.append("\"messageVersion\":\"01\",");
+        if (msgId != null) sb.append("\"messageId\":\"").append(escape(msgId)).append("\",");
+        if (creDt != null) sb.append("\"creationDateTime\":\"").append(escape(creDt)).append("\",");
+        if (id != null) sb.append("\"headerId\":\"").append(escape(id)).append("\",");
+        if (sb.charAt(sb.length()-1) == ',') sb.setLength(sb.length()-1);
+        sb.append("}");
         return sb.toString();
     }
 
