@@ -78,6 +78,8 @@ public class RouterOrchestrator {
         }
         String messageType = typeDetector.detectType(xml);
         log.info("[DETECT] Detected messageType={}", messageType);
+        // If HEAD detected but MsgDefIdr points to a supported payload, we still treat overall as HEAD_001 at Avro layer.
+        // Valid HEAD should pass XSD head.001.001.01; transformation emits HEAD_001.
         if (messageType == null || messageType.trim().isEmpty()) {
             log.error("[PROC] Could not detect messageType; aborting. PUID={}", puid);
             return;
@@ -171,9 +173,25 @@ public class RouterOrchestrator {
             return;
         }
 
-        // Publish valid + best-effort persistence and event
-        log.info("[KAFKA] Publishing valid message to topic payment-messages with key={}", puid);
-        publishTimer.record(() -> kafkaPublisher.publishValid(puid, unifiedJson));
+        // Publish valid (Avro) + best-effort persistence and event
+        log.info("[KAFKA] Publishing valid message (Avro) to topic payment-messages with key={}", puid);
+        publishTimer.record(() -> {
+            try {
+                org.apache.avro.Schema schema = kafkaPublisher.getUnifiedSchema();
+                org.apache.avro.generic.GenericRecord rec = new org.apache.avro.generic.GenericData.Record(schema);
+                String enumSymbol = mapToAvroEnum(messageType);
+                rec.put("messageType", new org.apache.avro.generic.GenericData.EnumSymbol(schema.getField("messageType").schema(), enumSymbol));
+                rec.put("messageVersion", extractVersion(messageType));
+                rec.put("messageId", puid);
+                rec.put("creationDateTime", Instant.now().toString());
+                java.util.Map<String, String> supplementaryData = new java.util.HashMap<>();
+                supplementaryData.put("rawUnifiedJson", unifiedJson);
+                rec.put("supplementaryData", supplementaryData);
+                kafkaPublisher.publishValidUnified(rec, puid);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to build or publish Avro record", e);
+            }
+        });
         log.info("[KAFKA] Publish complete for key={}", puid);
         try {
             if (unifiedRepo != null) {
@@ -199,6 +217,24 @@ public class RouterOrchestrator {
     private String safe(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
+    private String mapToAvroEnum(String messageType) {
+        if (messageType == null) return "UNKNOWN";
+        if (messageType.startsWith("pacs.008")) return "PACS_008";
+        if (messageType.startsWith("pacs.003")) return "PACS_003";
+        if (messageType.startsWith("pacs.007")) return "PACS_007";
+        if (messageType.startsWith("camt.056")) return "CAMT_056";
+        if (messageType.startsWith("pacs.002")) return "PACS_002";
+        if (messageType.startsWith("camt.029")) return "CAMT_029";
+        if (messageType.startsWith("head.001.001.01")) return "HEAD_001";
+        return "UNKNOWN";
+    }
+
+    private String extractVersion(String messageType) {
+        if (messageType == null) return null;
+        int idx = messageType.lastIndexOf('.');
+        return idx > 0 ? messageType.substring(idx + 1) : null;
     }
 }
 

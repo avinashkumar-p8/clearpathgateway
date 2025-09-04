@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "RouterException",
+  "namespace": "com.anz.fastpayment.schema",
+  "fields": [
+    { "name": "puid", "type": "string" },
+    { "name": "originalXml", "type": "string" }
+  ]
+}
+
+
+
+
+
+

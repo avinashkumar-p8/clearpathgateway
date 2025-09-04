@@ -55,6 +55,21 @@ public class UniqueIdExtractor {
                 String mid = firstNonBlank(text(doc, "*", "OrgnlMsgId"), text(doc, null, "OrgnlMsgId"));
                 if (notBlank(mid)) return mid.trim();
             }
+            if ("head.001.001.01".equals(messageType)) {
+                // Business Application Header uses BizMsgIdr and CreDt elements
+                String bizMsgIdr = firstNonBlank(
+                        text(doc, "urn:iso:std:iso:20022:tech:xsd:head.001.001.01", "BizMsgIdr"),
+                        text(doc, "*", "BizMsgIdr"),
+                        text(doc, null, "BizMsgIdr")
+                );
+                if (notBlank(bizMsgIdr)) return bizMsgIdr.trim();
+                String id = firstNonBlank(
+                        text(doc, "urn:iso:std:iso:20022:tech:xsd:head.001.001.01", "Id"),
+                        text(doc, "*", "Id"),
+                        text(doc, null, "Id")
+                );
+                if (notBlank(id)) return id.trim();
+            }
         } catch (Exception ignore) { }
         // Always non-null: fallback to PUID must be supplied by caller, so return empty to signal fallback
         return "";

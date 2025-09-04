@@ -113,6 +113,25 @@ public class SpannerLocalSchema {
                     throw ce;
                 }
             }
+
+            String ddl4 = "CREATE TABLE DedupeKeys (" +
+                    " basis STRING(MAX) NOT NULL,\n" +
+                    " message_type STRING(64),\n" +
+                    " unique_id STRING(MAX),\n" +
+                    " created_at TIMESTAMP,\n" +
+                    " original_xml STRING(MAX)\n" +
+                    ") PRIMARY KEY (basis)";
+            try {
+                adminTemplate.executeDdlStrings(Collections.singletonList(ddl4), true);
+                log.info("Created table DedupeKeys in Spanner emulator");
+            } catch (Exception ce) {
+                String msg = ce.getMessage() == null ? "" : ce.getMessage();
+                if (msg.contains("ALREADY_EXISTS") || msg.contains("AlreadyExists") || msg.contains("already exists")) {
+                    log.info("DedupeKeys table already exists; skipping create");
+                } else {
+                    throw ce;
+                }
+            }
         } catch (Exception e) {
             log.warn("Spanner emulator init warning: {}", e.getMessage());
         }
@@ -121,28 +140,8 @@ public class SpannerLocalSchema {
     private void ensureInstanceAndDatabase() throws Exception {
         SpannerOptions options = SpannerOptions.newBuilder().setProjectId(projectId).build();
         try (Spanner spanner = options.getService()) {
-            InstanceAdminClient instanceAdminClient = spanner.getInstanceAdminClient();
             DatabaseAdminClient databaseAdminClient = spanner.getDatabaseAdminClient();
-
-            InstanceId iid = InstanceId.of(projectId, instanceId);
-            boolean instanceExists;
-            try {
-                Instance i = instanceAdminClient.getInstance(iid.getInstance());
-                instanceExists = i != null;
-            } catch (Exception e) {
-                instanceExists = false;
-            }
-            if (!instanceExists) {
-                log.info("Creating Spanner emulator instance {} in project {}", instanceId, projectId);
-                InstanceInfo info = InstanceInfo.newBuilder(iid)
-                        .setDisplayName("Local Instance")
-                        .setInstanceConfigId(InstanceConfigId.of(projectId, "emulator-config"))
-                        .setNodeCount(1)
-                        .build();
-                instanceAdminClient.createInstance(info).get(30, TimeUnit.SECONDS);
-            }
-
-            DatabaseId db = DatabaseId.of(projectId, instanceId, databaseId);
+            // Many emulator builds don’t support instance admin; assume instance exists and ensure database only
             boolean dbExists;
             try {
                 databaseAdminClient.getDatabase(instanceId, databaseId);
@@ -152,7 +151,11 @@ public class SpannerLocalSchema {
             }
             if (!dbExists) {
                 log.info("Creating Spanner emulator database {} on instance {}", databaseId, instanceId);
-                databaseAdminClient.createDatabase(instanceId, databaseId, Collections.emptyList()).get(30, TimeUnit.SECONDS);
+                try {
+                    databaseAdminClient.createDatabase(instanceId, databaseId, Collections.emptyList()).get(30, TimeUnit.SECONDS);
+                } catch (Exception ce) {
+                    log.warn("Could not create database {} on emulator: {}", databaseId, ce.getMessage());
+                }
             }
         }
     }

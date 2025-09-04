@@ -1,0 +1,16 @@
+{
+  "name": "fast-router-e2e",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "kafkajs": "^2.2.4",
+    "dotenv": "^16.4.5",
+    "avsc": "^5.7.7"
+  },
+  "scripts": {
+    "test": "playwright test"
+  }
+}
+
+

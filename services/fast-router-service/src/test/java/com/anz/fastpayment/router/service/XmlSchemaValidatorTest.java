@@ -13,6 +13,15 @@ class XmlSchemaValidatorTest {
     @BeforeEach
     void setUp() {
         validator = new XmlSchemaValidator();
+        // Enable XSD validation for tests via reflection override
+        try {
+            java.lang.reflect.Field f = XmlSchemaValidator.class.getDeclaredField("xsdValidationEnabled");
+            f.setAccessible(true);
+            f.set(validator, true);
+            java.lang.reflect.Field max = XmlSchemaValidator.class.getDeclaredField("maxXmlBytes");
+            max.setAccessible(true);
+            max.setInt(validator, 10_000_000);
+        } catch (Exception ignore) { }
     }
 
     @Test

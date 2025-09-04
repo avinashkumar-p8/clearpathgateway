@@ -10,6 +10,8 @@ public class Iso20022MessageTypeDetector {
             return "unknown";
         }
         String lower = xml.toLowerCase();
+        // Prioritize Business Application Header detection to avoid MsgDefIdr containing pacs.* confusing detection
+        if (lower.contains("head.001.001.01")) return "head.001.001.01";
         if (lower.contains("pacs.008.001.13")) return "pacs.008.001.13";
         if (lower.contains("pacs.003.001.11")) return "pacs.003.001.11";
         if (lower.contains("pacs.007.001.13")) return "pacs.007.001.13";
