@@ -102,7 +102,10 @@ export class KafkaTestHelper {
     
     // If not running, subscribe and start
     if (!this.isRunning) {
-      await this.consumer.subscribe({ topic, fromBeginning: true });
+      // For output topics, start from latest to avoid old messages
+      // For input topics, start from beginning to catch all messages
+      const fromBeginning = topic.includes('incoming') || topic.includes('input');
+      await this.consumer.subscribe({ topic, fromBeginning });
       this.currentTopic = topic;
       this.isRunning = true;
       
@@ -130,9 +133,14 @@ export class KafkaTestHelper {
   // Single message consumer to match test expectations with MUID filtering
   async consumeMessage(topic: string, timeout: number = 10000, expectedMUID?: string): Promise<any> {
     const startTime = Date.now();
+    let attemptCount = 0;
+    const maxAttempts = Math.floor(timeout / 1000); // One attempt per second
     
-    while (Date.now() - startTime < timeout) {
-      const messages = await this.consumeMessages(topic, 1, 2000); // Short timeout for each attempt
+    console.log(`🔍 Looking for message in topic: ${topic}${expectedMUID ? ` with MUID: ${expectedMUID}` : ''}`);
+    
+    while (Date.now() - startTime < timeout && attemptCount < maxAttempts) {
+      attemptCount++;
+      const messages = await this.consumeMessages(topic, 1, 1000); // Short timeout for each attempt
       
       if (messages.length > 0) {
         try {
@@ -147,36 +155,39 @@ export class KafkaTestHelper {
             
             // If expectedMUID is provided, filter messages to only return matching ones
             if (expectedMUID && decodedMessage.Header && decodedMessage.Header.MUID !== expectedMUID) {
-              console.log(`Filtered out message with MUID: ${decodedMessage.Header.MUID}, expected: ${expectedMUID}`);
+              console.log(`❌ Filtered out message with MUID: ${decodedMessage.Header.MUID}, expected: ${expectedMUID} (attempt ${attemptCount})`);
               continue; // Keep trying to find the right message
             }
             
+            console.log(`✅ Found matching message with MUID: ${decodedMessage.Header?.MUID || 'unknown'}`);
             return decodedMessage;
           }
         } catch (error) {
-          console.log('Avro deserialization failed, trying fallback:', error.message);
+          console.log(`⚠️  Avro deserialization failed (attempt ${attemptCount}), trying fallback:`, error.message);
           // Fallback to JSON parsing if Avro deserialization fails
           try {
             const jsonMessage = JSON.parse(messages[0].value?.toString() || '{}');
             
             // If expectedMUID is provided, filter messages to only return matching ones
             if (expectedMUID && jsonMessage.Header && jsonMessage.Header.MUID !== expectedMUID) {
-              console.log(`Filtered out JSON message with MUID: ${jsonMessage.Header.MUID}, expected: ${expectedMUID}`);
+              console.log(`❌ Filtered out JSON message with MUID: ${jsonMessage.Header.MUID}, expected: ${expectedMUID} (attempt ${attemptCount})`);
               continue; // Keep trying to find the right message
             }
             
+            console.log(`✅ Found matching JSON message with MUID: ${jsonMessage.Header?.MUID || 'unknown'}`);
             return jsonMessage;
           } catch (jsonError) {
-            console.log('JSON parsing also failed:', jsonError.message);
+            console.log(`⚠️  JSON parsing also failed (attempt ${attemptCount}):`, jsonError.message);
             return messages[0].value?.toString() || null;
           }
         }
       }
       
       // Wait a bit before trying again
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
     
+    console.log(`⏰ Timeout reached after ${attemptCount} attempts (${Date.now() - startTime}ms)`);
     return null; // Timeout reached
   }
 
@@ -207,9 +218,8 @@ export class KafkaTestHelper {
         }
       }
       
-      // COMPLETE TOPIC PURGING - Only drain input topic to prevent duplicate processing
-      // Don't drain output topic as we need to consume the new responses
-      const topics = ['transactions.incoming'];
+      // COMPLETE TOPIC PURGING - Drain both input and output topics for clean testing
+      const topics = ['transactions.incoming', 'fast-outward-clearing'];
       
       for (const topic of topics) {
         try {
@@ -290,6 +300,43 @@ export class KafkaTestHelper {
       
     } catch (error) {
       console.log('Topic clearing completed with minor issues:', error.message);
+    }
+  }
+
+  // Comprehensive pre-test cleanup function
+  async preTestCleanup() {
+    console.log('🧹 Starting pre-test cleanup...');
+    
+    try {
+      // Reset consumer state first
+      if (this.isRunning) {
+        await this.consumer.stop();
+        this.isRunning = false;
+        this.currentTopic = null;
+      }
+      
+      // Quick cleanup - just reset offsets instead of draining
+      await this.connect();
+      
+      // Reset offsets to latest for clean state
+      try {
+        await this.admin.setOffsets({
+          groupId: this.consumer.options.groupId!,
+          topic: 'transactions.incoming',
+          partitions: [{ partition: 0, offset: '-1' }] // -1 means latest
+        });
+        await this.admin.setOffsets({
+          groupId: this.consumer.options.groupId!,
+          topic: 'fast-outward-clearing',
+          partitions: [{ partition: 0, offset: '-1' }] // -1 means latest
+        });
+      } catch (error) {
+        // Ignore offset reset errors
+      }
+      
+      console.log('✅ Pre-test cleanup completed');
+    } catch (error) {
+      console.log('⚠️  Pre-test cleanup completed with minor issues:', error.message);
     }
   }
 

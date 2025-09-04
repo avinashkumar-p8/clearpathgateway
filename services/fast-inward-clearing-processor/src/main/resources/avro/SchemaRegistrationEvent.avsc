@@ -1,0 +1,71 @@
+{
+  "namespace": "com.anz.fastpayment.inward.avro",
+  "type": "record",
+  "name": "SchemaRegistrationEvent",
+  "doc": "Event for registering new Avro schemas dynamically",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string",
+      "doc": "Unique event identifier"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "type": "enum",
+        "name": "SchemaEventType",
+        "symbols": ["SCHEMA_REGISTER", "SCHEMA_UPDATE", "SCHEMA_DELETE"]
+      },
+      "doc": "Type of schema event"
+    },
+    {
+      "name": "schemaName",
+      "type": "string",
+      "doc": "Name of the schema"
+    },
+    {
+      "name": "subjectName",
+      "type": "string",
+      "doc": "Subject name for Schema Registry"
+    },
+    {
+      "name": "schemaContent",
+      "type": "string",
+      "doc": "JSON string of the Avro schema"
+    },
+    {
+      "name": "version",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Schema version"
+    },
+    {
+      "name": "compatibility",
+      "type": {
+        "type": "enum",
+        "name": "CompatibilityLevel",
+        "symbols": ["BACKWARD", "FORWARD", "FULL", "NONE"]
+      },
+      "default": "BACKWARD",
+      "doc": "Schema compatibility level"
+    },
+    {
+      "name": "timestamp",
+      "type": "string",
+      "doc": "Event timestamp"
+    },
+    {
+      "name": "source",
+      "type": "string",
+      "doc": "Source of the schema event"
+    },
+    {
+      "name": "metadata",
+      "type": {
+        "type": "map",
+        "values": "string"
+      },
+      "doc": "Additional metadata"
+    }
+  ]
+}

@@ -37,7 +37,7 @@ public final class ValidationTags {
     // ===== JSON PATHS FOR DIRECT FIELD EXTRACTION =====
     // ===== CURRENCY & COUNTRY =====
     public static final String CURRENCY = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY";
-    public static final String COUNTRY = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAcct.Country";
+    public static final String COUNTRY = "Body.messages[0].instruction.MsgCtxt.ProcCtryCd";
     
     // ===== MMBID FIELDS =====
     // public static final String FROM_MMBID = "Fr.FIId.FinInstnId.ClrSysMmbId.MmbId";
