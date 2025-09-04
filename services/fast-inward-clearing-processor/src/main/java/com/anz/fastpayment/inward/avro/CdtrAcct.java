@@ -17,7 +17,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = 6789270522146329838L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CdtrAcct\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CdtrAcct\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Account identifier */
-  private java.lang.CharSequence AcctId;
+  private java.lang.String AcctId;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * All-args constructor.
    * @param AcctId Account identifier
    */
-  public CdtrAcct(java.lang.CharSequence AcctId) {
+  public CdtrAcct(java.lang.String AcctId) {
     this.AcctId = AcctId;
   }
 
@@ -111,7 +111,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: AcctId = (java.lang.CharSequence)value$; break;
+    case 0: AcctId = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'AcctId' field.
    * @return Account identifier
    */
-  public java.lang.CharSequence getAcctId() {
+  public java.lang.String getAcctId() {
     return AcctId;
   }
 
@@ -130,7 +130,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
    * Account identifier
    * @param value the value to set.
    */
-  public void setAcctId(java.lang.CharSequence value) {
+  public void setAcctId(java.lang.String value) {
     this.AcctId = value;
   }
 
@@ -176,7 +176,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<CdtrAcct> {
 
     /** Account identifier */
-    private java.lang.CharSequence AcctId;
+    private java.lang.String AcctId;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * Account identifier
       * @return The value.
       */
-    public java.lang.CharSequence getAcctId() {
+    public java.lang.String getAcctId() {
       return AcctId;
     }
 
@@ -223,7 +223,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'AcctId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.CdtrAcct.Builder setAcctId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.CdtrAcct.Builder setAcctId(java.lang.String value) {
       validate(fields()[0], value);
       this.AcctId = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
     public CdtrAcct build() {
       try {
         CdtrAcct record = new CdtrAcct();
-        record.AcctId = fieldSetFlags()[0] ? this.AcctId : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.AcctId = fieldSetFlags()[0] ? this.AcctId : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class CdtrAcct extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.AcctId = in.readString(this.AcctId instanceof Utf8 ? (Utf8)this.AcctId : null);
+      this.AcctId = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.AcctId = in.readString(this.AcctId instanceof Utf8 ? (Utf8)this.AcctId : null);
+          this.AcctId = in.readString();
           break;
 
         default:

@@ -17,7 +17,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = 375872204816394888L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FromCust\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Name\",\"type\":\"string\",\"doc\":\"Customer name\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"FromCust\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Customer name\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Customer name */
-  private java.lang.CharSequence Name;
+  private java.lang.String Name;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
    * All-args constructor.
    * @param Name Customer name
    */
-  public FromCust(java.lang.CharSequence Name) {
+  public FromCust(java.lang.String Name) {
     this.Name = Name;
   }
 
@@ -111,7 +111,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: Name = (java.lang.CharSequence)value$; break;
+    case 0: Name = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'Name' field.
    * @return Customer name
    */
-  public java.lang.CharSequence getName() {
+  public java.lang.String getName() {
     return Name;
   }
 
@@ -130,7 +130,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
    * Customer name
    * @param value the value to set.
    */
-  public void setName(java.lang.CharSequence value) {
+  public void setName(java.lang.String value) {
     this.Name = value;
   }
 
@@ -176,7 +176,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<FromCust> {
 
     /** Customer name */
-    private java.lang.CharSequence Name;
+    private java.lang.String Name;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
       * Customer name
       * @return The value.
       */
-    public java.lang.CharSequence getName() {
+    public java.lang.String getName() {
       return Name;
     }
 
@@ -223,7 +223,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'Name'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.FromCust.Builder setName(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.FromCust.Builder setName(java.lang.String value) {
       validate(fields()[0], value);
       this.Name = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
     public FromCust build() {
       try {
         FromCust record = new FromCust();
-        record.Name = fieldSetFlags()[0] ? this.Name : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.Name = fieldSetFlags()[0] ? this.Name : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class FromCust extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.Name = in.readString(this.Name instanceof Utf8 ? (Utf8)this.Name : null);
+      this.Name = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.Name = in.readString(this.Name instanceof Utf8 ? (Utf8)this.Name : null);
+          this.Name = in.readString();
           break;
 
         default:

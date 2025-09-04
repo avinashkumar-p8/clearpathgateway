@@ -17,7 +17,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
   private static final long serialVersionUID = 7869625311515430154L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MndtId\",\"type\":\"string\",\"doc\":\"Mandate identifier\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MndtId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Mandate identifier\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
   }
 
   /** Mandate identifier */
-  private java.lang.CharSequence MndtId;
+  private java.lang.String MndtId;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
    * All-args constructor.
    * @param MndtId Mandate identifier
    */
-  public MndtRltdInf(java.lang.CharSequence MndtId) {
+  public MndtRltdInf(java.lang.String MndtId) {
     this.MndtId = MndtId;
   }
 
@@ -111,7 +111,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: MndtId = (java.lang.CharSequence)value$; break;
+    case 0: MndtId = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
    * Gets the value of the 'MndtId' field.
    * @return Mandate identifier
    */
-  public java.lang.CharSequence getMndtId() {
+  public java.lang.String getMndtId() {
     return MndtId;
   }
 
@@ -130,7 +130,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
    * Mandate identifier
    * @param value the value to set.
    */
-  public void setMndtId(java.lang.CharSequence value) {
+  public void setMndtId(java.lang.String value) {
     this.MndtId = value;
   }
 
@@ -176,7 +176,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
     implements org.apache.avro.data.RecordBuilder<MndtRltdInf> {
 
     /** Mandate identifier */
-    private java.lang.CharSequence MndtId;
+    private java.lang.String MndtId;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
       * Mandate identifier
       * @return The value.
       */
-    public java.lang.CharSequence getMndtId() {
+    public java.lang.String getMndtId() {
       return MndtId;
     }
 
@@ -223,7 +223,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
       * @param value The value of 'MndtId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MndtRltdInf.Builder setMndtId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MndtRltdInf.Builder setMndtId(java.lang.String value) {
       validate(fields()[0], value);
       this.MndtId = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
     public MndtRltdInf build() {
       try {
         MndtRltdInf record = new MndtRltdInf();
-        record.MndtId = fieldSetFlags()[0] ? this.MndtId : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.MndtId = fieldSetFlags()[0] ? this.MndtId : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class MndtRltdInf extends org.apache.avro.specific.SpecificRecordBase imp
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.MndtId = in.readString(this.MndtId instanceof Utf8 ? (Utf8)this.MndtId : null);
+      this.MndtId = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.MndtId = in.readString(this.MndtId instanceof Utf8 ? (Utf8)this.MndtId : null);
+          this.MndtId = in.readString();
           break;
 
         default:

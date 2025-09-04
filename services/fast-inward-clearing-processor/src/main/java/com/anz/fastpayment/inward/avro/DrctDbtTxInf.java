@@ -17,7 +17,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
   private static final long serialVersionUID = 5998727235574655749L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DrctDbtTxInf\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PmtId\",\"fields\":[{\"name\":\"InstrId\",\"type\":\"string\",\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":\"string\",\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":\"string\",\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":\"string\",\"doc\":\"Clearing system reference\"}]},\"doc\":\"Payment identifier\"},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Interbank settlement amount\"},{\"name\":\"IntrBkSttlmCCY\",\"type\":\"string\",\"doc\":\"Interbank settlement currency\"},{\"name\":\"IntrBkSttlmDt\",\"type\":\"string\",\"doc\":\"Interbank settlement date\"},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstgAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Instructing agent\"},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstdAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Instructed agent\"},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Dbtr\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]},\"doc\":\"Debtor\"},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]},\"doc\":\"Debtor account\"},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Debtor agent\"},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":\"string\",\"doc\":\"BIC\"}]},\"doc\":\"Creditor agent\"},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Cdtr\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]},\"doc\":\"Creditor\"},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":\"string\",\"doc\":\"Account identifier\"}]},\"doc\":\"Creditor account\"},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purp\",\"fields\":[{\"name\":\"Cd\",\"type\":\"string\",\"doc\":\"Code\"}]},\"doc\":\"Purpose\"},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RmtInf\",\"fields\":[{\"name\":\"Ustrd\",\"type\":\"string\",\"doc\":\"Unstructured\"}]},\"doc\":\"Remittance information\"},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":\"string\",\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]},\"doc\":\"Direct debit transaction\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DrctDbtTxInf\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PmtId\",\"fields\":[{\"name\":\"InstrId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing system reference\"}]},\"doc\":\"Payment identifier\"},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Interbank settlement amount\"},{\"name\":\"IntrBkSttlmCCY\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Interbank settlement currency\"},{\"name\":\"IntrBkSttlmDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Interbank settlement date\"},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstgAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Instructing agent\"},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstdAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Instructed agent\"},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Dbtr\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]},\"doc\":\"Debtor\"},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]},\"doc\":\"Debtor account\"},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Debtor agent\"},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Creditor agent\"},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Cdtr\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]},\"doc\":\"Creditor\"},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]},\"doc\":\"Creditor account\"},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purp\",\"fields\":[{\"name\":\"Cd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Code\"}]},\"doc\":\"Purpose\"},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RmtInf\",\"fields\":[{\"name\":\"Ustrd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Unstructured\"}]},\"doc\":\"Remittance information\"},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]},\"doc\":\"Direct debit transaction\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -78,9 +78,9 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
   /** Interbank settlement amount */
   private double IntrBkSttlmAmt;
   /** Interbank settlement currency */
-  private java.lang.CharSequence IntrBkSttlmCCY;
+  private java.lang.String IntrBkSttlmCCY;
   /** Interbank settlement date */
-  private java.lang.CharSequence IntrBkSttlmDt;
+  private java.lang.String IntrBkSttlmDt;
   /** Instructing agent */
   private com.anz.fastpayment.inward.avro.InstgAgt InstgAgt;
   /** Instructed agent */
@@ -129,7 +129,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
    * @param RmtInf Remittance information
    * @param DrctDbtTx Direct debit transaction
    */
-  public DrctDbtTxInf(com.anz.fastpayment.inward.avro.PmtId PmtId, java.lang.Double IntrBkSttlmAmt, java.lang.CharSequence IntrBkSttlmCCY, java.lang.CharSequence IntrBkSttlmDt, com.anz.fastpayment.inward.avro.InstgAgt InstgAgt, com.anz.fastpayment.inward.avro.InstdAgt InstdAgt, com.anz.fastpayment.inward.avro.Dbtr Dbtr, com.anz.fastpayment.inward.avro.DbtrAcct DbtrAcct, com.anz.fastpayment.inward.avro.DbtrAgt DbtrAgt, com.anz.fastpayment.inward.avro.CdtrAgt CdtrAgt, com.anz.fastpayment.inward.avro.Cdtr Cdtr, com.anz.fastpayment.inward.avro.CdtrAcct CdtrAcct, com.anz.fastpayment.inward.avro.Purp Purp, com.anz.fastpayment.inward.avro.RmtInf RmtInf, com.anz.fastpayment.inward.avro.DrctDbtTx DrctDbtTx) {
+  public DrctDbtTxInf(com.anz.fastpayment.inward.avro.PmtId PmtId, java.lang.Double IntrBkSttlmAmt, java.lang.String IntrBkSttlmCCY, java.lang.String IntrBkSttlmDt, com.anz.fastpayment.inward.avro.InstgAgt InstgAgt, com.anz.fastpayment.inward.avro.InstdAgt InstdAgt, com.anz.fastpayment.inward.avro.Dbtr Dbtr, com.anz.fastpayment.inward.avro.DbtrAcct DbtrAcct, com.anz.fastpayment.inward.avro.DbtrAgt DbtrAgt, com.anz.fastpayment.inward.avro.CdtrAgt CdtrAgt, com.anz.fastpayment.inward.avro.Cdtr Cdtr, com.anz.fastpayment.inward.avro.CdtrAcct CdtrAcct, com.anz.fastpayment.inward.avro.Purp Purp, com.anz.fastpayment.inward.avro.RmtInf RmtInf, com.anz.fastpayment.inward.avro.DrctDbtTx DrctDbtTx) {
     this.PmtId = PmtId;
     this.IntrBkSttlmAmt = IntrBkSttlmAmt;
     this.IntrBkSttlmCCY = IntrBkSttlmCCY;
@@ -183,8 +183,8 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
     switch (field$) {
     case 0: PmtId = (com.anz.fastpayment.inward.avro.PmtId)value$; break;
     case 1: IntrBkSttlmAmt = (java.lang.Double)value$; break;
-    case 2: IntrBkSttlmCCY = (java.lang.CharSequence)value$; break;
-    case 3: IntrBkSttlmDt = (java.lang.CharSequence)value$; break;
+    case 2: IntrBkSttlmCCY = value$ != null ? value$.toString() : null; break;
+    case 3: IntrBkSttlmDt = value$ != null ? value$.toString() : null; break;
     case 4: InstgAgt = (com.anz.fastpayment.inward.avro.InstgAgt)value$; break;
     case 5: InstdAgt = (com.anz.fastpayment.inward.avro.InstdAgt)value$; break;
     case 6: Dbtr = (com.anz.fastpayment.inward.avro.Dbtr)value$; break;
@@ -240,7 +240,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
    * Gets the value of the 'IntrBkSttlmCCY' field.
    * @return Interbank settlement currency
    */
-  public java.lang.CharSequence getIntrBkSttlmCCY() {
+  public java.lang.String getIntrBkSttlmCCY() {
     return IntrBkSttlmCCY;
   }
 
@@ -250,7 +250,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
    * Interbank settlement currency
    * @param value the value to set.
    */
-  public void setIntrBkSttlmCCY(java.lang.CharSequence value) {
+  public void setIntrBkSttlmCCY(java.lang.String value) {
     this.IntrBkSttlmCCY = value;
   }
 
@@ -258,7 +258,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
    * Gets the value of the 'IntrBkSttlmDt' field.
    * @return Interbank settlement date
    */
-  public java.lang.CharSequence getIntrBkSttlmDt() {
+  public java.lang.String getIntrBkSttlmDt() {
     return IntrBkSttlmDt;
   }
 
@@ -268,7 +268,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
    * Interbank settlement date
    * @param value the value to set.
    */
-  public void setIntrBkSttlmDt(java.lang.CharSequence value) {
+  public void setIntrBkSttlmDt(java.lang.String value) {
     this.IntrBkSttlmDt = value;
   }
 
@@ -517,9 +517,9 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
     /** Interbank settlement amount */
     private double IntrBkSttlmAmt;
     /** Interbank settlement currency */
-    private java.lang.CharSequence IntrBkSttlmCCY;
+    private java.lang.String IntrBkSttlmCCY;
     /** Interbank settlement date */
-    private java.lang.CharSequence IntrBkSttlmDt;
+    private java.lang.String IntrBkSttlmDt;
     /** Instructing agent */
     private com.anz.fastpayment.inward.avro.InstgAgt InstgAgt;
     private com.anz.fastpayment.inward.avro.InstgAgt.Builder InstgAgtBuilder;
@@ -874,7 +874,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
       * Interbank settlement currency
       * @return The value.
       */
-    public java.lang.CharSequence getIntrBkSttlmCCY() {
+    public java.lang.String getIntrBkSttlmCCY() {
       return IntrBkSttlmCCY;
     }
 
@@ -885,7 +885,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'IntrBkSttlmCCY'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.DrctDbtTxInf.Builder setIntrBkSttlmCCY(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.DrctDbtTxInf.Builder setIntrBkSttlmCCY(java.lang.String value) {
       validate(fields()[2], value);
       this.IntrBkSttlmCCY = value;
       fieldSetFlags()[2] = true;
@@ -918,7 +918,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
       * Interbank settlement date
       * @return The value.
       */
-    public java.lang.CharSequence getIntrBkSttlmDt() {
+    public java.lang.String getIntrBkSttlmDt() {
       return IntrBkSttlmDt;
     }
 
@@ -929,7 +929,7 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'IntrBkSttlmDt'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.DrctDbtTxInf.Builder setIntrBkSttlmDt(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.DrctDbtTxInf.Builder setIntrBkSttlmDt(java.lang.String value) {
       validate(fields()[3], value);
       this.IntrBkSttlmDt = value;
       fieldSetFlags()[3] = true;
@@ -1886,8 +1886,8 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
           record.PmtId = fieldSetFlags()[0] ? this.PmtId : (com.anz.fastpayment.inward.avro.PmtId) defaultValue(fields()[0]);
         }
         record.IntrBkSttlmAmt = fieldSetFlags()[1] ? this.IntrBkSttlmAmt : (java.lang.Double) defaultValue(fields()[1]);
-        record.IntrBkSttlmCCY = fieldSetFlags()[2] ? this.IntrBkSttlmCCY : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.IntrBkSttlmDt = fieldSetFlags()[3] ? this.IntrBkSttlmDt : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.IntrBkSttlmCCY = fieldSetFlags()[2] ? this.IntrBkSttlmCCY : (java.lang.String) defaultValue(fields()[2]);
+        record.IntrBkSttlmDt = fieldSetFlags()[3] ? this.IntrBkSttlmDt : (java.lang.String) defaultValue(fields()[3]);
         if (InstgAgtBuilder != null) {
           try {
             record.InstgAgt = this.InstgAgtBuilder.build();
@@ -2074,9 +2074,9 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
 
       this.IntrBkSttlmAmt = in.readDouble();
 
-      this.IntrBkSttlmCCY = in.readString(this.IntrBkSttlmCCY instanceof Utf8 ? (Utf8)this.IntrBkSttlmCCY : null);
+      this.IntrBkSttlmCCY = in.readString();
 
-      this.IntrBkSttlmDt = in.readString(this.IntrBkSttlmDt instanceof Utf8 ? (Utf8)this.IntrBkSttlmDt : null);
+      this.IntrBkSttlmDt = in.readString();
 
       if (this.InstgAgt == null) {
         this.InstgAgt = new com.anz.fastpayment.inward.avro.InstgAgt();
@@ -2148,11 +2148,11 @@ public class DrctDbtTxInf extends org.apache.avro.specific.SpecificRecordBase im
           break;
 
         case 2:
-          this.IntrBkSttlmCCY = in.readString(this.IntrBkSttlmCCY instanceof Utf8 ? (Utf8)this.IntrBkSttlmCCY : null);
+          this.IntrBkSttlmCCY = in.readString();
           break;
 
         case 3:
-          this.IntrBkSttlmDt = in.readString(this.IntrBkSttlmDt instanceof Utf8 ? (Utf8)this.IntrBkSttlmDt : null);
+          this.IntrBkSttlmDt = in.readString();
           break;
 
         case 4:

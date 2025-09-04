@@ -17,7 +17,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
   private static final long serialVersionUID = 5735974495872389142L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtDtls\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PmtCtxt\",\"type\":{\"type\":\"record\",\"name\":\"PmtCtxt\",\"fields\":[{\"name\":\"PuId\",\"type\":\"string\",\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":\"string\",\"doc\":\"Type\"},{\"name\":\"value\",\"type\":\"string\",\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]},\"doc\":\"Payment context\"},{\"name\":\"ProcCtryCd\",\"type\":\"string\",\"doc\":\"Processing country code\"},{\"name\":\"InstdClrgPref\",\"type\":\"string\",\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":\"string\",\"doc\":\"Instructed method of payment category\"},{\"name\":\"PmtCtgry\",\"type\":\"string\",\"doc\":\"Payment category\"},{\"name\":\"actClrMethod\",\"type\":\"string\",\"doc\":\"Actual clearing method\"},{\"name\":\"actlMtdOfPmtCtgry\",\"type\":\"string\",\"doc\":\"Actual method of payment category\"},{\"name\":\"FIDCIdentifier\",\"type\":\"string\",\"doc\":\"FIDC identifier\"},{\"name\":\"FICCIdentifier\",\"type\":\"string\",\"doc\":\"FICC identifier\"},{\"name\":\"VAM\",\"type\":\"string\",\"doc\":\"VAM\"},{\"name\":\"derivedDRAccountNo\",\"type\":\"string\",\"doc\":\"Derived debtor account number\"},{\"name\":\"derivedDRAccountSys\",\"type\":\"string\",\"doc\":\"Derived debtor account system\"},{\"name\":\"derivedDRBookCode\",\"type\":\"string\",\"doc\":\"Derived debtor book code\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtDtls\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PmtCtxt\",\"type\":{\"type\":\"record\",\"name\":\"PmtCtxt\",\"fields\":[{\"name\":\"PuId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Type\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]},\"doc\":\"Payment context\"},{\"name\":\"ProcCtryCd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing country code\"},{\"name\":\"InstdClrgPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed method of payment category\"},{\"name\":\"PmtCtgry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment category\"},{\"name\":\"actClrMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Actual clearing method\"},{\"name\":\"actlMtdOfPmtCtgry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Actual method of payment category\"},{\"name\":\"FIDCIdentifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"FIDC identifier\"},{\"name\":\"FICCIdentifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"FICC identifier\"},{\"name\":\"VAM\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"VAM\"},{\"name\":\"derivedDRAccountNo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor account number\"},{\"name\":\"derivedDRAccountSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor account system\"},{\"name\":\"derivedDRBookCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor book code\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -76,29 +76,29 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
   /** Payment context */
   private com.anz.fastpayment.inward.avro.PmtCtxt PmtCtxt;
   /** Processing country code */
-  private java.lang.CharSequence ProcCtryCd;
+  private java.lang.String ProcCtryCd;
   /** Instructed clearing preference */
-  private java.lang.CharSequence InstdClrgPref;
+  private java.lang.String InstdClrgPref;
   /** Instructed method of payment category */
-  private java.lang.CharSequence InstdMoPCat;
+  private java.lang.String InstdMoPCat;
   /** Payment category */
-  private java.lang.CharSequence PmtCtgry;
+  private java.lang.String PmtCtgry;
   /** Actual clearing method */
-  private java.lang.CharSequence actClrMethod;
+  private java.lang.String actClrMethod;
   /** Actual method of payment category */
-  private java.lang.CharSequence actlMtdOfPmtCtgry;
+  private java.lang.String actlMtdOfPmtCtgry;
   /** FIDC identifier */
-  private java.lang.CharSequence FIDCIdentifier;
+  private java.lang.String FIDCIdentifier;
   /** FICC identifier */
-  private java.lang.CharSequence FICCIdentifier;
+  private java.lang.String FICCIdentifier;
   /** VAM */
-  private java.lang.CharSequence VAM;
+  private java.lang.String VAM;
   /** Derived debtor account number */
-  private java.lang.CharSequence derivedDRAccountNo;
+  private java.lang.String derivedDRAccountNo;
   /** Derived debtor account system */
-  private java.lang.CharSequence derivedDRAccountSys;
+  private java.lang.String derivedDRAccountSys;
   /** Derived debtor book code */
-  private java.lang.CharSequence derivedDRBookCode;
+  private java.lang.String derivedDRBookCode;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -123,7 +123,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param derivedDRAccountSys Derived debtor account system
    * @param derivedDRBookCode Derived debtor book code
    */
-  public PmtDtls(com.anz.fastpayment.inward.avro.PmtCtxt PmtCtxt, java.lang.CharSequence ProcCtryCd, java.lang.CharSequence InstdClrgPref, java.lang.CharSequence InstdMoPCat, java.lang.CharSequence PmtCtgry, java.lang.CharSequence actClrMethod, java.lang.CharSequence actlMtdOfPmtCtgry, java.lang.CharSequence FIDCIdentifier, java.lang.CharSequence FICCIdentifier, java.lang.CharSequence VAM, java.lang.CharSequence derivedDRAccountNo, java.lang.CharSequence derivedDRAccountSys, java.lang.CharSequence derivedDRBookCode) {
+  public PmtDtls(com.anz.fastpayment.inward.avro.PmtCtxt PmtCtxt, java.lang.String ProcCtryCd, java.lang.String InstdClrgPref, java.lang.String InstdMoPCat, java.lang.String PmtCtgry, java.lang.String actClrMethod, java.lang.String actlMtdOfPmtCtgry, java.lang.String FIDCIdentifier, java.lang.String FICCIdentifier, java.lang.String VAM, java.lang.String derivedDRAccountNo, java.lang.String derivedDRAccountSys, java.lang.String derivedDRBookCode) {
     this.PmtCtxt = PmtCtxt;
     this.ProcCtryCd = ProcCtryCd;
     this.InstdClrgPref = InstdClrgPref;
@@ -172,18 +172,18 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: PmtCtxt = (com.anz.fastpayment.inward.avro.PmtCtxt)value$; break;
-    case 1: ProcCtryCd = (java.lang.CharSequence)value$; break;
-    case 2: InstdClrgPref = (java.lang.CharSequence)value$; break;
-    case 3: InstdMoPCat = (java.lang.CharSequence)value$; break;
-    case 4: PmtCtgry = (java.lang.CharSequence)value$; break;
-    case 5: actClrMethod = (java.lang.CharSequence)value$; break;
-    case 6: actlMtdOfPmtCtgry = (java.lang.CharSequence)value$; break;
-    case 7: FIDCIdentifier = (java.lang.CharSequence)value$; break;
-    case 8: FICCIdentifier = (java.lang.CharSequence)value$; break;
-    case 9: VAM = (java.lang.CharSequence)value$; break;
-    case 10: derivedDRAccountNo = (java.lang.CharSequence)value$; break;
-    case 11: derivedDRAccountSys = (java.lang.CharSequence)value$; break;
-    case 12: derivedDRBookCode = (java.lang.CharSequence)value$; break;
+    case 1: ProcCtryCd = value$ != null ? value$.toString() : null; break;
+    case 2: InstdClrgPref = value$ != null ? value$.toString() : null; break;
+    case 3: InstdMoPCat = value$ != null ? value$.toString() : null; break;
+    case 4: PmtCtgry = value$ != null ? value$.toString() : null; break;
+    case 5: actClrMethod = value$ != null ? value$.toString() : null; break;
+    case 6: actlMtdOfPmtCtgry = value$ != null ? value$.toString() : null; break;
+    case 7: FIDCIdentifier = value$ != null ? value$.toString() : null; break;
+    case 8: FICCIdentifier = value$ != null ? value$.toString() : null; break;
+    case 9: VAM = value$ != null ? value$.toString() : null; break;
+    case 10: derivedDRAccountNo = value$ != null ? value$.toString() : null; break;
+    case 11: derivedDRAccountSys = value$ != null ? value$.toString() : null; break;
+    case 12: derivedDRBookCode = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -210,7 +210,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'ProcCtryCd' field.
    * @return Processing country code
    */
-  public java.lang.CharSequence getProcCtryCd() {
+  public java.lang.String getProcCtryCd() {
     return ProcCtryCd;
   }
 
@@ -220,7 +220,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Processing country code
    * @param value the value to set.
    */
-  public void setProcCtryCd(java.lang.CharSequence value) {
+  public void setProcCtryCd(java.lang.String value) {
     this.ProcCtryCd = value;
   }
 
@@ -228,7 +228,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'InstdClrgPref' field.
    * @return Instructed clearing preference
    */
-  public java.lang.CharSequence getInstdClrgPref() {
+  public java.lang.String getInstdClrgPref() {
     return InstdClrgPref;
   }
 
@@ -238,7 +238,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Instructed clearing preference
    * @param value the value to set.
    */
-  public void setInstdClrgPref(java.lang.CharSequence value) {
+  public void setInstdClrgPref(java.lang.String value) {
     this.InstdClrgPref = value;
   }
 
@@ -246,7 +246,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'InstdMoPCat' field.
    * @return Instructed method of payment category
    */
-  public java.lang.CharSequence getInstdMoPCat() {
+  public java.lang.String getInstdMoPCat() {
     return InstdMoPCat;
   }
 
@@ -256,7 +256,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Instructed method of payment category
    * @param value the value to set.
    */
-  public void setInstdMoPCat(java.lang.CharSequence value) {
+  public void setInstdMoPCat(java.lang.String value) {
     this.InstdMoPCat = value;
   }
 
@@ -264,7 +264,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'PmtCtgry' field.
    * @return Payment category
    */
-  public java.lang.CharSequence getPmtCtgry() {
+  public java.lang.String getPmtCtgry() {
     return PmtCtgry;
   }
 
@@ -274,7 +274,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Payment category
    * @param value the value to set.
    */
-  public void setPmtCtgry(java.lang.CharSequence value) {
+  public void setPmtCtgry(java.lang.String value) {
     this.PmtCtgry = value;
   }
 
@@ -282,7 +282,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'actClrMethod' field.
    * @return Actual clearing method
    */
-  public java.lang.CharSequence getActClrMethod() {
+  public java.lang.String getActClrMethod() {
     return actClrMethod;
   }
 
@@ -292,7 +292,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Actual clearing method
    * @param value the value to set.
    */
-  public void setActClrMethod(java.lang.CharSequence value) {
+  public void setActClrMethod(java.lang.String value) {
     this.actClrMethod = value;
   }
 
@@ -300,7 +300,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'actlMtdOfPmtCtgry' field.
    * @return Actual method of payment category
    */
-  public java.lang.CharSequence getActlMtdOfPmtCtgry() {
+  public java.lang.String getActlMtdOfPmtCtgry() {
     return actlMtdOfPmtCtgry;
   }
 
@@ -310,7 +310,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Actual method of payment category
    * @param value the value to set.
    */
-  public void setActlMtdOfPmtCtgry(java.lang.CharSequence value) {
+  public void setActlMtdOfPmtCtgry(java.lang.String value) {
     this.actlMtdOfPmtCtgry = value;
   }
 
@@ -318,7 +318,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'FIDCIdentifier' field.
    * @return FIDC identifier
    */
-  public java.lang.CharSequence getFIDCIdentifier() {
+  public java.lang.String getFIDCIdentifier() {
     return FIDCIdentifier;
   }
 
@@ -328,7 +328,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * FIDC identifier
    * @param value the value to set.
    */
-  public void setFIDCIdentifier(java.lang.CharSequence value) {
+  public void setFIDCIdentifier(java.lang.String value) {
     this.FIDCIdentifier = value;
   }
 
@@ -336,7 +336,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'FICCIdentifier' field.
    * @return FICC identifier
    */
-  public java.lang.CharSequence getFICCIdentifier() {
+  public java.lang.String getFICCIdentifier() {
     return FICCIdentifier;
   }
 
@@ -346,7 +346,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * FICC identifier
    * @param value the value to set.
    */
-  public void setFICCIdentifier(java.lang.CharSequence value) {
+  public void setFICCIdentifier(java.lang.String value) {
     this.FICCIdentifier = value;
   }
 
@@ -354,7 +354,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'VAM' field.
    * @return VAM
    */
-  public java.lang.CharSequence getVAM() {
+  public java.lang.String getVAM() {
     return VAM;
   }
 
@@ -364,7 +364,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * VAM
    * @param value the value to set.
    */
-  public void setVAM(java.lang.CharSequence value) {
+  public void setVAM(java.lang.String value) {
     this.VAM = value;
   }
 
@@ -372,7 +372,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'derivedDRAccountNo' field.
    * @return Derived debtor account number
    */
-  public java.lang.CharSequence getDerivedDRAccountNo() {
+  public java.lang.String getDerivedDRAccountNo() {
     return derivedDRAccountNo;
   }
 
@@ -382,7 +382,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Derived debtor account number
    * @param value the value to set.
    */
-  public void setDerivedDRAccountNo(java.lang.CharSequence value) {
+  public void setDerivedDRAccountNo(java.lang.String value) {
     this.derivedDRAccountNo = value;
   }
 
@@ -390,7 +390,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'derivedDRAccountSys' field.
    * @return Derived debtor account system
    */
-  public java.lang.CharSequence getDerivedDRAccountSys() {
+  public java.lang.String getDerivedDRAccountSys() {
     return derivedDRAccountSys;
   }
 
@@ -400,7 +400,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Derived debtor account system
    * @param value the value to set.
    */
-  public void setDerivedDRAccountSys(java.lang.CharSequence value) {
+  public void setDerivedDRAccountSys(java.lang.String value) {
     this.derivedDRAccountSys = value;
   }
 
@@ -408,7 +408,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'derivedDRBookCode' field.
    * @return Derived debtor book code
    */
-  public java.lang.CharSequence getDerivedDRBookCode() {
+  public java.lang.String getDerivedDRBookCode() {
     return derivedDRBookCode;
   }
 
@@ -418,7 +418,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
    * Derived debtor book code
    * @param value the value to set.
    */
-  public void setDerivedDRBookCode(java.lang.CharSequence value) {
+  public void setDerivedDRBookCode(java.lang.String value) {
     this.derivedDRBookCode = value;
   }
 
@@ -467,29 +467,29 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
     private com.anz.fastpayment.inward.avro.PmtCtxt PmtCtxt;
     private com.anz.fastpayment.inward.avro.PmtCtxt.Builder PmtCtxtBuilder;
     /** Processing country code */
-    private java.lang.CharSequence ProcCtryCd;
+    private java.lang.String ProcCtryCd;
     /** Instructed clearing preference */
-    private java.lang.CharSequence InstdClrgPref;
+    private java.lang.String InstdClrgPref;
     /** Instructed method of payment category */
-    private java.lang.CharSequence InstdMoPCat;
+    private java.lang.String InstdMoPCat;
     /** Payment category */
-    private java.lang.CharSequence PmtCtgry;
+    private java.lang.String PmtCtgry;
     /** Actual clearing method */
-    private java.lang.CharSequence actClrMethod;
+    private java.lang.String actClrMethod;
     /** Actual method of payment category */
-    private java.lang.CharSequence actlMtdOfPmtCtgry;
+    private java.lang.String actlMtdOfPmtCtgry;
     /** FIDC identifier */
-    private java.lang.CharSequence FIDCIdentifier;
+    private java.lang.String FIDCIdentifier;
     /** FICC identifier */
-    private java.lang.CharSequence FICCIdentifier;
+    private java.lang.String FICCIdentifier;
     /** VAM */
-    private java.lang.CharSequence VAM;
+    private java.lang.String VAM;
     /** Derived debtor account number */
-    private java.lang.CharSequence derivedDRAccountNo;
+    private java.lang.String derivedDRAccountNo;
     /** Derived debtor account system */
-    private java.lang.CharSequence derivedDRAccountSys;
+    private java.lang.String derivedDRAccountSys;
     /** Derived debtor book code */
-    private java.lang.CharSequence derivedDRBookCode;
+    private java.lang.String derivedDRBookCode;
 
     /** Creates a new Builder */
     private Builder() {
@@ -708,7 +708,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Processing country code
       * @return The value.
       */
-    public java.lang.CharSequence getProcCtryCd() {
+    public java.lang.String getProcCtryCd() {
       return ProcCtryCd;
     }
 
@@ -719,7 +719,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'ProcCtryCd'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setProcCtryCd(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setProcCtryCd(java.lang.String value) {
       validate(fields()[1], value);
       this.ProcCtryCd = value;
       fieldSetFlags()[1] = true;
@@ -752,7 +752,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Instructed clearing preference
       * @return The value.
       */
-    public java.lang.CharSequence getInstdClrgPref() {
+    public java.lang.String getInstdClrgPref() {
       return InstdClrgPref;
     }
 
@@ -763,7 +763,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'InstdClrgPref'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setInstdClrgPref(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setInstdClrgPref(java.lang.String value) {
       validate(fields()[2], value);
       this.InstdClrgPref = value;
       fieldSetFlags()[2] = true;
@@ -796,7 +796,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Instructed method of payment category
       * @return The value.
       */
-    public java.lang.CharSequence getInstdMoPCat() {
+    public java.lang.String getInstdMoPCat() {
       return InstdMoPCat;
     }
 
@@ -807,7 +807,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'InstdMoPCat'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setInstdMoPCat(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setInstdMoPCat(java.lang.String value) {
       validate(fields()[3], value);
       this.InstdMoPCat = value;
       fieldSetFlags()[3] = true;
@@ -840,7 +840,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Payment category
       * @return The value.
       */
-    public java.lang.CharSequence getPmtCtgry() {
+    public java.lang.String getPmtCtgry() {
       return PmtCtgry;
     }
 
@@ -851,7 +851,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'PmtCtgry'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setPmtCtgry(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setPmtCtgry(java.lang.String value) {
       validate(fields()[4], value);
       this.PmtCtgry = value;
       fieldSetFlags()[4] = true;
@@ -884,7 +884,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Actual clearing method
       * @return The value.
       */
-    public java.lang.CharSequence getActClrMethod() {
+    public java.lang.String getActClrMethod() {
       return actClrMethod;
     }
 
@@ -895,7 +895,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'actClrMethod'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setActClrMethod(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setActClrMethod(java.lang.String value) {
       validate(fields()[5], value);
       this.actClrMethod = value;
       fieldSetFlags()[5] = true;
@@ -928,7 +928,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Actual method of payment category
       * @return The value.
       */
-    public java.lang.CharSequence getActlMtdOfPmtCtgry() {
+    public java.lang.String getActlMtdOfPmtCtgry() {
       return actlMtdOfPmtCtgry;
     }
 
@@ -939,7 +939,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'actlMtdOfPmtCtgry'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setActlMtdOfPmtCtgry(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setActlMtdOfPmtCtgry(java.lang.String value) {
       validate(fields()[6], value);
       this.actlMtdOfPmtCtgry = value;
       fieldSetFlags()[6] = true;
@@ -972,7 +972,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * FIDC identifier
       * @return The value.
       */
-    public java.lang.CharSequence getFIDCIdentifier() {
+    public java.lang.String getFIDCIdentifier() {
       return FIDCIdentifier;
     }
 
@@ -983,7 +983,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'FIDCIdentifier'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setFIDCIdentifier(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setFIDCIdentifier(java.lang.String value) {
       validate(fields()[7], value);
       this.FIDCIdentifier = value;
       fieldSetFlags()[7] = true;
@@ -1016,7 +1016,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * FICC identifier
       * @return The value.
       */
-    public java.lang.CharSequence getFICCIdentifier() {
+    public java.lang.String getFICCIdentifier() {
       return FICCIdentifier;
     }
 
@@ -1027,7 +1027,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'FICCIdentifier'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setFICCIdentifier(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setFICCIdentifier(java.lang.String value) {
       validate(fields()[8], value);
       this.FICCIdentifier = value;
       fieldSetFlags()[8] = true;
@@ -1060,7 +1060,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * VAM
       * @return The value.
       */
-    public java.lang.CharSequence getVAM() {
+    public java.lang.String getVAM() {
       return VAM;
     }
 
@@ -1071,7 +1071,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'VAM'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setVAM(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setVAM(java.lang.String value) {
       validate(fields()[9], value);
       this.VAM = value;
       fieldSetFlags()[9] = true;
@@ -1104,7 +1104,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Derived debtor account number
       * @return The value.
       */
-    public java.lang.CharSequence getDerivedDRAccountNo() {
+    public java.lang.String getDerivedDRAccountNo() {
       return derivedDRAccountNo;
     }
 
@@ -1115,7 +1115,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'derivedDRAccountNo'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setDerivedDRAccountNo(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setDerivedDRAccountNo(java.lang.String value) {
       validate(fields()[10], value);
       this.derivedDRAccountNo = value;
       fieldSetFlags()[10] = true;
@@ -1148,7 +1148,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Derived debtor account system
       * @return The value.
       */
-    public java.lang.CharSequence getDerivedDRAccountSys() {
+    public java.lang.String getDerivedDRAccountSys() {
       return derivedDRAccountSys;
     }
 
@@ -1159,7 +1159,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'derivedDRAccountSys'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setDerivedDRAccountSys(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setDerivedDRAccountSys(java.lang.String value) {
       validate(fields()[11], value);
       this.derivedDRAccountSys = value;
       fieldSetFlags()[11] = true;
@@ -1192,7 +1192,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * Derived debtor book code
       * @return The value.
       */
-    public java.lang.CharSequence getDerivedDRBookCode() {
+    public java.lang.String getDerivedDRBookCode() {
       return derivedDRBookCode;
     }
 
@@ -1203,7 +1203,7 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'derivedDRBookCode'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setDerivedDRBookCode(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtDtls.Builder setDerivedDRBookCode(java.lang.String value) {
       validate(fields()[12], value);
       this.derivedDRBookCode = value;
       fieldSetFlags()[12] = true;
@@ -1246,18 +1246,18 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
         } else {
           record.PmtCtxt = fieldSetFlags()[0] ? this.PmtCtxt : (com.anz.fastpayment.inward.avro.PmtCtxt) defaultValue(fields()[0]);
         }
-        record.ProcCtryCd = fieldSetFlags()[1] ? this.ProcCtryCd : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.InstdClrgPref = fieldSetFlags()[2] ? this.InstdClrgPref : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.InstdMoPCat = fieldSetFlags()[3] ? this.InstdMoPCat : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.PmtCtgry = fieldSetFlags()[4] ? this.PmtCtgry : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.actClrMethod = fieldSetFlags()[5] ? this.actClrMethod : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.actlMtdOfPmtCtgry = fieldSetFlags()[6] ? this.actlMtdOfPmtCtgry : (java.lang.CharSequence) defaultValue(fields()[6]);
-        record.FIDCIdentifier = fieldSetFlags()[7] ? this.FIDCIdentifier : (java.lang.CharSequence) defaultValue(fields()[7]);
-        record.FICCIdentifier = fieldSetFlags()[8] ? this.FICCIdentifier : (java.lang.CharSequence) defaultValue(fields()[8]);
-        record.VAM = fieldSetFlags()[9] ? this.VAM : (java.lang.CharSequence) defaultValue(fields()[9]);
-        record.derivedDRAccountNo = fieldSetFlags()[10] ? this.derivedDRAccountNo : (java.lang.CharSequence) defaultValue(fields()[10]);
-        record.derivedDRAccountSys = fieldSetFlags()[11] ? this.derivedDRAccountSys : (java.lang.CharSequence) defaultValue(fields()[11]);
-        record.derivedDRBookCode = fieldSetFlags()[12] ? this.derivedDRBookCode : (java.lang.CharSequence) defaultValue(fields()[12]);
+        record.ProcCtryCd = fieldSetFlags()[1] ? this.ProcCtryCd : (java.lang.String) defaultValue(fields()[1]);
+        record.InstdClrgPref = fieldSetFlags()[2] ? this.InstdClrgPref : (java.lang.String) defaultValue(fields()[2]);
+        record.InstdMoPCat = fieldSetFlags()[3] ? this.InstdMoPCat : (java.lang.String) defaultValue(fields()[3]);
+        record.PmtCtgry = fieldSetFlags()[4] ? this.PmtCtgry : (java.lang.String) defaultValue(fields()[4]);
+        record.actClrMethod = fieldSetFlags()[5] ? this.actClrMethod : (java.lang.String) defaultValue(fields()[5]);
+        record.actlMtdOfPmtCtgry = fieldSetFlags()[6] ? this.actlMtdOfPmtCtgry : (java.lang.String) defaultValue(fields()[6]);
+        record.FIDCIdentifier = fieldSetFlags()[7] ? this.FIDCIdentifier : (java.lang.String) defaultValue(fields()[7]);
+        record.FICCIdentifier = fieldSetFlags()[8] ? this.FICCIdentifier : (java.lang.String) defaultValue(fields()[8]);
+        record.VAM = fieldSetFlags()[9] ? this.VAM : (java.lang.String) defaultValue(fields()[9]);
+        record.derivedDRAccountNo = fieldSetFlags()[10] ? this.derivedDRAccountNo : (java.lang.String) defaultValue(fields()[10]);
+        record.derivedDRAccountSys = fieldSetFlags()[11] ? this.derivedDRAccountSys : (java.lang.String) defaultValue(fields()[11]);
+        record.derivedDRBookCode = fieldSetFlags()[12] ? this.derivedDRBookCode : (java.lang.String) defaultValue(fields()[12]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1328,29 +1328,29 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
       }
       this.PmtCtxt.customDecode(in);
 
-      this.ProcCtryCd = in.readString(this.ProcCtryCd instanceof Utf8 ? (Utf8)this.ProcCtryCd : null);
+      this.ProcCtryCd = in.readString();
 
-      this.InstdClrgPref = in.readString(this.InstdClrgPref instanceof Utf8 ? (Utf8)this.InstdClrgPref : null);
+      this.InstdClrgPref = in.readString();
 
-      this.InstdMoPCat = in.readString(this.InstdMoPCat instanceof Utf8 ? (Utf8)this.InstdMoPCat : null);
+      this.InstdMoPCat = in.readString();
 
-      this.PmtCtgry = in.readString(this.PmtCtgry instanceof Utf8 ? (Utf8)this.PmtCtgry : null);
+      this.PmtCtgry = in.readString();
 
-      this.actClrMethod = in.readString(this.actClrMethod instanceof Utf8 ? (Utf8)this.actClrMethod : null);
+      this.actClrMethod = in.readString();
 
-      this.actlMtdOfPmtCtgry = in.readString(this.actlMtdOfPmtCtgry instanceof Utf8 ? (Utf8)this.actlMtdOfPmtCtgry : null);
+      this.actlMtdOfPmtCtgry = in.readString();
 
-      this.FIDCIdentifier = in.readString(this.FIDCIdentifier instanceof Utf8 ? (Utf8)this.FIDCIdentifier : null);
+      this.FIDCIdentifier = in.readString();
 
-      this.FICCIdentifier = in.readString(this.FICCIdentifier instanceof Utf8 ? (Utf8)this.FICCIdentifier : null);
+      this.FICCIdentifier = in.readString();
 
-      this.VAM = in.readString(this.VAM instanceof Utf8 ? (Utf8)this.VAM : null);
+      this.VAM = in.readString();
 
-      this.derivedDRAccountNo = in.readString(this.derivedDRAccountNo instanceof Utf8 ? (Utf8)this.derivedDRAccountNo : null);
+      this.derivedDRAccountNo = in.readString();
 
-      this.derivedDRAccountSys = in.readString(this.derivedDRAccountSys instanceof Utf8 ? (Utf8)this.derivedDRAccountSys : null);
+      this.derivedDRAccountSys = in.readString();
 
-      this.derivedDRBookCode = in.readString(this.derivedDRBookCode instanceof Utf8 ? (Utf8)this.derivedDRBookCode : null);
+      this.derivedDRBookCode = in.readString();
 
     } else {
       for (int i = 0; i < 13; i++) {
@@ -1363,51 +1363,51 @@ public class PmtDtls extends org.apache.avro.specific.SpecificRecordBase impleme
           break;
 
         case 1:
-          this.ProcCtryCd = in.readString(this.ProcCtryCd instanceof Utf8 ? (Utf8)this.ProcCtryCd : null);
+          this.ProcCtryCd = in.readString();
           break;
 
         case 2:
-          this.InstdClrgPref = in.readString(this.InstdClrgPref instanceof Utf8 ? (Utf8)this.InstdClrgPref : null);
+          this.InstdClrgPref = in.readString();
           break;
 
         case 3:
-          this.InstdMoPCat = in.readString(this.InstdMoPCat instanceof Utf8 ? (Utf8)this.InstdMoPCat : null);
+          this.InstdMoPCat = in.readString();
           break;
 
         case 4:
-          this.PmtCtgry = in.readString(this.PmtCtgry instanceof Utf8 ? (Utf8)this.PmtCtgry : null);
+          this.PmtCtgry = in.readString();
           break;
 
         case 5:
-          this.actClrMethod = in.readString(this.actClrMethod instanceof Utf8 ? (Utf8)this.actClrMethod : null);
+          this.actClrMethod = in.readString();
           break;
 
         case 6:
-          this.actlMtdOfPmtCtgry = in.readString(this.actlMtdOfPmtCtgry instanceof Utf8 ? (Utf8)this.actlMtdOfPmtCtgry : null);
+          this.actlMtdOfPmtCtgry = in.readString();
           break;
 
         case 7:
-          this.FIDCIdentifier = in.readString(this.FIDCIdentifier instanceof Utf8 ? (Utf8)this.FIDCIdentifier : null);
+          this.FIDCIdentifier = in.readString();
           break;
 
         case 8:
-          this.FICCIdentifier = in.readString(this.FICCIdentifier instanceof Utf8 ? (Utf8)this.FICCIdentifier : null);
+          this.FICCIdentifier = in.readString();
           break;
 
         case 9:
-          this.VAM = in.readString(this.VAM instanceof Utf8 ? (Utf8)this.VAM : null);
+          this.VAM = in.readString();
           break;
 
         case 10:
-          this.derivedDRAccountNo = in.readString(this.derivedDRAccountNo instanceof Utf8 ? (Utf8)this.derivedDRAccountNo : null);
+          this.derivedDRAccountNo = in.readString();
           break;
 
         case 11:
-          this.derivedDRAccountSys = in.readString(this.derivedDRAccountSys instanceof Utf8 ? (Utf8)this.derivedDRAccountSys : null);
+          this.derivedDRAccountSys = in.readString();
           break;
 
         case 12:
-          this.derivedDRBookCode = in.readString(this.derivedDRBookCode instanceof Utf8 ? (Utf8)this.derivedDRBookCode : null);
+          this.derivedDRBookCode = in.readString();
           break;
 
         default:

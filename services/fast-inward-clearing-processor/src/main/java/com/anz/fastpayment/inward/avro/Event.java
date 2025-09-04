@@ -17,7 +17,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
   private static final long serialVersionUID = 7014457215166105120L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Event\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"EventCode\",\"type\":\"string\",\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":\"string\",\"doc\":\"Event identifier\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Event\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"EventCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event identifier\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,9 +74,9 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   /** Event code */
-  private java.lang.CharSequence EventCode;
+  private java.lang.String EventCode;
   /** Event identifier */
-  private java.lang.CharSequence EventID;
+  private java.lang.String EventID;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -90,7 +90,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
    * @param EventCode Event code
    * @param EventID Event identifier
    */
-  public Event(java.lang.CharSequence EventCode, java.lang.CharSequence EventID) {
+  public Event(java.lang.String EventCode, java.lang.String EventID) {
     this.EventCode = EventCode;
     this.EventID = EventID;
   }
@@ -116,8 +116,8 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: EventCode = (java.lang.CharSequence)value$; break;
-    case 1: EventID = (java.lang.CharSequence)value$; break;
+    case 0: EventCode = value$ != null ? value$.toString() : null; break;
+    case 1: EventID = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -126,7 +126,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'EventCode' field.
    * @return Event code
    */
-  public java.lang.CharSequence getEventCode() {
+  public java.lang.String getEventCode() {
     return EventCode;
   }
 
@@ -136,7 +136,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
    * Event code
    * @param value the value to set.
    */
-  public void setEventCode(java.lang.CharSequence value) {
+  public void setEventCode(java.lang.String value) {
     this.EventCode = value;
   }
 
@@ -144,7 +144,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'EventID' field.
    * @return Event identifier
    */
-  public java.lang.CharSequence getEventID() {
+  public java.lang.String getEventID() {
     return EventID;
   }
 
@@ -154,7 +154,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
    * Event identifier
    * @param value the value to set.
    */
-  public void setEventID(java.lang.CharSequence value) {
+  public void setEventID(java.lang.String value) {
     this.EventID = value;
   }
 
@@ -200,9 +200,9 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
     implements org.apache.avro.data.RecordBuilder<Event> {
 
     /** Event code */
-    private java.lang.CharSequence EventCode;
+    private java.lang.String EventCode;
     /** Event identifier */
-    private java.lang.CharSequence EventID;
+    private java.lang.String EventID;
 
     /** Creates a new Builder */
     private Builder() {
@@ -246,7 +246,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * Event code
       * @return The value.
       */
-    public java.lang.CharSequence getEventCode() {
+    public java.lang.String getEventCode() {
       return EventCode;
     }
 
@@ -257,7 +257,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'EventCode'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Event.Builder setEventCode(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Event.Builder setEventCode(java.lang.String value) {
       validate(fields()[0], value);
       this.EventCode = value;
       fieldSetFlags()[0] = true;
@@ -290,7 +290,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * Event identifier
       * @return The value.
       */
-    public java.lang.CharSequence getEventID() {
+    public java.lang.String getEventID() {
       return EventID;
     }
 
@@ -301,7 +301,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'EventID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Event.Builder setEventID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Event.Builder setEventID(java.lang.String value) {
       validate(fields()[1], value);
       this.EventID = value;
       fieldSetFlags()[1] = true;
@@ -334,8 +334,8 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
     public Event build() {
       try {
         Event record = new Event();
-        record.EventCode = fieldSetFlags()[0] ? this.EventCode : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.EventID = fieldSetFlags()[1] ? this.EventID : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.EventCode = fieldSetFlags()[0] ? this.EventCode : (java.lang.String) defaultValue(fields()[0]);
+        record.EventID = fieldSetFlags()[1] ? this.EventID : (java.lang.String) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -379,19 +379,19 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.EventCode = in.readString(this.EventCode instanceof Utf8 ? (Utf8)this.EventCode : null);
+      this.EventCode = in.readString();
 
-      this.EventID = in.readString(this.EventID instanceof Utf8 ? (Utf8)this.EventID : null);
+      this.EventID = in.readString();
 
     } else {
       for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.EventCode = in.readString(this.EventCode instanceof Utf8 ? (Utf8)this.EventCode : null);
+          this.EventCode = in.readString();
           break;
 
         case 1:
-          this.EventID = in.readString(this.EventID instanceof Utf8 ? (Utf8)this.EventID : null);
+          this.EventID = in.readString();
           break;
 
         default:

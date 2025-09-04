@@ -17,7 +17,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = -9106448326948670031L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Header\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"ComponentName\",\"type\":\"string\",\"doc\":\"Component name\"},{\"name\":\"UUID\",\"type\":\"string\",\"doc\":\"Unique identifier\"},{\"name\":\"EventInfo\",\"type\":{\"type\":\"record\",\"name\":\"EventInfo\",\"fields\":[{\"name\":\"EventCode\",\"type\":\"string\",\"doc\":\"Event code\"},{\"name\":\"EventDescription\",\"type\":\"string\",\"doc\":\"Event description\"},{\"name\":\"EventID\",\"type\":\"string\",\"doc\":\"Event identifier\"},{\"name\":\"EventType\",\"type\":\"string\",\"doc\":\"Event type\"},{\"name\":\"EventProducer\",\"type\":\"string\",\"doc\":\"Event producer\"},{\"name\":\"EventTS\",\"type\":\"string\",\"doc\":\"Event timestamp\"},{\"name\":\"EventTopics\",\"type\":\"string\",\"doc\":\"Event topics\"},{\"name\":\"SystemId\",\"type\":[\"null\",\"string\"],\"doc\":\"System identifier\"},{\"name\":\"Events\",\"type\":{\"type\":\"record\",\"name\":\"Events\",\"fields\":[{\"name\":\"Event\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Event\",\"fields\":[{\"name\":\"EventCode\",\"type\":\"string\",\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":\"string\",\"doc\":\"Event identifier\"}]}},\"doc\":\"Array of events\"}]},\"doc\":\"Events information\"},{\"name\":\"EventVersion\",\"type\":[\"null\",\"string\"],\"doc\":\"Event version\"}]},\"doc\":\"Event information\"},{\"name\":\"ReplyToQueue\",\"type\":\"string\",\"doc\":\"Reply to queue\"},{\"name\":\"ReqMap\",\"type\":[\"null\",\"string\"],\"doc\":\"Request map\"},{\"name\":\"MUID\",\"type\":\"string\",\"doc\":\"Message unique identifier\"},{\"name\":\"Channel\",\"type\":\"string\",\"doc\":\"Channel\"},{\"name\":\"Direction\",\"type\":\"string\",\"doc\":\"Direction\"},{\"name\":\"RcvdTS\",\"type\":\"string\",\"doc\":\"Received timestamp\"},{\"name\":\"DomainName\",\"type\":\"string\",\"doc\":\"Domain name\"},{\"name\":\"DomainType\",\"type\":\"string\",\"doc\":\"Domain type\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Header\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"ComponentName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Component name\"},{\"name\":\"UUID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Unique identifier\"},{\"name\":\"EventInfo\",\"type\":{\"type\":\"record\",\"name\":\"EventInfo\",\"fields\":[{\"name\":\"EventCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event code\"},{\"name\":\"EventDescription\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event description\"},{\"name\":\"EventID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event identifier\"},{\"name\":\"EventType\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event type\"},{\"name\":\"EventProducer\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event producer\"},{\"name\":\"EventTS\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event timestamp\"},{\"name\":\"EventTopics\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event topics\"},{\"name\":\"SystemId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"System identifier\"},{\"name\":\"Events\",\"type\":{\"type\":\"record\",\"name\":\"Events\",\"fields\":[{\"name\":\"Event\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Event\",\"fields\":[{\"name\":\"EventCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event identifier\"}]}},\"doc\":\"Array of events\"}]},\"doc\":\"Events information\"},{\"name\":\"EventVersion\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"Event version\"}]},\"doc\":\"Event information\"},{\"name\":\"ReplyToQueue\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Reply to queue\"},{\"name\":\"ReqMap\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"Request map\"},{\"name\":\"MUID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message unique identifier\"},{\"name\":\"Channel\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Channel\"},{\"name\":\"Direction\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Direction\"},{\"name\":\"RcvdTS\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Received timestamp\"},{\"name\":\"DomainName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Domain name\"},{\"name\":\"DomainType\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Domain type\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,27 +74,27 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** Component name */
-  private java.lang.CharSequence ComponentName;
+  private java.lang.String ComponentName;
   /** Unique identifier */
-  private java.lang.CharSequence UUID;
+  private java.lang.String UUID;
   /** Event information */
   private com.anz.fastpayment.inward.avro.EventInfo EventInfo;
   /** Reply to queue */
-  private java.lang.CharSequence ReplyToQueue;
+  private java.lang.String ReplyToQueue;
   /** Request map */
-  private java.lang.CharSequence ReqMap;
+  private java.lang.String ReqMap;
   /** Message unique identifier */
-  private java.lang.CharSequence MUID;
+  private java.lang.String MUID;
   /** Channel */
-  private java.lang.CharSequence Channel;
+  private java.lang.String Channel;
   /** Direction */
-  private java.lang.CharSequence Direction;
+  private java.lang.String Direction;
   /** Received timestamp */
-  private java.lang.CharSequence RcvdTS;
+  private java.lang.String RcvdTS;
   /** Domain name */
-  private java.lang.CharSequence DomainName;
+  private java.lang.String DomainName;
   /** Domain type */
-  private java.lang.CharSequence DomainType;
+  private java.lang.String DomainType;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -117,7 +117,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param DomainName Domain name
    * @param DomainType Domain type
    */
-  public Header(java.lang.CharSequence ComponentName, java.lang.CharSequence UUID, com.anz.fastpayment.inward.avro.EventInfo EventInfo, java.lang.CharSequence ReplyToQueue, java.lang.CharSequence ReqMap, java.lang.CharSequence MUID, java.lang.CharSequence Channel, java.lang.CharSequence Direction, java.lang.CharSequence RcvdTS, java.lang.CharSequence DomainName, java.lang.CharSequence DomainType) {
+  public Header(java.lang.String ComponentName, java.lang.String UUID, com.anz.fastpayment.inward.avro.EventInfo EventInfo, java.lang.String ReplyToQueue, java.lang.String ReqMap, java.lang.String MUID, java.lang.String Channel, java.lang.String Direction, java.lang.String RcvdTS, java.lang.String DomainName, java.lang.String DomainType) {
     this.ComponentName = ComponentName;
     this.UUID = UUID;
     this.EventInfo = EventInfo;
@@ -161,17 +161,17 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: ComponentName = (java.lang.CharSequence)value$; break;
-    case 1: UUID = (java.lang.CharSequence)value$; break;
+    case 0: ComponentName = value$ != null ? value$.toString() : null; break;
+    case 1: UUID = value$ != null ? value$.toString() : null; break;
     case 2: EventInfo = (com.anz.fastpayment.inward.avro.EventInfo)value$; break;
-    case 3: ReplyToQueue = (java.lang.CharSequence)value$; break;
-    case 4: ReqMap = (java.lang.CharSequence)value$; break;
-    case 5: MUID = (java.lang.CharSequence)value$; break;
-    case 6: Channel = (java.lang.CharSequence)value$; break;
-    case 7: Direction = (java.lang.CharSequence)value$; break;
-    case 8: RcvdTS = (java.lang.CharSequence)value$; break;
-    case 9: DomainName = (java.lang.CharSequence)value$; break;
-    case 10: DomainType = (java.lang.CharSequence)value$; break;
+    case 3: ReplyToQueue = value$ != null ? value$.toString() : null; break;
+    case 4: ReqMap = value$ != null ? value$.toString() : null; break;
+    case 5: MUID = value$ != null ? value$.toString() : null; break;
+    case 6: Channel = value$ != null ? value$.toString() : null; break;
+    case 7: Direction = value$ != null ? value$.toString() : null; break;
+    case 8: RcvdTS = value$ != null ? value$.toString() : null; break;
+    case 9: DomainName = value$ != null ? value$.toString() : null; break;
+    case 10: DomainType = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -180,7 +180,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ComponentName' field.
    * @return Component name
    */
-  public java.lang.CharSequence getComponentName() {
+  public java.lang.String getComponentName() {
     return ComponentName;
   }
 
@@ -190,7 +190,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Component name
    * @param value the value to set.
    */
-  public void setComponentName(java.lang.CharSequence value) {
+  public void setComponentName(java.lang.String value) {
     this.ComponentName = value;
   }
 
@@ -198,7 +198,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'UUID' field.
    * @return Unique identifier
    */
-  public java.lang.CharSequence getUUID() {
+  public java.lang.String getUUID() {
     return UUID;
   }
 
@@ -208,7 +208,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Unique identifier
    * @param value the value to set.
    */
-  public void setUUID(java.lang.CharSequence value) {
+  public void setUUID(java.lang.String value) {
     this.UUID = value;
   }
 
@@ -234,7 +234,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ReplyToQueue' field.
    * @return Reply to queue
    */
-  public java.lang.CharSequence getReplyToQueue() {
+  public java.lang.String getReplyToQueue() {
     return ReplyToQueue;
   }
 
@@ -244,7 +244,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Reply to queue
    * @param value the value to set.
    */
-  public void setReplyToQueue(java.lang.CharSequence value) {
+  public void setReplyToQueue(java.lang.String value) {
     this.ReplyToQueue = value;
   }
 
@@ -252,7 +252,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ReqMap' field.
    * @return Request map
    */
-  public java.lang.CharSequence getReqMap() {
+  public java.lang.String getReqMap() {
     return ReqMap;
   }
 
@@ -262,7 +262,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Request map
    * @param value the value to set.
    */
-  public void setReqMap(java.lang.CharSequence value) {
+  public void setReqMap(java.lang.String value) {
     this.ReqMap = value;
   }
 
@@ -270,7 +270,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'MUID' field.
    * @return Message unique identifier
    */
-  public java.lang.CharSequence getMUID() {
+  public java.lang.String getMUID() {
     return MUID;
   }
 
@@ -280,7 +280,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Message unique identifier
    * @param value the value to set.
    */
-  public void setMUID(java.lang.CharSequence value) {
+  public void setMUID(java.lang.String value) {
     this.MUID = value;
   }
 
@@ -288,7 +288,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Channel' field.
    * @return Channel
    */
-  public java.lang.CharSequence getChannel() {
+  public java.lang.String getChannel() {
     return Channel;
   }
 
@@ -298,7 +298,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Channel
    * @param value the value to set.
    */
-  public void setChannel(java.lang.CharSequence value) {
+  public void setChannel(java.lang.String value) {
     this.Channel = value;
   }
 
@@ -306,7 +306,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Direction' field.
    * @return Direction
    */
-  public java.lang.CharSequence getDirection() {
+  public java.lang.String getDirection() {
     return Direction;
   }
 
@@ -316,7 +316,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Direction
    * @param value the value to set.
    */
-  public void setDirection(java.lang.CharSequence value) {
+  public void setDirection(java.lang.String value) {
     this.Direction = value;
   }
 
@@ -324,7 +324,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'RcvdTS' field.
    * @return Received timestamp
    */
-  public java.lang.CharSequence getRcvdTS() {
+  public java.lang.String getRcvdTS() {
     return RcvdTS;
   }
 
@@ -334,7 +334,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Received timestamp
    * @param value the value to set.
    */
-  public void setRcvdTS(java.lang.CharSequence value) {
+  public void setRcvdTS(java.lang.String value) {
     this.RcvdTS = value;
   }
 
@@ -342,7 +342,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'DomainName' field.
    * @return Domain name
    */
-  public java.lang.CharSequence getDomainName() {
+  public java.lang.String getDomainName() {
     return DomainName;
   }
 
@@ -352,7 +352,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Domain name
    * @param value the value to set.
    */
-  public void setDomainName(java.lang.CharSequence value) {
+  public void setDomainName(java.lang.String value) {
     this.DomainName = value;
   }
 
@@ -360,7 +360,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'DomainType' field.
    * @return Domain type
    */
-  public java.lang.CharSequence getDomainType() {
+  public java.lang.String getDomainType() {
     return DomainType;
   }
 
@@ -370,7 +370,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
    * Domain type
    * @param value the value to set.
    */
-  public void setDomainType(java.lang.CharSequence value) {
+  public void setDomainType(java.lang.String value) {
     this.DomainType = value;
   }
 
@@ -416,28 +416,28 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<Header> {
 
     /** Component name */
-    private java.lang.CharSequence ComponentName;
+    private java.lang.String ComponentName;
     /** Unique identifier */
-    private java.lang.CharSequence UUID;
+    private java.lang.String UUID;
     /** Event information */
     private com.anz.fastpayment.inward.avro.EventInfo EventInfo;
     private com.anz.fastpayment.inward.avro.EventInfo.Builder EventInfoBuilder;
     /** Reply to queue */
-    private java.lang.CharSequence ReplyToQueue;
+    private java.lang.String ReplyToQueue;
     /** Request map */
-    private java.lang.CharSequence ReqMap;
+    private java.lang.String ReqMap;
     /** Message unique identifier */
-    private java.lang.CharSequence MUID;
+    private java.lang.String MUID;
     /** Channel */
-    private java.lang.CharSequence Channel;
+    private java.lang.String Channel;
     /** Direction */
-    private java.lang.CharSequence Direction;
+    private java.lang.String Direction;
     /** Received timestamp */
-    private java.lang.CharSequence RcvdTS;
+    private java.lang.String RcvdTS;
     /** Domain name */
-    private java.lang.CharSequence DomainName;
+    private java.lang.String DomainName;
     /** Domain type */
-    private java.lang.CharSequence DomainType;
+    private java.lang.String DomainType;
 
     /** Creates a new Builder */
     private Builder() {
@@ -557,7 +557,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Component name
       * @return The value.
       */
-    public java.lang.CharSequence getComponentName() {
+    public java.lang.String getComponentName() {
       return ComponentName;
     }
 
@@ -568,7 +568,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ComponentName'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setComponentName(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setComponentName(java.lang.String value) {
       validate(fields()[0], value);
       this.ComponentName = value;
       fieldSetFlags()[0] = true;
@@ -601,7 +601,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Unique identifier
       * @return The value.
       */
-    public java.lang.CharSequence getUUID() {
+    public java.lang.String getUUID() {
       return UUID;
     }
 
@@ -612,7 +612,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'UUID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setUUID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setUUID(java.lang.String value) {
       validate(fields()[1], value);
       this.UUID = value;
       fieldSetFlags()[1] = true;
@@ -728,7 +728,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Reply to queue
       * @return The value.
       */
-    public java.lang.CharSequence getReplyToQueue() {
+    public java.lang.String getReplyToQueue() {
       return ReplyToQueue;
     }
 
@@ -739,7 +739,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ReplyToQueue'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setReplyToQueue(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setReplyToQueue(java.lang.String value) {
       validate(fields()[3], value);
       this.ReplyToQueue = value;
       fieldSetFlags()[3] = true;
@@ -772,7 +772,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Request map
       * @return The value.
       */
-    public java.lang.CharSequence getReqMap() {
+    public java.lang.String getReqMap() {
       return ReqMap;
     }
 
@@ -783,7 +783,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ReqMap'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setReqMap(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setReqMap(java.lang.String value) {
       validate(fields()[4], value);
       this.ReqMap = value;
       fieldSetFlags()[4] = true;
@@ -816,7 +816,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Message unique identifier
       * @return The value.
       */
-    public java.lang.CharSequence getMUID() {
+    public java.lang.String getMUID() {
       return MUID;
     }
 
@@ -827,7 +827,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'MUID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setMUID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setMUID(java.lang.String value) {
       validate(fields()[5], value);
       this.MUID = value;
       fieldSetFlags()[5] = true;
@@ -860,7 +860,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Channel
       * @return The value.
       */
-    public java.lang.CharSequence getChannel() {
+    public java.lang.String getChannel() {
       return Channel;
     }
 
@@ -871,7 +871,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Channel'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setChannel(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setChannel(java.lang.String value) {
       validate(fields()[6], value);
       this.Channel = value;
       fieldSetFlags()[6] = true;
@@ -904,7 +904,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Direction
       * @return The value.
       */
-    public java.lang.CharSequence getDirection() {
+    public java.lang.String getDirection() {
       return Direction;
     }
 
@@ -915,7 +915,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Direction'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setDirection(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setDirection(java.lang.String value) {
       validate(fields()[7], value);
       this.Direction = value;
       fieldSetFlags()[7] = true;
@@ -948,7 +948,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Received timestamp
       * @return The value.
       */
-    public java.lang.CharSequence getRcvdTS() {
+    public java.lang.String getRcvdTS() {
       return RcvdTS;
     }
 
@@ -959,7 +959,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'RcvdTS'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setRcvdTS(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setRcvdTS(java.lang.String value) {
       validate(fields()[8], value);
       this.RcvdTS = value;
       fieldSetFlags()[8] = true;
@@ -992,7 +992,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Domain name
       * @return The value.
       */
-    public java.lang.CharSequence getDomainName() {
+    public java.lang.String getDomainName() {
       return DomainName;
     }
 
@@ -1003,7 +1003,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'DomainName'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setDomainName(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setDomainName(java.lang.String value) {
       validate(fields()[9], value);
       this.DomainName = value;
       fieldSetFlags()[9] = true;
@@ -1036,7 +1036,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * Domain type
       * @return The value.
       */
-    public java.lang.CharSequence getDomainType() {
+    public java.lang.String getDomainType() {
       return DomainType;
     }
 
@@ -1047,7 +1047,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'DomainType'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Header.Builder setDomainType(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Header.Builder setDomainType(java.lang.String value) {
       validate(fields()[10], value);
       this.DomainType = value;
       fieldSetFlags()[10] = true;
@@ -1080,8 +1080,8 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
     public Header build() {
       try {
         Header record = new Header();
-        record.ComponentName = fieldSetFlags()[0] ? this.ComponentName : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.UUID = fieldSetFlags()[1] ? this.UUID : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.ComponentName = fieldSetFlags()[0] ? this.ComponentName : (java.lang.String) defaultValue(fields()[0]);
+        record.UUID = fieldSetFlags()[1] ? this.UUID : (java.lang.String) defaultValue(fields()[1]);
         if (EventInfoBuilder != null) {
           try {
             record.EventInfo = this.EventInfoBuilder.build();
@@ -1092,14 +1092,14 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
         } else {
           record.EventInfo = fieldSetFlags()[2] ? this.EventInfo : (com.anz.fastpayment.inward.avro.EventInfo) defaultValue(fields()[2]);
         }
-        record.ReplyToQueue = fieldSetFlags()[3] ? this.ReplyToQueue : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.ReqMap = fieldSetFlags()[4] ? this.ReqMap : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.MUID = fieldSetFlags()[5] ? this.MUID : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.Channel = fieldSetFlags()[6] ? this.Channel : (java.lang.CharSequence) defaultValue(fields()[6]);
-        record.Direction = fieldSetFlags()[7] ? this.Direction : (java.lang.CharSequence) defaultValue(fields()[7]);
-        record.RcvdTS = fieldSetFlags()[8] ? this.RcvdTS : (java.lang.CharSequence) defaultValue(fields()[8]);
-        record.DomainName = fieldSetFlags()[9] ? this.DomainName : (java.lang.CharSequence) defaultValue(fields()[9]);
-        record.DomainType = fieldSetFlags()[10] ? this.DomainType : (java.lang.CharSequence) defaultValue(fields()[10]);
+        record.ReplyToQueue = fieldSetFlags()[3] ? this.ReplyToQueue : (java.lang.String) defaultValue(fields()[3]);
+        record.ReqMap = fieldSetFlags()[4] ? this.ReqMap : (java.lang.String) defaultValue(fields()[4]);
+        record.MUID = fieldSetFlags()[5] ? this.MUID : (java.lang.String) defaultValue(fields()[5]);
+        record.Channel = fieldSetFlags()[6] ? this.Channel : (java.lang.String) defaultValue(fields()[6]);
+        record.Direction = fieldSetFlags()[7] ? this.Direction : (java.lang.String) defaultValue(fields()[7]);
+        record.RcvdTS = fieldSetFlags()[8] ? this.RcvdTS : (java.lang.String) defaultValue(fields()[8]);
+        record.DomainName = fieldSetFlags()[9] ? this.DomainName : (java.lang.String) defaultValue(fields()[9]);
+        record.DomainType = fieldSetFlags()[10] ? this.DomainType : (java.lang.String) defaultValue(fields()[10]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1167,45 +1167,45 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.ComponentName = in.readString(this.ComponentName instanceof Utf8 ? (Utf8)this.ComponentName : null);
+      this.ComponentName = in.readString();
 
-      this.UUID = in.readString(this.UUID instanceof Utf8 ? (Utf8)this.UUID : null);
+      this.UUID = in.readString();
 
       if (this.EventInfo == null) {
         this.EventInfo = new com.anz.fastpayment.inward.avro.EventInfo();
       }
       this.EventInfo.customDecode(in);
 
-      this.ReplyToQueue = in.readString(this.ReplyToQueue instanceof Utf8 ? (Utf8)this.ReplyToQueue : null);
+      this.ReplyToQueue = in.readString();
 
       if (in.readIndex() != 1) {
         in.readNull();
         this.ReqMap = null;
       } else {
-        this.ReqMap = in.readString(this.ReqMap instanceof Utf8 ? (Utf8)this.ReqMap : null);
+        this.ReqMap = in.readString();
       }
 
-      this.MUID = in.readString(this.MUID instanceof Utf8 ? (Utf8)this.MUID : null);
+      this.MUID = in.readString();
 
-      this.Channel = in.readString(this.Channel instanceof Utf8 ? (Utf8)this.Channel : null);
+      this.Channel = in.readString();
 
-      this.Direction = in.readString(this.Direction instanceof Utf8 ? (Utf8)this.Direction : null);
+      this.Direction = in.readString();
 
-      this.RcvdTS = in.readString(this.RcvdTS instanceof Utf8 ? (Utf8)this.RcvdTS : null);
+      this.RcvdTS = in.readString();
 
-      this.DomainName = in.readString(this.DomainName instanceof Utf8 ? (Utf8)this.DomainName : null);
+      this.DomainName = in.readString();
 
-      this.DomainType = in.readString(this.DomainType instanceof Utf8 ? (Utf8)this.DomainType : null);
+      this.DomainType = in.readString();
 
     } else {
       for (int i = 0; i < 11; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.ComponentName = in.readString(this.ComponentName instanceof Utf8 ? (Utf8)this.ComponentName : null);
+          this.ComponentName = in.readString();
           break;
 
         case 1:
-          this.UUID = in.readString(this.UUID instanceof Utf8 ? (Utf8)this.UUID : null);
+          this.UUID = in.readString();
           break;
 
         case 2:
@@ -1216,7 +1216,7 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
           break;
 
         case 3:
-          this.ReplyToQueue = in.readString(this.ReplyToQueue instanceof Utf8 ? (Utf8)this.ReplyToQueue : null);
+          this.ReplyToQueue = in.readString();
           break;
 
         case 4:
@@ -1224,32 +1224,32 @@ public class Header extends org.apache.avro.specific.SpecificRecordBase implemen
             in.readNull();
             this.ReqMap = null;
           } else {
-            this.ReqMap = in.readString(this.ReqMap instanceof Utf8 ? (Utf8)this.ReqMap : null);
+            this.ReqMap = in.readString();
           }
           break;
 
         case 5:
-          this.MUID = in.readString(this.MUID instanceof Utf8 ? (Utf8)this.MUID : null);
+          this.MUID = in.readString();
           break;
 
         case 6:
-          this.Channel = in.readString(this.Channel instanceof Utf8 ? (Utf8)this.Channel : null);
+          this.Channel = in.readString();
           break;
 
         case 7:
-          this.Direction = in.readString(this.Direction instanceof Utf8 ? (Utf8)this.Direction : null);
+          this.Direction = in.readString();
           break;
 
         case 8:
-          this.RcvdTS = in.readString(this.RcvdTS instanceof Utf8 ? (Utf8)this.RcvdTS : null);
+          this.RcvdTS = in.readString();
           break;
 
         case 9:
-          this.DomainName = in.readString(this.DomainName instanceof Utf8 ? (Utf8)this.DomainName : null);
+          this.DomainName = in.readString();
           break;
 
         case 10:
-          this.DomainType = in.readString(this.DomainType instanceof Utf8 ? (Utf8)this.DomainType : null);
+          this.DomainType = in.readString();
           break;
 
         default:

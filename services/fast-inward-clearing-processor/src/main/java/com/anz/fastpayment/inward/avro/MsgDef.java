@@ -17,7 +17,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = -2887230219031772570L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgDef\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MsgType\",\"type\":\"string\",\"doc\":\"Message type\"},{\"name\":\"Schema\",\"type\":\"string\",\"doc\":\"Schema\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgDef\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"MsgType\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message type\"},{\"name\":\"Schema\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Schema\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,9 +74,9 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** Message type */
-  private java.lang.CharSequence MsgType;
+  private java.lang.String MsgType;
   /** Schema */
-  private java.lang.CharSequence Schema;
+  private java.lang.String Schema;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -90,7 +90,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param MsgType Message type
    * @param Schema Schema
    */
-  public MsgDef(java.lang.CharSequence MsgType, java.lang.CharSequence Schema) {
+  public MsgDef(java.lang.String MsgType, java.lang.String Schema) {
     this.MsgType = MsgType;
     this.Schema = Schema;
   }
@@ -116,8 +116,8 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: MsgType = (java.lang.CharSequence)value$; break;
-    case 1: Schema = (java.lang.CharSequence)value$; break;
+    case 0: MsgType = value$ != null ? value$.toString() : null; break;
+    case 1: Schema = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -126,7 +126,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'MsgType' field.
    * @return Message type
    */
-  public java.lang.CharSequence getMsgType() {
+  public java.lang.String getMsgType() {
     return MsgType;
   }
 
@@ -136,7 +136,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
    * Message type
    * @param value the value to set.
    */
-  public void setMsgType(java.lang.CharSequence value) {
+  public void setMsgType(java.lang.String value) {
     this.MsgType = value;
   }
 
@@ -144,7 +144,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Schema' field.
    * @return Schema
    */
-  public java.lang.CharSequence getSchema$() {
+  public java.lang.String getSchema$() {
     return Schema;
   }
 
@@ -154,7 +154,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
    * Schema
    * @param value the value to set.
    */
-  public void setSchema$(java.lang.CharSequence value) {
+  public void setSchema$(java.lang.String value) {
     this.Schema = value;
   }
 
@@ -200,9 +200,9 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<MsgDef> {
 
     /** Message type */
-    private java.lang.CharSequence MsgType;
+    private java.lang.String MsgType;
     /** Schema */
-    private java.lang.CharSequence Schema;
+    private java.lang.String Schema;
 
     /** Creates a new Builder */
     private Builder() {
@@ -246,7 +246,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
       * Message type
       * @return The value.
       */
-    public java.lang.CharSequence getMsgType() {
+    public java.lang.String getMsgType() {
       return MsgType;
     }
 
@@ -257,7 +257,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'MsgType'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgDef.Builder setMsgType(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgDef.Builder setMsgType(java.lang.String value) {
       validate(fields()[0], value);
       this.MsgType = value;
       fieldSetFlags()[0] = true;
@@ -290,7 +290,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
       * Schema
       * @return The value.
       */
-    public java.lang.CharSequence getSchema$() {
+    public java.lang.String getSchema$() {
       return Schema;
     }
 
@@ -301,7 +301,7 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Schema'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgDef.Builder setSchema$(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgDef.Builder setSchema$(java.lang.String value) {
       validate(fields()[1], value);
       this.Schema = value;
       fieldSetFlags()[1] = true;
@@ -334,8 +334,8 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
     public MsgDef build() {
       try {
         MsgDef record = new MsgDef();
-        record.MsgType = fieldSetFlags()[0] ? this.MsgType : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.Schema = fieldSetFlags()[1] ? this.Schema : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.MsgType = fieldSetFlags()[0] ? this.MsgType : (java.lang.String) defaultValue(fields()[0]);
+        record.Schema = fieldSetFlags()[1] ? this.Schema : (java.lang.String) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -379,19 +379,19 @@ public class MsgDef extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.MsgType = in.readString(this.MsgType instanceof Utf8 ? (Utf8)this.MsgType : null);
+      this.MsgType = in.readString();
 
-      this.Schema = in.readString(this.Schema instanceof Utf8 ? (Utf8)this.Schema : null);
+      this.Schema = in.readString();
 
     } else {
       for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.MsgType = in.readString(this.MsgType instanceof Utf8 ? (Utf8)this.MsgType : null);
+          this.MsgType = in.readString();
           break;
 
         case 1:
-          this.Schema = in.readString(this.Schema instanceof Utf8 ? (Utf8)this.Schema : null);
+          this.Schema = in.readString();
           break;
 
         default:

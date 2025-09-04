@@ -17,7 +17,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
   private static final long serialVersionUID = 7332221978937626258L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtId\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"InstrId\",\"type\":\"string\",\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":\"string\",\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":\"string\",\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":\"string\",\"doc\":\"Clearing system reference\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PmtId\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"InstrId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing system reference\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,13 +74,13 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   /** Instruction identifier */
-  private java.lang.CharSequence InstrId;
+  private java.lang.String InstrId;
   /** Transaction identifier */
-  private java.lang.CharSequence TxId;
+  private java.lang.String TxId;
   /** End to end identifier */
-  private java.lang.CharSequence EndToEndId;
+  private java.lang.String EndToEndId;
   /** Clearing system reference */
-  private java.lang.CharSequence ClrSysRef;
+  private java.lang.String ClrSysRef;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -96,7 +96,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * @param EndToEndId End to end identifier
    * @param ClrSysRef Clearing system reference
    */
-  public PmtId(java.lang.CharSequence InstrId, java.lang.CharSequence TxId, java.lang.CharSequence EndToEndId, java.lang.CharSequence ClrSysRef) {
+  public PmtId(java.lang.String InstrId, java.lang.String TxId, java.lang.String EndToEndId, java.lang.String ClrSysRef) {
     this.InstrId = InstrId;
     this.TxId = TxId;
     this.EndToEndId = EndToEndId;
@@ -126,10 +126,10 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: InstrId = (java.lang.CharSequence)value$; break;
-    case 1: TxId = (java.lang.CharSequence)value$; break;
-    case 2: EndToEndId = (java.lang.CharSequence)value$; break;
-    case 3: ClrSysRef = (java.lang.CharSequence)value$; break;
+    case 0: InstrId = value$ != null ? value$.toString() : null; break;
+    case 1: TxId = value$ != null ? value$.toString() : null; break;
+    case 2: EndToEndId = value$ != null ? value$.toString() : null; break;
+    case 3: ClrSysRef = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -138,7 +138,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'InstrId' field.
    * @return Instruction identifier
    */
-  public java.lang.CharSequence getInstrId() {
+  public java.lang.String getInstrId() {
     return InstrId;
   }
 
@@ -148,7 +148,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Instruction identifier
    * @param value the value to set.
    */
-  public void setInstrId(java.lang.CharSequence value) {
+  public void setInstrId(java.lang.String value) {
     this.InstrId = value;
   }
 
@@ -156,7 +156,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'TxId' field.
    * @return Transaction identifier
    */
-  public java.lang.CharSequence getTxId() {
+  public java.lang.String getTxId() {
     return TxId;
   }
 
@@ -166,7 +166,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Transaction identifier
    * @param value the value to set.
    */
-  public void setTxId(java.lang.CharSequence value) {
+  public void setTxId(java.lang.String value) {
     this.TxId = value;
   }
 
@@ -174,7 +174,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'EndToEndId' field.
    * @return End to end identifier
    */
-  public java.lang.CharSequence getEndToEndId() {
+  public java.lang.String getEndToEndId() {
     return EndToEndId;
   }
 
@@ -184,7 +184,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * End to end identifier
    * @param value the value to set.
    */
-  public void setEndToEndId(java.lang.CharSequence value) {
+  public void setEndToEndId(java.lang.String value) {
     this.EndToEndId = value;
   }
 
@@ -192,7 +192,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'ClrSysRef' field.
    * @return Clearing system reference
    */
-  public java.lang.CharSequence getClrSysRef() {
+  public java.lang.String getClrSysRef() {
     return ClrSysRef;
   }
 
@@ -202,7 +202,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
    * Clearing system reference
    * @param value the value to set.
    */
-  public void setClrSysRef(java.lang.CharSequence value) {
+  public void setClrSysRef(java.lang.String value) {
     this.ClrSysRef = value;
   }
 
@@ -248,13 +248,13 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
     implements org.apache.avro.data.RecordBuilder<PmtId> {
 
     /** Instruction identifier */
-    private java.lang.CharSequence InstrId;
+    private java.lang.String InstrId;
     /** Transaction identifier */
-    private java.lang.CharSequence TxId;
+    private java.lang.String TxId;
     /** End to end identifier */
-    private java.lang.CharSequence EndToEndId;
+    private java.lang.String EndToEndId;
     /** Clearing system reference */
-    private java.lang.CharSequence ClrSysRef;
+    private java.lang.String ClrSysRef;
 
     /** Creates a new Builder */
     private Builder() {
@@ -314,7 +314,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * Instruction identifier
       * @return The value.
       */
-    public java.lang.CharSequence getInstrId() {
+    public java.lang.String getInstrId() {
       return InstrId;
     }
 
@@ -325,7 +325,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'InstrId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtId.Builder setInstrId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtId.Builder setInstrId(java.lang.String value) {
       validate(fields()[0], value);
       this.InstrId = value;
       fieldSetFlags()[0] = true;
@@ -358,7 +358,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * Transaction identifier
       * @return The value.
       */
-    public java.lang.CharSequence getTxId() {
+    public java.lang.String getTxId() {
       return TxId;
     }
 
@@ -369,7 +369,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'TxId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtId.Builder setTxId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtId.Builder setTxId(java.lang.String value) {
       validate(fields()[1], value);
       this.TxId = value;
       fieldSetFlags()[1] = true;
@@ -402,7 +402,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * End to end identifier
       * @return The value.
       */
-    public java.lang.CharSequence getEndToEndId() {
+    public java.lang.String getEndToEndId() {
       return EndToEndId;
     }
 
@@ -413,7 +413,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'EndToEndId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtId.Builder setEndToEndId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtId.Builder setEndToEndId(java.lang.String value) {
       validate(fields()[2], value);
       this.EndToEndId = value;
       fieldSetFlags()[2] = true;
@@ -446,7 +446,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * Clearing system reference
       * @return The value.
       */
-    public java.lang.CharSequence getClrSysRef() {
+    public java.lang.String getClrSysRef() {
       return ClrSysRef;
     }
 
@@ -457,7 +457,7 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'ClrSysRef'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.PmtId.Builder setClrSysRef(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.PmtId.Builder setClrSysRef(java.lang.String value) {
       validate(fields()[3], value);
       this.ClrSysRef = value;
       fieldSetFlags()[3] = true;
@@ -490,10 +490,10 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
     public PmtId build() {
       try {
         PmtId record = new PmtId();
-        record.InstrId = fieldSetFlags()[0] ? this.InstrId : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.TxId = fieldSetFlags()[1] ? this.TxId : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.EndToEndId = fieldSetFlags()[2] ? this.EndToEndId : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.ClrSysRef = fieldSetFlags()[3] ? this.ClrSysRef : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.InstrId = fieldSetFlags()[0] ? this.InstrId : (java.lang.String) defaultValue(fields()[0]);
+        record.TxId = fieldSetFlags()[1] ? this.TxId : (java.lang.String) defaultValue(fields()[1]);
+        record.EndToEndId = fieldSetFlags()[2] ? this.EndToEndId : (java.lang.String) defaultValue(fields()[2]);
+        record.ClrSysRef = fieldSetFlags()[3] ? this.ClrSysRef : (java.lang.String) defaultValue(fields()[3]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -541,31 +541,31 @@ public class PmtId extends org.apache.avro.specific.SpecificRecordBase implement
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.InstrId = in.readString(this.InstrId instanceof Utf8 ? (Utf8)this.InstrId : null);
+      this.InstrId = in.readString();
 
-      this.TxId = in.readString(this.TxId instanceof Utf8 ? (Utf8)this.TxId : null);
+      this.TxId = in.readString();
 
-      this.EndToEndId = in.readString(this.EndToEndId instanceof Utf8 ? (Utf8)this.EndToEndId : null);
+      this.EndToEndId = in.readString();
 
-      this.ClrSysRef = in.readString(this.ClrSysRef instanceof Utf8 ? (Utf8)this.ClrSysRef : null);
+      this.ClrSysRef = in.readString();
 
     } else {
       for (int i = 0; i < 4; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.InstrId = in.readString(this.InstrId instanceof Utf8 ? (Utf8)this.InstrId : null);
+          this.InstrId = in.readString();
           break;
 
         case 1:
-          this.TxId = in.readString(this.TxId instanceof Utf8 ? (Utf8)this.TxId : null);
+          this.TxId = in.readString();
           break;
 
         case 2:
-          this.EndToEndId = in.readString(this.EndToEndId instanceof Utf8 ? (Utf8)this.EndToEndId : null);
+          this.EndToEndId = in.readString();
           break;
 
         case 3:
-          this.ClrSysRef = in.readString(this.ClrSysRef instanceof Utf8 ? (Utf8)this.ClrSysRef : null);
+          this.ClrSysRef = in.readString();
           break;
 
         default:

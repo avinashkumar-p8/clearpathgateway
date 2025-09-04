@@ -17,7 +17,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
   private static final long serialVersionUID = 6952909557189811086L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Purp\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Cd\",\"type\":\"string\",\"doc\":\"Code\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Purp\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Cd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Code\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
   }
 
   /** Code */
-  private java.lang.CharSequence Cd;
+  private java.lang.String Cd;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
    * All-args constructor.
    * @param Cd Code
    */
-  public Purp(java.lang.CharSequence Cd) {
+  public Purp(java.lang.String Cd) {
     this.Cd = Cd;
   }
 
@@ -111,7 +111,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: Cd = (java.lang.CharSequence)value$; break;
+    case 0: Cd = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
    * Gets the value of the 'Cd' field.
    * @return Code
    */
-  public java.lang.CharSequence getCd() {
+  public java.lang.String getCd() {
     return Cd;
   }
 
@@ -130,7 +130,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
    * Code
    * @param value the value to set.
    */
-  public void setCd(java.lang.CharSequence value) {
+  public void setCd(java.lang.String value) {
     this.Cd = value;
   }
 
@@ -176,7 +176,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
     implements org.apache.avro.data.RecordBuilder<Purp> {
 
     /** Code */
-    private java.lang.CharSequence Cd;
+    private java.lang.String Cd;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
       * Code
       * @return The value.
       */
-    public java.lang.CharSequence getCd() {
+    public java.lang.String getCd() {
       return Cd;
     }
 
@@ -223,7 +223,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'Cd'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Purp.Builder setCd(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Purp.Builder setCd(java.lang.String value) {
       validate(fields()[0], value);
       this.Cd = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
     public Purp build() {
       try {
         Purp record = new Purp();
-        record.Cd = fieldSetFlags()[0] ? this.Cd : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.Cd = fieldSetFlags()[0] ? this.Cd : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class Purp extends org.apache.avro.specific.SpecificRecordBase implements
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.Cd = in.readString(this.Cd instanceof Utf8 ? (Utf8)this.Cd : null);
+      this.Cd = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.Cd = in.readString(this.Cd instanceof Utf8 ? (Utf8)this.Cd : null);
+          this.Cd = in.readString();
           break;
 
         default:

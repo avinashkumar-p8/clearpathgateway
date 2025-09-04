@@ -1,11 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
-  fullyParallel: true,
+  testDir: './tests/e2e', // Only run E2E tests
+  fullyParallel: false, // Disable parallel execution for Kafka tests
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1, // Force single worker for test isolation
   reporter: [
     ['html'],
     ['json', { outputFile: 'test-results/results.json' }],
@@ -19,20 +19,12 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'e2e-tests',
       use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
     },
   ],
   webServer: {
-    command: 'cd ../services/fast-inward-clearing-processor && mvn spring-boot:run',
+    command: 'cd .. && mvn spring-boot:run',
     url: 'http://localhost:8080/api/v1/health/status',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,

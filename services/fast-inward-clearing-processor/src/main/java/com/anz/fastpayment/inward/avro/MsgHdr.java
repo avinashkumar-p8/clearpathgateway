@@ -17,7 +17,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = -7242426940069271363L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgHdr\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"ClientDt\",\"type\":\"string\",\"doc\":\"Client date\"},{\"name\":\"ClientName\",\"type\":\"string\",\"doc\":\"Client name\"},{\"name\":\"PartyId\",\"type\":\"string\",\"doc\":\"Party identifier\"},{\"name\":\"Version\",\"type\":\"string\",\"doc\":\"Version\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MsgHdr\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"ClientDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client date\"},{\"name\":\"ClientName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client name\"},{\"name\":\"PartyId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Party identifier\"},{\"name\":\"Version\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Version\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,13 +74,13 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** Client date */
-  private java.lang.CharSequence ClientDt;
+  private java.lang.String ClientDt;
   /** Client name */
-  private java.lang.CharSequence ClientName;
+  private java.lang.String ClientName;
   /** Party identifier */
-  private java.lang.CharSequence PartyId;
+  private java.lang.String PartyId;
   /** Version */
-  private java.lang.CharSequence Version;
+  private java.lang.String Version;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -96,7 +96,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param PartyId Party identifier
    * @param Version Version
    */
-  public MsgHdr(java.lang.CharSequence ClientDt, java.lang.CharSequence ClientName, java.lang.CharSequence PartyId, java.lang.CharSequence Version) {
+  public MsgHdr(java.lang.String ClientDt, java.lang.String ClientName, java.lang.String PartyId, java.lang.String Version) {
     this.ClientDt = ClientDt;
     this.ClientName = ClientName;
     this.PartyId = PartyId;
@@ -126,10 +126,10 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: ClientDt = (java.lang.CharSequence)value$; break;
-    case 1: ClientName = (java.lang.CharSequence)value$; break;
-    case 2: PartyId = (java.lang.CharSequence)value$; break;
-    case 3: Version = (java.lang.CharSequence)value$; break;
+    case 0: ClientDt = value$ != null ? value$.toString() : null; break;
+    case 1: ClientName = value$ != null ? value$.toString() : null; break;
+    case 2: PartyId = value$ != null ? value$.toString() : null; break;
+    case 3: Version = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -138,7 +138,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ClientDt' field.
    * @return Client date
    */
-  public java.lang.CharSequence getClientDt() {
+  public java.lang.String getClientDt() {
     return ClientDt;
   }
 
@@ -148,7 +148,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Client date
    * @param value the value to set.
    */
-  public void setClientDt(java.lang.CharSequence value) {
+  public void setClientDt(java.lang.String value) {
     this.ClientDt = value;
   }
 
@@ -156,7 +156,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'ClientName' field.
    * @return Client name
    */
-  public java.lang.CharSequence getClientName() {
+  public java.lang.String getClientName() {
     return ClientName;
   }
 
@@ -166,7 +166,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Client name
    * @param value the value to set.
    */
-  public void setClientName(java.lang.CharSequence value) {
+  public void setClientName(java.lang.String value) {
     this.ClientName = value;
   }
 
@@ -174,7 +174,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'PartyId' field.
    * @return Party identifier
    */
-  public java.lang.CharSequence getPartyId() {
+  public java.lang.String getPartyId() {
     return PartyId;
   }
 
@@ -184,7 +184,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Party identifier
    * @param value the value to set.
    */
-  public void setPartyId(java.lang.CharSequence value) {
+  public void setPartyId(java.lang.String value) {
     this.PartyId = value;
   }
 
@@ -192,7 +192,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Version' field.
    * @return Version
    */
-  public java.lang.CharSequence getVersion() {
+  public java.lang.String getVersion() {
     return Version;
   }
 
@@ -202,7 +202,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
    * Version
    * @param value the value to set.
    */
-  public void setVersion(java.lang.CharSequence value) {
+  public void setVersion(java.lang.String value) {
     this.Version = value;
   }
 
@@ -248,13 +248,13 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<MsgHdr> {
 
     /** Client date */
-    private java.lang.CharSequence ClientDt;
+    private java.lang.String ClientDt;
     /** Client name */
-    private java.lang.CharSequence ClientName;
+    private java.lang.String ClientName;
     /** Party identifier */
-    private java.lang.CharSequence PartyId;
+    private java.lang.String PartyId;
     /** Version */
-    private java.lang.CharSequence Version;
+    private java.lang.String Version;
 
     /** Creates a new Builder */
     private Builder() {
@@ -314,7 +314,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Client date
       * @return The value.
       */
-    public java.lang.CharSequence getClientDt() {
+    public java.lang.String getClientDt() {
       return ClientDt;
     }
 
@@ -325,7 +325,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ClientDt'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setClientDt(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setClientDt(java.lang.String value) {
       validate(fields()[0], value);
       this.ClientDt = value;
       fieldSetFlags()[0] = true;
@@ -358,7 +358,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Client name
       * @return The value.
       */
-    public java.lang.CharSequence getClientName() {
+    public java.lang.String getClientName() {
       return ClientName;
     }
 
@@ -369,7 +369,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'ClientName'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setClientName(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setClientName(java.lang.String value) {
       validate(fields()[1], value);
       this.ClientName = value;
       fieldSetFlags()[1] = true;
@@ -402,7 +402,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Party identifier
       * @return The value.
       */
-    public java.lang.CharSequence getPartyId() {
+    public java.lang.String getPartyId() {
       return PartyId;
     }
 
@@ -413,7 +413,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'PartyId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setPartyId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setPartyId(java.lang.String value) {
       validate(fields()[2], value);
       this.PartyId = value;
       fieldSetFlags()[2] = true;
@@ -446,7 +446,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * Version
       * @return The value.
       */
-    public java.lang.CharSequence getVersion() {
+    public java.lang.String getVersion() {
       return Version;
     }
 
@@ -457,7 +457,7 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Version'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setVersion(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.MsgHdr.Builder setVersion(java.lang.String value) {
       validate(fields()[3], value);
       this.Version = value;
       fieldSetFlags()[3] = true;
@@ -490,10 +490,10 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
     public MsgHdr build() {
       try {
         MsgHdr record = new MsgHdr();
-        record.ClientDt = fieldSetFlags()[0] ? this.ClientDt : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.ClientName = fieldSetFlags()[1] ? this.ClientName : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.PartyId = fieldSetFlags()[2] ? this.PartyId : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.Version = fieldSetFlags()[3] ? this.Version : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.ClientDt = fieldSetFlags()[0] ? this.ClientDt : (java.lang.String) defaultValue(fields()[0]);
+        record.ClientName = fieldSetFlags()[1] ? this.ClientName : (java.lang.String) defaultValue(fields()[1]);
+        record.PartyId = fieldSetFlags()[2] ? this.PartyId : (java.lang.String) defaultValue(fields()[2]);
+        record.Version = fieldSetFlags()[3] ? this.Version : (java.lang.String) defaultValue(fields()[3]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -541,31 +541,31 @@ public class MsgHdr extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.ClientDt = in.readString(this.ClientDt instanceof Utf8 ? (Utf8)this.ClientDt : null);
+      this.ClientDt = in.readString();
 
-      this.ClientName = in.readString(this.ClientName instanceof Utf8 ? (Utf8)this.ClientName : null);
+      this.ClientName = in.readString();
 
-      this.PartyId = in.readString(this.PartyId instanceof Utf8 ? (Utf8)this.PartyId : null);
+      this.PartyId = in.readString();
 
-      this.Version = in.readString(this.Version instanceof Utf8 ? (Utf8)this.Version : null);
+      this.Version = in.readString();
 
     } else {
       for (int i = 0; i < 4; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.ClientDt = in.readString(this.ClientDt instanceof Utf8 ? (Utf8)this.ClientDt : null);
+          this.ClientDt = in.readString();
           break;
 
         case 1:
-          this.ClientName = in.readString(this.ClientName instanceof Utf8 ? (Utf8)this.ClientName : null);
+          this.ClientName = in.readString();
           break;
 
         case 2:
-          this.PartyId = in.readString(this.PartyId instanceof Utf8 ? (Utf8)this.PartyId : null);
+          this.PartyId = in.readString();
           break;
 
         case 3:
-          this.Version = in.readString(this.Version instanceof Utf8 ? (Utf8)this.Version : null);
+          this.Version = in.readString();
           break;
 
         default:

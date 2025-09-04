@@ -58,6 +58,30 @@ export class HttpTestHelper {
   async getServiceInfo(): Promise<AxiosResponse> {
     return this.get('/api/v1/health/info');
   }
+
+  // Alias for healthCheck to match test expectations
+  async getHealthStatus(): Promise<AxiosResponse> {
+    return this.healthCheck();
+  }
+
+  // Additional health-related methods
+  async getHealthDetails(): Promise<AxiosResponse> {
+    return this.get('/actuator/health');
+  }
+
+  async getMetrics(): Promise<AxiosResponse> {
+    return this.get('/actuator/metrics');
+  }
+
+  async getInfo(): Promise<AxiosResponse> {
+    return this.get('/actuator/info');
+  }
+
+  // Disconnect method for cleanup (no-op for HTTP client)
+  async disconnect(): Promise<void> {
+    // HTTP client doesn't need explicit disconnection
+    // This method exists for consistency with KafkaTestHelper
+  }
 }
 
 export const httpHelper = new HttpTestHelper();

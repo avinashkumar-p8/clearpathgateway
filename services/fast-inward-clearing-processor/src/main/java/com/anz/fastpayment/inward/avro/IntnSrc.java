@@ -17,7 +17,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
   private static final long serialVersionUID = 4189738821822063853L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"IntnSrc\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"type\",\"type\":\"string\",\"doc\":\"Type\"},{\"name\":\"value\",\"type\":\"string\",\"doc\":\"Value\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"IntnSrc\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Type\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Value\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,9 +74,9 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /** Type */
-  private java.lang.CharSequence type;
+  private java.lang.String type;
   /** Value */
-  private java.lang.CharSequence value;
+  private java.lang.String value;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -90,7 +90,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param type Type
    * @param value Value
    */
-  public IntnSrc(java.lang.CharSequence type, java.lang.CharSequence value) {
+  public IntnSrc(java.lang.String type, java.lang.String value) {
     this.type = type;
     this.value = value;
   }
@@ -116,8 +116,8 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: type = (java.lang.CharSequence)value$; break;
-    case 1: value = (java.lang.CharSequence)value$; break;
+    case 0: type = value$ != null ? value$.toString() : null; break;
+    case 1: value = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -126,7 +126,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'type' field.
    * @return Type
    */
-  public java.lang.CharSequence getType() {
+  public java.lang.String getType() {
     return type;
   }
 
@@ -136,7 +136,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
    * Type
    * @param value the value to set.
    */
-  public void setType(java.lang.CharSequence value) {
+  public void setType(java.lang.String value) {
     this.type = value;
   }
 
@@ -144,7 +144,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'value' field.
    * @return Value
    */
-  public java.lang.CharSequence getValue() {
+  public java.lang.String getValue() {
     return value;
   }
 
@@ -154,7 +154,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
    * Value
    * @param value the value to set.
    */
-  public void setValue(java.lang.CharSequence value) {
+  public void setValue(java.lang.String value) {
     this.value = value;
   }
 
@@ -200,9 +200,9 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
     implements org.apache.avro.data.RecordBuilder<IntnSrc> {
 
     /** Type */
-    private java.lang.CharSequence type;
+    private java.lang.String type;
     /** Value */
-    private java.lang.CharSequence value;
+    private java.lang.String value;
 
     /** Creates a new Builder */
     private Builder() {
@@ -246,7 +246,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
       * Type
       * @return The value.
       */
-    public java.lang.CharSequence getType() {
+    public java.lang.String getType() {
       return type;
     }
 
@@ -257,7 +257,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'type'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.IntnSrc.Builder setType(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.IntnSrc.Builder setType(java.lang.String value) {
       validate(fields()[0], value);
       this.type = value;
       fieldSetFlags()[0] = true;
@@ -290,7 +290,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
       * Value
       * @return The value.
       */
-    public java.lang.CharSequence getValue() {
+    public java.lang.String getValue() {
       return value;
     }
 
@@ -301,7 +301,7 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'value'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.IntnSrc.Builder setValue(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.IntnSrc.Builder setValue(java.lang.String value) {
       validate(fields()[1], value);
       this.value = value;
       fieldSetFlags()[1] = true;
@@ -334,8 +334,8 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
     public IntnSrc build() {
       try {
         IntnSrc record = new IntnSrc();
-        record.type = fieldSetFlags()[0] ? this.type : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.value = fieldSetFlags()[1] ? this.value : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.type = fieldSetFlags()[0] ? this.type : (java.lang.String) defaultValue(fields()[0]);
+        record.value = fieldSetFlags()[1] ? this.value : (java.lang.String) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -379,19 +379,19 @@ public class IntnSrc extends org.apache.avro.specific.SpecificRecordBase impleme
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.type = in.readString(this.type instanceof Utf8 ? (Utf8)this.type : null);
+      this.type = in.readString();
 
-      this.value = in.readString(this.value instanceof Utf8 ? (Utf8)this.value : null);
+      this.value = in.readString();
 
     } else {
       for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.type = in.readString(this.type instanceof Utf8 ? (Utf8)this.type : null);
+          this.type = in.readString();
           break;
 
         case 1:
-          this.value = in.readString(this.value instanceof Utf8 ? (Utf8)this.value : null);
+          this.value = in.readString();
           break;
 
         default:

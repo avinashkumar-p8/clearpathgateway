@@ -2,6 +2,8 @@ package com.anz.fastpayment.inward.handler.impl;
 
 import com.anz.fastpayment.inward.handler.*;
 import com.anz.fastpayment.inward.model.*;
+import com.anz.fastpayment.inward.metrics.ProcessingTimeMetrics;
+import com.anz.fastpayment.inward.metrics.CircuitBreakerMetrics;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -26,6 +28,8 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
     private final MessageParsingHandler parsingHandler;
     private final ValidationHandler validationHandler;
     private final BusinessProcessingHandler businessHandler;
+    private final ProcessingTimeMetrics processingTimeMetrics;
+    private final CircuitBreakerMetrics circuitBreakerMetrics;
     
     // Metrics counters
     private final AtomicLong totalMessagesProcessed = new AtomicLong(0);
@@ -39,11 +43,15 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
     public TransactionProcessingHandlerImpl(IdempotencyHandler idempotencyHandler,
                                           MessageParsingHandler parsingHandler,
                                           ValidationHandler validationHandler,
-                                          BusinessProcessingHandler businessHandler) {
+                                          BusinessProcessingHandler businessHandler,
+                                          ProcessingTimeMetrics processingTimeMetrics,
+                                          CircuitBreakerMetrics circuitBreakerMetrics) {
         this.idempotencyHandler = idempotencyHandler;
         this.parsingHandler = parsingHandler;
         this.validationHandler = validationHandler;
         this.businessHandler = businessHandler;
+        this.processingTimeMetrics = processingTimeMetrics;
+        this.circuitBreakerMetrics = circuitBreakerMetrics;
     }
     
     @Override
@@ -62,10 +70,23 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
         try {
             totalMessagesProcessed.incrementAndGet();
             
+            // Check circuit breaker before processing
+            if (!circuitBreakerMetrics.isOperationAllowed()) {
+                circuitBreakerMetrics.recordRejected();
+                logger.warn("Transaction processing rejected by circuit breaker for: {}", transactionId);
+                return ProcessingResult.systemError(new RuntimeException("Circuit breaker is OPEN"), 
+                                                   System.currentTimeMillis() - startTime);
+            }
+            
             // Step 1: Idempotency Check
+            long idempotencyStartTime = System.currentTimeMillis();
             IdempotencyResult idempotencyResult = idempotencyHandler.checkAndRegister(context);
+            long idempotencyDuration = System.currentTimeMillis() - idempotencyStartTime;
+            processingTimeMetrics.recordIdempotencyTime(idempotencyDuration);
+            
             if (!idempotencyResult.isNewMessage()) {
                 duplicateMessages.incrementAndGet();
+                circuitBreakerMetrics.recordSuccess(); // Duplicate detection is considered success
                 logger.info("Duplicate message detected for transaction: {} - MUID: {}", 
                            transactionId, idempotencyResult.getMuid());
                 return ProcessingResult.duplicate(idempotencyResult.getMuid(), 
@@ -73,9 +94,14 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
             }
             
             // Step 2: Message Parsing & Enrichment
+            long parsingStartTime = System.currentTimeMillis();
             ParsingResult parsingResult = parsingHandler.parseAndEnrich(context);
+            long parsingDuration = System.currentTimeMillis() - parsingStartTime;
+            processingTimeMetrics.recordParsingTime(parsingDuration);
+            
             if (!parsingResult.isSuccess()) {
                 parsingFailures.incrementAndGet();
+                circuitBreakerMetrics.recordFailure();
                 logger.warn("Message parsing failed for transaction: {} - Error: {}", 
                            transactionId, parsingResult.getErrorMessage());
                 return ProcessingResult.parsingFailed(parsingResult.getErrorMessage(), 
@@ -83,38 +109,50 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
             }
             
             // Step 3: Validation
+            long validationStartTime = System.currentTimeMillis();
             com.anz.fastpayment.inward.scheme.validation.model.ValidationResult validationResult = 
                 validationHandler.validate(parsingResult.getMessagePayload(), transactionId);
+            long validationDuration = System.currentTimeMillis() - validationStartTime;
+            processingTimeMetrics.recordValidationTime(validationDuration);
+            
             if (!validationHandler.isValidationSuccessful(validationResult)) {
                 validationFailures.incrementAndGet();
+                circuitBreakerMetrics.recordFailure();
                 List<String> validationErrors = validationHandler.getValidationErrors(validationResult);
                 logger.warn("Validation failed for transaction: {} - Errors: {}", 
                            transactionId, validationErrors);
-                return ProcessingResult.validationFailed(validationErrors, 
-                                                       System.currentTimeMillis() - startTime);
+                
+                // Create failure response with validation errors in Trailer
+                BusinessProcessingResult failureResult = businessHandler.createFailureResponse(
+                    context.getAvroMessage(), transactionId, validationErrors);
+                return ProcessingResult.success(failureResult.getResponseMessage(), 
+                                               System.currentTimeMillis() - startTime);
             }
             
-            // Step 4: Business Processing
-            BusinessProcessingResult businessResult = businessHandler.process(parsingResult.getMessagePayload(), transactionId);
-            if (!businessResult.isSuccess()) {
-                businessProcessingFailures.incrementAndGet();
-                logger.warn("Business processing failed for transaction: {} - Error: {}", 
-                           transactionId, businessResult.getErrorMessage());
-                return ProcessingResult.businessProcessingFailed(businessResult.getErrorMessage(), 
-                                                               System.currentTimeMillis() - startTime);
-            }
+            // Step 4: Create Response (No business processing needed)
+            long responseStartTime = System.currentTimeMillis();
+            BusinessProcessingResult successResult = businessHandler.createSuccessResponse(
+                context.getAvroMessage(), transactionId);
+            long responseDuration = System.currentTimeMillis() - responseStartTime;
+            processingTimeMetrics.recordResponseCreationTime(responseDuration);
             
             // Success - Update idempotency status
             idempotencyHandler.updateProcessingStatus(idempotencyResult.getMuid(), "COMPLETED");
             
             successfulMessages.incrementAndGet();
+            circuitBreakerMetrics.recordSuccess();
             long processingDuration = System.currentTimeMillis() - startTime;
+            processingTimeMetrics.recordOverallProcessingTime(processingDuration);
             
             logger.info("Successfully processed transaction: {} in {}ms", transactionId, processingDuration);
-            return ProcessingResult.success(businessResult.getResponseMessage(), processingDuration);
+            return ProcessingResult.success(successResult.getResponseMessage(), processingDuration);
             
         } catch (Exception e) {
             systemErrors.incrementAndGet();
+            circuitBreakerMetrics.recordFailure();
+            long processingDuration = System.currentTimeMillis() - startTime;
+            processingTimeMetrics.recordOverallProcessingTime(processingDuration);
+            
             logger.error("System error during transaction processing for: {} - Error: {}", 
                         transactionId, e.getMessage(), e);
             
@@ -127,7 +165,7 @@ public class TransactionProcessingHandlerImpl implements TransactionProcessingHa
                            statusUpdateError.getMessage());
             }
             
-            return ProcessingResult.systemError(e, System.currentTimeMillis() - startTime);
+            return ProcessingResult.systemError(e, processingDuration);
         }
     }
     

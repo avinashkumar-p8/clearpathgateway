@@ -1,178 +1,241 @@
 package com.anz.fastpayment.inward.scheme.validation.service;
 
-import com.anz.fastpayment.inward.scheme.validation.exception.ValidationException;
-import com.anz.fastpayment.inward.scheme.validation.repository.CurrencyRepository;
-import com.anz.fastpayment.inward.scheme.validation.repository.CountryRepository;
 import com.anz.fastpayment.inward.scheme.validation.entity.Currency;
 import com.anz.fastpayment.inward.scheme.validation.entity.Country;
+import com.anz.fastpayment.inward.scheme.validation.repository.CurrencyRepository;
+import com.anz.fastpayment.inward.scheme.validation.repository.CountryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Currency and Country Validation Service for Banking Operations
- * Implements database-backed validation with caching for performance
- * Uses Java 21 features for modern, efficient validation
+ * Service for validating currency and country codes against database
+ * Provides business logic for currency and country validation
  */
 @Service
-@Transactional
 public class CurrencyCountryValidationService {
     
     private static final Logger log = LoggerFactory.getLogger(CurrencyCountryValidationService.class);
     
-    private final CurrencyRepository currencyRepository;
-    private final CountryRepository countryRepository;
+    @Autowired
+    private CurrencyRepository currencyRepository;
     
     @Autowired
-    public CurrencyCountryValidationService(CurrencyRepository currencyRepository, 
-                                          CountryRepository countryRepository) {
-        this.currencyRepository = currencyRepository;
-        this.countryRepository = countryRepository;
+    private CountryRepository countryRepository;
+    
+    /**
+     * Validate currency code against database
+     * @param currencyCode The currency code to validate
+     * @return Validation result with details
+     */
+    public CurrencyValidationResult validateCurrency(String currencyCode) {
+        log.debug("Validating currency code: {}", currencyCode);
+        
+        if (currencyCode == null || currencyCode.trim().isEmpty()) {
+            return CurrencyValidationResult.invalid("Currency code cannot be null or empty");
+        }
+        
+        String trimmedCode = currencyCode.trim().toUpperCase();
+        
+        // Check if currency exists in database
+        Optional<Currency> currencyOpt = currencyRepository.findByCode(trimmedCode);
+        if (currencyOpt.isEmpty()) {
+            log.warn("Currency code not found in database: {}", trimmedCode);
+            return CurrencyValidationResult.invalid("Currency code not found: " + trimmedCode);
+        }
+        
+        Currency currency = currencyOpt.get();
+        
+        // Check if currency is active
+        if (!currency.isActive()) {
+            log.warn("Currency code is inactive: {}", trimmedCode);
+            return CurrencyValidationResult.invalid("Currency code is inactive: " + trimmedCode);
+        }
+        
+        log.debug("Currency validation successful: {}", trimmedCode);
+        return CurrencyValidationResult.valid(currency);
+    }
+    
+    /**
+     * Validate country code against database
+     * @param countryCode The country code to validate
+     * @return Validation result with details
+     */
+    public CountryValidationResult validateCountry(String countryCode) {
+        log.debug("Validating country code: {}", countryCode);
+        
+        if (countryCode == null || countryCode.trim().isEmpty()) {
+            return CountryValidationResult.invalid("Country code cannot be null or empty");
+        }
+        
+        String trimmedCode = countryCode.trim().toUpperCase();
+        
+        // Check if country exists in database
+        Optional<Country> countryOpt = countryRepository.findByCode(trimmedCode);
+        if (countryOpt.isEmpty()) {
+            log.warn("Country code not found in database: {}", trimmedCode);
+            return CountryValidationResult.invalid("Country code not found: " + trimmedCode);
+        }
+        
+        Country country = countryOpt.get();
+        
+        // Check if country is active
+        if (!country.isActive()) {
+            log.warn("Country code is inactive: {}", trimmedCode);
+            return CountryValidationResult.invalid("Country code is inactive: " + trimmedCode);
+        }
+        
+        log.debug("Country validation successful: {}", trimmedCode);
+        return CountryValidationResult.valid(country);
     }
     
     /**
      * Validate currency-country combination
-     * Throws ValidationException for invalid combinations
+     * @param currencyCode The currency code
+     * @param countryCode The country code
+     * @return Validation result
      */
-    @Transactional(readOnly = true)
-    public void validateCountryCurrency(String countryCode, String currencyCode, String transactionId) {
-        log.debug("Validating currency-country combination: {} - {} for transaction: {}", 
-            currencyCode, countryCode, transactionId);
+    public CurrencyCountryValidationResult validateCurrencyCountry(String currencyCode, String countryCode) {
+        log.debug("Validating currency-country combination: {} - {}", currencyCode, countryCode);
         
-        // Validate currency exists
-        Optional<Currency> currency = getCurrencyByCode(currencyCode);
-        if (currency.isEmpty()) {
-            throw new ValidationException(
-                "Invalid currency code: " + currencyCode,
-                "INVALID_CURRENCY",
-                "currency",
-                transactionId
-            );
+        // Validate currency first
+        CurrencyValidationResult currencyResult = validateCurrency(currencyCode);
+        if (!currencyResult.isValid()) {
+            return CurrencyCountryValidationResult.invalid(currencyResult.getErrorMessage());
         }
         
-        // Validate country exists
-        Optional<Country> country = getCountryByCode(countryCode);
-        if (country.isEmpty()) {
-            throw new ValidationException(
-                "Invalid country code: " + countryCode,
-                "INVALID_COUNTRY",
-                "country",
-                transactionId
-            );
+        // Validate country
+        CountryValidationResult countryResult = validateCountry(countryCode);
+        if (!countryResult.isValid()) {
+            return CurrencyCountryValidationResult.invalid(countryResult.getErrorMessage());
         }
         
-        // Validate currency-country combination
-        if (!isValidCurrencyCountry(currencyCode, countryCode)) {
-            throw new ValidationException(
-                String.format("Currency %s is not valid for country %s", currencyCode, countryCode),
-                "INVALID_CURRENCY_COUNTRY_COMBINATION",
-                "currency",
-                transactionId
-            );
+        // Check if currency is valid for the country
+        Currency currency = currencyResult.getCurrency();
+        Country country = countryResult.getCountry();
+        
+        if (currency.getValidCountries() != null && 
+            !currency.getValidCountries().contains(countryCode.toUpperCase())) {
+            log.warn("Currency {} is not valid for country {}", currencyCode, countryCode);
+            return CurrencyCountryValidationResult.invalid(
+                "Currency " + currencyCode + " is not valid for country " + countryCode);
         }
         
-        log.debug("Currency-country validation successful: {} - {} for transaction: {}", 
-            currencyCode, countryCode, transactionId);
+        log.debug("Currency-country validation successful: {} - {}", currencyCode, countryCode);
+        return CurrencyCountryValidationResult.valid(currency, country);
     }
     
     /**
-     * Get currency by code with caching
+     * Get all active currencies
+     * @return List of active currencies
      */
-    @Cacheable(value = "currencyCache", key = "#currencyCode")
-    @Transactional(readOnly = true)
-    public Optional<Currency> getCurrencyByCode(String currencyCode) {
-        log.debug("Fetching currency by code: {}", currencyCode);
-        return currencyRepository.findByCode(currencyCode);
+    public List<Currency> getAllActiveCurrencies() {
+        return currencyRepository.findByActiveTrue();
     }
     
     /**
-     * Get country by code with caching
+     * Get all active countries
+     * @return List of active countries
      */
-    @Cacheable(value = "countryCache", key = "#countryCode")
-    @Transactional(readOnly = true)
-    public Optional<Country> getCountryByCode(String countryCode) {
-        log.debug("Fetching country by code: {}", countryCode);
-        return countryRepository.findByCode(countryCode);
+    public List<Country> getAllActiveCountries() {
+        return countryRepository.findByActiveTrue();
     }
     
     /**
-     * Check if currency-country combination is valid
+     * Check if currency exists
+     * @param currencyCode The currency code to check
+     * @return true if currency exists, false otherwise
      */
-    @Transactional(readOnly = true)
-    public boolean isValidCurrencyCountry(String currencyCode, String countryCode) {
-        log.debug("Checking validity of currency-country combination: {} - {}", currencyCode, countryCode);
+    public boolean currencyExists(String currencyCode) {
+        return currencyRepository.existsByCode(currencyCode.toUpperCase());
+    }
+    
+    /**
+     * Check if country exists
+     * @param countryCode The country code to check
+     * @return true if country exists, false otherwise
+     */
+    public boolean countryExists(String countryCode) {
+        return countryRepository.existsByCode(countryCode.toUpperCase());
+    }
+    
+    // Inner classes for validation results
+    public static class CurrencyValidationResult {
+        private final boolean valid;
+        private final Currency currency;
+        private final String errorMessage;
         
-        Optional<Currency> currency = getCurrencyByCode(currencyCode);
-        Optional<Country> country = getCountryByCode(countryCode);
-        
-        if (currency.isEmpty() || country.isEmpty()) {
-            return false;
+        private CurrencyValidationResult(boolean valid, Currency currency, String errorMessage) {
+            this.valid = valid;
+            this.currency = currency;
+            this.errorMessage = errorMessage;
         }
         
-        // Check if the currency is valid for the country
-        // This is a simplified validation - in production, you might have a separate mapping table
-        return currency.get().getValidCountries().contains(countryCode);
-    }
-    
-    /**
-     * Get valid currencies for a country
-     */
-    @Transactional(readOnly = true)
-    public List<String> getValidCurrenciesForCountry(String countryCode) {
-        log.debug("Fetching valid currencies for country: {}", countryCode);
-        
-        Optional<Country> country = getCountryByCode(countryCode);
-        if (country.isEmpty()) {
-            return List.of();
+        public static CurrencyValidationResult valid(Currency currency) {
+            return new CurrencyValidationResult(true, currency, null);
         }
         
-        return country.get().getValidCurrencies();
-    }
-    
-    /**
-     * Get valid countries for a currency
-     */
-    @Transactional(readOnly = true)
-    public List<String> getValidCountriesForCurrency(String currencyCode) {
-        log.debug("Fetching valid countries for currency: {}", currencyCode);
-        
-        Optional<Currency> currency = getCurrencyByCode(currencyCode);
-        if (currency.isEmpty()) {
-            return List.of();
+        public static CurrencyValidationResult invalid(String errorMessage) {
+            return new CurrencyValidationResult(false, null, errorMessage);
         }
         
-        return currency.get().getValidCountries();
+        public boolean isValid() { return valid; }
+        public Currency getCurrency() { return currency; }
+        public String getErrorMessage() { return errorMessage; }
     }
     
-    /**
-     * Refresh currency cache
-     */
-    @CacheEvict(value = "currencyCache", allEntries = true)
-    public void refreshCurrencyCache() {
-        log.info("Currency cache refreshed");
+    public static class CountryValidationResult {
+        private final boolean valid;
+        private final Country country;
+        private final String errorMessage;
+        
+        private CountryValidationResult(boolean valid, Country country, String errorMessage) {
+            this.valid = valid;
+            this.country = country;
+            this.errorMessage = errorMessage;
+        }
+        
+        public static CountryValidationResult valid(Country country) {
+            return new CountryValidationResult(true, country, null);
+        }
+        
+        public static CountryValidationResult invalid(String errorMessage) {
+            return new CountryValidationResult(false, null, errorMessage);
+        }
+        
+        public boolean isValid() { return valid; }
+        public Country getCountry() { return country; }
+        public String getErrorMessage() { return errorMessage; }
     }
     
-    /**
-     * Refresh country cache
-     */
-    @CacheEvict(value = "countryCache", allEntries = true)
-    public void refreshCountryCache() {
-        log.info("Country cache refreshed");
-    }
-    
-    /**
-     * Refresh all validation caches
-     */
-    public void refreshAllCaches() {
-        refreshCurrencyCache();
-        refreshCountryCache();
-        log.info("All validation caches refreshed");
+    public static class CurrencyCountryValidationResult {
+        private final boolean valid;
+        private final Currency currency;
+        private final Country country;
+        private final String errorMessage;
+        
+        private CurrencyCountryValidationResult(boolean valid, Currency currency, Country country, String errorMessage) {
+            this.valid = valid;
+            this.currency = currency;
+            this.country = country;
+            this.errorMessage = errorMessage;
+        }
+        
+        public static CurrencyCountryValidationResult valid(Currency currency, Country country) {
+            return new CurrencyCountryValidationResult(true, currency, country, null);
+        }
+        
+        public static CurrencyCountryValidationResult invalid(String errorMessage) {
+            return new CurrencyCountryValidationResult(false, null, null, errorMessage);
+        }
+        
+        public boolean isValid() { return valid; }
+        public Currency getCurrency() { return currency; }
+        public Country getCountry() { return country; }
+        public String getErrorMessage() { return errorMessage; }
     }
 }

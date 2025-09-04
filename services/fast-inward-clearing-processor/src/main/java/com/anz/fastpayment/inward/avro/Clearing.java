@@ -17,7 +17,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
   private static final long serialVersionUID = -140193136879223961L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Clearing\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"ClearPref\",\"type\":\"string\",\"doc\":\"Clearing preference\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Clearing\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"ClearPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing preference\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /** Clearing preference */
-  private java.lang.CharSequence ClearPref;
+  private java.lang.String ClearPref;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
    * All-args constructor.
    * @param ClearPref Clearing preference
    */
-  public Clearing(java.lang.CharSequence ClearPref) {
+  public Clearing(java.lang.String ClearPref) {
     this.ClearPref = ClearPref;
   }
 
@@ -111,7 +111,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: ClearPref = (java.lang.CharSequence)value$; break;
+    case 0: ClearPref = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'ClearPref' field.
    * @return Clearing preference
    */
-  public java.lang.CharSequence getClearPref() {
+  public java.lang.String getClearPref() {
     return ClearPref;
   }
 
@@ -130,7 +130,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
    * Clearing preference
    * @param value the value to set.
    */
-  public void setClearPref(java.lang.CharSequence value) {
+  public void setClearPref(java.lang.String value) {
     this.ClearPref = value;
   }
 
@@ -176,7 +176,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<Clearing> {
 
     /** Clearing preference */
-    private java.lang.CharSequence ClearPref;
+    private java.lang.String ClearPref;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
       * Clearing preference
       * @return The value.
       */
-    public java.lang.CharSequence getClearPref() {
+    public java.lang.String getClearPref() {
       return ClearPref;
     }
 
@@ -223,7 +223,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'ClearPref'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Clearing.Builder setClearPref(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Clearing.Builder setClearPref(java.lang.String value) {
       validate(fields()[0], value);
       this.ClearPref = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
     public Clearing build() {
       try {
         Clearing record = new Clearing();
-        record.ClearPref = fieldSetFlags()[0] ? this.ClearPref : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.ClearPref = fieldSetFlags()[0] ? this.ClearPref : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class Clearing extends org.apache.avro.specific.SpecificRecordBase implem
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.ClearPref = in.readString(this.ClearPref instanceof Utf8 ? (Utf8)this.ClearPref : null);
+      this.ClearPref = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.ClearPref = in.readString(this.ClearPref instanceof Utf8 ? (Utf8)this.ClearPref : null);
+          this.ClearPref = in.readString();
           break;
 
         default:

@@ -17,7 +17,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
   private static final long serialVersionUID = 3529465711303056061L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ToBene\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Name\",\"type\":\"string\",\"doc\":\"Beneficiary name\"},{\"name\":\"Country\",\"type\":\"string\",\"doc\":\"Country code\"},{\"name\":\"Message\",\"type\":\"string\",\"doc\":\"Message\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ToBene\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Beneficiary name\"},{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"Message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,11 +74,11 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   /** Beneficiary name */
-  private java.lang.CharSequence Name;
+  private java.lang.String Name;
   /** Country code */
-  private java.lang.CharSequence Country;
+  private java.lang.String Country;
   /** Message */
-  private java.lang.CharSequence Message;
+  private java.lang.String Message;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -93,7 +93,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param Country Country code
    * @param Message Message
    */
-  public ToBene(java.lang.CharSequence Name, java.lang.CharSequence Country, java.lang.CharSequence Message) {
+  public ToBene(java.lang.String Name, java.lang.String Country, java.lang.String Message) {
     this.Name = Name;
     this.Country = Country;
     this.Message = Message;
@@ -121,9 +121,9 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: Name = (java.lang.CharSequence)value$; break;
-    case 1: Country = (java.lang.CharSequence)value$; break;
-    case 2: Message = (java.lang.CharSequence)value$; break;
+    case 0: Name = value$ != null ? value$.toString() : null; break;
+    case 1: Country = value$ != null ? value$.toString() : null; break;
+    case 2: Message = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -132,7 +132,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Name' field.
    * @return Beneficiary name
    */
-  public java.lang.CharSequence getName() {
+  public java.lang.String getName() {
     return Name;
   }
 
@@ -142,7 +142,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * Beneficiary name
    * @param value the value to set.
    */
-  public void setName(java.lang.CharSequence value) {
+  public void setName(java.lang.String value) {
     this.Name = value;
   }
 
@@ -150,7 +150,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Country' field.
    * @return Country code
    */
-  public java.lang.CharSequence getCountry() {
+  public java.lang.String getCountry() {
     return Country;
   }
 
@@ -160,7 +160,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * Country code
    * @param value the value to set.
    */
-  public void setCountry(java.lang.CharSequence value) {
+  public void setCountry(java.lang.String value) {
     this.Country = value;
   }
 
@@ -168,7 +168,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'Message' field.
    * @return Message
    */
-  public java.lang.CharSequence getMessage() {
+  public java.lang.String getMessage() {
     return Message;
   }
 
@@ -178,7 +178,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
    * Message
    * @param value the value to set.
    */
-  public void setMessage(java.lang.CharSequence value) {
+  public void setMessage(java.lang.String value) {
     this.Message = value;
   }
 
@@ -224,11 +224,11 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<ToBene> {
 
     /** Beneficiary name */
-    private java.lang.CharSequence Name;
+    private java.lang.String Name;
     /** Country code */
-    private java.lang.CharSequence Country;
+    private java.lang.String Country;
     /** Message */
-    private java.lang.CharSequence Message;
+    private java.lang.String Message;
 
     /** Creates a new Builder */
     private Builder() {
@@ -280,7 +280,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
       * Beneficiary name
       * @return The value.
       */
-    public java.lang.CharSequence getName() {
+    public java.lang.String getName() {
       return Name;
     }
 
@@ -291,7 +291,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Name'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToBene.Builder setName(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToBene.Builder setName(java.lang.String value) {
       validate(fields()[0], value);
       this.Name = value;
       fieldSetFlags()[0] = true;
@@ -324,7 +324,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
       * Country code
       * @return The value.
       */
-    public java.lang.CharSequence getCountry() {
+    public java.lang.String getCountry() {
       return Country;
     }
 
@@ -335,7 +335,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Country'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToBene.Builder setCountry(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToBene.Builder setCountry(java.lang.String value) {
       validate(fields()[1], value);
       this.Country = value;
       fieldSetFlags()[1] = true;
@@ -368,7 +368,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
       * Message
       * @return The value.
       */
-    public java.lang.CharSequence getMessage() {
+    public java.lang.String getMessage() {
       return Message;
     }
 
@@ -379,7 +379,7 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'Message'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.ToBene.Builder setMessage(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.ToBene.Builder setMessage(java.lang.String value) {
       validate(fields()[2], value);
       this.Message = value;
       fieldSetFlags()[2] = true;
@@ -412,9 +412,9 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
     public ToBene build() {
       try {
         ToBene record = new ToBene();
-        record.Name = fieldSetFlags()[0] ? this.Name : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.Country = fieldSetFlags()[1] ? this.Country : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.Message = fieldSetFlags()[2] ? this.Message : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.Name = fieldSetFlags()[0] ? this.Name : (java.lang.String) defaultValue(fields()[0]);
+        record.Country = fieldSetFlags()[1] ? this.Country : (java.lang.String) defaultValue(fields()[1]);
+        record.Message = fieldSetFlags()[2] ? this.Message : (java.lang.String) defaultValue(fields()[2]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -460,25 +460,25 @@ public class ToBene extends org.apache.avro.specific.SpecificRecordBase implemen
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.Name = in.readString(this.Name instanceof Utf8 ? (Utf8)this.Name : null);
+      this.Name = in.readString();
 
-      this.Country = in.readString(this.Country instanceof Utf8 ? (Utf8)this.Country : null);
+      this.Country = in.readString();
 
-      this.Message = in.readString(this.Message instanceof Utf8 ? (Utf8)this.Message : null);
+      this.Message = in.readString();
 
     } else {
       for (int i = 0; i < 3; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.Name = in.readString(this.Name instanceof Utf8 ? (Utf8)this.Name : null);
+          this.Name = in.readString();
           break;
 
         case 1:
-          this.Country = in.readString(this.Country instanceof Utf8 ? (Utf8)this.Country : null);
+          this.Country = in.readString();
           break;
 
         case 2:
-          this.Message = in.readString(this.Message instanceof Utf8 ? (Utf8)this.Message : null);
+          this.Message = in.readString();
           break;
 
         default:

@@ -17,7 +17,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
   private static final long serialVersionUID = 3669608391964247184L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Dbtr\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Nm\",\"type\":\"string\",\"doc\":\"Name\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Dbtr\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
   }
 
   /** Name */
-  private java.lang.CharSequence Nm;
+  private java.lang.String Nm;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -87,7 +87,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
    * All-args constructor.
    * @param Nm Name
    */
-  public Dbtr(java.lang.CharSequence Nm) {
+  public Dbtr(java.lang.String Nm) {
     this.Nm = Nm;
   }
 
@@ -111,7 +111,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: Nm = (java.lang.CharSequence)value$; break;
+    case 0: Nm = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -120,7 +120,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
    * Gets the value of the 'Nm' field.
    * @return Name
    */
-  public java.lang.CharSequence getNm() {
+  public java.lang.String getNm() {
     return Nm;
   }
 
@@ -130,7 +130,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
    * Name
    * @param value the value to set.
    */
-  public void setNm(java.lang.CharSequence value) {
+  public void setNm(java.lang.String value) {
     this.Nm = value;
   }
 
@@ -176,7 +176,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
     implements org.apache.avro.data.RecordBuilder<Dbtr> {
 
     /** Name */
-    private java.lang.CharSequence Nm;
+    private java.lang.String Nm;
 
     /** Creates a new Builder */
     private Builder() {
@@ -212,7 +212,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
       * Name
       * @return The value.
       */
-    public java.lang.CharSequence getNm() {
+    public java.lang.String getNm() {
       return Nm;
     }
 
@@ -223,7 +223,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'Nm'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.Dbtr.Builder setNm(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.Dbtr.Builder setNm(java.lang.String value) {
       validate(fields()[0], value);
       this.Nm = value;
       fieldSetFlags()[0] = true;
@@ -256,7 +256,7 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
     public Dbtr build() {
       try {
         Dbtr record = new Dbtr();
-        record.Nm = fieldSetFlags()[0] ? this.Nm : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.Nm = fieldSetFlags()[0] ? this.Nm : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -298,13 +298,13 @@ public class Dbtr extends org.apache.avro.specific.SpecificRecordBase implements
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.Nm = in.readString(this.Nm instanceof Utf8 ? (Utf8)this.Nm : null);
+      this.Nm = in.readString();
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.Nm = in.readString(this.Nm instanceof Utf8 ? (Utf8)this.Nm : null);
+          this.Nm = in.readString();
           break;
 
         default:

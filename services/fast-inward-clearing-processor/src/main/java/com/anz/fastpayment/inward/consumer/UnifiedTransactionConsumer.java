@@ -75,7 +75,7 @@ public class UnifiedTransactionConsumer {
         String transactionId = consumerRecord.key();
         long messageNumber = messagesReceived.incrementAndGet();
         
-        logger.info("Processing message #{} - Transaction: {} from partition: {}, offset: {}", 
+        logger.info("Processing message #{} - Transaction: {} from partition: {}, offset: {}",
                    messageNumber, transactionId, consumerRecord.partition(), consumerRecord.offset());
         
         try {
@@ -96,7 +96,7 @@ public class UnifiedTransactionConsumer {
         } catch (Exception e) {
             // Handle unexpected errors
             systemErrors.incrementAndGet();
-            logger.error("Unexpected error processing message #{} - Transaction: {} - Error: {}", 
+            logger.error("Unexpected error processing message #{} - Transaction: {} - Error: {}",
                         messageNumber, transactionId, e.getMessage(), e);
             
             // Send to DLQ
@@ -121,33 +121,33 @@ public class UnifiedTransactionConsumer {
                 
             case VALIDATION_FAILED:
                 validationFailures.incrementAndGet();
-                logger.warn("Validation failed for Transaction: {} - Message #{} - Errors: {}", 
+                logger.warn("Validation failed for Transaction: {} - Message #{} - Errors: {}",
                            transactionId, messageNumber, result.getValidationErrors());
                 sendToDeadLetterQueue(transactionId, "Validation failed: " + result.getValidationErrors(), result.getMuid());
                 break;
                 
             case BUSINESS_PROCESSING_FAILED:
                 businessProcessingFailures.incrementAndGet();
-                logger.warn("Business processing failed for Transaction: {} - Message #{} - Error: {}", 
+                logger.warn("Business processing failed for Transaction: {} - Message #{} - Error: {}",
                            transactionId, messageNumber, result.getErrorMessage());
                 sendToDeadLetterQueue(transactionId, "Business processing failed: " + result.getErrorMessage(), result.getMuid());
                 break;
                 
             case PARSING_FAILED:
-                logger.warn("Parsing failed for Transaction: {} - Message #{} - Error: {}", 
+                logger.warn("Parsing failed for Transaction: {} - Message #{} - Error: {}",
                            transactionId, messageNumber, result.getErrorMessage());
                 sendToDeadLetterQueue(transactionId, "Parsing failed: " + result.getErrorMessage(), result.getMuid());
                 break;
                 
             case SYSTEM_ERROR:
                 systemErrors.incrementAndGet();
-                logger.error("System error for Transaction: {} - Message #{} - Error: {}", 
+                logger.error("System error for Transaction: {} - Message #{} - Error: {}",
                            transactionId, messageNumber, result.getErrorMessage());
                 sendToDeadLetterQueue(transactionId, "System error: " + result.getErrorMessage(), result.getMuid());
                 break;
                 
             default:
-                logger.warn("Unknown processing result for Transaction: {} - Message #{} - Status: {}", 
+                logger.warn("Unknown processing result for Transaction: {} - Message #{} - Status: {}",
                            transactionId, messageNumber, result.getStatus());
                 sendToDeadLetterQueue(transactionId, "Unknown processing result: " + result.getStatus(), result.getMuid());
         }
@@ -175,7 +175,7 @@ public class UnifiedTransactionConsumer {
                 if (exception != null) {
                     logger.error("Failed to send message to output topic: {}", exception.getMessage(), exception);
                 } else {
-                    logger.debug("Message sent to output topic: Topic={}, Partition={}, Offset={}", 
+                    logger.debug("Message sent to output topic: Topic={}, Partition={}, Offset={}",
                                metadata.topic(), metadata.partition(), metadata.offset());
                 }
             });
@@ -190,7 +190,7 @@ public class UnifiedTransactionConsumer {
      */
     private void sendToDeadLetterQueue(String transactionId, String errorMessage, String muid) {
         try {
-            String dlqMessage = String.format("Transaction: %s, MUID: %s, Error: %s", 
+            String dlqMessage = String.format("Transaction: %s, MUID: %s, Error: %s",
                                             transactionId, muid, errorMessage);
             
             ProducerRecord<String, String> record = 
@@ -205,13 +205,13 @@ public class UnifiedTransactionConsumer {
                 if (exception != null) {
                     logger.error("Failed to send message to DLQ: {}", exception.getMessage(), exception);
                 } else {
-                    logger.debug("Message sent to DLQ: Topic={}, Partition={}, Offset={}", 
+                    logger.debug("Message sent to DLQ: Topic={}, Partition={}, Offset={}",
                                metadata.topic(), metadata.partition(), metadata.offset());
                 }
             });
             
         } catch (Exception e) {
-            logger.error("Error sending message to DLQ - Transaction: {} - Error: {}", 
+            logger.error("Error sending message to DLQ - Transaction: {} - Error: {}",
                         transactionId, e.getMessage(), e);
         }
     }

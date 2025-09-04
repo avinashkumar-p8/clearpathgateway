@@ -36,8 +36,8 @@ public final class ValidationTags {
     
     // ===== JSON PATHS FOR DIRECT FIELD EXTRACTION =====
     // ===== CURRENCY & COUNTRY =====
-    public static final String CURRENCY = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY";
-    public static final String COUNTRY = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAcct.Country";
+    public static final String CURRENCY = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY";
+    public static final String COUNTRY = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAcct.Country";
     
     // ===== MMBID FIELDS =====
     // public static final String FROM_MMBID = "Fr.FIId.FinInstnId.ClrSysMmbId.MmbId";
@@ -45,21 +45,21 @@ public final class ValidationTags {
     
     // ===== MESSAGE IDENTIFIERS =====
     // public static final String BIZ_MSG_IDR = "Header.BizMsgIdr";
-    public static final String INSTR_ID = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.PmtId.InstrId";
+    public static final String INSTR_ID = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.PmtId.InstrId";
     
     // ===== COPY & DUPLICATE INDICATORS =====
     // public static final String CPY_DPICT = "Header.CpyDpict";
     
     // ===== DATE & TIME FIELDS =====
     // public static final String CRE_DT_TM = "instruction.MsgCtxt.EventTS";
-    public static final String INTR_BK_STTLM_DT = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmDt";
+    public static final String INTR_BK_STTLM_DT = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmDt";
     
     // ===== TRANSACTION COUNTS =====
     // public static final String NB_OF_TXS = "instruction.MsgCtxt.BaseAmt";
     
     // ===== AMOUNT FIELDS =====
     // public static final String TTL_INTR_BK_STTLM_AMT = "instruction.MsgCtxt.BaseAmt";
-    public static final String INTR_BK_STTLM_AMT = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt";
+    public static final String INTR_BK_STTLM_AMT = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt";
     
     // ===== SETTLEMENT METHOD =====
     // public static final String STTLM_MTD = "instruction.MsgCtxt.InstdClrgPref";
@@ -71,10 +71,10 @@ public final class ValidationTags {
     // public static final String PMT_TP_INF_SVC_LVL_CD = "instruction.MsgCtxt.InstdMoPCat";
     
     // ===== FINANCIAL INSTITUTION IDENTIFIERS =====
-    public static final String CDTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.CdtrAgt.BIC";
-    public static final String INSTG_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstgAgt.BIC";
-    public static final String DBTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAgt.BIC";
-    public static final String INSTD_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstdAgt.BIC";
+    public static final String CDTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.CdtrAgt.BIC";
+    public static final String INSTG_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstgAgt.BIC";
+    public static final String DBTR_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAgt.BIC";
+    public static final String INSTD_AGT_FIN_INSTN_ID_CLR_SYS_MMB_ID_MMB_ID = "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstdAgt.BIC";
     
     // ===== CHARGE BEARER =====
     // public static final String CHRG_BR = "instruction.MsgCtxt.ProcCtryCd";

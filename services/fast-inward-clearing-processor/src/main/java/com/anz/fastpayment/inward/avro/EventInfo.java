@@ -17,7 +17,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
   private static final long serialVersionUID = 6363526870651674305L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EventInfo\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"EventCode\",\"type\":\"string\",\"doc\":\"Event code\"},{\"name\":\"EventDescription\",\"type\":\"string\",\"doc\":\"Event description\"},{\"name\":\"EventID\",\"type\":\"string\",\"doc\":\"Event identifier\"},{\"name\":\"EventType\",\"type\":\"string\",\"doc\":\"Event type\"},{\"name\":\"EventProducer\",\"type\":\"string\",\"doc\":\"Event producer\"},{\"name\":\"EventTS\",\"type\":\"string\",\"doc\":\"Event timestamp\"},{\"name\":\"EventTopics\",\"type\":\"string\",\"doc\":\"Event topics\"},{\"name\":\"SystemId\",\"type\":[\"null\",\"string\"],\"doc\":\"System identifier\"},{\"name\":\"Events\",\"type\":{\"type\":\"record\",\"name\":\"Events\",\"fields\":[{\"name\":\"Event\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Event\",\"fields\":[{\"name\":\"EventCode\",\"type\":\"string\",\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":\"string\",\"doc\":\"Event identifier\"}]}},\"doc\":\"Array of events\"}]},\"doc\":\"Events information\"},{\"name\":\"EventVersion\",\"type\":[\"null\",\"string\"],\"doc\":\"Event version\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EventInfo\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"EventCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event code\"},{\"name\":\"EventDescription\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event description\"},{\"name\":\"EventID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event identifier\"},{\"name\":\"EventType\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event type\"},{\"name\":\"EventProducer\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event producer\"},{\"name\":\"EventTS\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event timestamp\"},{\"name\":\"EventTopics\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event topics\"},{\"name\":\"SystemId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"System identifier\"},{\"name\":\"Events\",\"type\":{\"type\":\"record\",\"name\":\"Events\",\"fields\":[{\"name\":\"Event\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Event\",\"fields\":[{\"name\":\"EventCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event code\"},{\"name\":\"EventID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Event identifier\"}]}},\"doc\":\"Array of events\"}]},\"doc\":\"Events information\"},{\"name\":\"EventVersion\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"Event version\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,25 +74,25 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
   }
 
   /** Event code */
-  private java.lang.CharSequence EventCode;
+  private java.lang.String EventCode;
   /** Event description */
-  private java.lang.CharSequence EventDescription;
+  private java.lang.String EventDescription;
   /** Event identifier */
-  private java.lang.CharSequence EventID;
+  private java.lang.String EventID;
   /** Event type */
-  private java.lang.CharSequence EventType;
+  private java.lang.String EventType;
   /** Event producer */
-  private java.lang.CharSequence EventProducer;
+  private java.lang.String EventProducer;
   /** Event timestamp */
-  private java.lang.CharSequence EventTS;
+  private java.lang.String EventTS;
   /** Event topics */
-  private java.lang.CharSequence EventTopics;
+  private java.lang.String EventTopics;
   /** System identifier */
-  private java.lang.CharSequence SystemId;
+  private java.lang.String SystemId;
   /** Events information */
   private com.anz.fastpayment.inward.avro.Events Events;
   /** Event version */
-  private java.lang.CharSequence EventVersion;
+  private java.lang.String EventVersion;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -114,7 +114,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * @param Events Events information
    * @param EventVersion Event version
    */
-  public EventInfo(java.lang.CharSequence EventCode, java.lang.CharSequence EventDescription, java.lang.CharSequence EventID, java.lang.CharSequence EventType, java.lang.CharSequence EventProducer, java.lang.CharSequence EventTS, java.lang.CharSequence EventTopics, java.lang.CharSequence SystemId, com.anz.fastpayment.inward.avro.Events Events, java.lang.CharSequence EventVersion) {
+  public EventInfo(java.lang.String EventCode, java.lang.String EventDescription, java.lang.String EventID, java.lang.String EventType, java.lang.String EventProducer, java.lang.String EventTS, java.lang.String EventTopics, java.lang.String SystemId, com.anz.fastpayment.inward.avro.Events Events, java.lang.String EventVersion) {
     this.EventCode = EventCode;
     this.EventDescription = EventDescription;
     this.EventID = EventID;
@@ -156,16 +156,16 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: EventCode = (java.lang.CharSequence)value$; break;
-    case 1: EventDescription = (java.lang.CharSequence)value$; break;
-    case 2: EventID = (java.lang.CharSequence)value$; break;
-    case 3: EventType = (java.lang.CharSequence)value$; break;
-    case 4: EventProducer = (java.lang.CharSequence)value$; break;
-    case 5: EventTS = (java.lang.CharSequence)value$; break;
-    case 6: EventTopics = (java.lang.CharSequence)value$; break;
-    case 7: SystemId = (java.lang.CharSequence)value$; break;
+    case 0: EventCode = value$ != null ? value$.toString() : null; break;
+    case 1: EventDescription = value$ != null ? value$.toString() : null; break;
+    case 2: EventID = value$ != null ? value$.toString() : null; break;
+    case 3: EventType = value$ != null ? value$.toString() : null; break;
+    case 4: EventProducer = value$ != null ? value$.toString() : null; break;
+    case 5: EventTS = value$ != null ? value$.toString() : null; break;
+    case 6: EventTopics = value$ != null ? value$.toString() : null; break;
+    case 7: SystemId = value$ != null ? value$.toString() : null; break;
     case 8: Events = (com.anz.fastpayment.inward.avro.Events)value$; break;
-    case 9: EventVersion = (java.lang.CharSequence)value$; break;
+    case 9: EventVersion = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -174,7 +174,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventCode' field.
    * @return Event code
    */
-  public java.lang.CharSequence getEventCode() {
+  public java.lang.String getEventCode() {
     return EventCode;
   }
 
@@ -184,7 +184,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event code
    * @param value the value to set.
    */
-  public void setEventCode(java.lang.CharSequence value) {
+  public void setEventCode(java.lang.String value) {
     this.EventCode = value;
   }
 
@@ -192,7 +192,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventDescription' field.
    * @return Event description
    */
-  public java.lang.CharSequence getEventDescription() {
+  public java.lang.String getEventDescription() {
     return EventDescription;
   }
 
@@ -202,7 +202,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event description
    * @param value the value to set.
    */
-  public void setEventDescription(java.lang.CharSequence value) {
+  public void setEventDescription(java.lang.String value) {
     this.EventDescription = value;
   }
 
@@ -210,7 +210,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventID' field.
    * @return Event identifier
    */
-  public java.lang.CharSequence getEventID() {
+  public java.lang.String getEventID() {
     return EventID;
   }
 
@@ -220,7 +220,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event identifier
    * @param value the value to set.
    */
-  public void setEventID(java.lang.CharSequence value) {
+  public void setEventID(java.lang.String value) {
     this.EventID = value;
   }
 
@@ -228,7 +228,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventType' field.
    * @return Event type
    */
-  public java.lang.CharSequence getEventType() {
+  public java.lang.String getEventType() {
     return EventType;
   }
 
@@ -238,7 +238,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event type
    * @param value the value to set.
    */
-  public void setEventType(java.lang.CharSequence value) {
+  public void setEventType(java.lang.String value) {
     this.EventType = value;
   }
 
@@ -246,7 +246,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventProducer' field.
    * @return Event producer
    */
-  public java.lang.CharSequence getEventProducer() {
+  public java.lang.String getEventProducer() {
     return EventProducer;
   }
 
@@ -256,7 +256,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event producer
    * @param value the value to set.
    */
-  public void setEventProducer(java.lang.CharSequence value) {
+  public void setEventProducer(java.lang.String value) {
     this.EventProducer = value;
   }
 
@@ -264,7 +264,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventTS' field.
    * @return Event timestamp
    */
-  public java.lang.CharSequence getEventTS() {
+  public java.lang.String getEventTS() {
     return EventTS;
   }
 
@@ -274,7 +274,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event timestamp
    * @param value the value to set.
    */
-  public void setEventTS(java.lang.CharSequence value) {
+  public void setEventTS(java.lang.String value) {
     this.EventTS = value;
   }
 
@@ -282,7 +282,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventTopics' field.
    * @return Event topics
    */
-  public java.lang.CharSequence getEventTopics() {
+  public java.lang.String getEventTopics() {
     return EventTopics;
   }
 
@@ -292,7 +292,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event topics
    * @param value the value to set.
    */
-  public void setEventTopics(java.lang.CharSequence value) {
+  public void setEventTopics(java.lang.String value) {
     this.EventTopics = value;
   }
 
@@ -300,7 +300,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'SystemId' field.
    * @return System identifier
    */
-  public java.lang.CharSequence getSystemId() {
+  public java.lang.String getSystemId() {
     return SystemId;
   }
 
@@ -310,7 +310,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * System identifier
    * @param value the value to set.
    */
-  public void setSystemId(java.lang.CharSequence value) {
+  public void setSystemId(java.lang.String value) {
     this.SystemId = value;
   }
 
@@ -336,7 +336,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'EventVersion' field.
    * @return Event version
    */
-  public java.lang.CharSequence getEventVersion() {
+  public java.lang.String getEventVersion() {
     return EventVersion;
   }
 
@@ -346,7 +346,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
    * Event version
    * @param value the value to set.
    */
-  public void setEventVersion(java.lang.CharSequence value) {
+  public void setEventVersion(java.lang.String value) {
     this.EventVersion = value;
   }
 
@@ -392,26 +392,26 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
     implements org.apache.avro.data.RecordBuilder<EventInfo> {
 
     /** Event code */
-    private java.lang.CharSequence EventCode;
+    private java.lang.String EventCode;
     /** Event description */
-    private java.lang.CharSequence EventDescription;
+    private java.lang.String EventDescription;
     /** Event identifier */
-    private java.lang.CharSequence EventID;
+    private java.lang.String EventID;
     /** Event type */
-    private java.lang.CharSequence EventType;
+    private java.lang.String EventType;
     /** Event producer */
-    private java.lang.CharSequence EventProducer;
+    private java.lang.String EventProducer;
     /** Event timestamp */
-    private java.lang.CharSequence EventTS;
+    private java.lang.String EventTS;
     /** Event topics */
-    private java.lang.CharSequence EventTopics;
+    private java.lang.String EventTopics;
     /** System identifier */
-    private java.lang.CharSequence SystemId;
+    private java.lang.String SystemId;
     /** Events information */
     private com.anz.fastpayment.inward.avro.Events Events;
     private com.anz.fastpayment.inward.avro.Events.Builder EventsBuilder;
     /** Event version */
-    private java.lang.CharSequence EventVersion;
+    private java.lang.String EventVersion;
 
     /** Creates a new Builder */
     private Builder() {
@@ -523,7 +523,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event code
       * @return The value.
       */
-    public java.lang.CharSequence getEventCode() {
+    public java.lang.String getEventCode() {
       return EventCode;
     }
 
@@ -534,7 +534,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventCode'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventCode(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventCode(java.lang.String value) {
       validate(fields()[0], value);
       this.EventCode = value;
       fieldSetFlags()[0] = true;
@@ -567,7 +567,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event description
       * @return The value.
       */
-    public java.lang.CharSequence getEventDescription() {
+    public java.lang.String getEventDescription() {
       return EventDescription;
     }
 
@@ -578,7 +578,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventDescription'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventDescription(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventDescription(java.lang.String value) {
       validate(fields()[1], value);
       this.EventDescription = value;
       fieldSetFlags()[1] = true;
@@ -611,7 +611,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event identifier
       * @return The value.
       */
-    public java.lang.CharSequence getEventID() {
+    public java.lang.String getEventID() {
       return EventID;
     }
 
@@ -622,7 +622,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventID'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventID(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventID(java.lang.String value) {
       validate(fields()[2], value);
       this.EventID = value;
       fieldSetFlags()[2] = true;
@@ -655,7 +655,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event type
       * @return The value.
       */
-    public java.lang.CharSequence getEventType() {
+    public java.lang.String getEventType() {
       return EventType;
     }
 
@@ -666,7 +666,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventType'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventType(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventType(java.lang.String value) {
       validate(fields()[3], value);
       this.EventType = value;
       fieldSetFlags()[3] = true;
@@ -699,7 +699,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event producer
       * @return The value.
       */
-    public java.lang.CharSequence getEventProducer() {
+    public java.lang.String getEventProducer() {
       return EventProducer;
     }
 
@@ -710,7 +710,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventProducer'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventProducer(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventProducer(java.lang.String value) {
       validate(fields()[4], value);
       this.EventProducer = value;
       fieldSetFlags()[4] = true;
@@ -743,7 +743,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event timestamp
       * @return The value.
       */
-    public java.lang.CharSequence getEventTS() {
+    public java.lang.String getEventTS() {
       return EventTS;
     }
 
@@ -754,7 +754,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventTS'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventTS(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventTS(java.lang.String value) {
       validate(fields()[5], value);
       this.EventTS = value;
       fieldSetFlags()[5] = true;
@@ -787,7 +787,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event topics
       * @return The value.
       */
-    public java.lang.CharSequence getEventTopics() {
+    public java.lang.String getEventTopics() {
       return EventTopics;
     }
 
@@ -798,7 +798,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventTopics'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventTopics(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventTopics(java.lang.String value) {
       validate(fields()[6], value);
       this.EventTopics = value;
       fieldSetFlags()[6] = true;
@@ -831,7 +831,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * System identifier
       * @return The value.
       */
-    public java.lang.CharSequence getSystemId() {
+    public java.lang.String getSystemId() {
       return SystemId;
     }
 
@@ -842,7 +842,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'SystemId'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setSystemId(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setSystemId(java.lang.String value) {
       validate(fields()[7], value);
       this.SystemId = value;
       fieldSetFlags()[7] = true;
@@ -958,7 +958,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * Event version
       * @return The value.
       */
-    public java.lang.CharSequence getEventVersion() {
+    public java.lang.String getEventVersion() {
       return EventVersion;
     }
 
@@ -969,7 +969,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'EventVersion'.
       * @return This builder.
       */
-    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventVersion(java.lang.CharSequence value) {
+    public com.anz.fastpayment.inward.avro.EventInfo.Builder setEventVersion(java.lang.String value) {
       validate(fields()[9], value);
       this.EventVersion = value;
       fieldSetFlags()[9] = true;
@@ -1002,14 +1002,14 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
     public EventInfo build() {
       try {
         EventInfo record = new EventInfo();
-        record.EventCode = fieldSetFlags()[0] ? this.EventCode : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.EventDescription = fieldSetFlags()[1] ? this.EventDescription : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.EventID = fieldSetFlags()[2] ? this.EventID : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.EventType = fieldSetFlags()[3] ? this.EventType : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.EventProducer = fieldSetFlags()[4] ? this.EventProducer : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.EventTS = fieldSetFlags()[5] ? this.EventTS : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.EventTopics = fieldSetFlags()[6] ? this.EventTopics : (java.lang.CharSequence) defaultValue(fields()[6]);
-        record.SystemId = fieldSetFlags()[7] ? this.SystemId : (java.lang.CharSequence) defaultValue(fields()[7]);
+        record.EventCode = fieldSetFlags()[0] ? this.EventCode : (java.lang.String) defaultValue(fields()[0]);
+        record.EventDescription = fieldSetFlags()[1] ? this.EventDescription : (java.lang.String) defaultValue(fields()[1]);
+        record.EventID = fieldSetFlags()[2] ? this.EventID : (java.lang.String) defaultValue(fields()[2]);
+        record.EventType = fieldSetFlags()[3] ? this.EventType : (java.lang.String) defaultValue(fields()[3]);
+        record.EventProducer = fieldSetFlags()[4] ? this.EventProducer : (java.lang.String) defaultValue(fields()[4]);
+        record.EventTS = fieldSetFlags()[5] ? this.EventTS : (java.lang.String) defaultValue(fields()[5]);
+        record.EventTopics = fieldSetFlags()[6] ? this.EventTopics : (java.lang.String) defaultValue(fields()[6]);
+        record.SystemId = fieldSetFlags()[7] ? this.SystemId : (java.lang.String) defaultValue(fields()[7]);
         if (EventsBuilder != null) {
           try {
             record.Events = this.EventsBuilder.build();
@@ -1020,7 +1020,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
         } else {
           record.Events = fieldSetFlags()[8] ? this.Events : (com.anz.fastpayment.inward.avro.Events) defaultValue(fields()[8]);
         }
-        record.EventVersion = fieldSetFlags()[9] ? this.EventVersion : (java.lang.CharSequence) defaultValue(fields()[9]);
+        record.EventVersion = fieldSetFlags()[9] ? this.EventVersion : (java.lang.String) defaultValue(fields()[9]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1092,25 +1092,25 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.EventCode = in.readString(this.EventCode instanceof Utf8 ? (Utf8)this.EventCode : null);
+      this.EventCode = in.readString();
 
-      this.EventDescription = in.readString(this.EventDescription instanceof Utf8 ? (Utf8)this.EventDescription : null);
+      this.EventDescription = in.readString();
 
-      this.EventID = in.readString(this.EventID instanceof Utf8 ? (Utf8)this.EventID : null);
+      this.EventID = in.readString();
 
-      this.EventType = in.readString(this.EventType instanceof Utf8 ? (Utf8)this.EventType : null);
+      this.EventType = in.readString();
 
-      this.EventProducer = in.readString(this.EventProducer instanceof Utf8 ? (Utf8)this.EventProducer : null);
+      this.EventProducer = in.readString();
 
-      this.EventTS = in.readString(this.EventTS instanceof Utf8 ? (Utf8)this.EventTS : null);
+      this.EventTS = in.readString();
 
-      this.EventTopics = in.readString(this.EventTopics instanceof Utf8 ? (Utf8)this.EventTopics : null);
+      this.EventTopics = in.readString();
 
       if (in.readIndex() != 1) {
         in.readNull();
         this.SystemId = null;
       } else {
-        this.SystemId = in.readString(this.SystemId instanceof Utf8 ? (Utf8)this.SystemId : null);
+        this.SystemId = in.readString();
       }
 
       if (this.Events == null) {
@@ -1122,38 +1122,38 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
         in.readNull();
         this.EventVersion = null;
       } else {
-        this.EventVersion = in.readString(this.EventVersion instanceof Utf8 ? (Utf8)this.EventVersion : null);
+        this.EventVersion = in.readString();
       }
 
     } else {
       for (int i = 0; i < 10; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.EventCode = in.readString(this.EventCode instanceof Utf8 ? (Utf8)this.EventCode : null);
+          this.EventCode = in.readString();
           break;
 
         case 1:
-          this.EventDescription = in.readString(this.EventDescription instanceof Utf8 ? (Utf8)this.EventDescription : null);
+          this.EventDescription = in.readString();
           break;
 
         case 2:
-          this.EventID = in.readString(this.EventID instanceof Utf8 ? (Utf8)this.EventID : null);
+          this.EventID = in.readString();
           break;
 
         case 3:
-          this.EventType = in.readString(this.EventType instanceof Utf8 ? (Utf8)this.EventType : null);
+          this.EventType = in.readString();
           break;
 
         case 4:
-          this.EventProducer = in.readString(this.EventProducer instanceof Utf8 ? (Utf8)this.EventProducer : null);
+          this.EventProducer = in.readString();
           break;
 
         case 5:
-          this.EventTS = in.readString(this.EventTS instanceof Utf8 ? (Utf8)this.EventTS : null);
+          this.EventTS = in.readString();
           break;
 
         case 6:
-          this.EventTopics = in.readString(this.EventTopics instanceof Utf8 ? (Utf8)this.EventTopics : null);
+          this.EventTopics = in.readString();
           break;
 
         case 7:
@@ -1161,7 +1161,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
             in.readNull();
             this.SystemId = null;
           } else {
-            this.SystemId = in.readString(this.SystemId instanceof Utf8 ? (Utf8)this.SystemId : null);
+            this.SystemId = in.readString();
           }
           break;
 
@@ -1177,7 +1177,7 @@ public class EventInfo extends org.apache.avro.specific.SpecificRecordBase imple
             in.readNull();
             this.EventVersion = null;
           } else {
-            this.EventVersion = in.readString(this.EventVersion instanceof Utf8 ? (Utf8)this.EventVersion : null);
+            this.EventVersion = in.readString();
           }
           break;
 
