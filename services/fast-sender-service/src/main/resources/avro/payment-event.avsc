@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "PaymentEvent",
+  "namespace": "com.anz.fastpayment.schema",
+  "fields": [
+    { "name": "puid", "type": "string" },
+    { "name": "json", "type": "string" }
+  ]
+}
+
+

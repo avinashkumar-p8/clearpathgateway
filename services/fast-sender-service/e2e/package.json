@@ -1,0 +1,12 @@
+{
+  "name": "fast-sender-e2e",
+  "private": true,
+  "devDependencies": {
+    "@kafkajs/confluent-schema-registry": "^3.9.0",
+    "@playwright/test": "^1.45.0",
+    "kafkajs": "^2.2.4"
+  },
+  "scripts": {
+    "test": "playwright test --reporter=line"
+  }
+}
