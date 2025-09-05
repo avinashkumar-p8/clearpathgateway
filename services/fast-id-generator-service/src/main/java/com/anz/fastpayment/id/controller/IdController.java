@@ -22,7 +22,7 @@ public class IdController {
     }
 
     @GetMapping("/puid")
-    public ResponseEntity<Map<String, String>> puid(@RequestParam(name = "channel", defaultValue = "G3I") String channel) {
+    public ResponseEntity<Map<String, String>> puid(@RequestParam(name = "channel", defaultValue = "G31") String channel) {
         String puid = service.nextPuid(channel);
         Map<String, String> body = new HashMap<>();
         body.put("puid", puid);
@@ -30,15 +30,15 @@ public class IdController {
     }
 
     @GetMapping("/muid")
-    public ResponseEntity<Map<String, String>> muid(@RequestParam("puid") String puid) {
-        String muid = service.nextMuid(puid);
+    public ResponseEntity<Map<String, String>> muid() {
+        String muid = service.nextMuid();
         Map<String, String> body = new HashMap<>();
         body.put("muid", muid);
         return ResponseEntity.ok(body);
     }
 
     @GetMapping("/puid-block")
-    public ResponseEntity<Map<String, Object>> puidBlock(@RequestParam(name = "channel", defaultValue = "G3I") String channel,
+    public ResponseEntity<Map<String, Object>> puidBlock(@RequestParam(name = "channel", defaultValue = "G31") String channel,
                                                          @RequestParam(name = "size", defaultValue = "50") int size) {
         if (size < 1) size = 1;
         if (size > 1000) size = 1000;
