@@ -3,10 +3,10 @@
 A lightweight service that generates unique PUIDs (Payment Unique IDs) and MUIDs (Message Unique IDs) for the Clear Path Gateway. Designed to be stateless, horizontally scalable, and safe for concurrent multi-instance operation.
 
 ## Features
-- PUID: 16-char ID = 3-char channel + 9-digit epoch seconds + 1-char shard + 3-digit sequence
-- MUID: PUID-prefixed ID with a randomized base36 suffix
-- MUID cache: `@Cacheable` memoizes MUID per PUID for idempotency and consistency
-- Batch/block PUID generation
+- PUID: 16-char ID = prefix `G31` + 13-digit numeric (DB sequence-backed, block-allocated)
+- MUID: 16-char ID = prefix `MSG` + 13-digit numeric (DB sequence-backed, block-allocated)
+- In-memory cache via Ehcache (JCache) for lightweight performance (no per-ID DB writes)
+- Batch/block PUID generation (prefetch 1000 IDs per allocation)
 - Health endpoint
 - Stateless; safe for multi-instance scaling
 
@@ -17,19 +17,15 @@ A lightweight service that generates unique PUIDs (Payment Unique IDs) and MUIDs
 - GET `/api/ids/puid-block?channel=G3I&size=50` → `{ channel, count, puids: [] }`
 
 ## Uniqueness & Scalability
-- Within one instance, per-second sequence (000–999) is capped at 1000; if exceeded in the same second, the generator advances to the next second to avoid collisions.
-- Cross-instance uniqueness is achieved using `id.shard` (single character) configured per instance (env `ID_SHARD`). Ensure different shard values per instance under extreme load.
-- MUID adds randomness; memoized per PUID for idempotency via Spring Cache.
+- Cross-pod uniqueness via a shared DB-backed monotonically increasing sequence.
+- Each instance allocates blocks of 1000 IDs atomically; IDs are then served from memory.
+- No per-ID persistence; only the sequence value advances.
 
 ## Caching
-- Uses Spring Cache with Caffeine.
-- Cache name: `muidByPuid` (key = PUID, value = MUID).
-- Configure via Spring properties (example):
-  - `spring.cache.cache-names=muidByPuid`
-  - `spring.cache.caffeine.spec=maximumSize=100000,expireAfterWrite=6h`
+- Uses Spring Cache with Ehcache (JCache API).
+- Configure via `spring.cache.jcache.config` if a custom ehcache.xml is desired (defaults are sufficient here).
 
 ## Configuration
-- `id.shard` (env: `ID_SHARD`): single character shard discriminator (default `0`).
 - Server port: set `SERVER_PORT` (e.g., 8091) or `server.port` property.
 
 ## Local Development

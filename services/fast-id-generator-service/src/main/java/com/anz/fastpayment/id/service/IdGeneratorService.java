@@ -1,62 +1,68 @@
 package com.anz.fastpayment.id.service;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class IdGeneratorService {
 
-	@Value("${id.shard:0}")
-	private String shardConfig; // last digit used
+    private static final String PUID_PREFIX = "G31";
+    private static final String MUID_PREFIX = "MSG";
+    private static final int BLOCK_SIZE = 1000;
 
-	private volatile long lastSecond = -1L;
-	private final AtomicInteger sequence = new AtomicInteger(0);
-	private final java.util.Random random = new java.util.Random();
+    private final SequenceAllocator allocator;
 
-	public synchronized String nextPuid(String channel) {
-		if (channel == null || channel.isBlank()) channel = "G3I";
-		channel = channel.length() >= 3 ? channel.substring(0, 3) : String.format("%-3s", channel).replace(' ', 'X');
-		long nowSec = Instant.now().getEpochSecond();
-		if (nowSec != lastSecond) {
-			lastSecond = nowSec;
-			sequence.set(0);
-		}
-		int seq = sequence.getAndIncrement();
-		if (seq >= 1000) {
-			// wait for next second to keep uniqueness
-			do { nowSec = Instant.now().getEpochSecond(); } while (nowSec == lastSecond);
-			lastSecond = nowSec;
-			sequence.set(1);
-			seq = 0;
-		}
-		String epochSec = String.format("%09d", (int)(nowSec % 1_000_000_000L));
-		char shard = (shardConfig == null || shardConfig.isBlank()) ? '0' : shardConfig.charAt(shardConfig.length() - 1);
-		String seq3 = String.format("%03d", seq);
-		return channel + epochSec + shard + seq3; // 3 + 9 + 1 + 3 = 16
-	}
+    // In-memory block tracking; no per-ID storage
+    private final AtomicLong current = new AtomicLong(0);
+    private volatile long blockEndInclusive = -1L;
 
-	@Cacheable(cacheNames = "muidByPuid", key = "#root.args[0]")
-	public String nextMuid(String puid) {
-		long nowPart = System.nanoTime() & 0xFFFFFL; // lower 20 bits
-		int rndPart = random.nextInt(1 << 12); // 12 bits
-		int mix = (int)((nowPart << 12) | rndPart) & 0xFFFFFF; // 24 bits total
-		String suffix = Integer.toString(mix, 36);
-		while (suffix.length() < 5) suffix = "0" + suffix; // pad to at least 5
-		return "%s-%s".formatted(puid, suffix);
-	}
+    public IdGeneratorService(SequenceAllocator allocator) {
+        this.allocator = allocator;
+    }
 
-    public synchronized List<String> nextPuidBlock(String channel, int size) {
+    public String nextPuid(String ignoredChannel) {
+        long n = nextNumeric();
+        return PUID_PREFIX + to13Digits(n);
+    }
+
+    public String nextMuid() {
+        long n = nextNumeric();
+        return MUID_PREFIX + to13Digits(n);
+    }
+
+    public synchronized List<String> nextPuidBlock(String ignoredChannel, int size) {
+        if (size < 1) size = 1;
         List<String> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            list.add(nextPuid(channel));
+            list.add(nextPuid(null));
         }
         return list;
+    }
+
+    private String to13Digits(long n) {
+        if (n < 0) n = Math.abs(n);
+        String s = Long.toString(n);
+        if (s.length() > 13) s = s.substring(s.length() - 13);
+        return String.format("%013d", Long.parseLong(s));
+    }
+
+    private long nextNumeric() {
+        for (;;) {
+            long curr = current.get();
+            if (curr <= blockEndInclusive && current.compareAndSet(curr, curr + 1)) {
+                return curr;
+            }
+            synchronized (this) {
+                if (current.get() > blockEndInclusive) {
+                    long start = allocator.allocateBlock(BLOCK_SIZE);
+                    current.set(start);
+                    blockEndInclusive = start + BLOCK_SIZE - 1;
+                }
+            }
+        }
     }
 }
 
