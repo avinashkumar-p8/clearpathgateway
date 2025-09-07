@@ -1,14 +1,12 @@
 {
-  "name": "fast-sender-service-e2e",
+  "name": "fast-sender-e2e",
   "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "test": "playwright test"
-  },
   "devDependencies": {
-    "@playwright/test": "^1.47.0"
+    "@kafkajs/confluent-schema-registry": "^3.9.0",
+    "@playwright/test": "^1.45.0",
+    "kafkajs": "^2.2.4"
+  },
+  "scripts": {
+    "test": "playwright test --reporter=line"
   }
 }
-
-
