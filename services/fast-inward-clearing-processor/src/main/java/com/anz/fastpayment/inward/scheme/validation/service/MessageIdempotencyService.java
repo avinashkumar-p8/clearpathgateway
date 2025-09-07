@@ -37,7 +37,7 @@ public class MessageIdempotencyService {
      * Check if message is new and register it for processing
      * This method ensures exactly-once processing
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean isMessageNewAndRegister(String muid, String topic, Integer partition, Long offset, String eventPayload) {
         if (!StringUtils.hasText(muid)) {
             logger.warn("MUID is null or empty, cannot ensure idempotency");
@@ -96,7 +96,7 @@ public class MessageIdempotencyService {
     /**
      * Update processing status of a message
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateProcessingStatus(String muid, String status) {
         if (!StringUtils.hasText(muid) || !StringUtils.hasText(status)) {
             logger.warn("Invalid parameters for status update: muid={}, status={}", muid, status);

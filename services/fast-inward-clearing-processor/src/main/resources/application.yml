@@ -2,8 +2,9 @@ spring:
   application:
     name: fast-inward-clearing-processor
   profiles:
-    active: local
+    active: test
 
+  # Kafka Configuration
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
@@ -15,6 +16,7 @@ spring:
         schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
         schema.registry.basic.auth.user.info: ${SCHEMA_REGISTRY_USERNAME:}:${SCHEMA_REGISTRY_PASSWORD:}
         basic.auth.credentials.source: USER_INFO
+        auto.register.schemas: true
     consumer:
       group-id: ${spring.application.name}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -24,16 +26,28 @@ spring:
         schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
         schema.registry.basic.auth.user.info: ${SCHEMA_REGISTRY_USERNAME:}:${SCHEMA_REGISTRY_PASSWORD:}
         specific.avro.reader: true
+        auto.register.schemas: true
 
   # Spanner Configuration
   cloud:
     gcp:
+      project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
       spanner:
-        project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
-        instance-id: ${SPANNER_INSTANCE:payment-gateway}
+        instance-id: ${SPANNER_INSTANCE:payment-gateway-local}
         database: ${SPANNER_DATABASE:inward-processor-db}
-        emulator-host: ${SPANNER_EMULATOR_HOST:localhost:9010}
-        auto-create-interleaved-table-ddl-on-delete-cascade: true
+        emulator:
+          enabled: true
+
+  # Schema Event Topics
+  schema:
+    registration:
+      topic: schema-registration-events
+    update:
+      topic: schema-update-events
+    delete:
+      topic: schema-delete-events
+    event:
+      topic: schema-events
 
 server:
   port: 8080
@@ -57,61 +71,48 @@ app:
   name: Fast Inward Clearing Processor
   version: 21.0.0-apeafast-SNAPSHOT
 
-  # Idempotency Configuration for Banking Operations
+  # Kafka Topics Configuration
+  kafka:
+    topics:
+      input: transactions.incoming
+      output: fast-outward-clearing
+      dlq: fast-inward-clearing-dlq
+
+  # Idempotency Configuration
   idempotency:
     cache:
       muid:
-        ttl-seconds: 3600  # 1 hour TTL for MUID cache
-        max-entries: 10000 # Maximum entries in cache
+        ttl-seconds: 3600
+        max-entries: 10000
         eviction-policy: LRU
-    
     database:
       cleanup:
         enabled: true
-        retention-days: 90  # Keep MUID records for 90 days
-        batch-size: 1000    # Batch size for cleanup operations
-        schedule: "0 2 * * *" # Daily at 2 AM
-    
+        retention-days: 90
+        batch-size: 1000
+        schedule: "0 2 * * *"
     logging:
       level: INFO
       include-muid: true
-      include-topic: false  # Don't log topic for security
-      include-partition: false  # Don't log partition for security
-      include-offset: false  # Don't log offset for security
-    
+      include-topic: false
+      include-partition: false
+      include-offset: false
     monitoring:
       enabled: true
       metrics-prefix: "kafka.idempotency"
       health-check:
         enabled: true
         timeout-seconds: 30
-    
     error-handling:
       max-retries: 3
       backoff-multiplier: 2.0
       initial-delay-ms: 1000
-        
     security:
       audit-logging: true
       sensitive-data-masking: true
       encryption:
-        enabled: false  # Enable if encryption is required
+        enabled: false
         algorithm: "AES-256"
-
-  # Kafka Topic Configuration
-  kafka:
-    topics:
-      input: transactions.incoming
-      output: transactions.processed
-      dlq: transactions.dlq
-
-    producer:
-      acks: all
-      retries: 3
-    schema-registry:
-      url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
-      username: ${SCHEMA_REGISTRY_USERNAME:}
-      password: ${SCHEMA_REGISTRY_PASSWORD:}
 
   # Processing Configuration
   processing:
@@ -135,13 +136,12 @@ app:
     wait-duration-in-open-state: 30s
     sliding-window-size: 10
 
-  # Cache configuration - use in-memory cache instead of Redis
-  cache:
-    type: simple  # Use in-memory cache instead of Redis
-    cache-names: muidCache,currencyCache,countryCache
+# Cache configuration
+cache:
+  type: simple
+  cache-names: muidCache,currencyCache,countryCache
 
-
-
+# Logging Configuration
 logging:
   level:
     com.anz.fastpayment: DEBUG
@@ -150,6 +150,26 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] - %msg%n"
 
 ---
+# Local Profile Configuration
+spring:
+  config:
+    activate:
+      on-profile: local
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${spring.application.name}
+  cloud:
+    gcp:
+      project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
+      spanner:
+        instance-id: ${SPANNER_INSTANCE:payment-gateway-local}
+        database: ${SPANNER_DATABASE:inward-processor-db}
+        emulator:
+          enabled: true
+
+---
+# Test Profile Configuration
 spring:
   config:
     activate:
@@ -162,25 +182,26 @@ spring:
       concurrency: 3
       ack-mode: manual
       type: single
-      # Retry configuration
       retry:
         enabled: true
         initial-interval: 1s
         max-attempts: 3
         multiplier: 2.0
         max-interval: 10s
-  # Spanner Configuration for Test Profile
   cloud:
     gcp:
+      project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
       spanner:
-        project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
-        instance-id: ${SPANNER_INSTANCE:payment-gateway}
+        instance-id: ${SPANNER_INSTANCE:payment-gateway-local}
         database: ${SPANNER_DATABASE:inward-processor-db}
+        emulator:
+          enabled: true
   cache:
-    type: simple  # Use in-memory cache instead of Redis
+    type: simple
     cache-names: muidCache,currencyCache,countryCache
 
 ---
+# GCP Production Profile Configuration
 spring:
   config:
     activate:
@@ -193,7 +214,6 @@ spring:
       concurrency: 3
       ack-mode: manual
       type: single
-      # Retry configuration
       retry:
         enabled: true
         initial-interval: 1s
@@ -203,6 +223,10 @@ spring:
   cloud:
     gcp:
       project-id: ${GCP_PROJECT_ID:anz-fastpayment-sg}
+      credentials:
+        location: ${GOOGLE_APPLICATION_CREDENTIALS}
       spanner:
         instance-id: ${SPANNER_INSTANCE:payment-gateway}
         database: ${SPANNER_DATABASE:inward-processor-db}
+        emulator:
+          enabled: false

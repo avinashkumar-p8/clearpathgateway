@@ -22,8 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Unified Transaction Consumer
  * Single consumer that handles all transaction processing through the pipeline
  * 
- * NOTE: This consumer is currently DISABLED for Phase 1
- * It will be enabled in Phase 3 after all handlers are implemented
+ * ENABLED: This consumer handles all transaction processing including schema management
  */
 @Component
 public class UnifiedTransactionConsumer {
@@ -64,7 +63,7 @@ public class UnifiedTransactionConsumer {
      * Uses the complete handler pipeline for processing
      */
     @KafkaListener(
-        topics = "#{inputTopic}",
+        topics = "${kafka.input.topic:transactions.incoming}",
         groupId = "${spring.kafka.consumer.group-id}",
         containerFactory = "kafkaListenerContainerFactory"
     )
@@ -265,4 +264,11 @@ public class UnifiedTransactionConsumer {
     public long getValidationFailures() { return validationFailures.get(); }
     public long getBusinessProcessingFailures() { return businessProcessingFailures.get(); }
     public long getSystemErrors() { return systemErrors.get(); }
+    
+    // ============================================================================
+    // SCHEMA MANAGEMENT: NOT NEEDED FOR MAIN FLOW
+    // ============================================================================
+    // Schema registration is handled automatically by Kafka Avro Serializer/Deserializer
+    // with auto.register.schemas: true in application.yml
+    // ============================================================================
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
  * Provides data access methods for idempotency checks and caching support
  */
 @Repository
-public interface MessageUniqueIdRepository extends SpannerRepository<MessageUniqueId, Long> {
+public interface MessageUniqueIdRepository extends SpannerRepository<MessageUniqueId, String> {
     
     /**
      * Check if MUID exists with active status

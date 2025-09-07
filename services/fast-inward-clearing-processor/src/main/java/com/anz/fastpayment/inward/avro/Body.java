@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Body extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5900468146001735984L;
+  private static final long serialVersionUID = -2791210666308543526L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Body\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PmtAddRq\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"PmtAddRq\",\"fields\":[{\"name\":\"RqUID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Request unique identifier\"},{\"name\":\"MsgHdr\",\"type\":{\"type\":\"record\",\"name\":\"MsgHdr\",\"fields\":[{\"name\":\"ClientDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client date\"},{\"name\":\"ClientName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client name\"},{\"name\":\"PartyId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Party identifier\"},{\"name\":\"Version\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Version\"}]},\"doc\":\"Message header\"},{\"name\":\"PayHdr\",\"type\":{\"type\":\"record\",\"name\":\"PayHdr\",\"fields\":[{\"name\":\"PODsID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"PODs identifier\"},{\"name\":\"PaymentID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment identifier\"},{\"name\":\"ThirdPartyPayID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Third party payment identifier\"},{\"name\":\"PaymentTRN\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment transaction reference number\"},{\"name\":\"PaymentRetRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment return reference\"},{\"name\":\"ProcDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing date\"}]},\"doc\":\"Payment header\"},{\"name\":\"FromFIData\",\"type\":{\"type\":\"record\",\"name\":\"FromFIData\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]},\"doc\":\"From financial institution data\"},{\"name\":\"FromCust\",\"type\":{\"type\":\"record\",\"name\":\"FromCust\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Customer name\"}]},\"doc\":\"From customer\"},{\"name\":\"FromAcct\",\"type\":{\"type\":\"record\",\"name\":\"FromAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"AcctSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account system\"},{\"name\":\"AcctGrp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account group\"},{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account name\"},{\"name\":\"PmtAuthMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment authorization method\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]},\"doc\":\"From account\"},{\"name\":\"ToFIData\",\"type\":{\"type\":\"record\",\"name\":\"ToFIData\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]},\"doc\":\"To financial institution data\"},{\"name\":\"Clearing\",\"type\":{\"type\":\"record\",\"name\":\"Clearing\",\"fields\":[{\"name\":\"ClearPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing preference\"}]},\"doc\":\"Clearing information\"},{\"name\":\"ToBene\",\"type\":{\"type\":\"record\",\"name\":\"ToBene\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Beneficiary name\"},{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"Message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message\"}]},\"doc\":\"To beneficiary\"},{\"name\":\"ToAcct\",\"type\":{\"type\":\"record\",\"name\":\"ToAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]},\"doc\":\"To account\"},{\"name\":\"Fees\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Fees array\"}]}},\"doc\":\"Payment add request array\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Body\",\"namespace\":\"com.anz.fastpayment.inward.avro\",\"fields\":[{\"name\":\"PmtAddRq\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"PmtAddRq\",\"fields\":[{\"name\":\"RqUID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Request unique identifier\"},{\"name\":\"MsgHdr\",\"type\":{\"type\":\"record\",\"name\":\"MsgHdr\",\"fields\":[{\"name\":\"ClientDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client date\"},{\"name\":\"ClientName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Client name\"},{\"name\":\"PartyId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Party identifier\"},{\"name\":\"Version\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Version\"}]},\"doc\":\"Message header\"},{\"name\":\"PayHdr\",\"type\":{\"type\":\"record\",\"name\":\"PayHdr\",\"fields\":[{\"name\":\"PODsID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"PODs identifier\"},{\"name\":\"PaymentID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment identifier\"},{\"name\":\"ThirdPartyPayID\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Third party payment identifier\"},{\"name\":\"PaymentTRN\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment transaction reference number\"},{\"name\":\"PaymentRetRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment return reference\"},{\"name\":\"ProcDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing date\"}]},\"doc\":\"Payment header\"},{\"name\":\"FromFIData\",\"type\":{\"type\":\"record\",\"name\":\"FromFIData\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]},\"doc\":\"From financial institution data\"},{\"name\":\"FromCust\",\"type\":{\"type\":\"record\",\"name\":\"FromCust\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Customer name\"}]},\"doc\":\"From customer\"},{\"name\":\"FromAcct\",\"type\":{\"type\":\"record\",\"name\":\"FromAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"AcctSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account system\"},{\"name\":\"AcctGrp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account group\"},{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account name\"},{\"name\":\"PmtAuthMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment authorization method\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]},\"doc\":\"From account\"},{\"name\":\"ToFIData\",\"type\":{\"type\":\"record\",\"name\":\"ToFIData\",\"fields\":[{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Bank identifier code\"}]},\"doc\":\"To financial institution data\"},{\"name\":\"Clearing\",\"type\":{\"type\":\"record\",\"name\":\"Clearing\",\"fields\":[{\"name\":\"ClearPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing preference\"}]},\"doc\":\"Clearing information\"},{\"name\":\"ToBene\",\"type\":{\"type\":\"record\",\"name\":\"ToBene\",\"fields\":[{\"name\":\"Name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Beneficiary name\"},{\"name\":\"Country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Country code\"},{\"name\":\"Message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message\"}]},\"doc\":\"To beneficiary\"},{\"name\":\"ToAcct\",\"type\":{\"type\":\"record\",\"name\":\"ToAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"},{\"name\":\"CurCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Currency code\"},{\"name\":\"Amount\",\"type\":\"double\",\"doc\":\"Amount\"},{\"name\":\"Narrative\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Narrative\"},{\"name\":\"AcctUse\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account use\"}]},\"doc\":\"To account\"},{\"name\":\"Fees\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Fees array\"}]}},\"doc\":\"Payment add request array\"},{\"name\":\"Procctxt\",\"type\":{\"type\":\"record\",\"name\":\"Procctxt\",\"fields\":[{\"name\":\"sideEffect\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Side effects array\"},{\"name\":\"softFail\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"doc\":\"Soft failures array\"},{\"name\":\"PmtDtls\",\"type\":{\"type\":\"record\",\"name\":\"PmtDtls\",\"fields\":[{\"name\":\"PmtCtxt\",\"type\":{\"type\":\"record\",\"name\":\"PmtCtxt\",\"fields\":[{\"name\":\"PuId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment unit identifier\"},{\"name\":\"IntnSrc\",\"type\":{\"type\":\"record\",\"name\":\"IntnSrc\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Type\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Value\"}]},\"doc\":\"Intention source\"}]},\"doc\":\"Payment context\"},{\"name\":\"ProcCtryCd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing country code\"},{\"name\":\"InstdClrgPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed method of payment category\"},{\"name\":\"PmtCtgry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Payment category\"},{\"name\":\"actClrMethod\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Actual clearing method\"},{\"name\":\"actlMtdOfPmtCtgry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Actual method of payment category\"},{\"name\":\"FIDCIdentifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"FIDC identifier\"},{\"name\":\"FICCIdentifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"FICC identifier\"},{\"name\":\"VAM\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"VAM\"},{\"name\":\"derivedDRAccountNo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor account number\"},{\"name\":\"derivedDRAccountSys\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor account system\"},{\"name\":\"derivedDRBookCode\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Derived debtor book code\"}]},\"doc\":\"Payment details\"}]},\"doc\":\"Processing context\"},{\"name\":\"messages\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Message\",\"fields\":[{\"name\":\"instruction\",\"type\":{\"type\":\"record\",\"name\":\"Instruction\",\"fields\":[{\"name\":\"MsgDef\",\"type\":{\"type\":\"record\",\"name\":\"MsgDef\",\"fields\":[{\"name\":\"MsgType\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message type\"},{\"name\":\"Schema\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Schema\"}]},\"doc\":\"Message definition\"},{\"name\":\"MsgCtxt\",\"type\":{\"type\":\"record\",\"name\":\"MsgCtxt\",\"fields\":[{\"name\":\"OrigMsgTyp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Original message type\"},{\"name\":\"InstdClrgPref\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed clearing preference\"},{\"name\":\"InstdMoPCat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instructed method of payment category\"},{\"name\":\"Site\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Site\"},{\"name\":\"BaseAmt\",\"type\":\"double\",\"doc\":\"Base amount\"},{\"name\":\"BaseCcy\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Base currency\"},{\"name\":\"SenderBIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Sender BIC\"},{\"name\":\"ProcCtryCd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Processing country code\"},{\"name\":\"Department\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Department\"},{\"name\":\"MsgId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Message identifier\"},{\"name\":\"Direction\",\"type\":{\"type\":\"string\"",",\"avro.java.string\":\"String\"},\"doc\":\"Direction\"}]},\"doc\":\"Message context\"},{\"name\":\"MsgAddRq\",\"type\":{\"type\":\"record\",\"name\":\"MsgAddRq\",\"fields\":[{\"name\":\"OrigMsg\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Original message\"},{\"name\":\"MsgDtls\",\"type\":{\"type\":\"record\",\"name\":\"MsgDtls\",\"fields\":[{\"name\":\"DrctDbtTxInf\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTxInf\",\"fields\":[{\"name\":\"PmtId\",\"type\":{\"type\":\"record\",\"name\":\"PmtId\",\"fields\":[{\"name\":\"InstrId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Instruction identifier\"},{\"name\":\"TxId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Transaction identifier\"},{\"name\":\"EndToEndId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"End to end identifier\"},{\"name\":\"ClrSysRef\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Clearing system reference\"}]},\"doc\":\"Payment identifier\"},{\"name\":\"IntrBkSttlmAmt\",\"type\":\"double\",\"doc\":\"Interbank settlement amount\"},{\"name\":\"IntrBkSttlmCCY\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Interbank settlement currency\"},{\"name\":\"IntrBkSttlmDt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Interbank settlement date\"},{\"name\":\"InstgAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstgAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Instructing agent\"},{\"name\":\"InstdAgt\",\"type\":{\"type\":\"record\",\"name\":\"InstdAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Instructed agent\"},{\"name\":\"Dbtr\",\"type\":{\"type\":\"record\",\"name\":\"Dbtr\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]},\"doc\":\"Debtor\"},{\"name\":\"DbtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]},\"doc\":\"Debtor account\"},{\"name\":\"DbtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"DbtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Debtor agent\"},{\"name\":\"CdtrAgt\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAgt\",\"fields\":[{\"name\":\"BIC\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"BIC\"}]},\"doc\":\"Creditor agent\"},{\"name\":\"Cdtr\",\"type\":{\"type\":\"record\",\"name\":\"Cdtr\",\"fields\":[{\"name\":\"Nm\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name\"}]},\"doc\":\"Creditor\"},{\"name\":\"CdtrAcct\",\"type\":{\"type\":\"record\",\"name\":\"CdtrAcct\",\"fields\":[{\"name\":\"AcctId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Account identifier\"}]},\"doc\":\"Creditor account\"},{\"name\":\"Purp\",\"type\":{\"type\":\"record\",\"name\":\"Purp\",\"fields\":[{\"name\":\"Cd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Code\"}]},\"doc\":\"Purpose\"},{\"name\":\"RmtInf\",\"type\":{\"type\":\"record\",\"name\":\"RmtInf\",\"fields\":[{\"name\":\"Ustrd\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Unstructured\"}]},\"doc\":\"Remittance information\"},{\"name\":\"DrctDbtTx\",\"type\":{\"type\":\"record\",\"name\":\"DrctDbtTx\",\"fields\":[{\"name\":\"MndtRltdInf\",\"type\":{\"type\":\"record\",\"name\":\"MndtRltdInf\",\"fields\":[{\"name\":\"MndtId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Mandate identifier\"}]},\"doc\":\"Mandate related information\"}]},\"doc\":\"Direct debit transaction\"}]},\"doc\":\"Direct debit transaction information\"}]},\"doc\":\"Message details\"}]},\"doc\":\"Message add request\"}]},\"doc\":\"Instruction\"}]}},\"doc\":\"Messages array\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -75,6 +75,10 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
 
   /** Payment add request array */
   private java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq> PmtAddRq;
+  /** Processing context */
+  private com.anz.fastpayment.inward.avro.Procctxt Procctxt;
+  /** Messages array */
+  private java.util.List<com.anz.fastpayment.inward.avro.Message> messages;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -86,9 +90,13 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    * @param PmtAddRq Payment add request array
+   * @param Procctxt Processing context
+   * @param messages Messages array
    */
-  public Body(java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq> PmtAddRq) {
+  public Body(java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq> PmtAddRq, com.anz.fastpayment.inward.avro.Procctxt Procctxt, java.util.List<com.anz.fastpayment.inward.avro.Message> messages) {
     this.PmtAddRq = PmtAddRq;
+    this.Procctxt = Procctxt;
+    this.messages = messages;
   }
 
   @Override
@@ -102,6 +110,8 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return PmtAddRq;
+    case 1: return Procctxt;
+    case 2: return messages;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -112,6 +122,8 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: PmtAddRq = (java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq>)value$; break;
+    case 1: Procctxt = (com.anz.fastpayment.inward.avro.Procctxt)value$; break;
+    case 2: messages = (java.util.List<com.anz.fastpayment.inward.avro.Message>)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -132,6 +144,42 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
    */
   public void setPmtAddRq(java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq> value) {
     this.PmtAddRq = value;
+  }
+
+  /**
+   * Gets the value of the 'Procctxt' field.
+   * @return Processing context
+   */
+  public com.anz.fastpayment.inward.avro.Procctxt getProcctxt() {
+    return Procctxt;
+  }
+
+
+  /**
+   * Sets the value of the 'Procctxt' field.
+   * Processing context
+   * @param value the value to set.
+   */
+  public void setProcctxt(com.anz.fastpayment.inward.avro.Procctxt value) {
+    this.Procctxt = value;
+  }
+
+  /**
+   * Gets the value of the 'messages' field.
+   * @return Messages array
+   */
+  public java.util.List<com.anz.fastpayment.inward.avro.Message> getMessages() {
+    return messages;
+  }
+
+
+  /**
+   * Sets the value of the 'messages' field.
+   * Messages array
+   * @param value the value to set.
+   */
+  public void setMessages(java.util.List<com.anz.fastpayment.inward.avro.Message> value) {
+    this.messages = value;
   }
 
   /**
@@ -177,6 +225,11 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
 
     /** Payment add request array */
     private java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq> PmtAddRq;
+    /** Processing context */
+    private com.anz.fastpayment.inward.avro.Procctxt Procctxt;
+    private com.anz.fastpayment.inward.avro.Procctxt.Builder ProcctxtBuilder;
+    /** Messages array */
+    private java.util.List<com.anz.fastpayment.inward.avro.Message> messages;
 
     /** Creates a new Builder */
     private Builder() {
@@ -193,6 +246,17 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
         this.PmtAddRq = data().deepCopy(fields()[0].schema(), other.PmtAddRq);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
+      if (isValidValue(fields()[1], other.Procctxt)) {
+        this.Procctxt = data().deepCopy(fields()[1].schema(), other.Procctxt);
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
+      }
+      if (other.hasProcctxtBuilder()) {
+        this.ProcctxtBuilder = com.anz.fastpayment.inward.avro.Procctxt.newBuilder(other.getProcctxtBuilder());
+      }
+      if (isValidValue(fields()[2], other.messages)) {
+        this.messages = data().deepCopy(fields()[2].schema(), other.messages);
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
+      }
     }
 
     /**
@@ -204,6 +268,15 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
       if (isValidValue(fields()[0], other.PmtAddRq)) {
         this.PmtAddRq = data().deepCopy(fields()[0].schema(), other.PmtAddRq);
         fieldSetFlags()[0] = true;
+      }
+      if (isValidValue(fields()[1], other.Procctxt)) {
+        this.Procctxt = data().deepCopy(fields()[1].schema(), other.Procctxt);
+        fieldSetFlags()[1] = true;
+      }
+      this.ProcctxtBuilder = null;
+      if (isValidValue(fields()[2], other.messages)) {
+        this.messages = data().deepCopy(fields()[2].schema(), other.messages);
+        fieldSetFlags()[2] = true;
       }
     }
 
@@ -251,12 +324,150 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
       return this;
     }
 
+    /**
+      * Gets the value of the 'Procctxt' field.
+      * Processing context
+      * @return The value.
+      */
+    public com.anz.fastpayment.inward.avro.Procctxt getProcctxt() {
+      return Procctxt;
+    }
+
+
+    /**
+      * Sets the value of the 'Procctxt' field.
+      * Processing context
+      * @param value The value of 'Procctxt'.
+      * @return This builder.
+      */
+    public com.anz.fastpayment.inward.avro.Body.Builder setProcctxt(com.anz.fastpayment.inward.avro.Procctxt value) {
+      validate(fields()[1], value);
+      this.ProcctxtBuilder = null;
+      this.Procctxt = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'Procctxt' field has been set.
+      * Processing context
+      * @return True if the 'Procctxt' field has been set, false otherwise.
+      */
+    public boolean hasProcctxt() {
+      return fieldSetFlags()[1];
+    }
+
+    /**
+     * Gets the Builder instance for the 'Procctxt' field and creates one if it doesn't exist yet.
+     * Processing context
+     * @return This builder.
+     */
+    public com.anz.fastpayment.inward.avro.Procctxt.Builder getProcctxtBuilder() {
+      if (ProcctxtBuilder == null) {
+        if (hasProcctxt()) {
+          setProcctxtBuilder(com.anz.fastpayment.inward.avro.Procctxt.newBuilder(Procctxt));
+        } else {
+          setProcctxtBuilder(com.anz.fastpayment.inward.avro.Procctxt.newBuilder());
+        }
+      }
+      return ProcctxtBuilder;
+    }
+
+    /**
+     * Sets the Builder instance for the 'Procctxt' field
+     * Processing context
+     * @param value The builder instance that must be set.
+     * @return This builder.
+     */
+
+    public com.anz.fastpayment.inward.avro.Body.Builder setProcctxtBuilder(com.anz.fastpayment.inward.avro.Procctxt.Builder value) {
+      clearProcctxt();
+      ProcctxtBuilder = value;
+      return this;
+    }
+
+    /**
+     * Checks whether the 'Procctxt' field has an active Builder instance
+     * Processing context
+     * @return True if the 'Procctxt' field has an active Builder instance
+     */
+    public boolean hasProcctxtBuilder() {
+      return ProcctxtBuilder != null;
+    }
+
+    /**
+      * Clears the value of the 'Procctxt' field.
+      * Processing context
+      * @return This builder.
+      */
+    public com.anz.fastpayment.inward.avro.Body.Builder clearProcctxt() {
+      Procctxt = null;
+      ProcctxtBuilder = null;
+      fieldSetFlags()[1] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'messages' field.
+      * Messages array
+      * @return The value.
+      */
+    public java.util.List<com.anz.fastpayment.inward.avro.Message> getMessages() {
+      return messages;
+    }
+
+
+    /**
+      * Sets the value of the 'messages' field.
+      * Messages array
+      * @param value The value of 'messages'.
+      * @return This builder.
+      */
+    public com.anz.fastpayment.inward.avro.Body.Builder setMessages(java.util.List<com.anz.fastpayment.inward.avro.Message> value) {
+      validate(fields()[2], value);
+      this.messages = value;
+      fieldSetFlags()[2] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'messages' field has been set.
+      * Messages array
+      * @return True if the 'messages' field has been set, false otherwise.
+      */
+    public boolean hasMessages() {
+      return fieldSetFlags()[2];
+    }
+
+
+    /**
+      * Clears the value of the 'messages' field.
+      * Messages array
+      * @return This builder.
+      */
+    public com.anz.fastpayment.inward.avro.Body.Builder clearMessages() {
+      messages = null;
+      fieldSetFlags()[2] = false;
+      return this;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public Body build() {
       try {
         Body record = new Body();
         record.PmtAddRq = fieldSetFlags()[0] ? this.PmtAddRq : (java.util.List<com.anz.fastpayment.inward.avro.PmtAddRq>) defaultValue(fields()[0]);
+        if (ProcctxtBuilder != null) {
+          try {
+            record.Procctxt = this.ProcctxtBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("Procctxt"));
+            throw e;
+          }
+        } else {
+          record.Procctxt = fieldSetFlags()[1] ? this.Procctxt : (com.anz.fastpayment.inward.avro.Procctxt) defaultValue(fields()[1]);
+        }
+        record.messages = fieldSetFlags()[2] ? this.messages : (java.util.List<com.anz.fastpayment.inward.avro.Message>) defaultValue(fields()[2]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -302,6 +513,21 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
     if (actualSize0 != size0)
       throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
 
+    this.Procctxt.customEncode(out);
+
+    long size1 = this.messages.size();
+    out.writeArrayStart();
+    out.setItemCount(size1);
+    long actualSize1 = 0;
+    for (com.anz.fastpayment.inward.avro.Message e1: this.messages) {
+      actualSize1++;
+      out.startItem();
+      e1.customEncode(out);
+    }
+    out.writeArrayEnd();
+    if (actualSize1 != size1)
+      throw new java.util.ConcurrentModificationException("Array-size written was " + size1 + ", but element count was " + actualSize1 + ".");
+
   }
 
   @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
@@ -327,8 +553,31 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
         }
       }
 
+      if (this.Procctxt == null) {
+        this.Procctxt = new com.anz.fastpayment.inward.avro.Procctxt();
+      }
+      this.Procctxt.customDecode(in);
+
+      long size1 = in.readArrayStart();
+      java.util.List<com.anz.fastpayment.inward.avro.Message> a1 = this.messages;
+      if (a1 == null) {
+        a1 = new SpecificData.Array<com.anz.fastpayment.inward.avro.Message>((int)size1, SCHEMA$.getField("messages").schema());
+        this.messages = a1;
+      } else a1.clear();
+      SpecificData.Array<com.anz.fastpayment.inward.avro.Message> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<com.anz.fastpayment.inward.avro.Message>)a1 : null);
+      for ( ; 0 < size1; size1 = in.arrayNext()) {
+        for ( ; size1 != 0; size1--) {
+          com.anz.fastpayment.inward.avro.Message e1 = (ga1 != null ? ga1.peek() : null);
+          if (e1 == null) {
+            e1 = new com.anz.fastpayment.inward.avro.Message();
+          }
+          e1.customDecode(in);
+          a1.add(e1);
+        }
+      }
+
     } else {
-      for (int i = 0; i < 1; i++) {
+      for (int i = 0; i < 3; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           long size0 = in.readArrayStart();
@@ -346,6 +595,33 @@ public class Body extends org.apache.avro.specific.SpecificRecordBase implements
               }
               e0.customDecode(in);
               a0.add(e0);
+            }
+          }
+          break;
+
+        case 1:
+          if (this.Procctxt == null) {
+            this.Procctxt = new com.anz.fastpayment.inward.avro.Procctxt();
+          }
+          this.Procctxt.customDecode(in);
+          break;
+
+        case 2:
+          long size1 = in.readArrayStart();
+          java.util.List<com.anz.fastpayment.inward.avro.Message> a1 = this.messages;
+          if (a1 == null) {
+            a1 = new SpecificData.Array<com.anz.fastpayment.inward.avro.Message>((int)size1, SCHEMA$.getField("messages").schema());
+            this.messages = a1;
+          } else a1.clear();
+          SpecificData.Array<com.anz.fastpayment.inward.avro.Message> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<com.anz.fastpayment.inward.avro.Message>)a1 : null);
+          for ( ; 0 < size1; size1 = in.arrayNext()) {
+            for ( ; size1 != 0; size1--) {
+              com.anz.fastpayment.inward.avro.Message e1 = (ga1 != null ? ga1.peek() : null);
+              if (e1 == null) {
+                e1 = new com.anz.fastpayment.inward.avro.Message();
+              }
+              e1.customDecode(in);
+              a1.add(e1);
             }
           }
           break;

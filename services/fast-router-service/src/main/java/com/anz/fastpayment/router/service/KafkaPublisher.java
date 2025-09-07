@@ -1,17 +1,24 @@
 package com.anz.fastpayment.router.service;
 
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class KafkaPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class);
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate;
 
     @Value("${app.kafka.topics.payment-messages:payment-messages}")
     private String paymentMessagesTopic;
@@ -22,14 +29,25 @@ public class KafkaPublisher {
     @Value("${app.kafka.topics.pacs002-requests:pacs002-requests}")
     private String pacs002RequestsTopic;
 
-    public KafkaPublisher(KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
+    private final Schema unifiedSchema;
+
+    public KafkaPublisher(KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate) {
+        this.avroKafkaTemplate = avroKafkaTemplate;
+        try {
+            ClassPathResource schemaRes = new ClassPathResource("avro/unified-payment-message.avsc");
+            try (InputStream in = schemaRes.getInputStream()) {
+                String content = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+                this.unifiedSchema = new Schema.Parser().parse(content);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to load Avro schema", e);
+        }
     }
 
-    public void publishValid(String key, String payload) {
-        log.info("Publishing valid message to topic {} with key {}", paymentMessagesTopic, key);
+    public void publishValidUnified(GenericRecord record, String key) {
+        log.info("Publishing avro message to topic {} with key {}", paymentMessagesTopic, key);
         try {
-            kafkaTemplate.send(paymentMessagesTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+            avroKafkaTemplate.send(paymentMessagesTopic, key, record).get(5, java.util.concurrent.TimeUnit.SECONDS);
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
             log.warn("Interrupted while publishing to topic={}, key={}", paymentMessagesTopic, key, ie);
@@ -38,29 +56,35 @@ public class KafkaPublisher {
         }
     }
 
+    // For backward-compatibility for exception and pacs002 requests (string JSON)
+    private final org.springframework.kafka.core.KafkaTemplate<String, String> jsonKafkaTemplate = null;
+
     public void publishInvalid(String key, String payload) {
-        log.warn("Publishing invalid message to exception topic {} with key {}", exceptionTopic, key);
+        if (jsonKafkaTemplate == null) {
+            log.warn("JSON template not configured; skipping invalid publish");
+            return;
+        }
         try {
-            kafkaTemplate.send(exceptionTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            log.warn("Interrupted while publishing to topic={}, key={}", exceptionTopic, key, ie);
-        } catch (java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
-            log.warn("Kafka publish timeout/failure for topic={}, key={}", exceptionTopic, key, e);
+            jsonKafkaTemplate.send(exceptionTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.warn("Kafka publish failure for exception topic={}, key={}", exceptionTopic, key, e);
         }
     }
 
     public void publishPacs002Request(String key, String payload) {
-        log.info("Publishing pacs002 request to topic {} with key {}", pacs002RequestsTopic, key);
+        if (jsonKafkaTemplate == null) {
+            log.warn("JSON template not configured; skipping pacs002 request publish");
+            return;
+        }
         try {
-            kafkaTemplate.send(pacs002RequestsTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            log.warn("Interrupted while publishing to topic={}, key={}", pacs002RequestsTopic, key, ie);
-        } catch (java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
-            log.warn("Kafka publish timeout/failure for topic={}, key={}", pacs002RequestsTopic, key, e);
+            jsonKafkaTemplate.send(pacs002RequestsTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.warn("Kafka publish failure for pacs002 topic={}, key={}", pacs002RequestsTopic, key, e);
         }
     }
-}
 
+    public Schema getUnifiedSchema() {
+        return unifiedSchema;
+    }
+}
 
