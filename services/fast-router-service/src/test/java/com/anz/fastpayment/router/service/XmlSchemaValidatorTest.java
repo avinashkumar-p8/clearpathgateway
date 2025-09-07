@@ -13,6 +13,16 @@ class XmlSchemaValidatorTest {
     @BeforeEach
     void setUp() {
         validator = new XmlSchemaValidator();
+        try {
+            java.lang.reflect.Method m = XmlSchemaValidator.class.getDeclaredMethod("setXsdValidationEnabled", boolean.class);
+            m.setAccessible(true);
+            m.invoke(validator, true);
+        } catch (Exception ignore) { }
+        try {
+            java.lang.reflect.Method m2 = XmlSchemaValidator.class.getDeclaredMethod("setMaxXmlBytes", int.class);
+            m2.setAccessible(true);
+            m2.invoke(validator, 10_000_000); // lift for tests
+        } catch (Exception ignore) { }
     }
 
     @Test

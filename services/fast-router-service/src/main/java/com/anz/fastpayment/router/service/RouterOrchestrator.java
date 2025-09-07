@@ -136,13 +136,20 @@ public class RouterOrchestrator {
             return;
         }
 
-        // Dedup placeholder (currently non-blocking)
+        // Dedup check: store key in Spanner; if exists, mark duplicate and stop
         try {
             String uniqueId = uniqueIdExtractor.extractUniqueId(xml, messageType);
             if (uniqueId == null || uniqueId.trim().isEmpty()) {
                 log.info("[DEDUP] Skipping dedup for PUID={} due to missing uniqueId", puid);
             } else if (duplicateChecker.isDuplicateAndRecord(messageType, uniqueId, xml)) {
-                log.info("[DEDUP] Skipping duplicate message for PUID={} (uniqueId={})", puid, uniqueId);
+                log.info("[DEDUP] Duplicate message detected. PUID={}, uniqueId={}", puid, uniqueId);
+                try {
+                    if (inboundRepo != null) {
+                        InboundMessage m = inboundRepo.findById(puid).orElse(null);
+                        if (m != null) { m.setStatus("DUPLICATE"); m.setError("DUPLICATE"); inboundRepo.save(m); }
+                    }
+                } catch (Exception ignore) { }
+                // Stop further processing for this event
                 return;
             }
         } catch (Exception ignore) { }
@@ -170,9 +177,39 @@ public class RouterOrchestrator {
             return;
         }
 
-        // Publish valid + best-effort persistence and event
-        log.info("[KAFKA] Publishing valid message to topic payment-messages with key={}", puid);
-        publishTimer.record(() -> kafkaPublisher.publishValid(puid, unifiedJson));
+        // Publish valid (Avro)
+        log.info("[KAFKA] Publishing valid message (Avro) to topic payment-messages with key={}", puid);
+        publishTimer.record(() -> {
+            try {
+                org.apache.avro.Schema schema = kafkaPublisher.getUnifiedSchema();
+                org.apache.avro.generic.GenericRecord rec = new org.apache.avro.generic.GenericData.Record(schema);
+                // Map detected type and version
+                String version = "";
+                if (messageType.contains(".001.")) {
+                    version = messageType.substring(messageType.lastIndexOf('.') + 1);
+                }
+                String mtUpper = messageType.replace('.', '_').toUpperCase();
+                if (mtUpper.startsWith("PACS_008")) mtUpper = "PACS_008";
+                else if (mtUpper.startsWith("PACS_003")) mtUpper = "PACS_003";
+                else if (mtUpper.startsWith("PACS_007")) mtUpper = "PACS_007";
+                else if (mtUpper.startsWith("CAMT_056")) mtUpper = "CAMT_056";
+                else if (mtUpper.startsWith("PACS_002")) mtUpper = "PACS_002";
+                else if (mtUpper.startsWith("CAMT_029")) mtUpper = "CAMT_029";
+                org.apache.avro.Schema enumSchema = schema.getField("messageType").schema();
+                Object enumVal = org.apache.avro.generic.GenericData.get().createEnum(mtUpper, enumSchema);
+                rec.put("messageType", enumVal);
+                rec.put("messageVersion", version);
+                rec.put("messageId", puid);
+                rec.put("creationDateTime", java.time.Instant.now().toString());
+                org.apache.avro.Schema suppSchema = schema.getField("supplementaryData").schema();
+                java.util.Map<String, String> map = new java.util.HashMap<>();
+                map.put("rawUnifiedJson", unifiedJson);
+                rec.put("supplementaryData", map);
+                kafkaPublisher.publishValidUnified(rec, puid);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         log.info("[KAFKA] Publish complete for key={}", puid);
         try {
             if (unifiedRepo != null) {

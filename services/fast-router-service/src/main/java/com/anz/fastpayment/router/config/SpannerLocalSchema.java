@@ -67,17 +67,7 @@ public class SpannerLocalSchema {
                     " status STRING(32),\n" +
                     " error STRING(MAX)\n" +
                     ") PRIMARY KEY (puid)";
-            try {
-                adminTemplate.executeDdlStrings(Collections.singletonList(ddl), true);
-                log.info("Created table InboundMessages in Spanner emulator");
-            } catch (Exception ce) {
-                String msg = ce.getMessage() == null ? "" : ce.getMessage();
-                if (msg.contains("ALREADY_EXISTS") || msg.contains("AlreadyExists") || msg.contains("already exists")) {
-                    log.info("InboundMessages table already exists; skipping create");
-                } else {
-                    throw ce;
-                }
-            }
+            execDdlWithRetries("InboundMessages", ddl);
 
             String ddl3 = "CREATE TABLE RouterEvents (" +
                     " puid STRING(16) NOT NULL,\n" +
@@ -85,34 +75,20 @@ public class SpannerLocalSchema {
                     " created_at TIMESTAMP,\n" +
                     " json STRING(MAX)\n" +
                     ") PRIMARY KEY (puid)";
-            try {
-                adminTemplate.executeDdlStrings(Collections.singletonList(ddl3), true);
-                log.info("Created table RouterEvents in Spanner emulator");
-            } catch (Exception ce) {
-                String msg = ce.getMessage() == null ? "" : ce.getMessage();
-                if (msg.contains("ALREADY_EXISTS") || msg.contains("AlreadyExists") || msg.contains("already exists")) {
-                    log.info("RouterEvents table already exists; skipping create");
-                } else {
-                    throw ce;
-                }
-            }
+            execDdlWithRetries("RouterEvents", ddl3);
             String ddl2 = "CREATE TABLE UnifiedMessages (" +
                     " puid STRING(16) NOT NULL,\n" +
                     " message_type STRING(64),\n" +
                     " created_at TIMESTAMP,\n" +
                     " json STRING(MAX)\n" +
                     ") PRIMARY KEY (puid)";
-            try {
-                adminTemplate.executeDdlStrings(Collections.singletonList(ddl2), true);
-                log.info("Created table UnifiedMessages in Spanner emulator");
-            } catch (Exception ce) {
-                String msg = ce.getMessage() == null ? "" : ce.getMessage();
-                if (msg.contains("ALREADY_EXISTS") || msg.contains("AlreadyExists") || msg.contains("already exists")) {
-                    log.info("UnifiedMessages table already exists; skipping create");
-                } else {
-                    throw ce;
-                }
-            }
+            execDdlWithRetries("UnifiedMessages", ddl2);
+
+            String ddl4 = "CREATE TABLE DedupKeys (" +
+                    " message_type STRING(64) NOT NULL,\n" +
+                    " unique_id STRING(128) NOT NULL\n" +
+                    ") PRIMARY KEY (message_type, unique_id)";
+            execDdlWithRetries("DedupKeys", ddl4);
         } catch (Exception e) {
             log.warn("Spanner emulator init warning: {}", e.getMessage());
         }
@@ -153,6 +129,30 @@ public class SpannerLocalSchema {
             if (!dbExists) {
                 log.info("Creating Spanner emulator database {} on instance {}", databaseId, instanceId);
                 databaseAdminClient.createDatabase(instanceId, databaseId, Collections.emptyList()).get(30, TimeUnit.SECONDS);
+            }
+        }
+    }
+
+    private void execDdlWithRetries(String tableName, String ddl) throws Exception {
+        int attempts = 0;
+        while (true) {
+            try {
+                adminTemplate.executeDdlStrings(Collections.singletonList(ddl), true);
+                log.info("Created table {} in Spanner emulator", tableName);
+                return;
+            } catch (Exception ce) {
+                String msg = ce.getMessage() == null ? "" : ce.getMessage();
+                if (msg.contains("ALREADY_EXISTS") || msg.contains("AlreadyExists") || msg.contains("already exists")) {
+                    log.info("{} table already exists; skipping create", tableName);
+                    return;
+                }
+                attempts++;
+                if (attempts >= 5) {
+                    throw ce;
+                }
+                long sleepMs = 500L * attempts;
+                log.info("DDL '{}' failed (attempt {}/5): {}. Retrying after {} ms", tableName, attempts, msg, sleepMs);
+                try { Thread.sleep(sleepMs); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); throw ce; }
             }
         }
     }
