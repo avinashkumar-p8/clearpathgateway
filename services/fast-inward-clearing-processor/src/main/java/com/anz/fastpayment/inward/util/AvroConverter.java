@@ -163,7 +163,11 @@ public class AvroConverter {
      * Extract transaction type from processing context
      */
     private static String extractTransactionType(GenericRecord message) {
-        GenericRecord procctxt = (GenericRecord) message.get("Procctxt");
+        GenericRecord body = (GenericRecord) message.get("Body");
+        if (body == null) {
+            return "UNKNOWN";
+        }
+        GenericRecord procctxt = (GenericRecord) body.get("Procctxt");
         if (procctxt != null) {
             GenericRecord pmtDtls = (GenericRecord) procctxt.get("PmtDtls");
             if (pmtDtls != null) {

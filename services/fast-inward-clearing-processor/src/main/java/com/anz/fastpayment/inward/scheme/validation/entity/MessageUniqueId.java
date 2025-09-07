@@ -13,9 +13,6 @@ import java.time.LocalDateTime;
 public class MessageUniqueId {
     
     @PrimaryKey
-    @Column(name = "id")
-    private Long id;
-    
     @Column(name = "muid")
     private String muid;
     
@@ -59,14 +56,6 @@ public class MessageUniqueId {
     }
     
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
     public String getMuid() {
         return muid;
     }
@@ -144,8 +133,7 @@ public class MessageUniqueId {
     @Override
     public String toString() {
         return "MessageUniqueId{" +
-                "id=" + id +
-                ", muid='" + muid + '\'' +
+                "muid='" + muid + '\'' +
                 ", topic='" + topic + '\'' +
                 ", partition=" + partition +
                 ", offset=" + offset +

@@ -1,5 +1,5 @@
 # Use OpenJDK 21 slim image
-FROM openjdk:21-jre-slim
+FROM azul/zulu-openjdk:21-jre
 
 # Set working directory
 WORKDIR /app
