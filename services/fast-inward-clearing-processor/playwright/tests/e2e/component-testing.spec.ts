@@ -20,8 +20,9 @@ test.describe('Component Testing - InputMessage Schema', () => {
   });
 
   test.beforeEach(async () => {
-    await kafkaHelper.clearMessages();
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    console.log('🧹 Pre-test cleanup for reliable testing...');
+    await kafkaHelper.preTestCleanup();
+    console.log('✅ Ready for test execution');
   });
 
   test('1. IDEMPOTENCY TEST - should handle duplicate messages correctly', async () => {
@@ -177,22 +178,21 @@ test.describe('Component Testing - InputMessage Schema', () => {
       }
     };
     
-    // Introduce validation failures
-    invalidMessage.Body.PmtAddRq[0].FromAcct.CurCode = "INVALID"; // Invalid currency
-    invalidMessage.Body.PmtAddRq[0].FromAcct.Amount = -100.00; // Negative amount
-    invalidMessage.Body.PmtAddRq[0].PayHdr.ProcDate = "INVALID_DATE"; // Invalid date format
-    invalidMessage.Body.PmtAddRq[0].FromFIData.BIC = "DBSGSGSG"; // 8 chars instead of 11
-    invalidMessage.Body.PmtAddRq[0].ToFIData.BIC = "UOVBSGSG"; // 8 chars instead of 11
-    invalidMessage.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstgAgt.BIC = "ANZBSGSG"; // 8 chars
-    invalidMessage.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstdAgt.BIC = "UOVBSGSG"; // 8 chars
-    invalidMessage.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAgt.BIC = "UOVBSGSG"; // 8 chars
-    invalidMessage.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.CdtrAgt.BIC = "DBSGSGSG"; // 8 chars
+    // Introduce validation failures using the correct JSON paths that validation actually checks
+    // The validation expects Body.messages[0]... structure, so we need to modify the Body.messages array
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY = "INVALID"; // Invalid currency
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt = -100.00; // Negative amount
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmDt = "INVALID_DATE"; // Invalid date format
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstgAgt.BIC = "ANZBSGSG"; // 8 chars instead of 11
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstdAgt.BIC = "UOVBSGSG"; // 8 chars instead of 11
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAgt.BIC = "UOVBSGSG"; // 8 chars instead of 11
+    invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.CdtrAgt.BIC = "DBSGSGSG"; // 8 chars instead of 11
     
     console.log(`🔍 Testing Validation Failures with MUID: ${uniqueMUID}`);
     console.log('❌ Testing with INVALID data:');
-    console.log(`   - Currency: ${invalidMessage.Body.PmtAddRq[0].FromAcct.CurCode} (invalid)`);
-    console.log(`   - Amount: ${invalidMessage.Body.PmtAddRq[0].FromAcct.Amount} (negative)`);
-    console.log(`   - Date: ${invalidMessage.Body.PmtAddRq[0].PayHdr.ProcDate} (invalid format)`);
+    console.log(`   - Currency: ${invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY} (invalid)`);
+    console.log(`   - Amount: ${invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt} (negative)`);
+    console.log(`   - Date: ${invalidMessage.Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmDt} (invalid format)`);
     console.log(`   - BIC codes: All 8 characters (should be 11)`);
     
     await kafkaHelper.sendMessage(inputTopic, invalidMessage, uniqueMUID);

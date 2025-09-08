@@ -31,10 +31,12 @@ public class KafkaAvroConfig {
         return new DefaultKafkaProducerFactory<>(props);
     }
 
-    @Bean(name = "avroKafkaTemplate")
+    @Bean
     public KafkaTemplate<String, GenericRecord> avroKafkaTemplate() {
         return new KafkaTemplate<>(avroProducerFactory());
     }
 }
+
+
 
 

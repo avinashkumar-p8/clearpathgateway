@@ -19,8 +19,7 @@ public class KafkaPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class);
 
-    private final KafkaTemplate<String, String> jsonKafkaTemplate;
-    private final KafkaTemplate<String, GenericRecord> avroKafkaTemplate;
+    private final KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate;
 
     @Value("${app.kafka.topics.payment-messages:payment-messages}")
     private String paymentMessagesTopic;
@@ -32,36 +31,22 @@ public class KafkaPublisher {
     private String pacs002RequestsTopic;
 
     private final Schema unifiedSchema;
-    private final Schema exceptionSchema;
-    private final Schema pacs002RequestSchema;
 
-    public KafkaPublisher(@Qualifier("stringKafkaTemplate") KafkaTemplate<String, String> jsonKafkaTemplate,
-                          @Qualifier("avroKafkaTemplate") KafkaTemplate<String, GenericRecord> avroKafkaTemplate) {
-        this.jsonKafkaTemplate = jsonKafkaTemplate;
+    public KafkaPublisher(KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate) {
         this.avroKafkaTemplate = avroKafkaTemplate;
         try {
-            this.unifiedSchema = parseSchema("avro/unified-payment-message.avsc");
-            this.exceptionSchema = parseSchema("avro/router-exception.avsc");
-            this.pacs002RequestSchema = parseSchema("avro/pacs002-request.avsc");
+            ClassPathResource schemaRes = new ClassPathResource("avro/unified-payment-message.avsc");
+            try (InputStream in = schemaRes.getInputStream()) {
+                String content = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+                this.unifiedSchema = new Schema.Parser().parse(content);
+            }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to load Avro schema", e);
         }
     }
 
-    public void publishValid(String key, String payload) {
-        log.info("Publishing valid message (JSON) to topic {} with key {}", paymentMessagesTopic, key);
-        try {
-            jsonKafkaTemplate.send(paymentMessagesTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            log.warn("Interrupted while publishing to topic={}, key={}", paymentMessagesTopic, key, ie);
-        } catch (java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
-            log.warn("Kafka publish timeout/failure for topic={}, key={}", paymentMessagesTopic, key, e);
-        }
-    }
-
     public void publishValidUnified(GenericRecord record, String key) {
-        log.info("Publishing valid message (Avro) to topic {} with key {}", paymentMessagesTopic, key);
+        log.info("Publishing avro message to topic {} with key {}", paymentMessagesTopic, key);
         try {
             avroKafkaTemplate.send(paymentMessagesTopic, key, record).get(5, java.util.concurrent.TimeUnit.SECONDS);
         } catch (InterruptedException ie) {
@@ -72,34 +57,35 @@ public class KafkaPublisher {
         }
     }
 
+    // For backward-compatibility for exception and pacs002 requests (string JSON)
+    private final org.springframework.kafka.core.KafkaTemplate<String, String> jsonKafkaTemplate = null;
+
     public void publishInvalid(String key, String payload) {
-        log.warn("Publishing invalid message (Avro) to exception topic {} with key {}", exceptionTopic, key);
+        if (jsonKafkaTemplate == null) {
+            log.warn("JSON template not configured; skipping invalid publish");
+            return;
+        }
         try {
-            GenericRecord rec = new GenericData.Record(exceptionSchema);
-            rec.put("puid", key);
-            rec.put("originalXml", payload);
-            avroKafkaTemplate.send(exceptionTopic, key, rec).get(5, java.util.concurrent.TimeUnit.SECONDS);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            log.warn("Interrupted while publishing to topic={}, key={}", exceptionTopic, key, ie);
-        } catch (java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
-            log.warn("Kafka publish timeout/failure for topic={}, key={}", exceptionTopic, key, e);
+            jsonKafkaTemplate.send(exceptionTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.warn("Kafka publish failure for exception topic={}, key={}", exceptionTopic, key, e);
         }
     }
 
     public void publishPacs002Request(String key, String payload) {
-        log.info("Publishing pacs002 request (Avro) to topic {} with key {}", pacs002RequestsTopic, key);
-        try {
-            GenericRecord rec = new GenericData.Record(pacs002RequestSchema);
-            rec.put("puid", key);
-            rec.put("payload", payload);
-            avroKafkaTemplate.send(pacs002RequestsTopic, key, rec).get(5, java.util.concurrent.TimeUnit.SECONDS);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            log.warn("Interrupted while publishing to topic={}, key={}", pacs002RequestsTopic, key, ie);
-        } catch (java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
-            log.warn("Kafka publish timeout/failure for topic={}, key={}", pacs002RequestsTopic, key, e);
+        if (jsonKafkaTemplate == null) {
+            log.warn("JSON template not configured; skipping pacs002 request publish");
+            return;
         }
+        try {
+            jsonKafkaTemplate.send(pacs002RequestsTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.warn("Kafka publish failure for pacs002 topic={}, key={}", pacs002RequestsTopic, key, e);
+        }
+    }
+
+    public Schema getUnifiedSchema() {
+        return unifiedSchema;
     }
 
     public Schema getUnifiedSchema() { return unifiedSchema; }
@@ -112,5 +98,4 @@ public class KafkaPublisher {
         }
     }
 }
-
 

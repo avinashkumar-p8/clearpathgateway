@@ -19,7 +19,7 @@ spring:
     consumer:
       group-id: ${spring.application.name}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
 
 server:
@@ -54,6 +54,11 @@ app:
   external:
     g3-host-endpoint: ${G3_HOST_ENDPOINT:https://g3host.anz.com/api}
     cpg-endpoint: ${CPG_ENDPOINT:https://cpg.anz.com/gateway}
+
+  kafka:
+    topics:
+      payment-events: ${SENDER_PAYMENT_EVENTS_TOPIC:payment-events}
+      sender-inbound: ${SENDER_INBOUND_TOPIC:sender-wrapper-requests}
 
 logging:
   level:

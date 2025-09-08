@@ -1,10 +1,10 @@
 package com.anz.fastpayment.router.service;
 
-import com.anz.fastpayment.router.model.DedupeKey;
-import com.anz.fastpayment.router.repository.DedupeKeyRepository;
+import com.anz.fastpayment.router.model.DedupKey;
+import com.google.cloud.spring.data.spanner.core.SpannerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,34 +12,36 @@ public class DuplicateChecker {
 
     private static final Logger log = LoggerFactory.getLogger(DuplicateChecker.class);
 
-    private final DedupeKeyRepository dedupeRepo;
+    private final SpannerTemplate spannerTemplate;
 
-    public DuplicateChecker(ObjectProvider<DedupeKeyRepository> repoProvider) {
-        this.dedupeRepo = repoProvider.getIfAvailable();
+    public DuplicateChecker(SpannerTemplate spannerTemplate) {
+        this.spannerTemplate = spannerTemplate;
     }
 
+    // Returns true if duplicate (i.e., key already exists). First-time insert returns false (not duplicate).
     public boolean isDuplicateAndRecord(String messageType, String uniqueId, String xml) {
-        String basis = (uniqueId != null && !uniqueId.isBlank()) ? (messageType + "::" + uniqueId) : null;
-        if (basis == null) {
-            log.info("[DEDUP] No uniqueId; skipping dedupe");
+        if (uniqueId == null || uniqueId.isBlank()) {
+            log.info("[DEDUP] No uniqueId provided for messageType={}; skipping dedup.", messageType);
             return false;
         }
         try {
-            if (dedupeRepo == null) {
-                log.info("[DEDUP] Repo unavailable (local?); allowing basis={}", basis);
-                return false;
-            }
-            boolean exists = dedupeRepo.existsById(basis);
-            if (exists) {
-                log.info("[DEDUP] Duplicate detected for basis={}, blocking", basis);
+            DedupKey key = new DedupKey();
+            key.setMessageType(messageType);
+            key.setUniqueId(uniqueId.trim());
+            spannerTemplate.insert(key); // INSERT only; fails if key exists
+            log.debug("[DEDUP] Inserted dedup key for messageType={}, uniqueId={}", messageType, uniqueId);
+            return false; // not a duplicate
+        } catch (DuplicateKeyException dke) {
+            log.info("[DEDUP] Duplicate detected for messageType={}, uniqueId={}", messageType, uniqueId);
+            return true;
+        } catch (RuntimeException re) {
+            String msg = re.getMessage() == null ? "" : re.getMessage();
+            if (msg.contains("ALREADY_EXISTS") || msg.contains("AlreadyExists") || msg.contains("already exists")) {
+                log.info("[DEDUP] Duplicate detected for messageType={}, uniqueId={}", messageType, uniqueId);
                 return true;
             }
-            DedupeKey key = new DedupeKey(basis, java.time.Instant.now());
-            dedupeRepo.save(key);
-            log.info("[DEDUP] Recorded new basis={}, allowing", basis);
-            return false;
-        } catch (Exception e) {
-            log.warn("[DEDUP] Error during dedupe check; allowing. err={}", e.getMessage());
+            // Best-effort: do not block processing on dedup store failure
+            log.warn("[DEDUP] Dedup insert failed (non-fatal) for messageType={}, uniqueId={}, err={}", messageType, uniqueId, re.toString());
             return false;
         }
     }

@@ -1,195 +1,199 @@
 export const testData = {
-  // Sample InputMessage structure matching the new Avro schema
+  // Sample InputMessage structure matching the actual message structure from test-message.json
   sampleInputMessage: {
     Header: {
-      ComponentName: "FAST_SENDER",
-      UUID: "test-uuid-12345",
+      ComponentName: "PSPAPFAFAST",
+      UUID: "G3I400071311436B",
       EventInfo: {
-        EventCode: "PAYMENT_INITIATED",
-        EventDescription: "Payment message initiated",
-        EventID: "evt-001",
-        EventType: "PAYMENT",
-        EventProducer: "FAST_SENDER",
-        EventTS: "2024-01-15T10:30:00Z",
-        EventTopics: "payment,clearing",
+        EventCode: "P.PSP.STS.M.OP_RPI.100",
+        EventDescription: "Payment request received in PSP",
+        EventID: "185bd46a-d178-453b-a808-4eeedff5427b",
+        EventType: "PE",
+        EventProducer: "Clear Path Gateway",
+        EventTS: "2025-05-08T09:02:10.765",
+        EventTopics: "<KAFKA Topic>",
         SystemId: null,
         Events: {
           Event: [
             {
-              EventCode: "PAYMENT_CREATED",
-              EventID: "evt-001-001"
+              EventCode: "I.PSP.STS.M.OP_RPI.100",
+              EventID: "185bd46a-d178-453b-a808-3eeedff5427a"
+            },
+            {
+              EventCode: "P.PSP.STS.M.OP_RPI.100",
+              EventID: "185bd46a-d178-453b-a808-4eeedff5427b"
             }
           ]
         },
         EventVersion: null
       },
-      ReplyToQueue: "fast.response.queue",
+      ReplyToQueue: "PPSP.PPORCH.GPAFL.RSP.01",
       ReqMap: null,
       MUID: "msg-unique-id-12345",
-      Channel: "FAST_CHANNEL",
-      Direction: "INWARD",
-      RcvdTS: "2024-01-15T10:30:00Z",
-      DomainName: "PAYMENT_DOMAIN",
-      DomainType: "CLEARING"
+      Channel: "G3I",
+      Direction: "I",
+      RcvdTS: "2025-06-10T21:08:21",
+      DomainName: "PAYMENTS",
+      DomainType: "PAYMENT"
     },
     Body: {
       PmtAddRq: [
         {
-          RqUID: "req-uid-12345",
+          RqUID: "20250424UOVBSGSGBRT1XXXXXX",
           MsgHdr: {
-            ClientDt: "2024-01-15",
-            ClientName: "TEST_CLIENT",
-            PartyId: "PARTY_001",
+            ClientDt: "2025-06-10T21:08:21",
+            ClientName: "G3I",
+            PartyId: "749440SGD000001",
             Version: "1.0"
           },
           PayHdr: {
-            PODsID: "pods-123",
-            PaymentID: "pay-12345",
-            ThirdPartyPayID: "tp-123",
-            PaymentTRN: "trn-12345",
-            PaymentRetRef: "ret-ref-123",
-            ProcDate: "2024-01-15"
+            PODsID: "G3I400071311436B",
+            PaymentID: "20250424UOVBSGSGBRT1XXXXXX",
+            ThirdPartyPayID: "NC2503XXXX",
+            PaymentTRN: "20250424UOVBSGSGBRT1XXXXXX",
+            PaymentRetRef: "FPS00",
+            ProcDate: "2025-06-10"
           },
           FromFIData: {
             Country: "SG",
-            BIC: "DBSGSGSGXXX"
+            BIC: "XXXBSGSXXXX"
           },
           FromCust: {
-            Name: "Test Sender"
+            Name: "XXXXpore Pte Ltd"
           },
           FromAcct: {
-            AcctId: "ACC001",
-            AcctSys: "DBS",
-            AcctGrp: "CURRENT",
-            Name: "Sender Account",
-            PmtAuthMethod: "SIGNATURE",
-            Narrative: "Test payment",
+            AcctId: "783451100000001",
+            AcctSys: "VAM",
+            AcctGrp: "SGB",
+            Name: "749440SGD000001",
+            PmtAuthMethod: "AFPONLY",
+            Narrative: "DDI+G3I400071311436B+OTHR+FPS00+XXXXITAL PTE.+NC250",
             CurCode: "SGD",
-            Amount: 215.00,
-            AcctUse: "DEBIT"
+            Amount: 2182.14,
+            AcctUse: "BUSINESS"
           },
           ToFIData: {
             Country: "SG",
-            BIC: "UOVBSGSGXXX"
+            BIC: "OCBCSGSGXXX"
           },
           Clearing: {
             ClearPref: "FAST"
           },
           ToBene: {
-            Name: "Test Receiver",
+            Name: "XX LTD.",
             Country: "SG",
-            Message: "Test payment message"
+            Message: "XXXXXXXX"
           },
           ToAcct: {
-            AcctId: "ACC002",
+            AcctId: "80XXXX",
             CurCode: "SGD",
-            Amount: 215.00,
-            Narrative: "Test payment received",
-            AcctUse: "CREDIT"
+            Amount: 2182.14,
+            Narrative: "12345      INWGDR+API20250424211XXXXXX",
+            AcctUse: "BUSINESS"
           },
-          Fees: ["0.50"]
+          Fees: []
         }
-      ]
-    },
-    Procctxt: {
-      sideEffect: ["none"],
-      softFail: [],
-      PmtDtls: {
-        PmtCtxt: {
-          PuId: "pu-001",
-          IntnSrc: {
-            type: "MANUAL",
-            value: "USER_INITIATED"
-          }
-        },
-        ProcCtryCd: "SG",
-        InstdClrgPref: "FAST",
-        InstdMoPCat: "CLEARING",
-        PmtCtgry: "PAYMENT",
-        actClrMethod: "FAST",
-        actlMtdOfPmtCtgry: "CLEARING",
-        FIDCIdentifier: "fidc-001",
-        FICCIdentifier: "ficc-001",
-        VAM: "vam-001",
-        derivedDRAccountNo: "DR001",
-        derivedDRAccountSys: "DBS",
-        derivedDRBookCode: "CURRENT"
-      }
-    },
-    messages: [
-      {
-        instruction: {
-          MsgDef: {
-            MsgType: "PAYMENT",
-            Schema: "FAST_PAYMENT_SCHEMA"
+      ],
+      Procctxt: {
+        sideEffect: [],
+        softFail: [],
+        PmtDtls: {
+          PmtCtxt: {
+            PuId: "G3I400071311436B",
+            IntnSrc: {
+              type: "CLRG",
+              value: "G3"
+            }
           },
-          MsgCtxt: {
-            OrigMsgTyp: "PAYMENT_INITIATION",
-            InstdClrgPref: "FAST",
-            InstdMoPCat: "CLEARING",
-            Site: "SINGAPORE",
-            BaseAmt: 215.00,
-            BaseCcy: "SGD",
-            SenderBIC: "DBSGSGSGXXX",
-            ProcCtryCd: "SG",
-            Department: "PAYMENTS",
-            MsgId: "msg-001",
-            Direction: "INWARD"
-          },
-          MsgAddRq: {
-            OrigMsg: "Original payment message",
-            MsgDtls: {
-              DrctDbtTxInf: {
-                PmtId: {
-                  InstrId: "instr-001",
-                  TxId: "tx-001",
-                  EndToEndId: "end-to-end-001",
-                  ClrSysRef: "clr-001"
-                },
-                IntrBkSttlmAmt: 215.00,
-                IntrBkSttlmCCY: "SGD",
-                IntrBkSttlmDt: "2024-01-15",
-                InstgAgt: {
-                  BIC: "ANZBSGSGXXX"
-                },
-                InstdAgt: {
-                  BIC: "UOVBSGSGXXX"
-                },
-                Dbtr: {
-                  Nm: "Test Sender"
-                },
-                DbtrAcct: {
-                  AcctId: "ACC001"
-                },
-                DbtrAgt: {
-                  BIC: "UOVBSGSGXXX"
-                },
-                CdtrAgt: {
-                  BIC: "DBSGSGSGXXX"
-                },
-                Cdtr: {
-                  Nm: "Test Receiver"
-                },
-                CdtrAcct: {
-                  AcctId: "ACC002"
-                },
-                Purp: {
-                  Cd: "CASH"
-                },
-                RmtInf: {
-                  Ustrd: "Test payment"
-                },
-                DrctDbtTx: {
-                  MndtRltdInf: {
-                    MndtId: "mandate-001"
+          ProcCtryCd: "SG",
+          InstdClrgPref: "G3DDFAST",
+          InstdMoPCat: "FAST",
+          PmtCtgry: "DD",
+          actClrMethod: "ACH",
+          actlMtdOfPmtCtgry: "ACH",
+          FIDCIdentifier: "DEBTOR",
+          FICCIdentifier: "INSTDAGT",
+          VAM: "No",
+          derivedDRAccountNo: "01000018493A",
+          derivedDRAccountSys: "MDZ",
+          derivedDRBookCode: "SGB"
+        }
+      },
+      messages: [
+        {
+          instruction: {
+            MsgDef: {
+              MsgType: "ISOX",
+              Schema: "pacs.003.001.02"
+            },
+            MsgCtxt: {
+              OrigMsgTyp: "PACS.003",
+              InstdClrgPref: "G3DDFAST",
+              InstdMoPCat: "FAST",
+              Site: "SG1",
+              BaseAmt: 215,
+              BaseCcy: "SGD",
+              SenderBIC: "SACHSGS1XXX",
+              ProcCtryCd: "SG",
+              Department: "SGIFAST",
+              MsgId: "NA132504110957516877A9C100364A963O",
+              Direction: "I"
+            },
+            MsgAddRq: {
+              OrigMsg: "",
+              MsgDtls: {
+                DrctDbtTxInf: {
+                  PmtId: {
+                    InstrId: "20250411MBBESGS2BRT8705045",
+                    TxId: "20250411MBBESGS2BRT8705045",
+                    EndToEndId: "NC2503XXXX",
+                    ClrSysRef: "001"
+                  },
+                  IntrBkSttlmAmt: 215,
+                  IntrBkSttlmCCY: "SGD",
+                  IntrBkSttlmDt: "2025-05-30",
+                  InstgAgt: {
+                    BIC: "OCBCSGSGXXX"
+                  },
+                  InstdAgt: {
+                    BIC: "XXXBSGSXXXX"
+                  },
+                  Dbtr: {
+                    Nm: "Sender"
+                  },
+                  DbtrAcct: {
+                    AcctId: "1419XXXX"
+                  },
+                  DbtrAgt: {
+                    BIC: "XXXBSGSXXXX"
+                  },
+                  CdtrAgt: {
+                    BIC: "OCBCSGSGXXX"
+                  },
+                  Cdtr: {
+                    Nm: "Receiver"
+                  },
+                  CdtrAcct: {
+                    AcctId: "80XXXX"
+                  },
+                  Purp: {
+                    Cd: "OTHR"
+                  },
+                  RmtInf: {
+                    Ustrd: "XXXX"
+                  },
+                  DrctDbtTx: {
+                    MndtRltdInf: {
+                      MndtId: "FPS00"
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-    ]
+      ]
+    }
   },
 
   // Expected ResponseMessage structure
@@ -202,13 +206,13 @@ export const testData = {
     },
     Body: {
       // ... same body structure
+      Procctxt: {
+        // ... same processing context
+      },
+      messages: [
+        // ... same messages structure
+      ]
     },
-    Procctxt: {
-      // ... same processing context
-    },
-    messages: [
-      // ... same messages structure
-    ],
     Trailer: {
       status: "SUCCESS",
       StatusCode: "200",
@@ -231,7 +235,7 @@ export const testData = {
     invalidAmount: {
       name: "Invalid Amount",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromAcct.Amount": -1000.00 },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt": -1000.00 },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Invalid amount: Amount cannot be negative"]
@@ -249,7 +253,7 @@ export const testData = {
     invalidCurrency: {
       name: "Invalid Currency Code",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromAcct.CurCode": "INVALID" },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY": "INVALID" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Invalid currency code: INVALID"]
@@ -258,7 +262,7 @@ export const testData = {
     invalidBIC: {
       name: "Invalid BIC Format",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromFIData.BIC": "INVALID" },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.InstgAgt.BIC": "INVALID" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Invalid BIC format: INVALID"]
@@ -267,7 +271,7 @@ export const testData = {
     invalidCountry: {
       name: "Invalid Country Code",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromFIData.Country": "XX" },
+      modification: { "Body.messages[0].instruction.MsgCtxt.ProcCtryCd": "XX" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Invalid country code: XX"]
@@ -286,7 +290,7 @@ export const testData = {
     invalidClearingPreference: {
       name: "Invalid Clearing Preference",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].Clearing.ClearPref": "INVALID" },
+      modification: { "Body.messages[0].instruction.MsgCtxt.InstdClrgPref": "INVALID" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Invalid clearing preference: INVALID"]
@@ -295,7 +299,7 @@ export const testData = {
     invalidPaymentCategory: {
       name: "Invalid Payment Category",
       input: "sampleInputMessage",
-      modification: { "Procctxt.PmtDtls.PmtCtxt.actlMtdOfPmtCtgry": "INVALID" },
+      modification: { "Procctxt.PmtDtls.actlMtdOfPmtCtgry": "INVALID" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Invalid payment category: INVALID"]
@@ -305,7 +309,7 @@ export const testData = {
     highValueTransaction: {
       name: "High Value Transaction",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromAcct.Amount": 1000000.00 },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt": 1000000.00 },
       expectedStatus: "SUCCESS",
       expectedStatusCode: "200",
       description: "High value transaction should pass additional validation"
@@ -315,8 +319,7 @@ export const testData = {
       name: "Cross Currency Transaction",
       input: "sampleInputMessage",
       modification: { 
-        "Body.PmtAddRq[0].FromAcct.CurCode": "USD",
-        "Body.PmtAddRq[0].ToAcct.CurCode": "SGD"
+        "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmCCY": "USD"
       },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
@@ -337,7 +340,7 @@ export const testData = {
     largeMessage: {
       name: "Large Message Processing",
       input: "sampleInputMessage",
-      modification: { "messages": Array(1000).fill({ instruction: { MsgDef: { MsgType: "PAYMENT" } } }) },
+      modification: { "Body.messages": Array(1000).fill({ instruction: { MsgDef: { MsgType: "PAYMENT" } } }) },
       expectedStatus: "SUCCESS",
       expectedStatusCode: "200",
       description: "Large message should be processed within SLA"
@@ -347,7 +350,7 @@ export const testData = {
     zeroAmount: {
       name: "Zero Amount Transaction",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromAcct.Amount": 0.00 },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt": 0.00 },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Transaction amount cannot be zero"]
@@ -356,7 +359,7 @@ export const testData = {
     maximumAmount: {
       name: "Maximum Amount Transaction",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromAcct.Amount": 999999999.99 },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmAmt": 999999999.99 },
       expectedStatus: "SUCCESS",
       expectedStatusCode: "200",
       description: "Maximum allowed amount should be processed"
@@ -366,7 +369,7 @@ export const testData = {
     specialCharactersInNarrative: {
       name: "Special Characters in Narrative",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].FromAcct.Narrative": "Payment with special chars: @#$%^&*()" },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.RmtInf.Ustrd": "Payment with special chars: @#$%^&*()" },
       expectedStatus: "SUCCESS",
       expectedStatusCode: "200",
       description: "Special characters should be handled properly"
@@ -376,7 +379,7 @@ export const testData = {
     futureDatedTransaction: {
       name: "Future Dated Transaction",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].PayHdr.ProcDate": "2025-12-31" },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.IntrBkSttlmDt": "2025-12-31" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Future processing date not allowed"]
@@ -386,7 +389,7 @@ export const testData = {
     sanctionedCountry: {
       name: "Sanctioned Country Transaction",
       input: "sampleInputMessage",
-      modification: { "Body.PmtAddRq[0].ToFIData.Country": "XX" },
+      modification: { "Body.messages[0].instruction.MsgAddRq.MsgDtls.DrctDbtTxInf.DbtrAcct.Country": "XX" },
       expectedStatus: "FAILED",
       expectedStatusCode: "400",
       expectedErrors: ["Transactions to sanctioned countries not allowed"]

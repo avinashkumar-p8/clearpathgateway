@@ -39,3 +39,5 @@ public class GenericAvroSerializer implements Serializer<GenericRecord> {
 }
 
 
+
+

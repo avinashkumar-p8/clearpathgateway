@@ -438,504 +438,504 @@
               }
             },
             "doc": "Payment add request array"
+          },
+          {
+            "name": "Procctxt",
+            "type": {
+              "type": "record",
+              "name": "Procctxt",
+              "fields": [
+                {
+                  "name": "sideEffect",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  },
+                  "doc": "Side effects array"
+                },
+                {
+                  "name": "softFail",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  },
+                  "doc": "Soft failures array"
+                },
+                {
+                  "name": "PmtDtls",
+                  "type": {
+                    "type": "record",
+                    "name": "PmtDtls",
+                    "fields": [
+                      {
+                        "name": "PmtCtxt",
+                        "type": {
+                          "type": "record",
+                          "name": "PmtCtxt",
+                          "fields": [
+                            {
+                              "name": "PuId",
+                              "type": "string",
+                              "doc": "Payment unit identifier"
+                            },
+                            {
+                              "name": "IntnSrc",
+                              "type": {
+                                "type": "record",
+                                "name": "IntnSrc",
+                                "fields": [
+                                  {
+                                    "name": "type",
+                                    "type": "string",
+                                    "doc": "Type"
+                                  },
+                                  {
+                                    "name": "value",
+                                    "type": "string",
+                                    "doc": "Value"
+                                  }
+                                ]
+                              },
+                              "doc": "Intention source"
+                            }
+                          ]
+                        },
+                        "doc": "Payment context"
+                      },
+                      {
+                        "name": "ProcCtryCd",
+                        "type": "string",
+                        "doc": "Processing country code"
+                      },
+                      {
+                        "name": "InstdClrgPref",
+                        "type": "string",
+                        "doc": "Instructed clearing preference"
+                      },
+                      {
+                        "name": "InstdMoPCat",
+                        "type": "string",
+                        "doc": "Instructed method of payment category"
+                      },
+                      {
+                        "name": "PmtCtgry",
+                        "type": "string",
+                        "doc": "Payment category"
+                      },
+                      {
+                        "name": "actClrMethod",
+                        "type": "string",
+                        "doc": "Actual clearing method"
+                      },
+                      {
+                        "name": "actlMtdOfPmtCtgry",
+                        "type": "string",
+                        "doc": "Actual method of payment category"
+                      },
+                      {
+                        "name": "FIDCIdentifier",
+                        "type": "string",
+                        "doc": "FIDC identifier"
+                      },
+                      {
+                        "name": "FICCIdentifier",
+                        "type": "string",
+                        "doc": "FICC identifier"
+                      },
+                      {
+                        "name": "VAM",
+                        "type": "string",
+                        "doc": "VAM"
+                      },
+                      {
+                        "name": "derivedDRAccountNo",
+                        "type": "string",
+                        "doc": "Derived debtor account number"
+                      },
+                      {
+                        "name": "derivedDRAccountSys",
+                        "type": "string",
+                        "doc": "Derived debtor account system"
+                      },
+                      {
+                        "name": "derivedDRBookCode",
+                        "type": "string",
+                        "doc": "Derived debtor book code"
+                      }
+                    ]
+                  },
+                  "doc": "Payment details"
+                }
+              ]
+            },
+            "doc": "Processing context"
+          },
+          {
+            "name": "messages",
+            "type": {
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "Message",
+                "fields": [
+                  {
+                    "name": "instruction",
+                    "type": {
+                      "type": "record",
+                      "name": "Instruction",
+                      "fields": [
+                        {
+                          "name": "MsgDef",
+                          "type": {
+                            "type": "record",
+                            "name": "MsgDef",
+                            "fields": [
+                              {
+                                "name": "MsgType",
+                                "type": "string",
+                                "doc": "Message type"
+                              },
+                              {
+                                "name": "Schema",
+                                "type": "string",
+                                "doc": "Schema"
+                              }
+                            ]
+                          },
+                          "doc": "Message definition"
+                        },
+                        {
+                          "name": "MsgCtxt",
+                          "type": {
+                            "type": "record",
+                            "name": "MsgCtxt",
+                            "fields": [
+                              {
+                                "name": "OrigMsgTyp",
+                                "type": "string",
+                                "doc": "Original message type"
+                              },
+                              {
+                                "name": "InstdClrgPref",
+                                "type": "string",
+                                "doc": "Instructed clearing preference"
+                              },
+                              {
+                                "name": "InstdMoPCat",
+                                "type": "string",
+                                "doc": "Instructed method of payment category"
+                              },
+                              {
+                                "name": "Site",
+                                "type": "string",
+                                "doc": "Site"
+                              },
+                              {
+                                "name": "BaseAmt",
+                                "type": "double",
+                                "doc": "Base amount"
+                              },
+                              {
+                                "name": "BaseCcy",
+                                "type": "string",
+                                "doc": "Base currency"
+                              },
+                              {
+                                "name": "SenderBIC",
+                                "type": "string",
+                                "doc": "Sender BIC"
+                              },
+                              {
+                                "name": "ProcCtryCd",
+                                "type": "string",
+                                "doc": "Processing country code"
+                              },
+                              {
+                                "name": "Department",
+                                "type": "string",
+                                "doc": "Department"
+                              },
+                              {
+                                "name": "MsgId",
+                                "type": "string",
+                                "doc": "Message identifier"
+                              },
+                              {
+                                "name": "Direction",
+                                "type": "string",
+                                "doc": "Direction"
+                              }
+                            ]
+                          },
+                          "doc": "Message context"
+                        },
+                        {
+                          "name": "MsgAddRq",
+                          "type": {
+                            "type": "record",
+                            "name": "MsgAddRq",
+                            "fields": [
+                              {
+                                "name": "OrigMsg",
+                                "type": "string",
+                                "doc": "Original message"
+                              },
+                              {
+                                "name": "MsgDtls",
+                                "type": {
+                                  "type": "record",
+                                  "name": "MsgDtls",
+                                  "fields": [
+                                    {
+                                      "name": "DrctDbtTxInf",
+                                      "type": {
+                                        "type": "record",
+                                        "name": "DrctDbtTxInf",
+                                        "fields": [
+                                          {
+                                            "name": "PmtId",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "PmtId",
+                                              "fields": [
+                                                {
+                                                  "name": "InstrId",
+                                                  "type": "string",
+                                                  "doc": "Instruction identifier"
+                                                },
+                                                {
+                                                  "name": "TxId",
+                                                  "type": "string",
+                                                  "doc": "Transaction identifier"
+                                                },
+                                                {
+                                                  "name": "EndToEndId",
+                                                  "type": "string",
+                                                  "doc": "End to end identifier"
+                                                },
+                                                {
+                                                  "name": "ClrSysRef",
+                                                  "type": "string",
+                                                  "doc": "Clearing system reference"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Payment identifier"
+                                          },
+                                          {
+                                            "name": "IntrBkSttlmAmt",
+                                            "type": "double",
+                                            "doc": "Interbank settlement amount"
+                                          },
+                                          {
+                                            "name": "IntrBkSttlmCCY",
+                                            "type": "string",
+                                            "doc": "Interbank settlement currency"
+                                          },
+                                          {
+                                            "name": "IntrBkSttlmDt",
+                                            "type": "string",
+                                            "doc": "Interbank settlement date"
+                                          },
+                                          {
+                                            "name": "InstgAgt",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "InstgAgt",
+                                              "fields": [
+                                                {
+                                                  "name": "BIC",
+                                                  "type": "string",
+                                                  "doc": "BIC"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Instructing agent"
+                                          },
+                                          {
+                                            "name": "InstdAgt",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "InstdAgt",
+                                              "fields": [
+                                                {
+                                                  "name": "BIC",
+                                                  "type": "string",
+                                                  "doc": "BIC"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Instructed agent"
+                                          },
+                                          {
+                                            "name": "Dbtr",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "Dbtr",
+                                              "fields": [
+                                                {
+                                                  "name": "Nm",
+                                                  "type": "string",
+                                                  "doc": "Name"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Debtor"
+                                          },
+                                          {
+                                            "name": "DbtrAcct",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "DbtrAcct",
+                                              "fields": [
+                                                {
+                                                  "name": "AcctId",
+                                                  "type": "string",
+                                                  "doc": "Account identifier"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Debtor account"
+                                          },
+                                          {
+                                            "name": "DbtrAgt",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "DbtrAgt",
+                                              "fields": [
+                                                {
+                                                  "name": "BIC",
+                                                  "type": "string",
+                                                  "doc": "BIC"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Debtor agent"
+                                          },
+                                          {
+                                            "name": "CdtrAgt",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "CdtrAgt",
+                                              "fields": [
+                                                {
+                                                  "name": "BIC",
+                                                  "type": "string",
+                                                  "doc": "BIC"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Creditor agent"
+                                          },
+                                          {
+                                            "name": "Cdtr",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "Cdtr",
+                                              "fields": [
+                                                {
+                                                  "name": "Nm",
+                                                  "type": "string",
+                                                  "doc": "Name"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Creditor"
+                                          },
+                                          {
+                                            "name": "CdtrAcct",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "CdtrAcct",
+                                              "fields": [
+                                                {
+                                                  "name": "AcctId",
+                                                  "type": "string",
+                                                  "doc": "Account identifier"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Creditor account"
+                                          },
+                                          {
+                                            "name": "Purp",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "Purp",
+                                              "fields": [
+                                                {
+                                                  "name": "Cd",
+                                                  "type": "string",
+                                                  "doc": "Code"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Purpose"
+                                          },
+                                          {
+                                            "name": "RmtInf",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "RmtInf",
+                                              "fields": [
+                                                {
+                                                  "name": "Ustrd",
+                                                  "type": "string",
+                                                  "doc": "Unstructured"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Remittance information"
+                                          },
+                                          {
+                                            "name": "DrctDbtTx",
+                                            "type": {
+                                              "type": "record",
+                                              "name": "DrctDbtTx",
+                                              "fields": [
+                                                {
+                                                  "name": "MndtRltdInf",
+                                                  "type": {
+                                                    "type": "record",
+                                                    "name": "MndtRltdInf",
+                                                    "fields": [
+                                                      {
+                                                        "name": "MndtId",
+                                                        "type": "string",
+                                                        "doc": "Mandate identifier"
+                                                      }
+                                                    ]
+                                                  },
+                                                  "doc": "Mandate related information"
+                                                }
+                                              ]
+                                            },
+                                            "doc": "Direct debit transaction"
+                                          }
+                                        ]
+                                      },
+                                      "doc": "Direct debit transaction information"
+                                    }
+                                  ]
+                                },
+                                "doc": "Message details"
+                              }
+                            ]
+                          },
+                          "doc": "Message add request"
+                        }
+                      ]
+                    },
+                    "doc": "Instruction"
+                  }
+                ]
+              }
+            },
+            "doc": "Messages array"
           }
         ]
       },
       "doc": "Message body"
-    },
-    {
-      "name": "Procctxt",
-      "type": {
-        "type": "record",
-        "name": "Procctxt",
-        "fields": [
-          {
-            "name": "sideEffect",
-            "type": {
-              "type": "array",
-              "items": "string"
-            },
-            "doc": "Side effects array"
-          },
-          {
-            "name": "softFail",
-            "type": {
-              "type": "array",
-              "items": "string"
-            },
-            "doc": "Soft failures array"
-          },
-          {
-            "name": "PmtDtls",
-            "type": {
-              "type": "record",
-              "name": "PmtDtls",
-              "fields": [
-                {
-                  "name": "PmtCtxt",
-                  "type": {
-                    "type": "record",
-                    "name": "PmtCtxt",
-                    "fields": [
-                      {
-                        "name": "PuId",
-                        "type": "string",
-                        "doc": "Payment unit identifier"
-                      },
-                      {
-                        "name": "IntnSrc",
-                        "type": {
-                          "type": "record",
-                          "name": "IntnSrc",
-                          "fields": [
-                            {
-                              "name": "type",
-                              "type": "string",
-                              "doc": "Type"
-                            },
-                            {
-                              "name": "value",
-                              "type": "string",
-                              "doc": "Value"
-                            }
-                          ]
-                        },
-                        "doc": "Intention source"
-                      }
-                    ]
-                  },
-                  "doc": "Payment context"
-                },
-                {
-                  "name": "ProcCtryCd",
-                  "type": "string",
-                  "doc": "Processing country code"
-                },
-                {
-                  "name": "InstdClrgPref",
-                  "type": "string",
-                  "doc": "Instructed clearing preference"
-                },
-                {
-                  "name": "InstdMoPCat",
-                  "type": "string",
-                  "doc": "Instructed method of payment category"
-                },
-                {
-                  "name": "PmtCtgry",
-                  "type": "string",
-                  "doc": "Payment category"
-                },
-                {
-                  "name": "actClrMethod",
-                  "type": "string",
-                  "doc": "Actual clearing method"
-                },
-                {
-                  "name": "actlMtdOfPmtCtgry",
-                  "type": "string",
-                  "doc": "Actual method of payment category"
-                },
-                {
-                  "name": "FIDCIdentifier",
-                  "type": "string",
-                          "doc": "FIDC identifier"
-                },
-                {
-                  "name": "FICCIdentifier",
-                  "type": "string",
-                  "doc": "FICC identifier"
-                },
-                {
-                  "name": "VAM",
-                  "type": "string",
-                  "doc": "VAM"
-                },
-                {
-                  "name": "derivedDRAccountNo",
-                  "type": "string",
-                  "doc": "Derived debtor account number"
-                },
-                {
-                  "name": "derivedDRAccountSys",
-                  "type": "string",
-                  "doc": "Derived debtor account system"
-                },
-                {
-                  "name": "derivedDRBookCode",
-                  "type": "string",
-                  "doc": "Derived debtor book code"
-                }
-              ]
-            },
-            "doc": "Payment details"
-          }
-        ]
-      },
-      "doc": "Processing context"
-    },
-    {
-      "name": "messages",
-      "type": {
-        "type": "array",
-        "items": {
-          "type": "record",
-          "name": "Message",
-          "fields": [
-            {
-              "name": "instruction",
-              "type": {
-                "type": "record",
-                "name": "Instruction",
-                "fields": [
-                  {
-                    "name": "MsgDef",
-                    "type": {
-                      "type": "record",
-                      "name": "MsgDef",
-                      "fields": [
-                        {
-                          "name": "MsgType",
-                          "type": "string",
-                          "doc": "Message type"
-                        },
-                        {
-                          "name": "Schema",
-                          "type": "string",
-                          "doc": "Schema"
-                        }
-                      ]
-                    },
-                    "doc": "Message definition"
-                  },
-                  {
-                    "name": "MsgCtxt",
-                    "type": {
-                      "type": "record",
-                      "name": "MsgCtxt",
-                      "fields": [
-                        {
-                          "name": "OrigMsgTyp",
-                          "type": "string",
-                          "doc": "Original message type"
-                        },
-                        {
-                          "name": "InstdClrgPref",
-                          "type": "string",
-                          "doc": "Instructed clearing preference"
-                        },
-                        {
-                          "name": "InstdMoPCat",
-                          "type": "string",
-                          "doc": "Instructed method of payment category"
-                        },
-                        {
-                          "name": "Site",
-                          "type": "string",
-                          "doc": "Site"
-                        },
-                        {
-                          "name": "BaseAmt",
-                          "type": "double",
-                          "doc": "Base amount"
-                        },
-                        {
-                          "name": "BaseCcy",
-                          "type": "string",
-                          "doc": "Base currency"
-                        },
-                        {
-                          "name": "SenderBIC",
-                          "type": "string",
-                          "doc": "Sender BIC"
-                        },
-                        {
-                          "name": "ProcCtryCd",
-                          "type": "string",
-                          "doc": "Processing country code"
-                        },
-                        {
-                          "name": "Department",
-                          "type": "string",
-                          "doc": "Department"
-                        },
-                        {
-                          "name": "MsgId",
-                          "type": "string",
-                          "doc": "Message identifier"
-                        },
-                        {
-                          "name": "Direction",
-                          "type": "string",
-                          "doc": "Direction"
-                        }
-                      ]
-                    },
-                    "doc": "Message context"
-                  },
-                  {
-                    "name": "MsgAddRq",
-                    "type": {
-                      "type": "record",
-                      "name": "MsgAddRq",
-                      "fields": [
-                        {
-                          "name": "OrigMsg",
-                          "type": "string",
-                          "doc": "Original message"
-                        },
-                        {
-                          "name": "MsgDtls",
-                          "type": {
-                            "type": "record",
-                            "name": "MsgDtls",
-                            "fields": [
-                              {
-                                "name": "DrctDbtTxInf",
-                                "type": {
-                                  "type": "record",
-                                  "name": "DrctDbtTxInf",
-                                  "fields": [
-                                    {
-                                      "name": "PmtId",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "PmtId",
-                                        "fields": [
-                                          {
-                                            "name": "InstrId",
-                                            "type": "string",
-                                            "doc": "Instruction identifier"
-                                          },
-                                          {
-                                            "name": "TxId",
-                                            "type": "string",
-                                            "doc": "Transaction identifier"
-                                          },
-                                          {
-                                            "name": "EndToEndId",
-                                            "type": "string",
-                                            "doc": "End to end identifier"
-                                          },
-                                          {
-                                            "name": "ClrSysRef",
-                                            "type": "string",
-                                            "doc": "Clearing system reference"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Payment identifier"
-                                    },
-                                    {
-                                      "name": "IntrBkSttlmAmt",
-                                      "type": "double",
-                                      "doc": "Interbank settlement amount"
-                                    },
-                                    {
-                                      "name": "IntrBkSttlmCCY",
-                                      "type": "string",
-                                      "doc": "Interbank settlement currency"
-                                    },
-                                    {
-                                      "name": "IntrBkSttlmDt",
-                                      "type": "string",
-                                      "doc": "Interbank settlement date"
-                                    },
-                                    {
-                                      "name": "InstgAgt",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "InstgAgt",
-                                        "fields": [
-                                          {
-                                            "name": "BIC",
-                                            "type": "string",
-                                            "doc": "BIC"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Instructing agent"
-                                    },
-                                    {
-                                      "name": "InstdAgt",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "InstdAgt",
-                                        "fields": [
-                                          {
-                                            "name": "BIC",
-                                            "type": "string",
-                                            "doc": "BIC"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Instructed agent"
-                                    },
-                                    {
-                                      "name": "Dbtr",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "Dbtr",
-                                        "fields": [
-                                          {
-                                            "name": "Nm",
-                                            "type": "string",
-                                            "doc": "Name"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Debtor"
-                                    },
-                                    {
-                                      "name": "DbtrAcct",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "DbtrAcct",
-                                        "fields": [
-                                          {
-                                            "name": "AcctId",
-                                            "type": "string",
-                                            "doc": "Account identifier"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Debtor account"
-                                    },
-                                    {
-                                      "name": "DbtrAgt",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "DbtrAgt",
-                                        "fields": [
-                                          {
-                                            "name": "BIC",
-                                            "type": "string",
-                                            "doc": "BIC"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Debtor agent"
-                                    },
-                                    {
-                                      "name": "CdtrAgt",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "CdtrAgt",
-                                        "fields": [
-                                          {
-                                            "name": "BIC",
-                                            "type": "string",
-                                            "doc": "BIC"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Creditor agent"
-                                    },
-                                    {
-                                      "name": "Cdtr",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "Cdtr",
-                                        "fields": [
-                                          {
-                                            "name": "Nm",
-                                            "type": "string",
-                                            "doc": "Name"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Creditor"
-                                    },
-                                    {
-                                      "name": "CdtrAcct",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "CdtrAcct",
-                                        "fields": [
-                                          {
-                                            "name": "AcctId",
-                                            "type": "string",
-                                            "doc": "Account identifier"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Creditor account"
-                                    },
-                                    {
-                                      "name": "Purp",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "Purp",
-                                        "fields": [
-                                          {
-                                            "name": "Cd",
-                                            "type": "string",
-                                            "doc": "Code"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Purpose"
-                                    },
-                                    {
-                                      "name": "RmtInf",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "RmtInf",
-                                        "fields": [
-                                          {
-                                            "name": "Ustrd",
-                                            "type": "string",
-                                            "doc": "Unstructured"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Remittance information"
-                                    },
-                                    {
-                                      "name": "DrctDbtTx",
-                                      "type": {
-                                        "type": "record",
-                                        "name": "DrctDbtTx",
-                                        "fields": [
-                                          {
-                                            "name": "MndtRltdInf",
-                                            "type": {
-                                              "type": "record",
-                                              "name": "MndtRltdInf",
-                                              "fields": [
-                                                {
-                                                  "name": "MndtId",
-                                                  "type": "string",
-                                                  "doc": "Mandate identifier"
-                                                }
-                                              ]
-                                            },
-                                            "doc": "Mandate related information"
-                                          }
-                                        ]
-                                      },
-                                      "doc": "Direct debit transaction"
-                                    }
-                                  ]
-                                },
-                                "doc": "Direct debit transaction information"
-                              }
-                            ]
-                          },
-                          "doc": "Message details"
-                        }
-                      ]
-                    },
-                    "doc": "Message add request"
-                  }
-                ]
-              },
-              "doc": "Instruction"
-            }
-          ]
-        },
-        "doc": "Messages array"
-      }
     }
   ]
 }

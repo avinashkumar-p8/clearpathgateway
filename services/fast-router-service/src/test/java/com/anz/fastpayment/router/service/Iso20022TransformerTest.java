@@ -13,7 +13,7 @@ class Iso20022TransformerTest {
         TransformationConfigLoader loader = new TransformationConfigLoader(new ObjectMapper());
         Iso20022Transformer transformer = new Iso20022Transformer(loader);
         String xml = """
-                <Document xmlns=\"urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13\">
+                <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13">
                   <FIToFICstmrCdtTrf>
                     <GrpHdr>
                       <MsgId>MSG-001</MsgId>
@@ -23,7 +23,7 @@ class Iso20022TransformerTest {
                     </GrpHdr>
                     <CdtTrfTxInf>
                       <PmtId><EndToEndId>E2E-001</EndToEndId></PmtId>
-                      <IntrBkSttlmAmt Ccy=\"SGD\">1000.00</IntrBkSttlmAmt>
+                      <IntrBkSttlmAmt Ccy="SGD">1000.00</IntrBkSttlmAmt>
                       <ChrgBr>SHAR</ChrgBr>
                       <Dbtr><Nm>John Doe</Nm></Dbtr>
                       <DbtrAgt><FinInstnId><BICFI>AAAAUS33</BICFI></FinInstnId></DbtrAgt>
@@ -36,11 +36,12 @@ class Iso20022TransformerTest {
 
         String puid = "G3I0000000000001";
         String json = transformer.toUnifiedJson(xml, "pacs.008.001.13", puid);
-        assertTrue(json.contains("\"puid\":\"" + puid + "\""));
-        assertTrue(json.contains("\"messageType\":\"PACS_008\""));
-        assertTrue(json.contains("\"messageVersion\":\"13\""));
-        assertTrue(json.contains("\"EndToEndId\"") || json.contains("\"endToEndId\""));
-        assertTrue(json.contains("\"currency\":\"SGD\""));
+        assertTrue(json.contains("\"Header\""));
+        assertTrue(json.contains("\"Body\""));
+        assertTrue(json.contains("\"Trailer\""));
+        assertTrue(json.contains("\"UUID\":\"" + puid + "\""));
+        assertTrue(json.contains("\"PODsID\":\"" + puid + "\""));
+        assertTrue(json.contains("\"CurCode\":\"SGD\""));
     }
 }
 

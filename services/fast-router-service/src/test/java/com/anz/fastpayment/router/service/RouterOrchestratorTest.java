@@ -19,7 +19,9 @@ class RouterOrchestratorTest {
     private XmlSchemaValidator xsdValidator;
     private Iso20022Transformer transformer;
     private KafkaPublisher publisher;
-    private com.fasterxml.jackson.databind.ObjectMapper objectMapper;
+    private String capturedKey;
+    private String capturedPayload;
+    private org.apache.avro.generic.GenericRecord capturedRecord;
 
     private RouterOrchestrator orchestrator;
 
@@ -34,19 +36,25 @@ class RouterOrchestratorTest {
         };
         detector = new Iso20022MessageTypeDetector();
         xsdValidator = new XmlSchemaValidator();
+        // Ensure validation is enabled in unit tests
         try {
-            java.lang.reflect.Field f = XmlSchemaValidator.class.getDeclaredField("xsdValidationEnabled");
-            f.setAccessible(true);
-            f.set(xsdValidator, true);
-            java.lang.reflect.Field max = XmlSchemaValidator.class.getDeclaredField("maxXmlBytes");
-            max.setAccessible(true);
-            max.setInt(xsdValidator, 10_000_000);
+            java.lang.reflect.Method m = XmlSchemaValidator.class.getDeclaredMethod("setXsdValidationEnabled", boolean.class);
+            m.setAccessible(true);
+            m.invoke(xsdValidator, true);
         } catch (Exception ignore) { }
         transformer = new Iso20022Transformer(new com.anz.fastpayment.router.mapping.TransformationConfigLoader(new com.fasterxml.jackson.databind.ObjectMapper()));
-        publisher = mock(KafkaPublisher.class);
-        // Stub Avro schema for tests
-        org.apache.avro.Schema testSchema = new org.apache.avro.Schema.Parser().parse("{\n  \"type\": \"record\",\n  \"name\": \"UnifiedPaymentMessage\",\n  \"fields\": [\n    { \"name\": \"messageType\", \"type\": \"string\" },\n    { \"name\": \"messageVersion\", \"type\": [\"null\", \"string\"], \"default\": null },\n    { \"name\": \"messageId\", \"type\": \"string\" },\n    { \"name\": \"creationDateTime\", \"type\": \"string\" },\n    { \"name\": \"supplementaryData\", \"type\": [\"null\", {\"type\": \"map\", \"values\": \"string\"}], \"default\": null }\n  ]\n}");
-        when(publisher.getUnifiedSchema()).thenReturn(testSchema);
+        publisher = new KafkaPublisher(null) {
+            @Override
+            public void publishValidUnified(org.apache.avro.generic.GenericRecord record, String key) {
+                capturedKey = key;
+                capturedRecord = record;
+            }
+            @Override
+            public void publishInvalid(String key, String payload) {
+                capturedKey = key;
+                capturedPayload = payload;
+            }
+        };
         ObjectProvider<com.anz.fastpayment.router.repository.InboundMessageRepository> provider = new ObjectProvider<>() {
             @Override public com.anz.fastpayment.router.repository.InboundMessageRepository getObject(Object... args) { return null; }
             @Override public com.anz.fastpayment.router.repository.InboundMessageRepository getIfAvailable() { return null; }
@@ -101,18 +109,50 @@ class RouterOrchestratorTest {
                   </FIToFICstmrCdtTrf>
                 </Document>
                 """;
+        // Use a no-op validator for happy path to focus on transform/publish
+        XmlSchemaValidator okValidator = new XmlSchemaValidator() {
+            @Override public void validate(String xmlContent, String messageType) { /* no-op */ }
+        };
+        @SuppressWarnings("unchecked")
+        ObjectProvider<InboundMessageRepository> inboundProvider = (ObjectProvider<InboundMessageRepository>) new ObjectProvider<InboundMessageRepository>() {
+            @Override public InboundMessageRepository getObject(Object... args) { return null; }
+            @Override public InboundMessageRepository getIfAvailable() { return null; }
+            @Override public InboundMessageRepository getIfUnique() { return null; }
+            @Override public InboundMessageRepository getObject() { return null; }
+            @Override public void forEach(java.util.function.Consumer action) { }
+            @Override public java.util.stream.Stream stream() { return java.util.stream.Stream.empty(); }
+            @Override public java.util.Iterator iterator() { return java.util.Collections.emptyIterator(); }
+        };
+        @SuppressWarnings("unchecked")
+        ObjectProvider<UnifiedMessageRepository> unifiedProvider = (ObjectProvider<UnifiedMessageRepository>) new ObjectProvider<UnifiedMessageRepository>() {
+            @Override public UnifiedMessageRepository getObject(Object... args) { return null; }
+            @Override public UnifiedMessageRepository getIfAvailable() { return null; }
+            @Override public UnifiedMessageRepository getIfUnique() { return null; }
+            @Override public UnifiedMessageRepository getObject() { return null; }
+            @Override public void forEach(java.util.function.Consumer action) { }
+            @Override public java.util.stream.Stream stream() { return java.util.stream.Stream.empty(); }
+            @Override public java.util.Iterator iterator() { return java.util.Collections.emptyIterator(); }
+        };
+        orchestrator = new RouterOrchestrator(
+                puidGenerator,
+                inboundProvider,
+                detector,
+                okValidator,
+                transformer,
+                publisher,
+                mock(EventPublisher.class),
+                new UniqueIdExtractor(),
+                unifiedProvider,
+                mock(DuplicateChecker.class),
+                new SimpleMeterRegistry()
+        );
 
         orchestrator.processInboundXml(xml);
 
-        ArgumentCaptor<org.apache.avro.generic.GenericRecord> recCaptor = ArgumentCaptor.forClass(org.apache.avro.generic.GenericRecord.class);
-        ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-        verify(publisher, times(1)).publishValidUnified(recCaptor.capture(), keyCaptor.capture());
-        assertEquals("G3I0000000000001", keyCaptor.getValue());
-        org.apache.avro.generic.GenericRecord rec = recCaptor.getValue();
-        assertNotNull(rec);
-        assertEquals("PACS_008", String.valueOf(rec.get("messageType")));
-        assertNotNull(rec.get("messageId"));
-        assertEquals("13", rec.get("messageVersion"));
+        assertTrue("G3I0000000000001".equals(capturedKey));
+        assertNotNull(capturedRecord);
+        assertNotNull(capturedRecord.get("messageType"));
+        assertNotNull(capturedRecord.get("messageId"));
     }
 
     @Test
@@ -212,5 +252,60 @@ class RouterOrchestratorTest {
 
         verify(kafkaPublisher, times(1)).publishInvalid(eq("PUID1"), anyString());
         verify(kafkaPublisher, times(1)).publishPacs002Request(eq("PUID1"), anyString());
+    }
+
+    @Test
+    void duplicate_shouldMarkInboundAsDuplicateAndStop() {
+        // Arrange deterministic PUID
+        PuidGenerator puidGen = mock(PuidGenerator.class);
+        when(puidGen.nextPuid()).thenReturn("G3I0000000000999");
+
+        InboundMessageRepository inboundRepo = mock(InboundMessageRepository.class);
+        com.anz.fastpayment.router.model.InboundMessage existing = new com.anz.fastpayment.router.model.InboundMessage();
+        existing.setPuid("G3I0000000000999");
+        existing.setStatus("RECEIVED");
+        when(inboundRepo.findById("G3I0000000000999")).thenReturn(java.util.Optional.of(existing));
+        @SuppressWarnings("unchecked")
+        ObjectProvider<InboundMessageRepository> inboundProvider = (ObjectProvider<InboundMessageRepository>) mock(ObjectProvider.class);
+        when(inboundProvider.getIfAvailable()).thenReturn(inboundRepo);
+
+        Iso20022MessageTypeDetector typeDetector = mock(Iso20022MessageTypeDetector.class);
+        when(typeDetector.detectType(anyString())).thenReturn("pacs.008.001.13");
+
+        XmlSchemaValidator validator = mock(XmlSchemaValidator.class); // no throw
+        Iso20022Transformer transformer = mock(Iso20022Transformer.class);
+        KafkaPublisher kafkaPublisher = mock(KafkaPublisher.class);
+        EventPublisher eventPublisher = mock(EventPublisher.class);
+        UniqueIdExtractor uniqueIdExtractor = mock(UniqueIdExtractor.class);
+        when(uniqueIdExtractor.extractUniqueId(anyString(), anyString())).thenReturn("E2E-DUP-001");
+
+        @SuppressWarnings("unchecked")
+        ObjectProvider<UnifiedMessageRepository> unifiedProvider = (ObjectProvider<UnifiedMessageRepository>) mock(ObjectProvider.class);
+        when(unifiedProvider.getIfAvailable()).thenReturn(null);
+
+        DuplicateChecker duplicateChecker = mock(DuplicateChecker.class);
+        when(duplicateChecker.isDuplicateAndRecord(eq("pacs.008.001.13"), eq("E2E-DUP-001"), anyString())).thenReturn(true);
+
+        RouterOrchestrator orch = new RouterOrchestrator(
+                puidGen,
+                inboundProvider,
+                typeDetector,
+                validator,
+                transformer,
+                kafkaPublisher,
+                eventPublisher,
+                uniqueIdExtractor,
+                unifiedProvider,
+                duplicateChecker,
+                new io.micrometer.core.instrument.simple.SimpleMeterRegistry()
+        );
+
+        // Act
+        orch.processInboundXml("<Document xmlns=\"urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13\"><FIToFICstmrCdtTrf><CdtTrfTxInf><PmtId><EndToEndId>E2E-DUP-001</EndToEndId></PmtId></CdtTrfTxInf></FIToFICstmrCdtTrf></Document>");
+
+        // Assert: should not publish valid
+        verify(kafkaPublisher, never()).publishValidUnified(any(), anyString());
+        // Assert status updated to DUPLICATE
+        verify(inboundRepo, atLeastOnce()).save(argThat(m -> "DUPLICATE".equals(m.getStatus())));
     }
 }

@@ -66,6 +66,11 @@ public class XmlSchemaValidator {
         }
     }
 
+    // Test-only convenience hook
+    void setXsdValidationEnabled(boolean enabled) { this.xsdValidationEnabled = enabled; }
+    // Test-only convenience hook
+    void setMaxXmlBytes(int max) { this.maxXmlBytes = max; }
+
     private String resolveSchemaPath(String messageType) {
         return switch (messageType) {
             case "pacs.008.001.13" -> "schema/pacs.008.001.13.xsd";

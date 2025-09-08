@@ -50,7 +50,6 @@ public class Iso20022Transformer {
     private String transformPacs008(String xml, String puid) throws Exception {
         Document doc = parseSecure(xml);
 
-        // naive extraction for demo: MsgId, CreDtTm, EndToEndId, IntrBkSttlmAmt/@Ccy and text
         String ns = "urn:iso:std:iso:20022:tech:xsd:pacs.008.001.13";
         String msgId = text(doc, ns, "MsgId");
         String creDtTm = text(doc, ns, "CreDtTm");
@@ -58,21 +57,49 @@ public class Iso20022Transformer {
         String amt = text(doc, ns, "IntrBkSttlmAmt");
         String ccy = attr(doc, ns, "IntrBkSttlmAmt", "Ccy");
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"puid\":\"").append(escape(puid)).append("\",");
-        sb.append("\"messageType\":\"PACS_008\",");
-        sb.append("\"messageVersion\":\"13\",");
-        if (msgId != null) sb.append("\"messageId\":\"").append(escape(msgId)).append("\",");
-        if (creDtTm != null) sb.append("\"creationDateTime\":\"").append(escape(creDtTm)).append("\",");
-        sb.append("\"transactions\":[{");
-        if (e2e != null) sb.append("\"endToEndId\":\"").append(escape(e2e)).append("\",");
-        if (amt != null) sb.append("\"amount\":").append(amt).append(",");
-        if (ccy != null) sb.append("\"currency\":\"").append(escape(ccy)).append("\",");
-        // trim trailing comma if present
-        if (sb.charAt(sb.length()-1) == ',') sb.setLength(sb.length()-1);
-        sb.append("}]}");
-        return sb.toString();
+        com.fasterxml.jackson.databind.node.ObjectNode root = objectMapper.createObjectNode();
+        com.fasterxml.jackson.databind.node.ObjectNode header = root.putObject("Header");
+        header.put("ComponentName", "PSPAPFAFAST");
+        header.put("UUID", puid);
+        header.put("Channel", "G3I");
+        header.put("Direction", "I");
+        com.fasterxml.jackson.databind.node.ObjectNode eventInfo = header.putObject("EventInfo");
+        eventInfo.put("EventCode", "P.PSP.STS.M.OP_RPI.100");
+        eventInfo.put("EventDescription", "Payment request received in PSP");
+        eventInfo.put("EventID", java.util.UUID.randomUUID().toString());
+        eventInfo.put("EventType", "PE");
+        eventInfo.put("EventProducer", "Clear Path Gateway");
+        eventInfo.put("EventTS", java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.now()));
+        eventInfo.put("EventTopics", "payment-messages");
+        com.fasterxml.jackson.databind.node.ObjectNode events = eventInfo.putObject("Events");
+        com.fasterxml.jackson.databind.node.ArrayNode arr = events.putArray("Event");
+        com.fasterxml.jackson.databind.node.ObjectNode e1 = arr.addObject();
+        e1.put("EventCode", "I.PSP.STS.M.OP_RPI.100");
+        e1.put("EventID", java.util.UUID.randomUUID().toString());
+        com.fasterxml.jackson.databind.node.ObjectNode e2node = arr.addObject();
+        e2node.put("EventCode", "P.PSP.STS.M.OP_RPI.100");
+        e2node.put("EventID", eventInfo.get("EventID").asText());
+
+        com.fasterxml.jackson.databind.node.ObjectNode body = root.putObject("Body");
+        com.fasterxml.jackson.databind.node.ArrayNode pmtAddRq = body.putArray("PmtAddRq");
+        com.fasterxml.jackson.databind.node.ObjectNode first = pmtAddRq.addObject();
+        first.put("RqUID", msgId != null ? msgId : puid);
+        com.fasterxml.jackson.databind.node.ObjectNode msgHdr = first.putObject("MsgHdr");
+        if (creDtTm != null) msgHdr.put("ClientDt", creDtTm);
+        msgHdr.put("ClientName", "G3I");
+        com.fasterxml.jackson.databind.node.ObjectNode payHdr = first.putObject("PayHdr");
+        payHdr.put("PODsID", puid);
+        if (e2e != null) payHdr.put("PaymentID", e2e);
+        com.fasterxml.jackson.databind.node.ObjectNode toAcct = first.putObject("ToAcct");
+        if (ccy != null) toAcct.put("CurCode", ccy);
+        if (amt != null) {
+            try { toAcct.put("Amount", Double.parseDouble(amt)); } catch (Exception ignore) { toAcct.put("Amount", amt); }
+        }
+
+        root.putObject("Trailer").putObject("ServiceStatus").put("StatusCode", "OK");
+        root.putObject("Procctxt");
+        root.putArray("messages");
+        return objectMapper.writeValueAsString(root);
     }
 
     private String transformPacs003(String xml, String puid) throws Exception {

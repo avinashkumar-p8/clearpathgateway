@@ -14,6 +14,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SERVICE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 SETUP_SCRIPT="$SCRIPT_DIR/setup-services.sh"
 CLEANUP_SCRIPT="$SCRIPT_DIR/cleanup-services.sh"
 
@@ -40,9 +41,8 @@ print_info() {
 # Function to handle cleanup on exit
 cleanup_on_exit() {
     echo -e "\n${YELLOW}🛑 Test execution interrupted. Cleaning up...${NC}"
-    if [ -f "$CLEANUP_SCRIPT" ]; then
-        bash "$CLEANUP_SCRIPT"
-    fi
+    cd "$SERVICE_DIR"
+    docker-compose down --remove-orphans 2>/dev/null || true
     exit 1
 }
 
@@ -184,15 +184,16 @@ fi
 if [ "$AUTO_CLEANUP" = true ]; then
     echo -e "\n${BLUE}🧹 Step 5: Cleaning up services...${NC}"
     
-    print_info "Running service cleanup..."
-    if bash "$CLEANUP_SCRIPT"; then
+    print_info "Stopping Docker services..."
+    cd "$SERVICE_DIR"
+    if docker-compose down --remove-orphans; then
         print_status "Services cleaned up successfully"
     else
         print_warning "Service cleanup had issues"
     fi
 else
     echo -e "\n${YELLOW}⚠️  Services left running (--no-cleanup specified)${NC}"
-    echo -e "${YELLOW}To cleanup manually, run: ./cleanup-services.sh${NC}"
+    echo -e "${YELLOW}To cleanup manually, run: cd .. && docker-compose down${NC}"
 fi
 
 # Step 6: Summary
