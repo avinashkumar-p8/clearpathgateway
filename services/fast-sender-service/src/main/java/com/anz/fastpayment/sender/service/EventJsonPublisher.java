@@ -1,5 +1,8 @@
 package com.anz.fastpayment.sender.service;
 
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,18 +15,33 @@ public class EventJsonPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(EventJsonPublisher.class);
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final Schema eventSchema;
 
     @Value("${app.kafka.topics.payment-events:payment-events}")
     private String paymentEventsTopic;
 
-    public EventJsonPublisher(KafkaTemplate<String, String> kafkaTemplate) {
+    public EventJsonPublisher(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
+        try {
+            String schemaJson = new String(
+                    java.util.Objects.requireNonNull(
+                            EventJsonPublisher.class.getClassLoader().getResourceAsStream("avro/payment-event.avsc")
+                    ).readAllBytes(),
+                    java.nio.charset.StandardCharsets.UTF_8
+            );
+            this.eventSchema = new Schema.Parser().parse(schemaJson);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to load payment-event.avsc", e);
+        }
     }
 
     public void publish(String key, String payload) {
         try {
-            kafkaTemplate.send(paymentEventsTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+            GenericRecord rec = new GenericData.Record(eventSchema);
+            rec.put("puid", key);
+            rec.put("json", payload);
+            kafkaTemplate.send(paymentEventsTopic, key, rec).get(5, java.util.concurrent.TimeUnit.SECONDS);
             log.info("[KAFKA] Published event JSON for key={} to topic {}", key, paymentEventsTopic);
         } catch (Exception e) {
             log.warn("[KAFKA] Publish timeout/failure for key={}, err={}", key, e.getMessage());

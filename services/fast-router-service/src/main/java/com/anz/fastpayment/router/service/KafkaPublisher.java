@@ -88,8 +88,6 @@ public class KafkaPublisher {
         return unifiedSchema;
     }
 
-    public Schema getUnifiedSchema() { return unifiedSchema; }
-
     private Schema parseSchema(String classpathLocation) throws Exception {
         ClassPathResource res = new ClassPathResource(classpathLocation);
         try (InputStream in = res.getInputStream()) {

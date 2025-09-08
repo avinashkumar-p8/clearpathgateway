@@ -22,6 +22,7 @@ class RouterOrchestratorTest {
     private String capturedKey;
     private String capturedPayload;
     private org.apache.avro.generic.GenericRecord capturedRecord;
+    private com.fasterxml.jackson.databind.ObjectMapper objectMapper;
 
     private RouterOrchestrator orchestrator;
 
@@ -144,6 +145,7 @@ class RouterOrchestratorTest {
                 new UniqueIdExtractor(),
                 unifiedProvider,
                 mock(DuplicateChecker.class),
+                new com.fasterxml.jackson.databind.ObjectMapper(),
                 new SimpleMeterRegistry()
         );
 
@@ -198,7 +200,8 @@ class RouterOrchestratorTest {
 
         // Expect XSD failure path: publishInvalid and pacs002 request
         orchestrator.processInboundXml(xml);
-        verify(publisher, times(1)).publishInvalid(eq("G3I0000000000002"), eq(xml));
+        assertEquals("G3I0000000000002", capturedKey);
+        assertEquals(xml, capturedPayload);
     }
 
     @Test
@@ -297,6 +300,7 @@ class RouterOrchestratorTest {
                 uniqueIdExtractor,
                 unifiedProvider,
                 duplicateChecker,
+                new com.fasterxml.jackson.databind.ObjectMapper(),
                 new io.micrometer.core.instrument.simple.SimpleMeterRegistry()
         );
 
