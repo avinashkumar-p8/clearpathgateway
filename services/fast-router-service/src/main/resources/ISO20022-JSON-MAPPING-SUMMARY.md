@@ -8,7 +8,7 @@ Successfully created an ultra lean, flattened unified JSON representation and ma
 
 ### 1. Ultra Lean Unified JSON Schema (`schemas/unified-payment-message-schema.json`)
 - **Size**: Streamlined schema with minimal definitions (v3.0.0)
-- **Coverage**: Supports ALL 6 ISO 20022 message types
+- **Coverage**: Supports ALL 7 ISO 20022 message types
 - **Features**:
   - **Flattened structure** - minimal nesting to reduce JSON bloat
   - **Essential fields only** - focused on core payment processing needs
@@ -24,6 +24,7 @@ Successfully created an ultra lean, flattened unified JSON representation and ma
 - `CAMT_056` - FI To FI Payment Cancellation Request (camt.056.001.11)
 - `PACS_002` - FI To FI Payment Status Report (pacs.002.001.15)
 - `CAMT_029` - Resolution of Investigation (camt.029.001.13)
+- `HEAD_001` - Business Application Header (head.001.001.01)
 
 ### 2. Comprehensive Mapping Documentation (`mappings/iso20022-to-unified-json-mapping.md`)
 - **Size**: 30+ pages of detailed mapping tables
@@ -72,7 +73,7 @@ Successfully created an ultra lean, flattened unified JSON representation and ma
 ### Ultra Lean JSON Schema Structure
 ```json
 {
-  "messageType": "PACS_008|PACS_003|PACS_007|CAMT_056|PACS_002|CAMT_029",
+  "messageType": "PACS_008|PACS_003|PACS_007|CAMT_056|PACS_002|CAMT_029|HEAD_001",
   "messageVersion": "version number",
   
   // Flattened header fields (no nested groupHeader object)
@@ -88,43 +89,24 @@ Successfully created an ultra lean, flattened unified JSON representation and ma
     {
       "endToEndId": "E2E-001",
       "amount": 1000.00,
-      "currency": "SGD",
-      "debtorName": "John Doe",           // Flattened - no nested objects
-      "debtorAccountId": "123456789",     // Direct account reference
-      "debtorBIC": "ABCDSGSG",           // Direct BIC reference
-      "creditorName": "Jane Smith",       // Flattened - no nested objects
-      "creditorAccountId": "987654321",   // Direct account reference
-      "creditorBIC": "EFGHSGSG",         // Direct BIC reference
-      "chargeBearer": "SHAR",
-      "remittanceInformation": "Invoice 123"  // Simple string, no structure
+      "currency": "SGD"
     }
   ],
   
   // Flat case management fields (no nested objects)
   "caseId": "CASE-001",
-  "caseCreator": "BANK_A",
-  "investigationStatus": "CONF",
   
-  // Simplified status reports (PACS.002 only)
-  "statusReports": [
-    {
-      "originalInstructionId": "INS-001",
-      "transactionStatus": "ACCP",
-      "statusReason": "Accepted",
-      "acceptanceDateTime": "2024-01-15T10:31:00Z"
-    }
-  ],
+  // HEAD_001 specific supplementary fields
+  "headerId": "HDR-001",
   
   // Supplementary data as simple key-value map
   "supplementaryData": {
-    "processingCode": "SWIFT_MT103",
-    "regulatoryCode": "SG_FAST"
+    "processingCode": "SWIFT_MT103"
   }
 }
 ```
 
 ### Key Design Principles
-
 1. **Minimal Nesting**: Flattened structure to reduce JSON bloat and parsing overhead
 2. **Essential Fields Only**: Focus on core payment processing requirements
 3. **Simple Data Types**: Use strings/numbers instead of complex nested objects
@@ -134,80 +116,14 @@ Successfully created an ultra lean, flattened unified JSON representation and ma
 
 ## Mapping Approach
 
-### Data Structure Consolidation
-
-**Before (Complex Nested XML)**:
-- Deep object hierarchies with 5+ levels of nesting
-- Complex party structures with identification, address, contact details
-- Nested financial institution data with branch information
-- Multiple amount objects with currency and type information
-
-**After (Ultra Lean Flattened JSON)**:
-- Maximum 2 levels of nesting (message → transactions/statusReports)
-- Direct field access: `debtorName`, `debtorBIC`, `debtorAccountId`
-- Simple numeric amounts with separate currency field
-- Consolidated essential information only
-
-### Field Mapping Examples
-
-**Amount Conversion**:
-```xml
-<!-- XML -->
-<IntrBkSttlmAmt Ccy="SGD">1000.50</IntrBkSttlmAmt>
-```
-```json
-// JSON
-{
-  "interbankSettlementAmount": {
-    "value": 1000.50,
-    "currency": "SGD"
-  }
-}
-```
-
-**Party Information**:
-```xml
-<!-- XML -->
-<Cdtr>
-  <Nm>ANZ Bank</Nm>
-  <Id>
-    <OrgId>
-      <LEI>ABCD1234567890123456</LEI>
-    </OrgId>
-  </Id>
-</Cdtr>
-```
-```json
-// JSON
-{
-  "creditor": {
-    "name": "ANZ Bank",
-    "identification": {
-      "organisationIdentification": {
-        "LEI": "ABCD1234567890123456"
-      }
-    }
-  }
-}
-```
+- **PACS_008**: Requires core group header and transaction fields
+- **PACS_003**: Requires core group header and transaction fields
+- **PACS_007**: Requires group header and reversal context
+- **CAMT_056**: Requires group header and case assignment info
+- **HEAD_001**: Business Application Header passthrough: captures `messageId` (MsgId), `creationDateTime` (CreDtTm), and `headerId` (Id) when present. No transactions array required.
 
 ## Implementation Benefits
-
-### For Microservices Architecture
-
-1. **Consistency**: All services use the same JSON structure
-2. **Validation**: Single schema for all message validation
-3. **Interoperability**: Easy message passing between services
-4. **Development Speed**: Reduced complexity in service implementation
-5. **Maintenance**: Centralized mapping updates
-
-### For Development Teams
-
-1. **Single Source of Truth**: One place for all mapping rules
-2. **Clear Documentation**: Comprehensive field-level mapping
-3. **Automated Transformation**: Machine-readable configuration
-4. **Testing Support**: Validation schemas and examples
-5. **Performance Guidelines**: Optimization best practices
+- Consistent and minimal payload for all supported message types, including headers-only HEAD_001.
 
 ## Validation and Quality Assurance
 

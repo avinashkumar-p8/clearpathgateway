@@ -81,10 +81,11 @@ public class Pacs002ServiceImpl implements Pacs002Service {
 
         // Publish to ActiveMQ
         boolean sent = false;
+        String destination = (pacs002OutboundQueue == null || pacs002OutboundQueue.isBlank()) ? "pacs002.outbound" : pacs002OutboundQueue;
         for (int attempt = 1; attempt <= Math.max(1, maxRetryAttempts); attempt++) {
             try {
-                jmsTemplate.convertAndSend(pacs002OutboundQueue, xml);
-                log.info("[AMQ] Sent pacs.002 for PUID={} to queue {} (attempt {} of {})", safe(request.getPuid()), pacs002OutboundQueue, attempt, maxRetryAttempts);
+                jmsTemplate.convertAndSend(destination, xml);
+                log.info("[AMQ] Sent pacs.002 for PUID={} to queue {} (attempt {} of {})", safe(request.getPuid()), destination, attempt, maxRetryAttempts);
                 sent = true;
                 break;
             } catch (Exception e) {

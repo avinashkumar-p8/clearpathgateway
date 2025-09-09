@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "Pacs002Request",
+  "namespace": "com.anz.fastpayment.schema",
+  "fields": [
+    { "name": "puid", "type": "string" },
+    { "name": "payload", "type": "string" }
+  ]
+}
+
+
+
+
+
+

@@ -97,28 +97,8 @@ public class SpannerLocalSchema {
     private void ensureInstanceAndDatabase() throws Exception {
         SpannerOptions options = SpannerOptions.newBuilder().setProjectId(projectId).build();
         try (Spanner spanner = options.getService()) {
-            InstanceAdminClient instanceAdminClient = spanner.getInstanceAdminClient();
             DatabaseAdminClient databaseAdminClient = spanner.getDatabaseAdminClient();
-
-            InstanceId iid = InstanceId.of(projectId, instanceId);
-            boolean instanceExists;
-            try {
-                Instance i = instanceAdminClient.getInstance(iid.getInstance());
-                instanceExists = i != null;
-            } catch (Exception e) {
-                instanceExists = false;
-            }
-            if (!instanceExists) {
-                log.info("Creating Spanner emulator instance {} in project {}", instanceId, projectId);
-                InstanceInfo info = InstanceInfo.newBuilder(iid)
-                        .setDisplayName("Local Instance")
-                        .setInstanceConfigId(InstanceConfigId.of(projectId, "emulator-config"))
-                        .setNodeCount(1)
-                        .build();
-                instanceAdminClient.createInstance(info).get(30, TimeUnit.SECONDS);
-            }
-
-            DatabaseId db = DatabaseId.of(projectId, instanceId, databaseId);
+            // Many emulator builds don’t support instance admin; assume instance exists and ensure database only
             boolean dbExists;
             try {
                 databaseAdminClient.getDatabase(instanceId, databaseId);
@@ -128,7 +108,11 @@ public class SpannerLocalSchema {
             }
             if (!dbExists) {
                 log.info("Creating Spanner emulator database {} on instance {}", databaseId, instanceId);
-                databaseAdminClient.createDatabase(instanceId, databaseId, Collections.emptyList()).get(30, TimeUnit.SECONDS);
+                try {
+                    databaseAdminClient.createDatabase(instanceId, databaseId, Collections.emptyList()).get(30, TimeUnit.SECONDS);
+                } catch (Exception ce) {
+                    log.warn("Could not create database {} on emulator: {}", databaseId, ce.getMessage());
+                }
             }
         }
     }

@@ -32,8 +32,10 @@ public class UniqueIdExtractor {
                 String instrId = firstNonBlank(text(doc, "*", "InstrId"), text(doc, null, "InstrId"));
                 if (notBlank(instrId)) return instrId.trim();
             }
-            // camt.056: use OrgnlInstrId for linkage to corresponding PACS message
+            // camt.056: prefer OrgnlMsgId, then OrgnlInstrId for linkage
             if (messageType != null && messageType.startsWith("camt.056")) {
+                String oMsg = firstNonBlank(text(doc, "*", "OrgnlMsgId"), text(doc, null, "OrgnlMsgId"));
+                if (notBlank(oMsg)) return oMsg.trim();
                 String oInstr = firstNonBlank(text(doc, "*", "OrgnlInstrId"), text(doc, null, "OrgnlInstrId"));
                 if (notBlank(oInstr)) return oInstr.trim();
             }

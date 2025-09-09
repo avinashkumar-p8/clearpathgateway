@@ -65,31 +65,41 @@ lsof -iTCP:8080 -sTCP:LISTEN -n -P
 kill <pid>
 ```
 
-Build only the router module (tests skipped) from repo root:
+Build router and ID generator as runnable JARs (tests skipped) from repo root:
 ```bash
-mvn -q -pl ./services/fast-router-service -DskipTests clean package
+mvn -U -q -DskipTests -pl services/fast-id-generator-service,services/fast-router-service -am package
 ```
 
-Run the app (from repo root):
+Start services as JARs (recommended for stability) from repo root:
 ```bash
-# Option A (recommended during local dev)
-SPRING_PROFILES_ACTIVE=local \
-SPRING_CLOUD_GCP_PROJECT_ID=local-project \
-SPANNER_EMULATOR_HOST=localhost:9010 \
-mvn -q -pl ./services/fast-router-service spring-boot:run \
-  > /tmp/router.jar.log 2>&1 & echo $!
+# stop anything on 8080/8091
+for p in 8080 8091; do pid=$(lsof -ti tcp:$p || true); [ -n "$pid" ] && kill -9 $pid || true; done
 
-# Option B (if you prefer the JAR)
-SPRING_PROFILES_ACTIVE=local \
-SPRING_CLOUD_GCP_PROJECT_ID=local-project \
-SPANNER_EMULATOR_HOST=localhost:9010 \
-java -jar "$(ls ./services/fast-router-service/target/fast-router-service-*-SNAPSHOT.jar | head -1)" \
-> /tmp/router.jar.log 2>&1 & echo $!
+# start ID generator (8091)
+nohup java -Xms128m -Xmx512m -jar services/fast-id-generator-service/target/fast-id-generator-service-*.jar \
+  --spring.profiles.active=local --server.port=8091 >/tmp/idgen.out 2>&1 &
+
+# start Router (8080)
+nohup java -Xms256m -Xmx1024m -jar services/fast-router-service/target/fast-router-service-*.jar \
+  --spring.profiles.active=local \
+  --SPRING_CLOUD_GCP_PROJECT_ID=local-project \
+  --SPANNER_EMULATOR_HOST=localhost:9010 \
+  --SPRING_KAFKA_BOOTSTRAP_SERVERS=localhost:9092 \
+  --ID_REMOTE_ENABLED=true \
+  --ID_SERVICE_BASE_URL=http://localhost:8091 >/tmp/router.jar.log 2>&1 &
 ```
 
-Health check:
+Health checks:
 ```bash
-curl -s http://localhost:8080/actuator/health
+curl -sf http://localhost:8091/health
+curl -sf http://localhost:8080/health
+```
+
+## Run E2E (stable subset)
+From `services/fast-router-service/e2e`:
+```bash
+KAFKA_BROKERS=localhost:9092 ROUTER_HEALTH_URL=http://localhost:8080/health \
+  npx --yes playwright test tests/router.e2e.spec.ts tests/router.xsd-failures.spec.ts --reporter=line
 ```
 
 ## Configuration reference

@@ -4,6 +4,7 @@ import com.anz.fastpayment.router.repository.InboundMessageRepository;
 import com.anz.fastpayment.router.repository.UnifiedMessageRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,6 +22,7 @@ class RouterOrchestratorTest {
     private String capturedKey;
     private String capturedPayload;
     private org.apache.avro.generic.GenericRecord capturedRecord;
+    private com.fasterxml.jackson.databind.ObjectMapper objectMapper;
 
     private RouterOrchestrator orchestrator;
 
@@ -76,7 +78,8 @@ class RouterOrchestratorTest {
         };
         DuplicateChecker duplicateChecker = mock(DuplicateChecker.class);
         when(duplicateChecker.isDuplicateAndRecord(anyString(), anyString(), anyString())).thenReturn(false);
-        orchestrator = new RouterOrchestrator(puidGenerator, provider, detector, xsdValidator, transformer, publisher, eventPublisher, uniqueIdExtractor, unifiedProvider, duplicateChecker, new SimpleMeterRegistry());
+        objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        orchestrator = new RouterOrchestrator(puidGenerator, provider, detector, xsdValidator, transformer, publisher, eventPublisher, uniqueIdExtractor, unifiedProvider, duplicateChecker, objectMapper, new SimpleMeterRegistry());
     }
 
     @Test
@@ -142,6 +145,7 @@ class RouterOrchestratorTest {
                 new UniqueIdExtractor(),
                 unifiedProvider,
                 mock(DuplicateChecker.class),
+                new com.fasterxml.jackson.databind.ObjectMapper(),
                 new SimpleMeterRegistry()
         );
 
@@ -185,12 +189,19 @@ class RouterOrchestratorTest {
         };
         DuplicateChecker duplicateChecker2 = mock(DuplicateChecker.class);
         when(duplicateChecker2.isDuplicateAndRecord(anyString(), anyString(), anyString())).thenReturn(false);
-        orchestrator = new RouterOrchestrator(puidGenerator, provider2, detector, xsdValidator, transformer, publisher, eventPublisher2, uniqueIdExtractor2, unifiedProvider2, duplicateChecker2, new SimpleMeterRegistry());
+        objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        // Ensure XSD enabled for this validator instance
+        try {
+            java.lang.reflect.Field f = XmlSchemaValidator.class.getDeclaredField("xsdValidationEnabled");
+            f.setAccessible(true);
+            f.set(xsdValidator, true);
+        } catch (Exception ignore) { }
+        orchestrator = new RouterOrchestrator(puidGenerator, provider2, detector, xsdValidator, transformer, publisher, eventPublisher2, uniqueIdExtractor2, unifiedProvider2, duplicateChecker2, objectMapper, new SimpleMeterRegistry());
 
+        // Expect XSD failure path: publishInvalid and pacs002 request
         orchestrator.processInboundXml(xml);
-
-        assertTrue(capturedKey.equals("G3I0000000000002"));
-        assertTrue(capturedPayload.equals(xml));
+        assertEquals("G3I0000000000002", capturedKey);
+        assertEquals(xml, capturedPayload);
     }
 
     @Test
@@ -211,6 +222,9 @@ class RouterOrchestratorTest {
 
         Iso20022Transformer transformer = mock(Iso20022Transformer.class);
         KafkaPublisher kafkaPublisher = mock(KafkaPublisher.class);
+        // stub schema for orchestrator path although not used due to early exit
+        org.apache.avro.Schema testSchema = new org.apache.avro.Schema.Parser().parse("{\n  \"type\": \"record\",\n  \"name\": \"UnifiedPaymentMessage\",\n  \"fields\": [\n    { \"name\": \"messageType\", \"type\": \"string\" },\n    { \"name\": \"messageVersion\", \"type\": [\"null\", \"string\"], \"default\": null },\n    { \"name\": \"messageId\", \"type\": \"string\" },\n    { \"name\": \"creationDateTime\", \"type\": \"string\" },\n    { \"name\": \"supplementaryData\", \"type\": [\"null\", {\"type\": \"map\", \"values\": \"string\"}], \"default\": null }\n  ]\n}");
+        when(kafkaPublisher.getUnifiedSchema()).thenReturn(testSchema);
         EventPublisher eventPublisher = mock(EventPublisher.class);
         UniqueIdExtractor uniqueIdExtractor = mock(UniqueIdExtractor.class);
         when(uniqueIdExtractor.extractUniqueId(anyString(), anyString())).thenReturn("E2E-123");
@@ -221,6 +235,7 @@ class RouterOrchestratorTest {
 
         DuplicateChecker duplicateChecker3 = mock(DuplicateChecker.class);
         when(duplicateChecker3.isDuplicateAndRecord(anyString(), anyString(), anyString())).thenReturn(false);
+        com.fasterxml.jackson.databind.ObjectMapper om = new com.fasterxml.jackson.databind.ObjectMapper();
         RouterOrchestrator orchestrator = new RouterOrchestrator(
                 puidGen,
                 inboundProvider,
@@ -232,6 +247,7 @@ class RouterOrchestratorTest {
                 uniqueIdExtractor,
                 unifiedProvider,
                 duplicateChecker3,
+                om,
                 new SimpleMeterRegistry()
         );
 
@@ -284,6 +300,7 @@ class RouterOrchestratorTest {
                 uniqueIdExtractor,
                 unifiedProvider,
                 duplicateChecker,
+                new com.fasterxml.jackson.databind.ObjectMapper(),
                 new io.micrometer.core.instrument.simple.SimpleMeterRegistry()
         );
 

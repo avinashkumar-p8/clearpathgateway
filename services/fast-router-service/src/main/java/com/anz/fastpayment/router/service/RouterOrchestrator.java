@@ -2,7 +2,6 @@ package com.anz.fastpayment.router.service;
 
 import com.anz.fastpayment.router.model.InboundMessage;
 import com.anz.fastpayment.router.repository.InboundMessageRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
@@ -30,7 +29,7 @@ public class RouterOrchestrator {
     private final UniqueIdExtractor uniqueIdExtractor;
     private final UnifiedMessageRepository unifiedRepo;
     private final DuplicateChecker duplicateChecker;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final com.fasterxml.jackson.databind.ObjectMapper objectMapper;
     private final MeterRegistry meterRegistry;
     private final Timer xsdTimer;
     private final Timer transformTimer;
@@ -48,6 +47,7 @@ public class RouterOrchestrator {
                               UniqueIdExtractor uniqueIdExtractor,
                               ObjectProvider<UnifiedMessageRepository> unifiedRepoProvider,
                               DuplicateChecker duplicateChecker,
+                              com.fasterxml.jackson.databind.ObjectMapper objectMapper,
                               MeterRegistry meterRegistry) {
         this.puidGenerator = puidGenerator;
         this.inboundRepo = inboundRepoProvider.getIfAvailable();
@@ -59,6 +59,7 @@ public class RouterOrchestrator {
         this.uniqueIdExtractor = uniqueIdExtractor;
         this.unifiedRepo = unifiedRepoProvider.getIfAvailable();
         this.duplicateChecker = duplicateChecker;
+        this.objectMapper = objectMapper;
         this.meterRegistry = meterRegistry;
         this.xsdTimer = meterRegistry.timer("router.xsd.validate.ms");
         this.transformTimer = meterRegistry.timer("router.transform.ms");
@@ -77,6 +78,8 @@ public class RouterOrchestrator {
         }
         String messageType = typeDetector.detectType(xml);
         log.info("[DETECT] Detected messageType={}", messageType);
+        // If HEAD detected but MsgDefIdr points to a supported payload, we still treat overall as HEAD_001 at Avro layer.
+        // Valid HEAD should pass XSD head.001.001.01; transformation emits HEAD_001.
         if (messageType == null || messageType.trim().isEmpty()) {
             log.error("[PROC] Could not detect messageType; aborting. PUID={}", puid);
             return;
@@ -235,6 +238,24 @@ public class RouterOrchestrator {
     private String safe(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
+    private String mapToAvroEnum(String messageType) {
+        if (messageType == null) return "UNKNOWN";
+        if (messageType.startsWith("pacs.008")) return "PACS_008";
+        if (messageType.startsWith("pacs.003")) return "PACS_003";
+        if (messageType.startsWith("pacs.007")) return "PACS_007";
+        if (messageType.startsWith("camt.056")) return "CAMT_056";
+        if (messageType.startsWith("pacs.002")) return "PACS_002";
+        if (messageType.startsWith("camt.029")) return "CAMT_029";
+        if (messageType.startsWith("head.001.001.01")) return "HEAD_001";
+        return "UNKNOWN";
+    }
+
+    private String extractVersion(String messageType) {
+        if (messageType == null) return null;
+        int idx = messageType.lastIndexOf('.');
+        return idx > 0 ? messageType.substring(idx + 1) : null;
     }
 }
 

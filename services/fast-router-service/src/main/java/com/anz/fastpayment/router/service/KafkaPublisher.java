@@ -5,6 +5,7 @@ import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -85,6 +86,14 @@ public class KafkaPublisher {
 
     public Schema getUnifiedSchema() {
         return unifiedSchema;
+    }
+
+    private Schema parseSchema(String classpathLocation) throws Exception {
+        ClassPathResource res = new ClassPathResource(classpathLocation);
+        try (InputStream in = res.getInputStream()) {
+            String content = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            return new Schema.Parser().parse(content);
+        }
     }
 }
 
