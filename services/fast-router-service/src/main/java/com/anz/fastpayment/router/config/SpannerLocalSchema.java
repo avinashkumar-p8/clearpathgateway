@@ -42,6 +42,10 @@ public class SpannerLocalSchema {
         this.adminTemplate = adminTemplate;
     }
 
+    // Test-only: force transient failures during instance/db ensure to cover retry branches
+    private int testInitFailCount = 0;
+    void setTestInitFailCount(int n) { this.testInitFailCount = Math.max(0, n); }
+
     @PostConstruct
     public void ensureTables() {
         try {
@@ -95,6 +99,10 @@ public class SpannerLocalSchema {
     }
 
     private void ensureInstanceAndDatabase() throws Exception {
+        if (testInitFailCount > 0) {
+            testInitFailCount--;
+            throw new RuntimeException("test-init-fail");
+        }
         SpannerOptions options = SpannerOptions.newBuilder().setProjectId(projectId).build();
         try (Spanner spanner = options.getService()) {
             DatabaseAdminClient databaseAdminClient = spanner.getDatabaseAdminClient();

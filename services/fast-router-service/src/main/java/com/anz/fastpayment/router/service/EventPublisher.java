@@ -5,6 +5,9 @@ import com.anz.fastpayment.router.repository.RouterEventRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,19 +24,37 @@ public class EventPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(EventPublisher.class);
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, GenericRecord> avroKafkaTemplate;
     private final RouterEventRepository eventRepository;
     private final ObjectMapper objectMapper;
 
     @Value("${app.kafka.topics.payment-events:payment-events}")
     private String paymentEventsTopic;
 
-    public EventPublisher(KafkaTemplate<String, String> kafkaTemplate,
+    private final Schema paymentEventSchema;
+
+    public EventPublisher(KafkaTemplate<String, GenericRecord> avroKafkaTemplate,
                           RouterEventRepository eventRepository,
                           ObjectMapper objectMapper) {
-        this.kafkaTemplate = kafkaTemplate;
+        this.avroKafkaTemplate = avroKafkaTemplate;
         this.eventRepository = eventRepository;
         this.objectMapper = objectMapper;
+        try {
+            String schemaStr = "{\n" +
+                    "  \"type\": \"record\",\n" +
+                    "  \"name\": \"PaymentEvent\",\n" +
+                    "  \"namespace\": \"com.anz.fastpayment.avro\",\n" +
+                    "  \"fields\": [\n" +
+                    "    {\"name\": \"puid\", \"type\": \"string\"},\n" +
+                    "    {\"name\": \"channel\", \"type\": \"string\"},\n" +
+                    "    {\"name\": \"topic\", \"type\": \"string\"},\n" +
+                    "    {\"name\": \"payloadJson\", \"type\": \"string\"}\n" +
+                    "  ]\n" +
+                    "}";
+            this.paymentEventSchema = new Schema.Parser().parse(schemaStr);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to initialize PaymentEvent schema", e);
+        }
     }
 
     public void publishPaymentReceivedEvent(String puid, String channel, String topicName) {
@@ -91,9 +112,14 @@ public class EventPublisher {
             return;
         }
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(paymentEventsTopic, puid, json);
         try {
-            kafkaTemplate.send(record);
+            GenericRecord rec = new GenericData.Record(paymentEventSchema);
+            rec.put("puid", puid);
+            rec.put("channel", channel == null ? "" : channel);
+            rec.put("topic", topicName);
+            rec.put("payloadJson", json);
+            ProducerRecord<String, GenericRecord> record = new ProducerRecord<>(paymentEventsTopic, puid, rec);
+            avroKafkaTemplate.send(record);
         } catch (Exception ex) {
             log.warn("[EVENT] Kafka send failed for PUID={} topic={}", puid, paymentEventsTopic, ex);
         }

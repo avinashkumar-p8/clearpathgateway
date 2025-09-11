@@ -75,6 +75,9 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <propertyName>jacoco.argLine</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>report</id>

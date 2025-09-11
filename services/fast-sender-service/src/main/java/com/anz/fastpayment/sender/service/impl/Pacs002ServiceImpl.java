@@ -7,6 +7,7 @@ import com.anz.fastpayment.sender.model.Pacs002Entity;
 import com.anz.fastpayment.sender.repository.Pacs002Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import com.anz.fastpayment.sender.service.EventJsonPublisher;
 import org.springframework.jms.core.JmsTemplate;
@@ -29,7 +30,7 @@ public class Pacs002ServiceImpl implements Pacs002Service {
 
     private static final Logger log = LoggerFactory.getLogger(Pacs002ServiceImpl.class);
 
-    private final Pacs002Repository pacs002Repository;
+    private final Pacs002Repository pacs002Repository; // optional in local
     private final JmsTemplate jmsTemplate;
     private final EventJsonPublisher eventJsonPublisher;
 
@@ -42,8 +43,8 @@ public class Pacs002ServiceImpl implements Pacs002Service {
     @Value("${app.sender.retry-backoff-ms:1000}")
     private long retryBackoffMs;
 
-    public Pacs002ServiceImpl(Pacs002Repository pacs002Repository, JmsTemplate jmsTemplate, EventJsonPublisher eventJsonPublisher) {
-        this.pacs002Repository = pacs002Repository;
+    public Pacs002ServiceImpl(ObjectProvider<Pacs002Repository> pacs002Repository, JmsTemplate jmsTemplate, EventJsonPublisher eventJsonPublisher) {
+        this.pacs002Repository = pacs002Repository.getIfAvailable();
         this.jmsTemplate = jmsTemplate;
         this.eventJsonPublisher = eventJsonPublisher;
     }
@@ -54,13 +55,15 @@ public class Pacs002ServiceImpl implements Pacs002Service {
                 safe(request.getPuid()), request.getMessageType(), safe(request.getUniqueId()), safe(request.getError()));
 
         // Idempotency: if record already exists, skip re-send
-        try {
-            if (pacs002Repository.existsById(request.getPuid())) {
-                log.info("[IDEMPOTENT] pacs.002 already processed for PUID={}, skipping re-send", safe(request.getPuid()));
-                return new Pacs002Response(request.getPuid(), "ACCEPTED");
+        if (pacs002Repository != null) {
+            try {
+                if (pacs002Repository.existsById(request.getPuid())) {
+                    log.info("[IDEMPOTENT] pacs.002 already processed for PUID={}, skipping re-send", safe(request.getPuid()));
+                    return new Pacs002Response(request.getPuid(), "ACCEPTED");
+                }
+            } catch (Exception e) {
+                log.warn("[IDEMPOTENT] Failed to check existence for PUID={}, err={}", safe(request.getPuid()), e.getMessage());
             }
-        } catch (Exception e) {
-            log.warn("[IDEMPOTENT] Failed to check existence for PUID={}, err={}", safe(request.getPuid()), e.getMessage());
         }
 
         String xml = buildPacs002RejectXml(request);
@@ -73,10 +76,12 @@ public class Pacs002ServiceImpl implements Pacs002Service {
         entity.setCreatedAt(java.time.Instant.now());
         entity.setXml(xml);
         entity.setEventJson(buildEventJson(request));
-        try {
-            pacs002Repository.save(entity);
-        } catch (Exception e) {
-            log.warn("[PERSIST] Failed to save pacs.002 entity for PUID={}, err={}", safe(request.getPuid()), e.getMessage());
+        if (pacs002Repository != null) {
+            try {
+                pacs002Repository.save(entity);
+            } catch (Exception e) {
+                log.warn("[PERSIST] Failed to save pacs.002 entity for PUID={}, err={}", safe(request.getPuid()), e.getMessage());
+            }
         }
 
         // Publish to ActiveMQ

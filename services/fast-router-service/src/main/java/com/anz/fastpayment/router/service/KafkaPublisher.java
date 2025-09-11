@@ -5,6 +5,7 @@ import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -20,6 +21,7 @@ public class KafkaPublisher {
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class);
 
     private final KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate;
+    // Deprecated JSON template path removed: all internal topics use Avro
 
     @Value("${app.kafka.topics.payment-messages:payment-messages}")
     private String paymentMessagesTopic;
@@ -32,7 +34,8 @@ public class KafkaPublisher {
 
     private final Schema unifiedSchema;
 
-    public KafkaPublisher(KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate) {
+    public KafkaPublisher(KafkaTemplate<String, org.apache.avro.generic.GenericRecord> avroKafkaTemplate,
+                          ObjectProvider<org.springframework.kafka.core.KafkaTemplate<String, String>> ignoredJsonKafkaTemplateProvider) {
         this.avroKafkaTemplate = avroKafkaTemplate;
         try {
             ClassPathResource schemaRes = new ClassPathResource("avro/unified-payment-message.avsc");
@@ -58,27 +61,42 @@ public class KafkaPublisher {
     }
 
     // For backward-compatibility for exception and pacs002 requests (string JSON)
-    private final org.springframework.kafka.core.KafkaTemplate<String, String> jsonKafkaTemplate = null;
 
     public void publishInvalid(String key, String payload) {
-        if (jsonKafkaTemplate == null) {
-            log.warn("JSON template not configured; skipping invalid publish");
-            return;
-        }
         try {
-            jsonKafkaTemplate.send(exceptionTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+            // Build RouterException Avro record
+            ClassPathResource schemaRes = new ClassPathResource("avro/router-exception.avsc");
+            Schema excSchema;
+            try (InputStream in = schemaRes.getInputStream()) {
+                excSchema = new Schema.Parser().parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+            }
+            GenericRecord rec = new GenericData.Record(excSchema);
+            rec.put("puid", key);
+            rec.put("originalXml", payload);
+            avroKafkaTemplate.send(exceptionTopic, key, rec).get(5, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            log.warn("Interrupted while publishing exception to topic={}, key={}", exceptionTopic, key, ie);
         } catch (Exception e) {
             log.warn("Kafka publish failure for exception topic={}, key={}", exceptionTopic, key, e);
         }
     }
 
     public void publishPacs002Request(String key, String payload) {
-        if (jsonKafkaTemplate == null) {
-            log.warn("JSON template not configured; skipping pacs002 request publish");
-            return;
-        }
         try {
-            jsonKafkaTemplate.send(pacs002RequestsTopic, key, payload).get(5, java.util.concurrent.TimeUnit.SECONDS);
+            // Build Pacs002Request Avro record
+            ClassPathResource schemaRes = new ClassPathResource("avro/pacs002-request.avsc");
+            Schema p2Schema;
+            try (InputStream in = schemaRes.getInputStream()) {
+                p2Schema = new Schema.Parser().parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+            }
+            GenericRecord rec = new GenericData.Record(p2Schema);
+            rec.put("puid", key);
+            rec.put("payload", payload);
+            avroKafkaTemplate.send(pacs002RequestsTopic, key, rec).get(5, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            log.warn("Interrupted while publishing pacs002 request to topic={}, key={}", pacs002RequestsTopic, key, ie);
         } catch (Exception e) {
             log.warn("Kafka publish failure for pacs002 topic={}, key={}", pacs002RequestsTopic, key, e);
         }
@@ -86,14 +104,6 @@ public class KafkaPublisher {
 
     public Schema getUnifiedSchema() {
         return unifiedSchema;
-    }
-
-    private Schema parseSchema(String classpathLocation) throws Exception {
-        ClassPathResource res = new ClassPathResource(classpathLocation);
-        try (InputStream in = res.getInputStream()) {
-            String content = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-            return new Schema.Parser().parse(content);
-        }
     }
 }
 

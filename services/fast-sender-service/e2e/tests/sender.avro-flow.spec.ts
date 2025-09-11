@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { Kafka } from 'kafkajs';
-import { SchemaRegistry, SchemaType } from '@kafkajs/confluent-schema-registry';
 
 const brokers = process.env.KAFKA_BROKERS?.split(',') ?? ['localhost:9092'];
-const schemaRegistryUrl = process.env.SCHEMA_REGISTRY_URL ?? 'http://localhost:8081';
 const pacs002RequestsTopic = process.env.PACS002_REQUESTS_TOPIC ?? 'pacs002-requests';
 const eventsTopic = process.env.PAYMENT_EVENTS_TOPIC ?? 'payment-events';
 
@@ -70,35 +68,21 @@ async function waitUntilAdvanced(kafka: Kafka, topic: string, before: any, timeo
   return false;
 }
 
-async function produceConfluentAvro(kafka: Kafka, registry: SchemaRegistry, topic: string, key: string, value: any) {
+async function produceFramedJsonAvro(kafka: Kafka, topic: string, key: string, value: any) {
   const producer = kafka.producer();
   await producer.connect();
-  const subject = 'com.anz.fastpayment.schema.Pacs002Request';
-  const schema = {
-    type: 'record',
-    name: 'Pacs002Request',
-    namespace: 'com.anz.fastpayment.schema',
-    fields: [
-      { name: 'puid', type: 'string' },
-      { name: 'payload', type: 'string' }
-    ]
-  };
-  let schemaId: number;
-  try {
-    schemaId = await registry.getLatestSchemaId(subject);
-  } catch {
-    const reg = await registry.register({ type: SchemaType.AVRO, schema: JSON.stringify(schema), subject });
-    schemaId = reg.id;
-  }
-  const encoded = await registry.encode(schemaId, value);
-  await producer.send({ topic, messages: [{ key, value: encoded }] });
+  const json = Buffer.from(JSON.stringify(value), 'utf-8');
+  const buf = Buffer.alloc(1 + 4 + json.length);
+  buf.writeUInt8(0, 0); // magic byte
+  buf.writeUInt32BE(1, 1); // dummy schema id
+  json.copy(buf, 5);
+  await producer.send({ topic, messages: [{ key, value: buf }] });
   await producer.disconnect();
 }
 
 test('Avro pacs002-request triggers event JSON', async ({}, testInfo) => {
   testInfo.setTimeout(120000);
   const kafka = new Kafka({ clientId: `sender-e2e-${process.pid}`, brokers });
-  const registry = new SchemaRegistry({ host: schemaRegistryUrl });
 
   await ensureTopics(kafka, [pacs002RequestsTopic, eventsTopic]);
 
@@ -107,7 +91,7 @@ test('Avro pacs002-request triggers event JSON', async ({}, testInfo) => {
 
   const before = await snapshotOffsets(kafka, eventsTopic);
   await new Promise(r => setTimeout(r, 500));
-  await produceConfluentAvro(kafka, registry, pacs002RequestsTopic, puid, { puid, payload: xml });
+  await produceFramedJsonAvro(kafka, pacs002RequestsTopic, puid, { puid, payload: xml });
   const advanced = await waitUntilAdvanced(kafka, eventsTopic, before, 60000);
   expect(advanced).toBeTruthy();
 });

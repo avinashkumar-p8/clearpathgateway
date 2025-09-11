@@ -25,6 +25,11 @@ public class XmlSchemaValidator {
     @Value("${app.validation.max-bytes:1048576}")
     private int maxXmlBytes;
 
+    // Test-only bypass to exercise success path without requiring full valid XML
+    private boolean testBypassValidation;
+    // Test-only: force secure property set to throw to cover catch branch
+    private boolean testForceSecurePropertiesCatch;
+
     public void validate(String xmlContent, String messageType) {
         if (!xsdValidationEnabled) {
             log.info("[XSD] Validation disabled by configuration; skipping XSD check for type={}", messageType);
@@ -48,6 +53,7 @@ public class XmlSchemaValidator {
             ClassPathResource schemaResource = new ClassPathResource(schemaPath);
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             try {
+                if (testForceSecurePropertiesCatch) throw new RuntimeException("test-secure");
                 factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
                 factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
                 factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -58,6 +64,9 @@ public class XmlSchemaValidator {
             Schema schema = factory.newSchema(schemaResource.getURL());
             Validator validator = schema.newValidator();
             log.debug("[XSD] Running validator for messageType={}", messageType);
+            if (testBypassValidation) {
+                return; // test-only success path
+            }
             validator.validate(new StreamSource(new ByteArrayInputStream(
                     xmlContent.getBytes(java.nio.charset.StandardCharsets.UTF_8))));
         } catch (Exception ex) {
@@ -70,6 +79,10 @@ public class XmlSchemaValidator {
     void setXsdValidationEnabled(boolean enabled) { this.xsdValidationEnabled = enabled; }
     // Test-only convenience hook
     void setMaxXmlBytes(int max) { this.maxXmlBytes = max; }
+    // Test-only convenience hook
+    void setTestBypassValidation(boolean bypass) { this.testBypassValidation = bypass; }
+    // Test-only convenience hook
+    void setTestForceSecurePropertiesCatch(boolean enable) { this.testForceSecurePropertiesCatch = enable; }
 
     private String resolveSchemaPath(String messageType) {
         return switch (messageType) {

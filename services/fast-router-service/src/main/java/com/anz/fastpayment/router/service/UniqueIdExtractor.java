@@ -27,8 +27,10 @@ public class UniqueIdExtractor {
                 dbf.setAttribute(javax.xml.XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             } catch (Exception ignored) { }
             Document doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
-            // PACS types: use InstrId (Instruction Identification)
+            // PACS types: prefer EndToEndId, then InstrId
             if (messageType != null && messageType.startsWith("pacs.")) {
+                String e2e = firstNonBlank(text(doc, "*", "EndToEndId"), text(doc, null, "EndToEndId"));
+                if (notBlank(e2e)) return e2e.trim();
                 String instrId = firstNonBlank(text(doc, "*", "InstrId"), text(doc, null, "InstrId"));
                 if (notBlank(instrId)) return instrId.trim();
             }

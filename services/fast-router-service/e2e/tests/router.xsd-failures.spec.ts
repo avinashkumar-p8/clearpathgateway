@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { Kafka } from 'kafkajs';
-import * as avsc from 'avsc';
+import avsc from 'avsc';
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const healthUrl = process.env.ROUTER_HEALTH_URL || 'http://localhost:8080/health';
 const brokers = (process.env.KAFKA_BROKERS || 'localhost:9092').split(',');
@@ -9,6 +12,18 @@ const exceptionTopic = process.env.EXCEPTION_TOPIC || 'exception-queue';
 const pacs002Topic = process.env.PACS002_TOPIC || 'pacs002-requests';
 const activemqApi = process.env.ACTIVEMQ_API || 'http://localhost:8161/api/message';
 const inboundQ = process.env.ACTIVEMQ_INBOUND || 'payment.inbound';
+
+async function waitForHealth(url: string, timeoutMs = 30000) {
+  const start = Date.now();
+  for (;;) {
+    try {
+      const resp = await fetch(url);
+      if (resp.ok) return true;
+    } catch {}
+    if (Date.now() - start > timeoutMs) return false;
+    await new Promise(r => setTimeout(r, 500));
+  }
+}
 
 async function readAvroSchema(schemaPath: string): Promise<avsc.Type> {
   const fs = await import('fs/promises');
@@ -189,8 +204,8 @@ test.describe('XSD failure flows', () => {
 
   test('pacs.003 XSD failure emits exception (offset-verified)', async ({}, testInfo) => {
     testInfo.setTimeout(120000);
-    const health = await fetch(healthUrl);
-    expect(health.ok).toBeTruthy();
+    const ok = await waitForHealth(healthUrl, 30000);
+    expect(ok).toBeTruthy();
 
     const bad003 = `<?xml version="1.0" encoding="UTF-8"?>\n<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.003.001.11">\n  <CstmrDrctDbtInitn></CstmrDrctDbtInitn>\n</Document>`;
 
@@ -244,6 +259,23 @@ test.describe('XSD failure flows', () => {
 
     const before = await snapshotOffsets([exceptionTopic, pacs002Topic]);
     await sendToInbound(badHead);
+    await waitUntilAdvanced([exceptionTopic], before, 60000);
+    const kafka = new Kafka({ clientId: `xsd-admin-verify-${process.pid}`, brokers });
+    const admin = kafka.admin();
+    await admin.connect();
+    const afterExc = await admin.fetchTopicOffsets(exceptionTopic);
+    await admin.disconnect().catch(() => {});
+    const advancedExc = Number(afterExc[0].offset) > Number(before[exceptionTopic][0].offset);
+    expect(advancedExc).toBeTruthy();
+  });
+
+  test('Wrong namespace causes XSD failure and emits exception', async ({}, testInfo) => {
+    testInfo.setTimeout(120000);
+    // Correct-ish body but wrong namespace that should not match any mapped XSD
+    const wrongNs = `<?xml version="1.0" encoding="UTF-8"?>\n<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.003.001.99">\n  <CstmrDrctDbtInitn/>\n</Document>`;
+
+    const before = await snapshotOffsets([exceptionTopic, pacs002Topic]);
+    await sendToInbound(wrongNs);
     await waitUntilAdvanced([exceptionTopic], before, 60000);
     const kafka = new Kafka({ clientId: `xsd-admin-verify-${process.pid}`, brokers });
     const admin = kafka.admin();

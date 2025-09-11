@@ -86,32 +86,14 @@ public class RouterOrchestrator {
         }
 
         // Best-effort persist RECEIVED
-        try {
-            if (inboundRepo != null) {
-                InboundMessage m = new InboundMessage();
-                m.setPuid(puid);
-                m.setChannelId("G3I");
-                m.setMessageType(messageType);
-                m.setReceivedAt(java.time.Instant.now());
-                m.setRawXml(xml);
-                m.setStatus("RECEIVED");
-                inboundRepo.save(m);
-            }
-        } catch (Exception e) {
-            log.warn("[PERSIST] RECEIVED save failed PUID={}, err={}", puid, e.getMessage());
-        }
+        recordReceived(puid, messageType, xml);
 
         // XSD validation - only this error triggers pacs.002
         try {
             log.info("[XSD] Validating XML against XSD for type={}", messageType);
             xsdTimer.record(() -> xmlSchemaValidator.validate(xml, messageType));
             log.info("[XSD] Validation successful for PUID={}", puid);
-            try {
-                if (inboundRepo != null) {
-                    InboundMessage m = inboundRepo.findById(puid).orElse(null);
-                    if (m != null) { m.setStatus("VALIDATED"); inboundRepo.save(m); }
-                }
-            } catch (Exception ignore) { }
+            safeUpdateInbound(puid, m -> { m.setStatus("VALIDATED"); });
         } catch (Exception xsdEx) {
             log.error("[XSD] Validation failed PUID={}, type={}, err={}", puid, messageType, xsdEx.getMessage());
             xsdFailCounter.increment();
@@ -129,13 +111,8 @@ public class RouterOrchestrator {
             } catch (Exception e) {
                 log.warn("[KAFKA] Failed to publish pacs002 request PUID={}, err={}", puid, e.getMessage());
             }
-            try { eventPublisher.publishPaymentReceivedEvent(puid, "G3I", "exception-queue"); } catch (Exception ignore) { }
-            try {
-                if (inboundRepo != null) {
-                    InboundMessage m = inboundRepo.findById(puid).orElse(null);
-                    if (m != null) { m.setStatus("ERROR"); m.setError("XSD_FAIL"); inboundRepo.save(m); }
-                }
-            } catch (Exception ignore) { }
+            safePublishEvent(puid, "G3I", "exception-queue");
+            safeUpdateInbound(puid, m -> { m.setStatus("ERROR"); m.setError("XSD_FAIL"); });
             return;
         }
 
@@ -146,12 +123,8 @@ public class RouterOrchestrator {
                 log.info("[DEDUP] Skipping dedup for PUID={} due to missing uniqueId", puid);
             } else if (duplicateChecker.isDuplicateAndRecord(messageType, uniqueId, xml)) {
                 log.info("[DEDUP] Duplicate message detected. PUID={}, uniqueId={}", puid, uniqueId);
-                try {
-                    if (inboundRepo != null) {
-                        InboundMessage m = inboundRepo.findById(puid).orElse(null);
-                        if (m != null) { m.setStatus("DUPLICATE"); m.setError("DUPLICATE"); inboundRepo.save(m); }
-                    }
-                } catch (Exception ignore) { }
+                try { kafkaPublisher.publishInvalid(puid, xml); } catch (Exception ignore) { }
+                safeUpdateInbound(puid, m -> { m.setStatus("DUPLICATE"); m.setError("DUPLICATE"); });
                 // Stop further processing for this event
                 return;
             }
@@ -171,12 +144,7 @@ public class RouterOrchestrator {
             log.error("[TRANSFORM] Failed PUID={}, err={}", puid, txEx.getMessage());
             transformFailCounter.increment();
             kafkaPublisher.publishInvalid(puid, xml);
-            try {
-                if (inboundRepo != null) {
-                    InboundMessage m = inboundRepo.findById(puid).orElse(null);
-                    if (m != null) { m.setStatus("ERROR"); m.setError("TRANSFORM_FAIL"); inboundRepo.save(m); }
-                }
-            } catch (Exception ignore) { }
+            safeUpdateInbound(puid, m -> { m.setStatus("ERROR"); m.setError("TRANSFORM_FAIL"); });
             return;
         }
 
@@ -187,17 +155,8 @@ public class RouterOrchestrator {
                 org.apache.avro.Schema schema = kafkaPublisher.getUnifiedSchema();
                 org.apache.avro.generic.GenericRecord rec = new org.apache.avro.generic.GenericData.Record(schema);
                 // Map detected type and version
-                String version = "";
-                if (messageType.contains(".001.")) {
-                    version = messageType.substring(messageType.lastIndexOf('.') + 1);
-                }
-                String mtUpper = messageType.replace('.', '_').toUpperCase();
-                if (mtUpper.startsWith("PACS_008")) mtUpper = "PACS_008";
-                else if (mtUpper.startsWith("PACS_003")) mtUpper = "PACS_003";
-                else if (mtUpper.startsWith("PACS_007")) mtUpper = "PACS_007";
-                else if (mtUpper.startsWith("CAMT_056")) mtUpper = "CAMT_056";
-                else if (mtUpper.startsWith("PACS_002")) mtUpper = "PACS_002";
-                else if (mtUpper.startsWith("CAMT_029")) mtUpper = "CAMT_029";
+                String version = extractVersion(messageType) == null ? "" : extractVersion(messageType);
+                String mtUpper = mapToAvroEnum(messageType);
                 org.apache.avro.Schema enumSchema = schema.getField("messageType").schema();
                 Object enumVal = org.apache.avro.generic.GenericData.get().createEnum(mtUpper, enumSchema);
                 rec.put("messageType", enumVal);
@@ -214,30 +173,9 @@ public class RouterOrchestrator {
             }
         });
         log.info("[KAFKA] Publish complete for key={}", puid);
-        try {
-            if (unifiedRepo != null) {
-                UnifiedMessage um = new UnifiedMessage();
-                um.setPuid(puid);
-                um.setMessageType(messageType);
-                um.setCreatedAt(java.time.Instant.now());
-                um.setJson(unifiedJson);
-                unifiedRepo.save(um);
-            }
-        } catch (Exception e) {
-            log.warn("[PERSIST] UnifiedMessage save failed PUID={}, err={}", puid, e.getMessage());
-        }
-        try { eventPublisher.publishPaymentReceivedEvent(puid, "G3I", "payment-messages"); } catch (Exception ignore) { }
-        try {
-            if (inboundRepo != null) {
-                InboundMessage m = inboundRepo.findById(puid).orElse(null);
-                if (m != null) { m.setStatus("PUBLISHED"); inboundRepo.save(m); }
-            }
-        } catch (Exception ignore) { }
-    }
-
-    private String safe(String s) {
-        if (s == null) return "";
-        return s.replace("\\", "\\\\").replace("\"", "\\\"");
+        safePersistUnified(puid, messageType, unifiedJson);
+        safePublishEvent(puid, "G3I", "payment-messages");
+        safeUpdateInbound(puid, m -> { m.setStatus("PUBLISHED"); });
     }
 
     private String mapToAvroEnum(String messageType) {
@@ -256,6 +194,56 @@ public class RouterOrchestrator {
         if (messageType == null) return null;
         int idx = messageType.lastIndexOf('.');
         return idx > 0 ? messageType.substring(idx + 1) : null;
+    }
+
+    // Helpers to reduce branching and centralize persistence/event error handling
+    private void recordReceived(String puid, String messageType, String xml) {
+        if (inboundRepo == null) return;
+        try {
+            InboundMessage m = new InboundMessage();
+            m.setPuid(puid);
+            m.setChannelId("G3I");
+            m.setMessageType(messageType);
+            m.setReceivedAt(Instant.now());
+            m.setRawXml(xml);
+            m.setStatus("RECEIVED");
+            inboundRepo.save(m);
+        } catch (Exception e) {
+            log.warn("[PERSIST] RECEIVED save failed PUID={}, err={}", puid, e.getMessage());
+        }
+    }
+
+    private void safePersistUnified(String puid, String messageType, String unifiedJson) {
+        try {
+            if (unifiedRepo != null) {
+                UnifiedMessage um = new UnifiedMessage();
+                um.setPuid(puid);
+                um.setMessageType(messageType);
+                um.setCreatedAt(Instant.now());
+                um.setJson(unifiedJson);
+                unifiedRepo.save(um);
+            }
+        } catch (Exception e) {
+            log.warn("[PERSIST] UnifiedMessage save failed PUID={}, err={}", puid, e.getMessage());
+        }
+    }
+
+    private void safePublishEvent(String puid, String channel, String topic) {
+        try { eventPublisher.publishPaymentReceivedEvent(puid, channel, topic); } catch (Exception ignore) { }
+    }
+
+    private void safeUpdateInbound(String puid, java.util.function.Consumer<InboundMessage> updater) {
+        if (inboundRepo == null) return;
+        try {
+            InboundMessage m = inboundRepo.findById(puid).orElseGet(() -> {
+                InboundMessage x = new InboundMessage();
+                x.setPuid(puid);
+                x.setReceivedAt(Instant.now());
+                return x;
+            });
+            updater.accept(m);
+            inboundRepo.save(m);
+        } catch (Exception ignore) { }
     }
 }
 

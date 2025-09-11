@@ -40,6 +40,9 @@ public class Iso20022Transformer {
         if ("camt.056.001.11".equals(messageType)) {
             return transformCamt056(xml, puid);
         }
+        if ("camt.029.001.13".equals(messageType)) {
+            return transformCamt029(xml, puid);
+        }
         if ("head.001.001.01".equals(messageType)) {
             return transformHead001(xml, puid);
         }
@@ -174,6 +177,27 @@ public class Iso20022Transformer {
         if (orgMsgId != null) sb.append("\"originalMessageId\":\"").append(escape(orgMsgId)).append("\",");
         if (creDtTm != null) sb.append("\"creationDateTime\":\"").append(escape(creDtTm)).append("\",");
         sb.append("\"transactions\":[{}]}");
+        return sb.toString();
+    }
+
+    private String transformCamt029(String xml, String puid) throws Exception {
+        Document doc = parseSecure(xml);
+
+        String ns = "urn:iso:std:iso:20022:tech:xsd:camt.029.001.13";
+        String caseId = text(doc, ns, "Id"); // Case/Id under RsltnOfInvstgtn/RslvdCase or ResolutionData5
+        String msgId = text(doc, ns, "Id"); // CaseAssignment/Id
+        String creDtTm = text(doc, ns, "CreDtTm");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"puid\":\"").append(escape(puid)).append("\",");
+        sb.append("\"messageType\":\"CAMT_029\",");
+        sb.append("\"messageVersion\":\"13\",");
+        if (msgId != null) sb.append("\"messageId\":\"").append(escape(msgId)).append("\",");
+        if (creDtTm != null) sb.append("\"creationDateTime\":\"").append(escape(creDtTm)).append("\",");
+        if (caseId != null) sb.append("\"caseId\":\"").append(escape(caseId)).append("\",");
+        if (sb.charAt(sb.length()-1) == ',') sb.setLength(sb.length()-1);
+        sb.append("}");
         return sb.toString();
     }
 

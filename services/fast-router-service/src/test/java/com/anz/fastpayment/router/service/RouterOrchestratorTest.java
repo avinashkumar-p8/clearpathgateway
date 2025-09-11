@@ -44,7 +44,7 @@ class RouterOrchestratorTest {
             m.invoke(xsdValidator, true);
         } catch (Exception ignore) { }
         transformer = new Iso20022Transformer(new com.anz.fastpayment.router.mapping.TransformationConfigLoader(new com.fasterxml.jackson.databind.ObjectMapper()));
-        publisher = new KafkaPublisher(null) {
+        publisher = new KafkaPublisher(null, null) {
             @Override
             public void publishValidUnified(org.apache.avro.generic.GenericRecord record, String key) {
                 capturedKey = key;
@@ -52,6 +52,12 @@ class RouterOrchestratorTest {
             }
             @Override
             public void publishInvalid(String key, String payload) {
+                capturedKey = key;
+                capturedPayload = payload;
+            }
+            @Override
+            public void publishPacs002Request(String key, String payload) {
+                // capture only to avoid NPE due to null template in unit tests
                 capturedKey = key;
                 capturedPayload = payload;
             }
@@ -201,7 +207,9 @@ class RouterOrchestratorTest {
         // Expect XSD failure path: publishInvalid and pacs002 request
         orchestrator.processInboundXml(xml);
         assertEquals("G3I0000000000002", capturedKey);
-        assertEquals(xml, capturedPayload);
+        // After XSD failure we publish Avro exception and then a pacs002 request JSON; ensure original XML present
+        assertNotNull(capturedPayload);
+        assertTrue(capturedPayload.contains("<root/>"));
     }
 
     @Test

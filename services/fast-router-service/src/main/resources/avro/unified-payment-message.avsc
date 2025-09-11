@@ -9,7 +9,7 @@
       "type": {
         "type": "enum",
         "name": "MessageType",
-        "symbols": ["PACS_008", "PACS_003", "PACS_007", "CAMT_056", "PACS_002", "CAMT_029"]
+        "symbols": ["PACS_008", "PACS_003", "PACS_007", "CAMT_056", "PACS_002", "CAMT_029", "HEAD_001"]
       }
     },
     { "name": "messageVersion", "type": ["null", "string"], "default": null },

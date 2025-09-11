@@ -13,13 +13,13 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
       retries: 3
       acks: all
     consumer:
       group-id: ${spring.application.name}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       auto-offset-reset: earliest
 
 server:
@@ -59,6 +59,8 @@ app:
     topics:
       payment-events: ${SENDER_PAYMENT_EVENTS_TOPIC:payment-events}
       sender-inbound: ${SENDER_INBOUND_TOPIC:sender-wrapper-requests}
+      pacs002-requests: ${SENDER_PACS002_REQUESTS_TOPIC:pacs002-requests}
+      camt029-requests: ${SENDER_CAMT029_REQUESTS_TOPIC:camt029-requests}
 
 logging:
   level:
@@ -74,6 +76,7 @@ spring:
   cloud:
     gcp:
       spanner:
+        enabled: false
         instance-id: ${SPANNER_INSTANCE:payment-gateway-local}
         database: ${SPANNER_DATABASE:sender-db}
         emulator:

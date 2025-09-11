@@ -15,13 +15,13 @@ public class EventJsonPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(EventJsonPublisher.class);
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, GenericRecord> kafkaTemplate;
     private final Schema eventSchema;
 
     @Value("${app.kafka.topics.payment-events:payment-events}")
     private String paymentEventsTopic;
 
-    public EventJsonPublisher(KafkaTemplate<String, Object> kafkaTemplate) {
+    public EventJsonPublisher(KafkaTemplate<String, GenericRecord> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
         try {
             String schemaJson = new String(

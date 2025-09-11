@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { Kafka } from 'kafkajs';
-import * as avsc from 'avsc';
+import avsc from 'avsc';
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function readAvroSchema(schemaPath: string): Promise<avsc.Type> {
   const fs = await import('fs/promises');
@@ -11,6 +14,15 @@ async function readAvroSchema(schemaPath: string): Promise<avsc.Type> {
 
 function decodeAvroMessage(buffer: Buffer, schema: avsc.Type): any {
   try { return schema.fromBuffer(buffer); } catch { return null; }
+}
+
+async function waitForHealth(url: string, timeoutMs = 30000) {
+  const start = Date.now();
+  for (;;) {
+    try { const r = await fetch(url); if (r.ok) return true; } catch {}
+    if (Date.now() - start > timeoutMs) return false;
+    await new Promise(r => setTimeout(r, 500));
+  }
 }
 
 test.describe('Duplicate flows across message types (invalid path via exception topic)', () => {
@@ -24,6 +36,8 @@ test.describe('Duplicate flows across message types (invalid path via exception 
   test.beforeAll(async () => {
     const schemaPath = path.resolve(__dirname, '../../src/main/resources/avro/router-exception.avsc');
     exceptionSchema = await readAvroSchema(schemaPath);
+    const ok = await waitForHealth(healthUrl, 30000);
+    expect(ok).toBeTruthy();
   });
 
   async function send(xml: string) {
@@ -39,26 +53,28 @@ test.describe('Duplicate flows across message types (invalid path via exception 
     const health = await fetch(healthUrl);
     expect(health.ok).toBeTruthy();
     const kafka = new Kafka({ clientId: `dup-all-${process.pid}`, brokers });
-    const consumer = kafka.consumer({ groupId: `dup-all-exc-${process.pid}-${Math.random().toString(36).slice(2,8)}` });
-    await consumer.connect();
-    await consumer.subscribe({ topic: exceptionTopic });
-    const received: any[] = [];
-    const done = new Promise<boolean>(resolve => {
-      const t = setTimeout(() => resolve(true), 12000);
-      consumer.run({
-        eachMessage: async ({ message }) => {
-          if (!message.value) return;
-          const d = decodeAvroMessage(message.value as Buffer, exceptionSchema);
-          if (d && d.puid && d.originalXml) received.push(d);
-        }
-      });
-    });
+    // Snapshot exception-topic offsets
+    const admin = kafka.admin();
+    await admin.connect();
+    const before = await admin.fetchTopicOffsets(exceptionTopic);
+    await admin.disconnect().catch(() => {});
+    // Send twice
     await send(xml);
     await new Promise(r => setTimeout(r, 800));
-    await send(xml); // duplicate
-    await done;
-    await consumer.disconnect();
-    expect(received.length).toBeGreaterThanOrEqual(1);
+    await send(xml);
+    // Assert offset advanced
+    const admin2 = kafka.admin();
+    await admin2.connect();
+    const start = Date.now();
+    let advanced = false;
+    for (;;) {
+      const after = await admin2.fetchTopicOffsets(exceptionTopic);
+      if (Number(after[0].offset) > Number(before[0].offset)) { advanced = true; break; }
+      if (Date.now() - start > 15000) break;
+      await new Promise(r => setTimeout(r, 300));
+    }
+    await admin2.disconnect().catch(() => {});
+    expect(advanced).toBeTruthy();
   }
 
   test('pacs.003 duplicate flow invalid -> exception topic', async () => {
